@@ -10,7 +10,6 @@
 // all properties it needs to track its movement, and collisions.
 
 //Test
-//Test2
 
 class Item
 {
