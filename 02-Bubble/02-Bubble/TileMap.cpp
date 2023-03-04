@@ -27,6 +27,7 @@ TileMap::TileMap(const string& levelFile, const glm::vec2& minCoords, ShaderProg
 {
 	loadLevel(levelFile);
 	prepareArrays(minCoords, program);
+	screenCoords = minCoords;
 	
 	steppedFloorSprite = Sprite::createSprite(glm::ivec2(tileSize, tileSize), glm::vec2(0.5, 0.5), &tilesheet, &program);
 }
@@ -50,7 +51,7 @@ void TileMap::render() const
 
 	for (auto p : positionsStepped)
 	{
-		steppedFloorSprite->setPosition(glm::vec2(p[0]* tileSize, p[1] * tileSize));
+		steppedFloorSprite->setPosition(glm::vec2(screenCoords.x + p[0]*tileSize, screenCoords.y + p[1] *tileSize));
 		steppedFloorSprite->render();
 	}
 }
@@ -190,12 +191,13 @@ void TileMap::prepareArrays(const glm::vec2& minCoords, ShaderProgram& program)
 	posLocation = program.bindVertexAttribute("position", 2, 4 * sizeof(float), 0);
 	texCoordLocation = program.bindVertexAttribute("texCoord", 2, 4 * sizeof(float), (void*)(2 * sizeof(float)));
 
-	std::cout << "tileTexSize: " << tileTexSize[0] << " " << tileTexSize[1] << endl;
-	std::cout << "nTiles: " << nTiles << endl;
-	std::cout << "tileSize: " << tileSize << endl;
-	std::cout << "blockSize: " << blockSize << endl;
-	std::cout << "mapSize: " << mapSize[0] << " " << mapSize[1] << endl;
-	std::cout << "tileSheetSize: " << tilesheetSize[0] << " " << tilesheetSize[1] << endl;
+	cout << "tileTexSize: " << tileTexSize[0] << " " << tileTexSize[1] << endl;
+	cout << "nTiles: " << nTiles << endl;
+	cout << "tileSize: " << tileSize << endl;
+	cout << "blockSize: " << blockSize << endl;
+	cout << "mapSize: " << mapSize[0] << " " << mapSize[1] << endl;
+	cout << "tileSheetSize: " << tilesheetSize[0] << " " << tilesheetSize[1] << endl;
+	cout << "position: " << position.x << " " << position.y << endl;
 }
 
 // Collision tests for axis aligned bounding boxes.
@@ -283,7 +285,7 @@ void TileMap::positionStepped(const glm::ivec2& pos, const glm::ivec2& size, int
 			if (map[y * mapSize.x + x] == 2)
 			{
 				map[y * mapSize.x + x] = 1;
-				positionsStepped.push_back(glm::ivec2(x + 2, y + 1));
+				positionsStepped.push_back(glm::ivec2(x, y));
 				--nStepTiles;
 			}
 			*posY = tileSize * y - size.y;
@@ -310,7 +312,8 @@ bool TileMap::doorOpen()
 glm::vec2 TileMap::getRandomPosition()
 {
 	srand(time(NULL));
-	return plattforms[rand() % plattforms.size()];
+	// in pixels
+	return (plattforms[rand() % plattforms.size()])*tileSize;
 }
 
 glm::ivec2 TileMap::getDoorPosition()
@@ -336,4 +339,9 @@ void TileMap::setKeyTaken(bool b)
 bool TileMap::getKeyTaken() const
 {
 	return keyTaken;
+}
+
+glm::ivec2 TileMap::getScreenCoords() const
+{
+	return screenCoords;
 }

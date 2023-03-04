@@ -4,14 +4,13 @@
 
 
 void Game::init()
-{
-	windowSize = glm::vec2(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
-	scene.setWindowSize(windowSize);
-	
+{	
 	bPlay = true;
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	scene.init();
 
+	windowSize = glm::vec2(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
+	scene.updateWindow(windowSize);
 }
 
 #include <iostream>
@@ -21,7 +20,7 @@ bool Game::update(int deltaTime)
 	if (currentWindowSize != windowSize)
 	{
 		windowSize = currentWindowSize;
-		scene.setWindowSize(currentWindowSize);
+		scene.updateWindow(currentWindowSize);
 		cout << "camera: " << windowSize.x << " " << windowSize.y << endl;
 	}
 	scene.update(deltaTime);

@@ -56,15 +56,16 @@ void Key::render()
 		if (!showing)
 		{
 			glm::ivec2 pos = map->getRandomPosition();
-			pos = pos * 16;
-			posItem = pos - glm::ivec2(0, 1);
+			posItem = pos - glm::ivec2(0, 24);
 			//DEBUG
-			cout << "Position given: " << pos.x << " " << pos.y << endl;
+			cout << "Position given: " << posItem.x << " " << posItem.y << endl;
 
-			sprite->setPosition(glm::vec2(pos.x + 32, pos.y - 8));
+			glm::ivec2 screenCoords = map->getScreenCoords();
+
+			sprite->setPosition(glm::vec2(screenCoords.x + posItem.x, screenCoords.y + posItem.y));
 
 			//DEBUG
-			cout << "position assinged is: " << pos.x << " " << pos.y - 1 << endl;
+			cout << "position assinged is: " << posItem.x << " " << posItem.y - 24 << endl;
 
 			showing = true;
 		}

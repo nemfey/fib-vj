@@ -29,7 +29,9 @@ void Door::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	sprite->changeAnimation(CLOSED);
 
 	posItem = map->getDoorPosition() * 16;
-	sprite->setPosition(posItem + glm::ivec2(32, 16));
+	//sprite->setPosition(posItem + glm::ivec2(32, 16));
+	glm::ivec2 screenCoords = map->getScreenCoords();
+	sprite->setPosition(posItem + screenCoords);
 
 	// key set position
 	//sprite->setPosition(glm::vec2(pos.x * 16 + 32, pos.y * 16 - 8));

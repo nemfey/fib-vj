@@ -92,8 +92,8 @@ int main(int argc, char **argv)
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
 	glutInitWindowPosition(100, 100);
-	//glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-	glutInitWindowSize(800, 600);
+	glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+	//glutInitWindowSize(800, 600);
 	glutCreateWindow(argv[0]);
 
 	//glutReshapeFunc(reshape);

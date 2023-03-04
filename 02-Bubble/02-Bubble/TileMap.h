@@ -51,6 +51,8 @@ public:
 
 	void setKeyTaken(bool b);
 	bool getKeyTaken() const;
+	glm::ivec2 getScreenCoords() const;
+	glm::ivec2 getMapSize() const { return mapSize; };
 
 private:
 	bool loadLevel(const string& levelFile);
@@ -60,7 +62,7 @@ private:
 	GLuint vao, vbo;
 	GLint posLocation, texCoordLocation;
 
-	glm::ivec2 position, mapSize, tilesheetSize;
+	glm::ivec2 position, mapSize, tilesheetSize, screenCoords;
 	int nTiles, tileSize, blockSize;
 	Texture tilesheet;
 	glm::vec2 tileTexSize;

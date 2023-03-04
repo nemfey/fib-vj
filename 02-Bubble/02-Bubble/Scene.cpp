@@ -5,8 +5,8 @@
 #include "Game.h"
 
 
-#define SCREEN_X 32
-#define SCREEN_Y 16
+#define SCREEN_X 144
+#define SCREEN_Y 99
 
 Scene::Scene()
 {
@@ -152,10 +152,15 @@ void Scene::initShaders()
 	fShader.free();
 }
 
-void Scene::setWindowSize(glm::vec2 w)
+void Scene::updateWindow(glm::vec2 w)
 {
 	windowSize = w;
 	projection = glm::ortho(0.f, float(windowSize.x - 1), float(windowSize.y - 1), 0.f);
+
+	// calculate screen size
+	int tileSize = map->getTileSize();
+	glm::vec2 levelSize = glm::vec2(map->getMapSize().x*tileSize, map->getMapSize().y*tileSize);
+	screenSize = glm::vec2((windowSize.x-levelSize.x)/2, (windowSize.x - levelSize.x) / 2);
 }
 
 

@@ -29,7 +29,7 @@ public:
 	void render();
 	float getCurrentTime();
 
-	void setWindowSize(glm::vec2 w);
+	void updateWindow(glm::vec2 w);
 
 private:
 	void initShaders();
@@ -48,6 +48,7 @@ private:
 	glm::mat4 projection;
 
 	glm::vec2 windowSize;
+	glm::ivec2 screenSize;
 
 };
 
