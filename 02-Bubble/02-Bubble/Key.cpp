@@ -10,6 +10,7 @@ enum KeyAnims
 	IDLE
 };
 
+// Public functions
 
 void Key::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
@@ -55,18 +56,12 @@ void Key::render()
 	{
 		if (!showing)
 		{
-			glm::ivec2 pos = map->getRandomPosition();
-			posItem = pos - glm::ivec2(0, 24);
-			//DEBUG
-			cout << "Position given: " << posItem.x << " " << posItem.y << endl;
-
+			posItem = map->getRandomPosition() - glm::vec2(0, 24);
 			glm::ivec2 screenCoords = map->getScreenCoords();
-
 			sprite->setPosition(glm::vec2(screenCoords.x + posItem.x, screenCoords.y + posItem.y));
 
 			//DEBUG
 			cout << "position assinged is: " << posItem.x << " " << posItem.y - 24 << endl;
-
 			showing = true;
 		}
 		sprite->render();

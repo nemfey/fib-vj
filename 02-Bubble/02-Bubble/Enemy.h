@@ -18,15 +18,18 @@ public:
 	virtual void update(int deltaTime);
 	virtual void render();
 
-	void setTileMap(TileMap* tileMap);
+	// Getters & Setters
+	void setTileMap(TileMap* tileMap) { map = tileMap; };
 	void setPosition(const glm::vec2& pos);
 
+public:
 	bool collisionPlayer();
 
 protected:
-	glm::ivec2 tileMapDispl, posEnemy;
 	Texture spritesheet;
 	Sprite* sprite;
+
+	glm::ivec2 tileMapDispl, posEnemy;
 	TileMap* map;
 
 };

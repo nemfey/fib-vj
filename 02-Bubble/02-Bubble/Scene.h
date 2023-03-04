@@ -27,15 +27,17 @@ public:
 	void init();
 	void update(int deltaTime);
 	void render();
-	float getCurrentTime();
-
 	void updateWindow(glm::vec2 w);
+
+	// Gettters & Setters
+	int getCurrentTime() { return currentTime; };
 
 private:
 	void initShaders();
 	void initPlayer();
 	void initEnemies();
 	void initItems();
+	void updateTime(int deltatime);
 
 private:
 	TileMap *map;
@@ -43,13 +45,12 @@ private:
 	vector<Enemy*> enemies;
 	vector<Item*> items;
 	ShaderProgram texProgram;
-	float currentTime;
-	int remainingSeconds;
+	
 	glm::mat4 projection;
-
 	glm::vec2 windowSize;
 	glm::ivec2 screenSize;
 
+	int currentTime, remainingSeconds;
 };
 
 

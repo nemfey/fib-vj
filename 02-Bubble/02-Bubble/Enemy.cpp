@@ -16,6 +16,7 @@ enum EnemyAnims
 	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT
 };
 
+// Public functions
 
 void Enemy::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram) {}
 
@@ -26,16 +27,15 @@ void Enemy::render()
 	sprite->render();
 }
 
-void Enemy::setTileMap(TileMap* tileMap)
-{
-	map = tileMap;
-}
+// Getters & Setters
 
 void Enemy::setPosition(const glm::vec2& pos)
 {
 	posEnemy = pos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x), float(tileMapDispl.y + posEnemy.y)));
 }
+
+// Protected functions
 
 bool Enemy::collisionPlayer()
 {

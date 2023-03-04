@@ -41,6 +41,7 @@ public:
 	void mousePress(int button);
 	void mouseRelease(int button);
 	
+	// Getters & Setters
 	bool getKey(int key) const;
 	bool getSpecialKey(int key) const;
 

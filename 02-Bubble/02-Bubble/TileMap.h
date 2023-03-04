@@ -30,53 +30,53 @@ public:
 	void render() const;
 	void free();
 
-	int getTileSize() const { return tileSize; }
-
 	bool collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size) const;
 	bool collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size) const;
 	bool collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const;
 	bool collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const;
-
-
-	void positionStepped(const glm::ivec2& pos, const glm::ivec2& size, int* posY);
-	
-	glm::ivec2 getPosPlayer() const;
-	void setPosPlayer(glm::ivec2 pos);
-	vector<pair<char, glm::ivec2>> getEnemies() const;
-
 	bool allPlattformsStepped() const;
 	bool doorOpen();
 	glm::vec2 getRandomPosition();
-	glm::ivec2 getDoorPosition();
-
-	void setKeyTaken(bool b);
-	bool getKeyTaken() const;
-	glm::ivec2 getScreenCoords() const;
+	void positionStepped(const glm::ivec2& pos, const glm::ivec2& size, int* posY);
+	
+	// Getters & Setters
+	int getTileSize() const { return tileSize; }
+	glm::ivec2 getPosPlayer() const { return posPlayer; };
+	vector<pair<char, glm::ivec2>> getEnemies() const { return enemies; };
+	glm::ivec2 getDoorPosition() { return posDoor; };
+	bool getKeyTaken() const { return keyTaken; };
 	glm::ivec2 getMapSize() const { return mapSize; };
+	glm::ivec2 getScreenCoords() const { return screenCoords; };
+
+	void setPosPlayer(glm::ivec2 pos) { posPlayer = pos; };
+	void setKeyTaken(bool b) { keyTaken = b; };
+
 
 private:
 	bool loadLevel(const string& levelFile);
 	void prepareArrays(const glm::vec2& minCoords, ShaderProgram& program);
 
 private:
+	int* map;
+	
 	GLuint vao, vbo;
 	GLint posLocation, texCoordLocation;
-
 	glm::ivec2 position, mapSize, tilesheetSize, screenCoords;
 	int nTiles, tileSize, blockSize;
 	Texture tilesheet;
 	glm::vec2 tileTexSize;
-	int* map;
+	
 	Sprite* steppedFloorSprite;
 	vector<glm::ivec2> positionsStepped;
 	vector<glm::ivec2> plattforms;
-	glm::ivec2 posPlayer;
-	vector<pair<char, glm::ivec2>> enemies;
 	int nStepTiles = 0;
 
-	bool keyTaken = false;
+	glm::ivec2 posPlayer;
+	vector<pair<char, glm::ivec2>> enemies;
 
 	glm::ivec2 posDoor = glm::ivec2(0,0);
+	bool keyTaken = false;
+
 };
 
 

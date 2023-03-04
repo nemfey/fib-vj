@@ -2,6 +2,7 @@
 #include <GL/glut.h>
 #include "Game.h"
 
+// Public functions
 
 void Game::init()
 {	
@@ -13,7 +14,6 @@ void Game::init()
 	scene.updateWindow(windowSize);
 }
 
-#include <iostream>
 bool Game::update(int deltaTime)
 {
 	glm::vec2 currentWindowSize = glm::vec2(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
@@ -21,19 +21,20 @@ bool Game::update(int deltaTime)
 	{
 		windowSize = currentWindowSize;
 		scene.updateWindow(currentWindowSize);
-		cout << "camera: " << windowSize.x << " " << windowSize.y << endl;
 	}
+
 	scene.update(deltaTime);
 	
 	return bPlay;
 }
 
-#include <iostream>
 void Game::render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	scene.render();
 }
+
+// Input callback methods
 
 void Game::keyPressed(int key)
 {
@@ -69,6 +70,7 @@ void Game::mouseRelease(int button)
 {
 }
 
+// Getters & Setters
 bool Game::getKey(int key) const
 {
 	return keys[key];

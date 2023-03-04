@@ -12,6 +12,7 @@ enum SkeletonAnims
 	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT
 };
 
+// Public functions
 
 void Skeleton::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {

@@ -17,25 +17,27 @@ public:
 	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram);
 	void update(int deltaTime);
 	void render();
-	
-	void setTileMap(TileMap *tileMap);
-	void setPosition(const glm::ivec2 &pos);
-
 	void loseLive();
+	
+	// Getters & Setters
+	glm::ivec2 getPosition() const { return posPlayer; };
 
-	glm::ivec2 getPosition() const;
+	void setTileMap(TileMap* tileMap) { map = tileMap; };
+	void setPosition(const glm::ivec2 &pos);
 	
 private:
-	bool bJumping;
-	glm::ivec2 tileMapDispl, posPlayer;
-	int jumpAngle, startY;
 	Texture spritesheet;
-	Sprite *sprite;
+	Sprite* sprite;
+	
+	glm::ivec2 tileMapDispl, posPlayer;
 	TileMap *map;
+
+	bool bJumping;
+	int jumpAngle, startY;
 
 	int lives = 3;
 	bool inmunityState = false;
-	float inmunityTime = 0.f;
+	int inmunityTime = 0;
 
 };
 

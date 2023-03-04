@@ -11,21 +11,15 @@ enum ItemAnims
 	IDLE
 };
 
+// Public functions
 
 void Item::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram) {}
 
 void Item::update(int deltaTime) {}
 
-void Item::render()
-{
-	//if(checkIfShowStateChanges())
-	//	sprite->render();
-}
+void Item::render() {}
 
-void Item::setTileMap(TileMap* tileMap)
-{
-	map = tileMap;
-}
+// Getters & Setters
 
 void Item::setPosition(const glm::vec2& pos)
 {
@@ -33,10 +27,7 @@ void Item::setPosition(const glm::vec2& pos)
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posItem.x), float(tileMapDispl.y + posItem.y)));
 }
 
-glm::ivec2 Item::getPosition()
-{
-	return posItem;
-}
+// Protected functions
 
 bool Item::collisionPlayer()
 {

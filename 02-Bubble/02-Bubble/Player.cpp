@@ -6,7 +6,6 @@
 #include "Game.h"
 
 
-//#define JUMP_ANGLE_STEP 8	 // bug de salto
 #define JUMP_ANGLE_STEP 4
 #define JUMP_HEIGHT 56
 #define FALL_STEP 4
@@ -16,6 +15,8 @@ enum PlayerAnims
 {
 	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT
 };
+
+// Public functions
 
 void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
@@ -94,10 +95,7 @@ void Player::update(int deltaTime)
 				bJumping = !map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y);
 		}
 		if (map->collisionMoveUp(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
-		{
 			bJumping = false;
-			//cout << "colision" << endl;
-		}
 	}
 	else
 	{
@@ -125,7 +123,7 @@ void Player::update(int deltaTime)
 		{
 			cout << "my inmunity state ended :(" << endl;
 			inmunityState = false;
-			inmunityTime = 0.f;
+			inmunityTime = 0;
 		}
 	}
 }
@@ -135,21 +133,8 @@ void Player::render()
 	if (!inmunityState)
 		sprite->render();
 	else
-	{
-		if (int(inmunityTime) % 250 <= 125)
+		if (inmunityTime%250 <= 125)
 			sprite->render();
-	}
-}
-
-void Player::setTileMap(TileMap *tileMap)
-{
-	map = tileMap;
-}
-
-void Player::setPosition(const glm::ivec2 &pos)
-{
-	posPlayer = pos;
-	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
 
 void Player::loseLive()
@@ -161,13 +146,16 @@ void Player::loseLive()
 		cout << "you lost a live but now im inmune" << endl;
 		// AÑADIR INMUNIDAD
 	}
-	else if (lives==0)
+	else if (lives == 0)
 		cout << "GAME OVER" << endl;
 }
 
-glm::ivec2 Player::getPosition() const
+// Getters & Setters
+
+void Player::setPosition(const glm::ivec2 &pos)
 {
-	return posPlayer;
+	posPlayer = pos;
+	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
 
 

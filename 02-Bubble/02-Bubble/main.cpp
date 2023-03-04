@@ -81,10 +81,6 @@ static void idleCallback()
 	}
 }
 
-//void reshape(int width, int height)
-//{
-//	cout << "width: " << width << " height: " << height << endl;
-//}
 
 int main(int argc, char **argv)
 {
@@ -93,7 +89,6 @@ int main(int argc, char **argv)
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
 	glutInitWindowPosition(100, 100);
 	glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-	//glutInitWindowSize(800, 600);
 	glutCreateWindow(argv[0]);
 
 	//glutReshapeFunc(reshape);

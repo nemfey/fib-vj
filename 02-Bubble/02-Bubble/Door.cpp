@@ -10,6 +10,7 @@ enum DoorAnims
 	CLOSED, OPEN
 };
 
+// Public functions
 
 void Door::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
@@ -33,10 +34,6 @@ void Door::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	glm::ivec2 screenCoords = map->getScreenCoords();
 	sprite->setPosition(posItem + screenCoords);
 
-	// key set position
-	//sprite->setPosition(glm::vec2(pos.x * 16 + 32, pos.y * 16 - 8));
-
-	//DEBUG
 	itemSize = glm::ivec2(32, 32);
 
 	cout << "Door position: " << posItem.x << " " << posItem.y << endl;
@@ -55,7 +52,6 @@ void Door::update(int deltaTime)
 	{
 		cout << "LEVEL FINISHED" << endl;
 	}
-	//else sprite->changeAnimation(CLOSED);
 }
 
 void Door::render()

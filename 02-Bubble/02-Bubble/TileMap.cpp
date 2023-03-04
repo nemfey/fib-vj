@@ -14,22 +14,20 @@ enum Items
 	KEY, DOOR
 };
 
-
-TileMap* TileMap::createTileMap(const string& levelFile, const glm::vec2& minCoords, ShaderProgram& program)
-{
-	TileMap* map = new TileMap(levelFile, minCoords, program);
-
-	return map;
-}
-
-
 TileMap::TileMap(const string& levelFile, const glm::vec2& minCoords, ShaderProgram& program)
 {
 	loadLevel(levelFile);
 	prepareArrays(minCoords, program);
 	screenCoords = minCoords;
-	
+
 	steppedFloorSprite = Sprite::createSprite(glm::ivec2(tileSize, tileSize), glm::vec2(0.5, 0.5), &tilesheet, &program);
+}
+
+// Public functions
+TileMap* TileMap::createTileMap(const string& levelFile, const glm::vec2& minCoords, ShaderProgram& program)
+{
+	TileMap* map = new TileMap(levelFile, minCoords, program);
+	return map;
 }
 
 TileMap::~TileMap()
@@ -37,7 +35,6 @@ TileMap::~TileMap()
 	if (map != NULL)
 		delete map;
 }
-
 
 void TileMap::render() const
 {
@@ -60,6 +57,119 @@ void TileMap::free()
 {
 	glDeleteBuffers(1, &vbo);
 }
+
+// Collision tests for axis aligned bounding boxes.
+// Method collisionMoveDown also corrects Y coordinate if the box is
+// already intersecting a tile below.
+
+bool TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size) const
+{
+	int x, y0, y1;
+
+	x = pos.x / tileSize;
+	y0 = pos.y / tileSize;
+	y1 = (pos.y + size.y - 1) / tileSize;
+	for (int y = y0; y <= y1; y++)
+	{
+		if (map[y * mapSize.x + x] == 3)
+			return true;
+	}
+	return false;
+}
+
+bool TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size) const
+{
+	int x, y0, y1;
+
+	x = (pos.x + size.x - 1) / tileSize;
+	y0 = pos.y / tileSize;
+	y1 = (pos.y + size.y - 1) / tileSize;
+	for (int y = y0; y <= y1; y++)
+	{
+		if (map[y * mapSize.x + x] == 3)
+			return true;
+	}
+	return false;
+}
+
+bool TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const
+{
+	int x0, x1, y;
+
+	x0 = pos.x / tileSize;
+	x1 = (pos.x + size.x - 1) / tileSize;
+	y = pos.y / tileSize;
+	for (int x = x0; x <= x1; x++)
+	{
+		if (map[y * mapSize.x + x] == 3)
+			if (*posY - tileSize * y < tileSize)
+				return true;
+	}
+	return false;
+}
+
+bool TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const
+{
+	int x0, x1, y;
+
+	x0 = pos.x / tileSize;
+	x1 = (pos.x + size.x - 1) / tileSize;
+	y = (pos.y + size.y - 1) / tileSize;
+	for (int x = x0; x <= x1; x++)
+	{
+		if (map[y * mapSize.x + x] != 0)
+		{
+			if (*posY - tileSize * y + size.y <= 4)
+			{
+				*posY = tileSize * y - size.y;
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+bool TileMap::allPlattformsStepped() const
+{
+	return nStepTiles == 0;
+}
+
+bool TileMap::doorOpen()
+{
+	return false;
+}
+
+glm::vec2 TileMap::getRandomPosition()
+{
+	srand(time(NULL));
+	// in pixels
+	return (plattforms[rand() % plattforms.size()]) * tileSize;
+}
+
+void TileMap::positionStepped(const glm::ivec2& pos, const glm::ivec2& size, int* posY)
+{
+	int x0, x1, y;
+
+	x0 = pos.x / tileSize;
+	x1 = (pos.x + size.x - 1) / tileSize;
+	y = (pos.y + size.y - 1) / tileSize;
+	for (int x = x0; x <= x1; x++)
+	{
+		if (*posY - tileSize * y + size.y <= 4)
+		{
+			if (map[y * mapSize.x + x] == 2)
+			{
+				map[y * mapSize.x + x] = 1;
+				positionsStepped.push_back(glm::ivec2(x, y));
+				--nStepTiles;
+			}
+			*posY = tileSize * y - size.y;
+		}
+	}
+
+}
+
+// Private functions
 
 bool TileMap::loadLevel(const string& levelFile)
 {
@@ -136,10 +246,6 @@ bool TileMap::loadLevel(const string& levelFile)
 	}
 	fin.close();
 
-	//DEBUG
-	//cout << "Stepping Tiles: " << nStepTiles << endl;
-	//for (auto p : plattforms) cout << "platform in: " << p.x << " " << p.y << endl;
-
 	return true;
 }
 
@@ -198,150 +304,4 @@ void TileMap::prepareArrays(const glm::vec2& minCoords, ShaderProgram& program)
 	cout << "mapSize: " << mapSize[0] << " " << mapSize[1] << endl;
 	cout << "tileSheetSize: " << tilesheetSize[0] << " " << tilesheetSize[1] << endl;
 	cout << "position: " << position.x << " " << position.y << endl;
-}
-
-// Collision tests for axis aligned bounding boxes.
-// Method collisionMoveDown also corrects Y coordinate if the box is
-// already intersecting a tile below.
-
-bool TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size) const
-{
-	int x, y0, y1;
-
-	x = pos.x / tileSize;
-	y0 = pos.y / tileSize;
-	y1 = (pos.y + size.y - 1) / tileSize;
-	for (int y = y0; y <= y1; y++)
-	{
-		if (map[y * mapSize.x + x] == 3)
-			return true;
-	}
-	return false;
-}
-
-bool TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size) const
-{
-	int x, y0, y1;
-
-	x = (pos.x + size.x - 1) / tileSize;
-	y0 = pos.y / tileSize;
-	y1 = (pos.y + size.y - 1) / tileSize;
-	for (int y = y0; y <= y1; y++)
-	{
-		if (map[y * mapSize.x + x] == 3)
-			return true;
-	}
-	return false;
-}
-
-bool TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const
-{
-	int x0, x1, y;
-
-	x0 = pos.x / tileSize;
-	x1 = (pos.x + size.x - 1) / tileSize;
-	y = pos.y / tileSize;
-	for (int x = x0; x <= x1; x++)
-	{
-		if (map[y * mapSize.x + x] == 3)
-			if (*posY - tileSize * y < tileSize)
-				return true;
-	}
-	return false;
-}
-
-bool TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const
-{
-	int x0, x1, y;
-
-	x0 = pos.x / tileSize;
-	x1 = (pos.x + size.x - 1) / tileSize;
-	y = (pos.y + size.y - 1) / tileSize;
-	for (int x = x0; x <= x1; x++)
-	{
-		if (map[y * mapSize.x + x] != 0)
-		{
-			if (*posY - tileSize * y + size.y <= 4)
-			{
-				*posY = tileSize * y - size.y;
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
-void TileMap::positionStepped(const glm::ivec2& pos, const glm::ivec2& size, int* posY)
-{
-	int x0, x1, y;
-
-	x0 = pos.x / tileSize;
-	x1 = (pos.x + size.x - 1) / tileSize;
-	y = (pos.y + size.y - 1) / tileSize;
-	for (int x = x0; x <= x1; x++)
-	{
-		if (*posY - tileSize * y + size.y <= 4)
-		{
-			if (map[y * mapSize.x + x] == 2)
-			{
-				map[y * mapSize.x + x] = 1;
-				positionsStepped.push_back(glm::ivec2(x, y));
-				--nStepTiles;
-			}
-			*posY = tileSize * y - size.y;
-		}
-	}
-
-}
-
-glm::ivec2 TileMap::getPosPlayer() const
-{
-	return posPlayer;
-}
-
-vector<pair<char, glm::ivec2>> TileMap::getEnemies() const
-{
-	return enemies;
-}
-
-bool TileMap::doorOpen()
-{
-	return false;
-}
-
-glm::vec2 TileMap::getRandomPosition()
-{
-	srand(time(NULL));
-	// in pixels
-	return (plattforms[rand() % plattforms.size()])*tileSize;
-}
-
-glm::ivec2 TileMap::getDoorPosition()
-{
-	return posDoor;
-}
-
-bool TileMap::allPlattformsStepped() const
-{
-	return nStepTiles == 0;
-}
-
-void TileMap::setPosPlayer(glm::ivec2 pos)
-{
-	posPlayer = pos;
-}
-
-void TileMap::setKeyTaken(bool b)
-{
-	keyTaken = b;
-}
-
-bool TileMap::getKeyTaken() const
-{
-	return keyTaken;
-}
-
-glm::ivec2 TileMap::getScreenCoords() const
-{
-	return screenCoords;
 }
