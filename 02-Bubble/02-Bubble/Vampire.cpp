@@ -57,7 +57,7 @@ void Vampire::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.5f, 0.5f));
 	sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.25f, 0.5f));
 	*/
-	// holalaaa
+	// holaaa
 	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x), float(tileMapDispl.y + posEnemy.y)));
