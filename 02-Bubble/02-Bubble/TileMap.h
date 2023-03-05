@@ -30,9 +30,9 @@ public:
 	void render() const;
 	void free();
 
-	bool collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size) const;
-	bool collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size) const;
-	bool collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const;
+	bool collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, bool bCrossPlattforms) const;
+	bool collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, bool bCrossPlattforms) const;
+	bool collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, int* posY, bool bCrossPlattforms) const;
 	bool collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const;
 	bool allPlattformsStepped() const;
 	bool doorOpen();

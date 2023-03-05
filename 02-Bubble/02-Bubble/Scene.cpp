@@ -136,6 +136,10 @@ void Scene::initEnemies()
 		if (tileMapEnemies[i].first == 'S') {
 			enemies.push_back(new Skeleton());
 		}
+		else if(tileMapEnemies[i].first == 'V')
+		{
+			enemies.push_back(new Vampire());
+		}
 		auto e = enemies[i];
 		e->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 		e->setPosition(glm::vec2(tileMapEnemies[i].second[0] * map->getTileSize(), tileMapEnemies[i].second[1] * map->getTileSize()));

@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Skeleton.h"
+#include "Vampire.h"
 #include "Item.h"
 #include "Key.h"
 #include "Door.h"

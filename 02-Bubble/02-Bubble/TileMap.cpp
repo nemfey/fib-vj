@@ -62,7 +62,7 @@ void TileMap::free()
 // Method collisionMoveDown also corrects Y coordinate if the box is
 // already intersecting a tile below.
 
-bool TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size) const
+bool TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, bool bCrossPlattforms) const
 {
 	int x, y0, y1;
 
@@ -71,13 +71,17 @@ bool TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size) c
 	y1 = (pos.y + size.y - 1) / tileSize;
 	for (int y = y0; y <= y1; y++)
 	{
-		if (map[y * mapSize.x + x] == 3)
+		int tile = map[y * mapSize.x + x];
+		if (tile == 3 || (!bCrossPlattforms && tile != 0))
 			return true;
+
+		//if (map[y * mapSize.x + x] == 3)
+		//	return true;
 	}
 	return false;
 }
 
-bool TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size) const
+bool TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, bool bCrossPlattforms) const
 {
 	int x, y0, y1;
 
@@ -86,13 +90,16 @@ bool TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size) 
 	y1 = (pos.y + size.y - 1) / tileSize;
 	for (int y = y0; y <= y1; y++)
 	{
-		if (map[y * mapSize.x + x] == 3)
+		int tile = map[y * mapSize.x + x];
+		if (tile == 3 || (!bCrossPlattforms && tile != 0))
 			return true;
+		//if (map[y * mapSize.x + x] == 3)
+		//	return true;
 	}
 	return false;
 }
 
-bool TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const
+bool TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, int* posY, bool bCrossPlattforms) const
 {
 	int x0, x1, y;
 
@@ -101,7 +108,9 @@ bool TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, int
 	y = pos.y / tileSize;
 	for (int x = x0; x <= x1; x++)
 	{
-		if (map[y * mapSize.x + x] == 3)
+		int tile = map[y * mapSize.x + x];
+
+		if (tile == 3 || (!bCrossPlattforms && tile != 0))
 			if (*posY - tileSize * y < tileSize)
 				return true;
 	}
@@ -214,6 +223,11 @@ bool TileMap::loadLevel(const string& levelFile)
 			//Skeleton
 			else if (tile == 'S') {
 				enemies.push_back(make_pair('S', glm::ivec2(i,j)));
+				map[j * mapSize.x + i] = 0;
+			}
+			// Vampire
+			else if (tile == 'V') {
+				enemies.push_back(make_pair('V', glm::ivec2(i, j)));
 				map[j * mapSize.x + i] = 0;
 			}
 			//Player

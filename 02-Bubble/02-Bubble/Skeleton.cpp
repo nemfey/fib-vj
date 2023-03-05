@@ -56,7 +56,7 @@ void Skeleton::update(int deltaTime)
 		posEnemy.y += FALL_STEP;
 
 		bool bFloorDown = map->collisionMoveDown(posEnemy+glm::ivec2(16,0), glm::ivec2(32, 32), &posEnemy.y);
-		bool bShouldMoveLeft = map->collisionMoveRight(posEnemy, glm::ivec2(32, 32)) || !bFloorDown;
+		bool bShouldMoveLeft = map->collisionMoveRight(posEnemy, glm::ivec2(32, 32), false) || !bFloorDown;
 		
 		if (bShouldMoveLeft)
 		{
@@ -77,7 +77,7 @@ void Skeleton::update(int deltaTime)
 		posEnemy.y += FALL_STEP;
 
 		bool bFloorDown = map->collisionMoveDown(posEnemy-glm::ivec2(16,0), glm::ivec2(32, 32), &posEnemy.y);
-		bool bShouldMoveRight = map->collisionMoveLeft(posEnemy, glm::ivec2(32, 32)) || !bFloorDown;
+		bool bShouldMoveRight = map->collisionMoveLeft(posEnemy, glm::ivec2(32, 32), false) || !bFloorDown;
 
 		if (bShouldMoveRight)
 		{
