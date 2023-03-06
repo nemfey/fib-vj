@@ -18,6 +18,7 @@ private:
 	bool moveRight = true;
 	bool humanAspect = true;
 	int humanAspectTime = 0;
+	int heightTransformation;
 	batMovement batMov;
 
 };
