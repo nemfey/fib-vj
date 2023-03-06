@@ -9,53 +9,59 @@
 
 enum VampireAnims
 {
-	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT
+	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT, FLY, TRANSFORM, UNTRANSFORM
 };
 
 // Public functions
 
 void Vampire::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
-	spritesheet.loadFromFile("images/vampire.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(1.0, 1.0), &spritesheet, &shaderProgram);
-	sprite->setNumberAnimations(4);
+	spritesheet.loadFromFile("images/devil.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(0.25, 0.25), &spritesheet, &shaderProgram);
+	sprite->setNumberAnimations(6);
 
 	sprite->setAnimationSpeed(STAND_LEFT, 8);
-	sprite->addKeyframe(STAND_LEFT, glm::vec2(1.f, 1.0f));
+	sprite->addKeyframe(STAND_LEFT, glm::vec2(0.25f, 0.0f));
 	
 	sprite->setAnimationSpeed(STAND_RIGHT, 8);
-	sprite->addKeyframe(STAND_RIGHT, glm::vec2(1.f, 1.0f));
+	sprite->addKeyframe(STAND_RIGHT, glm::vec2(0.f, 0.25f));
 
 	sprite->setAnimationSpeed(MOVE_RIGHT, 8);
-	sprite->addKeyframe(MOVE_RIGHT, glm::vec2(1.f, 1.0f));
+	sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.75f, 0.0f));
+	sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.f, 0.25f));
+	sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.25f, 0.25f));
+	sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.f, 0.25f));
 
 	sprite->setAnimationSpeed(MOVE_LEFT, 8);
-	sprite->addKeyframe(MOVE_LEFT, glm::vec2(1.f, 1.0f));
+	sprite->addKeyframe(MOVE_LEFT, glm::vec2(0.f, 0.0f));
+	sprite->addKeyframe(MOVE_LEFT, glm::vec2(0.25f, 0.0f));
+	sprite->addKeyframe(MOVE_LEFT, glm::vec2(0.5f, 0.0f));
+	sprite->addKeyframe(MOVE_LEFT, glm::vec2(0.25f, 0.0f));
 
-	sprite->setAnimationSpeed(STAND_LEFT, 8);
-	sprite->addKeyframe(STAND_LEFT, glm::vec2(1.f, 1.0f));
+	sprite->setAnimationSpeed(FLY, 8);
+	sprite->addKeyframe(FLY, glm::vec2(0.f, 0.75f));
+	sprite->addKeyframe(FLY, glm::vec2(0.25f, 0.75f));
+	sprite->addKeyframe(FLY, glm::vec2(0.5f, 0.75f));
+	sprite->addKeyframe(FLY, glm::vec2(0.75f, 0.75f));
+	sprite->addKeyframe(FLY, glm::vec2(0.5f, 0.75f));
+	sprite->addKeyframe(FLY, glm::vec2(0.25f, 0.75f));
 	
-	sprite->setAnimationSpeed(STAND_RIGHT, 8);
-	sprite->addKeyframe(STAND_RIGHT, glm::vec2(1.f, 1.0f));
+	sprite->setAnimationSpeed(TRANSFORM, 8);
+	sprite->addKeyframe(TRANSFORM, glm::vec2(0.5f, 0.25f));
+	sprite->addKeyframe(TRANSFORM, glm::vec2(0.75f, 0.25f));
+	sprite->addKeyframe(TRANSFORM, glm::vec2(0.f, 0.5f));
+	sprite->addKeyframe(TRANSFORM, glm::vec2(0.25f, 0.5f));
+	sprite->addKeyframe(TRANSFORM, glm::vec2(0.5f, 0.5f));
+	sprite->addKeyframe(TRANSFORM, glm::vec2(0.75f, 0.5f));
 
-	sprite->setAnimationSpeed(MOVE_RIGHT, 8);
-	sprite->addKeyframe(MOVE_RIGHT, glm::vec2(1.f, 1.0f));
+	sprite->setAnimationSpeed(UNTRANSFORM, 8);
+	sprite->addKeyframe(UNTRANSFORM, glm::vec2(0.75f, 0.5f));
+	sprite->addKeyframe(UNTRANSFORM, glm::vec2(0.5f, 0.5f));
+	sprite->addKeyframe(UNTRANSFORM, glm::vec2(0.25f, 0.5f));
+	sprite->addKeyframe(UNTRANSFORM, glm::vec2(0.f, 0.5f));
+	sprite->addKeyframe(UNTRANSFORM, glm::vec2(0.75f, 0.25f));
+	sprite->addKeyframe(UNTRANSFORM, glm::vec2(0.5f, 0.25f));
 
-	sprite->setAnimationSpeed(MOVE_LEFT, 8);
-	sprite->addKeyframe(MOVE_LEFT, glm::vec2(1.f, 1.0f));
-	/*
-	sprite->setAnimationSpeed(MOVE_LEFT, 8);
-	sprite->addKeyframe(MOVE_LEFT, glm::vec2(0.f, 0.f));
-	sprite->addKeyframe(MOVE_LEFT, glm::vec2(0.25f, 0.f));
-	sprite->addKeyframe(MOVE_LEFT, glm::vec2(0.5f, 0.f));
-	sprite->addKeyframe(MOVE_LEFT, glm::vec2(0.25f, 0.f));
-
-	sprite->setAnimationSpeed(MOVE_RIGHT, 8);
-	sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.f, 0.5f));
-	sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.25f, 0.5f));
-	sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.5f, 0.5f));
-	sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.25f, 0.5f));
-	*/
 	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x), float(tileMapDispl.y + posEnemy.y)));
@@ -71,6 +77,7 @@ void Vampire::update(int deltaTime)
 	{
 		humanAspect = false;
 		humanAspectTime = 0;
+
 		if (sprite->animation() == STAND_RIGHT || sprite->animation() == MOVE_RIGHT)
 			batMov = RightUp;
 		else
@@ -142,7 +149,7 @@ void Vampire::batBehavior(int deltaTime)
 	if (batMov == RightUp)
 	{
 		if (sprite->animation() != MOVE_RIGHT)
-			sprite->changeAnimation(MOVE_RIGHT);
+			sprite->changeAnimation(FLY);
 
 		posEnemy.x += 1;
 		posEnemy.y -= 1;
