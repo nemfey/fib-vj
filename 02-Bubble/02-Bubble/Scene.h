@@ -28,7 +28,7 @@ public:
 	void init();
 	void update(int deltaTime);
 	void render();
-	void updateWindow(glm::vec2 w);
+	void updateRatioWindowSize(float ratio, int width, int height);
 
 	// Gettters & Setters
 	int getCurrentTime() { return currentTime; };
@@ -48,8 +48,7 @@ private:
 	ShaderProgram texProgram;
 	
 	glm::mat4 projection;
-	glm::vec2 windowSize;
-	glm::ivec2 screenSize;
+	float ratioWindowSize;
 
 	int currentTime, remainingSeconds;
 };

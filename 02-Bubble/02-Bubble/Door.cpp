@@ -7,27 +7,31 @@
 
 enum DoorAnims
 {
-	CLOSED, OPEN
+	CLOSED, OPEN, OPENING
 };
 
 // Public functions
 
 void Door::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
-	spritesheet.loadFromFile("images/door.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(0.5, 1), &spritesheet, &shaderProgram);
-
+	//spritesheet.loadFromFile("images/door_hell.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spritesheet.loadFromFile("images/door_hell.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(0.25, 1), &spritesheet, &shaderProgram);
 	//Animations
-	sprite->setNumberAnimations(2);
+	sprite->setNumberAnimations(3);
 
 	sprite->setAnimationSpeed(CLOSED, 1);
 	sprite->addKeyframe(CLOSED, glm::vec2(0.f, 0.f));
 
 	sprite->setAnimationSpeed(OPEN, 1);
-	sprite->addKeyframe(OPEN, glm::vec2(0.5f, 0.f));
+	sprite->addKeyframe(OPEN, glm::vec2(0.75f, 0.f));
 
 	//Set animation
-	sprite->changeAnimation(CLOSED);
+	sprite->setAnimationSpeed(OPENING, 2);
+	sprite->addKeyframe(OPENING, glm::vec2(0.f, 0.f));
+	sprite->addKeyframe(OPENING, glm::vec2(0.25f, 0.f));
+	sprite->addKeyframe(OPENING, glm::vec2(0.5f, 0.f));
+	sprite->addKeyframe(OPENING, glm::vec2(0.75f, 0.f));
 
 	posItem = map->getDoorPosition() * 16;
 	//sprite->setPosition(posItem + glm::ivec2(32, 16));
@@ -43,10 +47,16 @@ void Door::update(int deltaTime)
 {
 	sprite->update(deltaTime);
 
-	if (!showing && map->getKeyTaken())
+	if (bOpening)
 	{
-		sprite->changeAnimation(OPEN);
-		showing = true;
+		openingProcess();
+	}
+	else if (!showing && map->getKeyTaken())
+	{
+		sprite->changeAnimation(OPENING);
+		bOpening = true;
+		//sprite->changeAnimation(OPEN);
+		//showing = true;
 	}
 	else if (showing && collisionPlayer())
 	{
@@ -57,4 +67,16 @@ void Door::update(int deltaTime)
 void Door::render()
 {
 	sprite->render();
+}
+
+// Private functions
+
+void Door::openingProcess()
+{
+	if (sprite->getCurrentKeyFrame() == 3)
+	{
+		sprite->changeAnimation(OPEN);
+		showing = true;
+		bOpening = false;
+	}
 }
