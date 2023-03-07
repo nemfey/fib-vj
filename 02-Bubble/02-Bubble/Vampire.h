@@ -15,10 +15,11 @@ private:
 private:
 	enum batMovement { RightUp, LeftUp, RightDown, LeftDown };
 
-	bool moveRight = true;
-	bool humanAspect = true;
+	bool bMoveRight = true;
+	bool bHumanAspect = true;
 	int humanAspectTime = 0;
 	int heightTransformation;
+	bool bTransformation = false;
 	batMovement batMov;
 
 };
