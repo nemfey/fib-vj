@@ -144,7 +144,7 @@ void Vampire::humanBehavior(int deltaTime)
 }
 
 void Vampire::batBehavior(int deltaTime)
-{
+{	
 	if (batMov == RightUp)
 	{
 		if (sprite->animation() != MOVE_RIGHT)
