@@ -151,8 +151,20 @@ bool TileMap::doorOpen()
 glm::vec2 TileMap::getRandomPosition()
 {
 	srand(time(NULL));
+
+	vector<glm::ivec2> available;
+
+	for (auto i = 0; i < plattforms.size(); ++i) {
+		glm::vec2 pos = plattforms[i];
+
+		if (!((pos.x > posPlayer.x / tileSize - 7 && pos.x < (posPlayer.x + 32) / tileSize + 7)
+			&& (pos.y > posPlayer.y / tileSize - 7 && pos.y < (posPlayer.y + 32) / tileSize + 7))) {
+			available.push_back(pos);
+		}
+	}
+
 	// in pixels
-	return (plattforms[rand() % plattforms.size()]) * tileSize;
+	return (available[rand() % available.size()]) * tileSize;
 }
 
 void TileMap::positionStepped(const glm::ivec2& pos, const glm::ivec2& size, int* posY)
