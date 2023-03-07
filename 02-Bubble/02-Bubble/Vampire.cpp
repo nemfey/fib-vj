@@ -77,7 +77,6 @@ void Vampire::update(int deltaTime)
 	{
 		humanAspect = false;
 		humanAspectTime = 0;
-
 		if (sprite->animation() == STAND_RIGHT || sprite->animation() == MOVE_RIGHT)
 			batMov = RightUp;
 		else
@@ -192,7 +191,14 @@ void Vampire::batBehavior(int deltaTime)
 		bool bShouldMoveLeft = map->collisionMoveRight(posEnemy, glm::ivec2(32, 32), false);
 		
 		if (bShouldMoveUp && !map->collisionMoveRight(posEnemy + glm::ivec2(1, -1), glm::ivec2(32, 32), false))
+		{
 			batMov = RightUp;
+			if (abs(posEnemy.y - heightTransformation) >= 32)
+			{
+				humanAspect = true;
+				humanAspectTime = 0;
+			}
+		}
 		else if (bShouldMoveLeft && !map->collisionMoveDown(posEnemy + glm::ivec2(-1, 1), glm::ivec2(32, 32), &posEnemy.y+1))
 			batMov = LeftDown;
 	}
@@ -205,7 +211,14 @@ void Vampire::batBehavior(int deltaTime)
 		bool bShouldMoveRight = map->collisionMoveLeft(posEnemy, glm::ivec2(32, 32), false);
 
 		if (bShouldMoveUp && !map->collisionMoveLeft(posEnemy + glm::ivec2(-1, -1), glm::ivec2(32, 32), false))
+		{
 			batMov = LeftUp;
+			if (abs(posEnemy.y - heightTransformation) >= 32)
+			{
+				humanAspect = true;
+				humanAspectTime = 0;
+			}
+		}
 		else if (bShouldMoveRight && !map->collisionMoveDown(posEnemy + glm::ivec2(1, 1), glm::ivec2(32, 32), &posEnemy.y+1))
 			batMov = RightDown;
 	}
