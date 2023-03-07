@@ -11,6 +11,8 @@ public:
 private:
 	void humanBehavior(int deltaTime);
 	void batBehavior(int deltaTime);
+	void transformationProcess();
+	void checkMovingBehavior();
 
 private:
 	enum batMovement { RightUp, LeftUp, RightDown, LeftDown };
