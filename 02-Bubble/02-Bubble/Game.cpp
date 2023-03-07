@@ -10,17 +10,21 @@ void Game::init()
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	scene.init();
 
-	windowSize = glm::vec2(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
-	scene.updateWindow(windowSize);
+	int w = glutGet(GLUT_WINDOW_WIDTH);
+	int h = glutGet(GLUT_WINDOW_HEIGHT);
+	ratioWindowSize = w / h;;
+	scene.updateRatioWindowSize(ratioWindowSize,w,h);
 }
 
 bool Game::update(int deltaTime)
 {
-	glm::vec2 currentWindowSize = glm::vec2(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
-	if (currentWindowSize != windowSize)
+	int w = glutGet(GLUT_WINDOW_WIDTH);
+	int h = glutGet(GLUT_WINDOW_HEIGHT);
+	float currentRatio = w/h;
+	if (currentRatio != ratioWindowSize)
 	{
-		windowSize = currentWindowSize;
-		scene.updateWindow(currentWindowSize);
+		ratioWindowSize = currentRatio;
+		scene.updateRatioWindowSize(currentRatio,w,h);
 	}
 
 	scene.update(deltaTime);

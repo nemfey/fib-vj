@@ -9,7 +9,11 @@ public:
 	void update(int deltaTime) override;
 	void render() override;
 
+private:
+	void openingProcess();
+
 
 private:
+	bool bOpening = false;
 
 };

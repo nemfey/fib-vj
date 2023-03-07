@@ -5,8 +5,10 @@
 #include "Game.h"
 
 
-#define SCREEN_X 144
-#define SCREEN_Y 99
+//#define SCREEN_X 144
+//#define SCREEN_Y 99
+#define SCREEN_X 0
+#define SCREEN_Y 0
 
 Scene::Scene()
 {
@@ -35,7 +37,7 @@ void Scene::init()
 	initItems();
 
 	//projection = glm::ortho(0.f, float(windowSize.x - 1), float(windowSize.y - 1), 0.f);
-	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
+	//projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	currentTime = 0;
 	remainingSeconds = 60;
 }
@@ -75,15 +77,17 @@ void Scene::render()
 	player->render();
 }
 
-void Scene::updateWindow(glm::vec2 w)
+void Scene::updateRatioWindowSize(float ratio, int width, int height)
 {
-	windowSize = w;
-	projection = glm::ortho(0.f, float(windowSize.x - 1), float(windowSize.y - 1), 0.f);
+	float aspectRatio = static_cast<float>(width) / static_cast<float>(height);
 
-	// calculate screen size
-	int tileSize = map->getTileSize();
-	glm::vec2 levelSize = glm::vec2(map->getMapSize().x * tileSize, map->getMapSize().y * tileSize);
-	screenSize = glm::vec2((windowSize.x - levelSize.x) / 2, (windowSize.x - levelSize.x) / 2);
+	if (aspectRatio > ratio) {
+		projection = glm::ortho(0.0f, height*ratio, float(height), 0.0f);
+	}
+	else {
+		projection = glm::ortho(0.0f, float(width), width / ratio, 0.0f);
+	}
+	//projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 }
 
 // Private functions
