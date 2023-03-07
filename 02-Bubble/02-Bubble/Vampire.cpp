@@ -18,7 +18,7 @@ void Vampire::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
 	spritesheet.loadFromFile("images/devil.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(0.25, 0.25), &spritesheet, &shaderProgram);
-	sprite->setNumberAnimations(6);
+	sprite->setNumberAnimations(7);
 
 	sprite->setAnimationSpeed(STAND_LEFT, 8);
 	sprite->addKeyframe(STAND_LEFT, glm::vec2(0.25f, 0.0f));
@@ -53,7 +53,7 @@ void Vampire::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	sprite->addKeyframe(TRANSFORM, glm::vec2(0.25f, 0.5f));
 	sprite->addKeyframe(TRANSFORM, glm::vec2(0.5f, 0.5f));
 	sprite->addKeyframe(TRANSFORM, glm::vec2(0.75f, 0.5f));
-	/*
+	
 	sprite->setAnimationSpeed(UNTRANSFORM, 8);
 	sprite->addKeyframe(UNTRANSFORM, glm::vec2(0.75f, 0.5f));
 	sprite->addKeyframe(UNTRANSFORM, glm::vec2(0.5f, 0.5f));
@@ -61,7 +61,7 @@ void Vampire::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	sprite->addKeyframe(UNTRANSFORM, glm::vec2(0.f, 0.5f));
 	sprite->addKeyframe(UNTRANSFORM, glm::vec2(0.75f, 0.25f));
 	sprite->addKeyframe(UNTRANSFORM, glm::vec2(0.5f, 0.25f));
-	*/
+	
 	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x), float(tileMapDispl.y + posEnemy.y)));
@@ -73,25 +73,50 @@ void Vampire::update(int deltaTime)
 
 	humanAspectTime += deltaTime;
 
-	if (bHumanAspect)
+	if (bTransformation)
+	{
+		if (sprite->getCurrentKeyFrame() == 5)
+		{
+			//cout << "TRANSFORMATION SHOULD END" << endl;
+			bHumanAspect = !bHumanAspect;
+			if (bHumanAspect)
+			{
+				humanAspectTime = 0;
+				sprite->changeAnimation(MOVE_RIGHT);
+			}
+			else
+			{
+				heightTransformation = posEnemy.y;
+				if (sprite->animation() == STAND_RIGHT || sprite->animation() == MOVE_RIGHT)
+					batMov = RightUp;
+				else
+					batMov = LeftUp;
+				cout << "executing this" << endl;
+				sprite->changeAnimation(FLY);
+			}
+			bTransformation = false;
+		}
+	}
+	else if (bHumanAspect)
 	{
 		if (humanAspectTime >= 12000)
 		{
-			bHumanAspect = false;
-			humanAspectTime = 0;
-			heightTransformation = posEnemy.y;
-			if (sprite->animation() == STAND_RIGHT || sprite->animation() == MOVE_RIGHT)
-				batMov = RightUp;
-			else
-				batMov = LeftUp;
+			//humanAspectTime = 0;
+			//heightTransformation = posEnemy.y;
+			//if (sprite->animation() == STAND_RIGHT || sprite->animation() == MOVE_RIGHT)
+			//	batMov = RightUp;
+			//else
+			//	batMov = LeftUp;
+			bTransformation = true;
+			sprite->changeAnimation(TRANSFORM);
 		}
 		else
 			humanBehavior(deltaTime);
 	}
 	else
 	{
-		if (sprite->animation() != FLY)
-			sprite->changeAnimation(FLY);
+		//if (sprite->animation() != FLY)
+		//	sprite->changeAnimation(FLY);
 		batBehavior(deltaTime);
 	}
 }
@@ -198,8 +223,10 @@ void Vampire::batBehavior(int deltaTime)
 			batMov = RightUp;
 			if (abs(posEnemy.y - heightTransformation) >= 32)
 			{
-				bHumanAspect = true;
-				humanAspectTime = 0;
+				bTransformation = true;
+				sprite->changeAnimation(UNTRANSFORM);
+				//bHumanAspect = true;
+				//humanAspectTime = 0;
 			}
 		}
 		else if (bShouldMoveLeft && !map->collisionMoveDown(posEnemy + glm::ivec2(-1, 1), glm::ivec2(32, 32), &posEnemy.y+1))
@@ -218,8 +245,10 @@ void Vampire::batBehavior(int deltaTime)
 			batMov = LeftUp;
 			if (abs(posEnemy.y - heightTransformation) >= 32)
 			{
-				bHumanAspect = true;
-				humanAspectTime = 0;
+				bTransformation = true;
+				sprite->changeAnimation(UNTRANSFORM);
+				//bHumanAspect = true;
+				//humanAspectTime = 0;
 			}
 		}
 		else if (bShouldMoveRight && !map->collisionMoveDown(posEnemy + glm::ivec2(1, 1), glm::ivec2(32, 32), &posEnemy.y+1))
