@@ -28,7 +28,7 @@ public:
 	void init();
 	void update(int deltaTime);
 	void render();
-	void updateRatioWindowSize(float ratio, int width, int height);
+	void updateRatioWindowSize(int width, int height);
 
 	// Gettters & Setters
 	int getCurrentTime() { return currentTime; };

@@ -9,24 +9,10 @@ void Game::init()
 	bPlay = true;
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	scene.init();
-
-	int w = glutGet(GLUT_WINDOW_WIDTH);
-	int h = glutGet(GLUT_WINDOW_HEIGHT);
-	ratioWindowSize = w / h;;
-	scene.updateRatioWindowSize(ratioWindowSize,w,h);
 }
 
 bool Game::update(int deltaTime)
 {
-	int w = glutGet(GLUT_WINDOW_WIDTH);
-	int h = glutGet(GLUT_WINDOW_HEIGHT);
-	float currentRatio = w/h;
-	if (currentRatio != ratioWindowSize)
-	{
-		ratioWindowSize = currentRatio;
-		scene.updateRatioWindowSize(currentRatio,w,h);
-	}
-
 	scene.update(deltaTime);
 	
 	return bPlay;
@@ -36,6 +22,17 @@ void Game::render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	scene.render();
+}
+
+void Game::reshape(int width, int height)
+{
+	glViewport(0, 0, width, height);
+	scene.updateRatioWindowSize(width, height);
+}
+
+void Game::reshapeCallback(int width, int height)
+{
+	Game::instance().reshape(width, height);
 }
 
 // Input callback methods

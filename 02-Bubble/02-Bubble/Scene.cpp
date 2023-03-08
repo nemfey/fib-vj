@@ -77,17 +77,29 @@ void Scene::render()
 	player->render();
 }
 
-void Scene::updateRatioWindowSize(float ratio, int width, int height)
+void Scene::updateRatioWindowSize(int width, int height)
 {
-	float aspectRatio = static_cast<float>(width) / static_cast<float>(height);
+	float gameRatio = 1.28f;
+	float windowRatio = width / float(height);
+	float scale = 1.0f;
 
-	if (aspectRatio > ratio) {
-		projection = glm::ortho(0.0f, height*ratio, float(height), 0.0f);
+	if (windowRatio > gameRatio)
+	{
+		scale = height / 400.0f;  // Escala en el eje Y
+		//projection = glm::ortho(float(width - 512) / -2, height * gameRatio, float(height), float(height - 400) / -2);
+		projection = glm::ortho(0.f, height * gameRatio, float(height), 0.f);
 	}
-	else {
-		projection = glm::ortho(0.0f, float(width), width / ratio, 0.0f);
+	else
+	{
+		scale = width / 512.0f;  // Escala en el eje X
+		//projection = glm::ortho(float(width - 512) / -2, float(width), width / gameRatio, float(height - 400) / -2);
+		projection = glm::ortho(0.f, float(width), width / gameRatio, 0.f);
 	}
-	//projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
+	projection = glm::scale(projection, glm::vec3(scale));
+
+	//projection = glm::scale(projection, glm::vec3(1.0f / windowRatio, 1.0f, 1.0f));
+
+	//glViewport(0, 0, width, height);
 }
 
 // Private functions
