@@ -151,6 +151,7 @@ void Scene::initItems()
 {
 	items.push_back(new Key());
 	items.push_back(new Door());
+	items.push_back(new Hourglass());
 
 	for (auto i : items)
 	{
