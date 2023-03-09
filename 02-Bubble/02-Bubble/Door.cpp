@@ -59,8 +59,6 @@ void Door::update(int deltaTime)
 	{
 		sprite->changeAnimation(OPENING);
 		bOpening = true;
-		//sprite->changeAnimation(OPEN);
-		//showing = true;
 	}
 	else if (showing && collisionPlayer())
 	{

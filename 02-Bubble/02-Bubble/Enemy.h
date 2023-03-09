@@ -19,8 +19,9 @@ public:
 	virtual void render();
 
 	// Getters & Setters
-	void setTileMap(TileMap* tileMap) { map = tileMap; };
 	void setPosition(const glm::vec2& pos);
+	void setHitbox(glm::ivec2 h) { hitbox = h; };
+	void setTileMap(TileMap* tileMap) { map = tileMap; };
 
 public:
 	bool collisionPlayer();
@@ -29,7 +30,7 @@ protected:
 	Texture spritesheet;
 	Sprite* sprite;
 
-	glm::ivec2 tileMapDispl, posEnemy;
+	glm::ivec2 tileMapDispl, posEnemy, hitbox;
 	TileMap* map;
 
 };
