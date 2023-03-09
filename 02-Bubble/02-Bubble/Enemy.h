@@ -20,7 +20,6 @@ public:
 
 	// Getters & Setters
 	void setPosition(const glm::vec2& pos);
-	void setHitbox(glm::ivec2 h) { hitbox = h; };
 	void setTileMap(TileMap* tileMap) { map = tileMap; };
 
 public:
@@ -30,7 +29,7 @@ protected:
 	Texture spritesheet;
 	Sprite* sprite;
 
-	glm::ivec2 tileMapDispl, posEnemy, hitbox;
+	glm::ivec2 tileMapDispl, posEnemy;
 	TileMap* map;
 
 };
