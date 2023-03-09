@@ -12,6 +12,7 @@
 #include "Item.h"
 #include "Key.h"
 #include "Door.h"
+#include "Hourglass.h"
 
 
 // Scene contains all the entities of our game.

@@ -39,28 +39,29 @@ void Hourglass::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 
 void Hourglass::update(int deltaTime)
 {
-	/*
 	if (showing && collisionPlayer())
 	{
 		taken = true;
 		showing = false;
 
-		map->setKeyTaken(true);
+		//DEBUG
+		cout << "Hourglass taken" << endl;
 	}
-	*/
 
 	sprite->update(deltaTime);
 }
 
 void Hourglass::render()
 {
-	posItem = map->getRandomPosition(7) - glm::vec2(0, 24);
-	glm::ivec2 screenCoords = map->getScreenCoords();
-	sprite->setPosition(glm::vec2(screenCoords.x + posItem.x, screenCoords.y + posItem.y));
+	if (!showing) {
+		posItem = map->getRandomPosition(7) - glm::vec2(0, 24);
+		glm::ivec2 screenCoords = map->getScreenCoords();
+		sprite->setPosition(glm::vec2(screenCoords.x + posItem.x, screenCoords.y + posItem.y));
 
-	//DEBUG
-	cout << "position assinged is: " << posItem.x << " " << posItem.y - 24 << endl;
-	showing = true;
+		//DEBUG
+		cout << "position assinged is: " << posItem.x << " " << posItem.y - 24 << endl;
+		showing = true;
+	}
 		
 	sprite->render();
 	
