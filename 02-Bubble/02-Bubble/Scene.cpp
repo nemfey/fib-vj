@@ -8,7 +8,7 @@
 //#define SCREEN_X 144
 //#define SCREEN_Y 99
 #define SCREEN_X 0
-#define SCREEN_Y 0
+#define SCREEN_Y 48
 
 Scene::Scene()
 {
@@ -85,15 +85,17 @@ void Scene::updateRatioWindowSize(int width, int height)
 
 	if (windowRatio > gameRatio)
 	{
-		scale = height / 400.0f;  // Escala en el eje Y
-		float offset = (width - 512*scale) / -2;
-		projection = glm::ortho(offset, float(width), float(height), 0.f);
+		scale = height / 400.0f;  // escalate Y axis
+		//float offset = (width - 512*scale) / -2;
+		//projection = glm::ortho(offset, float(width), float(height), 0.f);
+		projection = glm::ortho(0.f, float(width), float(height), 0.f);
 	}
 	else
 	{
-		scale = width / 512.0f;  // Escala en el eje X
-		float offset = (height - 400*scale) / -2;
-		projection = glm::ortho(0.f, float(width), float(height), offset);
+		scale = width / 512.0f;  // escalate X axis
+		//float offset = (height - 400*scale) / -2;
+		//projection = glm::ortho(0.f, float(width), float(height), offset);
+		projection = glm::ortho(0.f, float(width), float(height), 0.f);
 	}
 	projection = glm::scale(projection, glm::vec3(scale));
 
