@@ -46,6 +46,8 @@ void Hourglass::update(int deltaTime)
 
 		//DEBUG
 		cout << "Hourglass taken" << endl;
+
+		map->setHourglassTaken(true);
 	}
 
 	sprite->update(deltaTime);
@@ -60,6 +62,7 @@ void Hourglass::render()
 
 		//DEBUG
 		cout << "position assinged is: " << posItem.x << " " << posItem.y - 24 << endl;
+
 		showing = true;
 	}
 		

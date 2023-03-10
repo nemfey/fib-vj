@@ -69,55 +69,57 @@ void Vampire::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 
 void Vampire::update(int deltaTime)
 {
-	sprite->update(deltaTime);
+	if (!map->getHourglassTaken()) {
+		sprite->update(deltaTime);
 
-	humanAspectTime += deltaTime;
+		humanAspectTime += deltaTime;
 
-	if (bTransformation)
-	{
-		if (sprite->getCurrentKeyFrame() == 5)
+		if (bTransformation)
 		{
-			//cout << "TRANSFORMATION SHOULD END" << endl;
-			bHumanAspect = !bHumanAspect;
-			if (bHumanAspect)
+			if (sprite->getCurrentKeyFrame() == 5)
 			{
-				humanAspectTime = 0;
-				sprite->changeAnimation(MOVE_RIGHT);
+				//cout << "TRANSFORMATION SHOULD END" << endl;
+				bHumanAspect = !bHumanAspect;
+				if (bHumanAspect)
+				{
+					humanAspectTime = 0;
+					sprite->changeAnimation(MOVE_RIGHT);
+				}
+				else
+				{
+					heightTransformation = posEnemy.y;
+					if (sprite->animation() == STAND_RIGHT || sprite->animation() == MOVE_RIGHT)
+						batMov = RightUp;
+					else
+						batMov = LeftUp;
+					cout << "executing this" << endl;
+					sprite->changeAnimation(FLY);
+				}
+				bTransformation = false;
+			}
+		}
+		else if (bHumanAspect)
+		{
+			if (humanAspectTime >= 12000)
+			{
+				//humanAspectTime = 0;
+				//heightTransformation = posEnemy.y;
+				//if (sprite->animation() == STAND_RIGHT || sprite->animation() == MOVE_RIGHT)
+				//	batMov = RightUp;
+				//else
+				//	batMov = LeftUp;
+				bTransformation = true;
+				sprite->changeAnimation(TRANSFORM);
 			}
 			else
-			{
-				heightTransformation = posEnemy.y;
-				if (sprite->animation() == STAND_RIGHT || sprite->animation() == MOVE_RIGHT)
-					batMov = RightUp;
-				else
-					batMov = LeftUp;
-				cout << "executing this" << endl;
-				sprite->changeAnimation(FLY);
-			}
-			bTransformation = false;
-		}
-	}
-	else if (bHumanAspect)
-	{
-		if (humanAspectTime >= 12000)
-		{
-			//humanAspectTime = 0;
-			//heightTransformation = posEnemy.y;
-			//if (sprite->animation() == STAND_RIGHT || sprite->animation() == MOVE_RIGHT)
-			//	batMov = RightUp;
-			//else
-			//	batMov = LeftUp;
-			bTransformation = true;
-			sprite->changeAnimation(TRANSFORM);
+				humanBehavior(deltaTime);
 		}
 		else
-			humanBehavior(deltaTime);
-	}
-	else
-	{
-		//if (sprite->animation() != FLY)
-		//	sprite->changeAnimation(FLY);
-		batBehavior(deltaTime);
+		{
+			//if (sprite->animation() != FLY)
+			//	sprite->changeAnimation(FLY);
+			batBehavior(deltaTime);
+		}
 	}
 }
 

@@ -53,6 +53,7 @@ private:
 	glm::ivec2 screenSize;
 
 	int currentTime, remainingSeconds;
+	int itemTimer;
 };
 
 

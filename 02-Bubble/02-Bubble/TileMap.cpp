@@ -192,6 +192,11 @@ void TileMap::positionStepped(const glm::ivec2& pos, const glm::ivec2& size, int
 
 // Private functions
 
+void TileMap::setHourglassTaken(bool b)
+{
+	hourglassTaken = b;
+}
+
 bool TileMap::loadLevel(const string& levelFile)
 {
 	ifstream fin;
