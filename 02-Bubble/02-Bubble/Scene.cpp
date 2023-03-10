@@ -51,12 +51,13 @@ void Scene::update(int deltaTime)
 		if (itemTimer <= 0)
 			itemTimer = 10;
 	}
-
-	for (auto e : enemies)
-	{
-		e->update(deltaTime);
-		if (e->collisionPlayer())
-			player->loseLive();
+	if (!map->getHourglassTaken()) {
+		for (auto e : enemies)
+		{
+			e->update(deltaTime);
+			if (e->collisionPlayer())
+				player->loseLive();
+		}
 	}
 	for (auto i : items)
 		i->update(deltaTime);
