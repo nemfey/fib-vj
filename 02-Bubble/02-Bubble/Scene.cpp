@@ -53,6 +53,7 @@ void Scene::update(int deltaTime)
 		if (itemTimer <= 0)
 			itemTimer = 10;
 	}
+
 	if (!map->getHourglassTaken()) {
 		for (auto e : enemies)
 		{
@@ -61,6 +62,7 @@ void Scene::update(int deltaTime)
 				player->loseLive();
 		}
 	}
+
 	for (auto i : items)
 		i->update(deltaTime);
 }
@@ -174,15 +176,25 @@ void Scene::initItems()
 void Scene::updateTime(int deltatime)
 {
 	currentTime += deltatime;
-	if (60 - (currentTime / 1000) < remainingSeconds)
-	{
-		--remainingSeconds;
 
-		if (itemTimer > 0) --itemTimer;
-		if (itemTimer <= 0 && map->getHourglassTaken()) map->setHourglassTaken(false);
+	//Previous if statement
+	//if (60 - (currentTime / 1000) < remainingSeconds)
 
-		//DEBUG
-		cout << remainingSeconds << endl;
-		cout << "item timer is: " << itemTimer << endl;
+	//Game is running at 60FPS, so if the module is divisible by 60 then a second has passed
+	if (currentTime % 60 == 0)
+	{	
+		if (!map->getHourglassTaken()) {
+			--remainingSeconds;
+
+			//DEBUG
+			cout << remainingSeconds << endl;
+		}
+		else {
+			if (itemTimer > 0) --itemTimer;
+			if (itemTimer <= 0 && map->getHourglassTaken()) map->setHourglassTaken(false);
+
+			//DEBUG
+			cout << "item timer is: " << itemTimer << endl;
+		}
 	}
 }
