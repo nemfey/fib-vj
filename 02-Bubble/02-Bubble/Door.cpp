@@ -16,6 +16,7 @@ void Door::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
 	//spritesheet.loadFromFile("images/door_hell.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	spritesheet.loadFromFile("images/hell-door-5.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spritesheet.setMagFilter(GL_NEAREST);
 	sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(0.25, 0.5), &spritesheet, &shaderProgram);
 	//Animations
 	sprite->setNumberAnimations(3);

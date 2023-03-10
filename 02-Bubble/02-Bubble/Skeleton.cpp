@@ -17,6 +17,7 @@ enum SkeletonAnims
 void Skeleton::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
 	spritesheet.loadFromFile("images/skeleton.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spritesheet.setMagFilter(GL_NEAREST);
 	sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(0.25, 0.5), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(4);
 
@@ -41,6 +42,8 @@ void Skeleton::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x), float(tileMapDispl.y + posEnemy.y)));
+
+	hitbox = glm::ivec2(32, 32);
 }
 
 void Skeleton::update(int deltaTime)
@@ -52,7 +55,7 @@ void Skeleton::update(int deltaTime)
 		if (sprite->animation() != MOVE_RIGHT)
 			sprite->changeAnimation(MOVE_RIGHT);
 		
-		posEnemy.x += 1;
+		//posEnemy.x += 1;
 		posEnemy.y += FALL_STEP;
 
 		bool bFloorDown = map->collisionMoveDown(posEnemy+glm::ivec2(24,0), glm::ivec2(32, 32), &posEnemy.y);
@@ -60,20 +63,22 @@ void Skeleton::update(int deltaTime)
 		
 		if (bShouldMoveLeft)
 		{
-			posEnemy.x -= 1;
+			//posEnemy.x -= 1;
 			sprite->changeAnimation(STAND_RIGHT);
 			moveRight = false;
 
 			if (!bFloorDown)
 				posEnemy.y -= FALL_STEP; // instead of falling, recover original y
 		}
+		else
+			posEnemy.x += 1;
 	}
 	else
 	{
 		if (sprite->animation() != MOVE_LEFT)
 			sprite->changeAnimation(MOVE_LEFT);
 		
-		posEnemy.x -= 1;
+		//posEnemy.x -= 1;
 		posEnemy.y += FALL_STEP;
 
 		bool bFloorDown = map->collisionMoveDown(posEnemy-glm::ivec2(24,0), glm::ivec2(32, 32), &posEnemy.y);
@@ -81,13 +86,15 @@ void Skeleton::update(int deltaTime)
 
 		if (bShouldMoveRight)
 		{
-			posEnemy.x += 1;
+			//posEnemy.x += 1;
 			sprite->changeAnimation(STAND_LEFT);
 			moveRight = true;
 
 			if (!bFloorDown)
 				posEnemy.y -= FALL_STEP; // instead of falling, recover original y
 		}
+		else
+			posEnemy.x -= 1;
 	}
 
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x), float(tileMapDispl.y + posEnemy.y)));

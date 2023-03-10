@@ -31,6 +31,7 @@ protected:
 
 	glm::ivec2 tileMapDispl, posEnemy;
 	TileMap* map;
+	glm::ivec2 hitbox;
 
 };
 
