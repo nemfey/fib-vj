@@ -45,48 +45,50 @@ void Skeleton::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 
 void Skeleton::update(int deltaTime)
 {
-	sprite->update(deltaTime);
-	
-	if (moveRight)
-	{
-		if (sprite->animation() != MOVE_RIGHT)
-			sprite->changeAnimation(MOVE_RIGHT);
-		
-		posEnemy.x += 1;
-		posEnemy.y += FALL_STEP;
+	if (!map->getHourglassTaken()) {
+		sprite->update(deltaTime);
 
-		bool bFloorDown = map->collisionMoveDown(posEnemy+glm::ivec2(16,0), glm::ivec2(32, 32), &posEnemy.y);
-		bool bShouldMoveLeft = map->collisionMoveRight(posEnemy, glm::ivec2(32, 32), false) || !bFloorDown;
-		
-		if (bShouldMoveLeft)
+		if (moveRight)
 		{
-			posEnemy.x -= 1;
-			sprite->changeAnimation(STAND_RIGHT);
-			moveRight = false;
+			if (sprite->animation() != MOVE_RIGHT)
+				sprite->changeAnimation(MOVE_RIGHT);
 
-			if (!bFloorDown)
-				posEnemy.y -= FALL_STEP; // instead of falling, recover original y
-		}
-	}
-	else
-	{
-		if (sprite->animation() != MOVE_LEFT)
-			sprite->changeAnimation(MOVE_LEFT);
-		
-		posEnemy.x -= 1;
-		posEnemy.y += FALL_STEP;
-
-		bool bFloorDown = map->collisionMoveDown(posEnemy-glm::ivec2(16,0), glm::ivec2(32, 32), &posEnemy.y);
-		bool bShouldMoveRight = map->collisionMoveLeft(posEnemy, glm::ivec2(32, 32), false) || !bFloorDown;
-
-		if (bShouldMoveRight)
-		{
 			posEnemy.x += 1;
-			sprite->changeAnimation(STAND_LEFT);
-			moveRight = true;
+			posEnemy.y += FALL_STEP;
 
-			if (!bFloorDown)
-				posEnemy.y -= FALL_STEP; // instead of falling, recover original y
+			bool bFloorDown = map->collisionMoveDown(posEnemy + glm::ivec2(16, 0), glm::ivec2(32, 32), &posEnemy.y);
+			bool bShouldMoveLeft = map->collisionMoveRight(posEnemy, glm::ivec2(32, 32), false) || !bFloorDown;
+
+			if (bShouldMoveLeft)
+			{
+				posEnemy.x -= 1;
+				sprite->changeAnimation(STAND_RIGHT);
+				moveRight = false;
+
+				if (!bFloorDown)
+					posEnemy.y -= FALL_STEP; // instead of falling, recover original y
+			}
+		}
+		else
+		{
+			if (sprite->animation() != MOVE_LEFT)
+				sprite->changeAnimation(MOVE_LEFT);
+
+			posEnemy.x -= 1;
+			posEnemy.y += FALL_STEP;
+
+			bool bFloorDown = map->collisionMoveDown(posEnemy - glm::ivec2(16, 0), glm::ivec2(32, 32), &posEnemy.y);
+			bool bShouldMoveRight = map->collisionMoveLeft(posEnemy, glm::ivec2(32, 32), false) || !bFloorDown;
+
+			if (bShouldMoveRight)
+			{
+				posEnemy.x += 1;
+				sprite->changeAnimation(STAND_LEFT);
+				moveRight = true;
+
+				if (!bFloorDown)
+					posEnemy.y -= FALL_STEP; // instead of falling, recover original y
+			}
 		}
 	}
 

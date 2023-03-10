@@ -36,7 +36,7 @@ public:
 	bool collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const;
 	bool allPlattformsStepped() const;
 	bool doorOpen();
-	glm::vec2 getRandomPosition();
+	glm::vec2 getRandomPosition(int radius);
 	void positionStepped(const glm::ivec2& pos, const glm::ivec2& size, int* posY);
 	
 	// Getters & Setters
@@ -45,11 +45,13 @@ public:
 	vector<pair<char, glm::ivec2>> getEnemies() const { return enemies; };
 	glm::ivec2 getDoorPosition() { return posDoor; };
 	bool getKeyTaken() const { return keyTaken; };
+	bool getHourglassTaken() const { return hourglassTaken; };
 	glm::ivec2 getMapSize() const { return mapSize; };
 	glm::ivec2 getScreenCoords() const { return screenCoords; };
 
 	void setPosPlayer(glm::ivec2 pos) { posPlayer = pos; };
 	void setKeyTaken(bool b) { keyTaken = b; };
+	void setHourglassTaken(bool b);
 
 
 private:
@@ -76,6 +78,9 @@ private:
 
 	glm::ivec2 posDoor = glm::ivec2(0,0);
 	bool keyTaken = false;
+
+	bool hourglassTaken = false;
+	int counter = 0;
 
 };
 

@@ -11,7 +11,7 @@ using namespace std;
 
 enum Items
 {
-	KEY, DOOR
+	KEY, DOOR, HOURGLASS
 };
 
 TileMap::TileMap(const string& levelFile, const glm::vec2& minCoords, ShaderProgram& program)
@@ -148,7 +148,7 @@ bool TileMap::doorOpen()
 	return false;
 }
 
-glm::vec2 TileMap::getRandomPosition()
+glm::vec2 TileMap::getRandomPosition(int radius)
 {
 	srand(time(NULL));
 
@@ -157,8 +157,8 @@ glm::vec2 TileMap::getRandomPosition()
 	for (auto i = 0; i < plattforms.size(); ++i) {
 		glm::vec2 pos = plattforms[i];
 
-		if (!((pos.x > posPlayer.x / tileSize - 7 && pos.x < (posPlayer.x + 32) / tileSize + 7)
-			&& (pos.y > posPlayer.y / tileSize - 7 && pos.y < (posPlayer.y + 32) / tileSize + 7))) {
+		if (!((pos.x > posPlayer.x / tileSize - radius && pos.x < (posPlayer.x + 32) / tileSize + radius)
+			&& (pos.y > posPlayer.y / tileSize - radius && pos.y < (posPlayer.y + 32) / tileSize + radius))) {
 			available.push_back(pos);
 		}
 	}
@@ -191,6 +191,11 @@ void TileMap::positionStepped(const glm::ivec2& pos, const glm::ivec2& size, int
 }
 
 // Private functions
+
+void TileMap::setHourglassTaken(bool b)
+{
+	hourglassTaken = b;
+}
 
 bool TileMap::loadLevel(const string& levelFile)
 {
