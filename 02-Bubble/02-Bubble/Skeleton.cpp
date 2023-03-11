@@ -43,7 +43,7 @@ void Skeleton::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x), float(tileMapDispl.y + posEnemy.y)));
 
-	hitbox = glm::ivec2(32, 32);
+	hitbox = glm::ivec2(24, 24);
 }
 
 void Skeleton::update(int deltaTime)

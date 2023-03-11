@@ -15,7 +15,7 @@
     <ClInclude Include="Door.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="hourglass.h" />
+    <ClInclude Include="Hourglass.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Key.h" />
     <ClInclude Include="Menu.h" />
@@ -33,7 +33,7 @@
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="hourglass.cpp" />
+    <ClCompile Include="Hourglass.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Key.cpp" />
     <ClCompile Include="main.cpp" />
