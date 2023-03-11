@@ -50,6 +50,7 @@ private:
 	
 	glm::mat4 projection;
 	float ratioWindowSize;
+	float gameRatio = 1.28f;
 
 	int currentTime, remainingSeconds;
 	int itemTimer;

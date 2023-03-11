@@ -10,6 +10,9 @@ void Game::init()
 	//glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
 	scene.init();
+
+	// Descomentar la linea de abajo si no se quiere ver el cursor en la pantalla
+	//glutSetCursor(GLUT_CURSOR_NONE);
 }
 
 bool Game::update(int deltaTime)

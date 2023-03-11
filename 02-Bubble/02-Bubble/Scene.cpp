@@ -96,7 +96,6 @@ void Scene::render()
 
 void Scene::updateRatioWindowSize(int width, int height)
 {
-	float gameRatio = 1.28f;
 	float windowRatio = width / float(height);
 	float scale = 1.0f;
 
@@ -111,13 +110,8 @@ void Scene::updateRatioWindowSize(int width, int height)
 		scale = width / 512.0f;  // escalate X axis
 		float offset = (height - 400*scale) / 2;
 		projection = glm::ortho(0.f, float(width), float(height)-offset, -offset);
-		//projection = glm::ortho(0.f, float(width), float(height), 0.f);
 	}
 	projection = glm::scale(projection, glm::vec3(scale));
-
-	//projection = glm::scale(projection, glm::vec3(1.0f / windowRatio, 1.0f, 1.0f));
-
-	//glViewport(0, 0, width, height);
 }
 
 // Private functions
