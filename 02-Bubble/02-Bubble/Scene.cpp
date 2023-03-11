@@ -55,7 +55,11 @@ void Scene::update(int deltaTime)
 		{
 			e->update(deltaTime);
 			if (e->collisionPlayer())
+			{
 				player->loseLive();
+				player->setPosition(glm::vec2(initPosPlayer.x * map->getTileSize(), initPosPlayer.y * map->getTileSize()));
+				map->setPosPlayer(initPosPlayer);
+			}
 		}
 	}
 	else if (itemTimer==0)
@@ -67,7 +71,11 @@ void Scene::update(int deltaTime)
 			if (itemTimer<=1)
 				e->stopwatchEnding(currentTime);
 			if (e->collisionPlayer())
+			{
 				player->loseLive();
+				player->setPosition(glm::vec2(initPosPlayer.x * map->getTileSize(), initPosPlayer.y * map->getTileSize()));
+				map->setPosPlayer(initPosPlayer);
+			}
 		}
 	}
 	else
@@ -154,10 +162,11 @@ void Scene::initShaders()
 void Scene::initPlayer()
 {
 	player = new Player();
-	glm::ivec2 posPlayer = map->getPosPlayer();
+	//glm::ivec2 posPlayer = map->getPosPlayer();
+	initPosPlayer = map->getPosPlayer();
 
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	player->setPosition(glm::vec2(posPlayer[0] * map->getTileSize(), posPlayer[1] * map->getTileSize()));
+	player->setPosition(glm::vec2(initPosPlayer.x * map->getTileSize(), initPosPlayer.y * map->getTileSize()));
 	player->setTileMap(map);
 }
 
