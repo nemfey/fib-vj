@@ -27,21 +27,22 @@ void Enemy::render()
 	sprite->render();
 }
 
-void Enemy::vibrationMovement(int deltaTime)
+void Enemy::stopwatchEnding(int currentTime)
 {
-	//sprite->update(deltaTime);
-	if (mov < 5)
+	cout << "stopwatch ending" << endl;
+	cout << "hi: " << currentTime << endl;
+	if (currentTime%100 < 50 && firstHalfSecond)
 	{
-		if (mov == 0)
-			posEnemy.x += 5;
+		posEnemy.x += 2;
+		firstHalfSecond = false;
 	}
-	else
+	if (currentTime%100 >= 50 && !firstHalfSecond)
 	{
-		if (mov==5)
-			posEnemy.x -= 10;
-		if (mov == 9)
-			mov = 0;
+		posEnemy.x -= 2;
+		firstHalfSecond = true;
 	}
+
+	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x), float(tileMapDispl.y + posEnemy.y)));
 }
 
 // Getters & Setters

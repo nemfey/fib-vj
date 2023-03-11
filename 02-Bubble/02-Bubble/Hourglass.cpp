@@ -15,6 +15,7 @@ enum HourglassAnims
 void Hourglass::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
 	spritesheet.loadFromFile("images/hourglass.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spritesheet.setMagFilter(GL_NEAREST);
 	sprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(0.25, 0.5), &spritesheet, &shaderProgram);
 
 	//Animation
@@ -56,6 +57,7 @@ void Hourglass::update(int deltaTime)
 void Hourglass::render()
 {
 	if (!showing) {
+		// usar get random position?
 		posItem = map->getRandomPosition(7) - glm::vec2(0, 24);
 		glm::ivec2 screenCoords = map->getScreenCoords();
 		sprite->setPosition(glm::vec2(screenCoords.x + posItem.x, screenCoords.y + posItem.y));

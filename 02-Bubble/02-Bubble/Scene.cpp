@@ -49,10 +49,23 @@ void Scene::update(int deltaTime)
 	player->update(deltaTime);
 	map->setPosPlayer(player->getPosition());
 
-	if (!map->getHourglassTaken()) {
+	if (!map->getHourglassTaken())
+	{
 		for (auto e : enemies)
 		{
 			e->update(deltaTime);
+			if (e->collisionPlayer())
+				player->loseLive();
+		}
+	}
+	else if (itemTimer==0)
+		itemTimer = 5;
+	else
+	{
+		for (auto e : enemies)
+		{
+			if (itemTimer<=1)
+				e->stopwatchEnding(currentTime);
 			if (e->collisionPlayer())
 				player->loseLive();
 		}
@@ -183,7 +196,6 @@ void Scene::initItems()
 void Scene::updateTime(int deltatime)
 {
 	currentTime += deltatime;
-
 	//Previous if statement
 	//if (60 - (currentTime / 1000) < remainingSeconds)
 
@@ -198,7 +210,8 @@ void Scene::updateTime(int deltatime)
 		}
 		else {
 			if (itemTimer > 0) --itemTimer;
-			if (itemTimer <= 0 && map->getHourglassTaken()) map->setHourglassTaken(false);
+			if (itemTimer <= 0)
+				map->setHourglassTaken(false);
 
 			//DEBUG
 			cout << "item timer is: " << itemTimer << endl;
