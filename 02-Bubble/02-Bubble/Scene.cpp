@@ -47,8 +47,8 @@ void Scene::update(int deltaTime)
 	updateTime(deltaTime);
 
 	player->update(deltaTime);
-
 	map->setPosPlayer(player->getPosition());
+
 	if (map->getHourglassTaken()) {
 		if (itemTimer <= 0)
 			itemTimer = 10;
