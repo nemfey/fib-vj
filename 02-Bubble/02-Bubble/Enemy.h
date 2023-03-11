@@ -34,7 +34,7 @@ protected:
 	TileMap* map;
 	glm::ivec2 hitbox;
 
-	bool right = true;
+	int mov = 0;
 
 };
 

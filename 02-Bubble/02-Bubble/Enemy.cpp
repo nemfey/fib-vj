@@ -30,15 +30,17 @@ void Enemy::render()
 void Enemy::vibrationMovement(int deltaTime)
 {
 	//sprite->update(deltaTime);
-	if (right)
+	if (mov < 5)
 	{
-		posEnemy.x += 5;
-		right = false;
+		if (mov == 0)
+			posEnemy.x += 5;
 	}
 	else
 	{
-		posEnemy.x -= 5;
-		right = true;
+		if (mov==5)
+			posEnemy.x -= 10;
+		if (mov == 9)
+			mov = 0;
 	}
 }
 
