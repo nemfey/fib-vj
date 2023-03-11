@@ -27,6 +27,21 @@ void Enemy::render()
 	sprite->render();
 }
 
+void Enemy::vibrationMovement(int deltaTime)
+{
+	//sprite->update(deltaTime);
+	if (right)
+	{
+		posEnemy.x += 5;
+		right = false;
+	}
+	else
+	{
+		posEnemy.x -= 5;
+		right = true;
+	}
+}
+
 // Getters & Setters
 
 void Enemy::setPosition(const glm::vec2& pos)

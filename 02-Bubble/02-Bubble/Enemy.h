@@ -17,6 +17,7 @@ public:
 	virtual void init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram);
 	virtual void update(int deltaTime);
 	virtual void render();
+	void vibrationMovement(int deltaTime);
 
 	// Getters & Setters
 	void setPosition(const glm::vec2& pos);
@@ -32,6 +33,8 @@ protected:
 	glm::ivec2 tileMapDispl, posEnemy;
 	TileMap* map;
 	glm::ivec2 hitbox;
+
+	bool right = true;
 
 };
 
