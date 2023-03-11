@@ -52,6 +52,8 @@ private:
 	float ratioWindowSize;
 	float gameRatio = 1.28f;
 
+	glm::ivec2 initPosPlayer;
+
 	int currentTime, remainingSeconds;
 	int itemTimer;
 };
