@@ -29,8 +29,6 @@ void Enemy::render()
 
 void Enemy::stopwatchEnding(int currentTime)
 {
-	cout << "stopwatch ending" << endl;
-	cout << "hi: " << currentTime << endl;
 	if (currentTime%100 < 50 && firstHalfSecond)
 	{
 		posEnemy.x += 2;
@@ -60,8 +58,9 @@ bool Enemy::collisionPlayer()
 	glm::ivec2 posPlayer = map->getPosPlayer();
 	int tileSize = map->getTileSize();
 
-	bool collisionX = posPlayer.x + 32 >= posEnemy.x && posEnemy.x + 32 >= posPlayer.x;
-	bool collisionY = posPlayer.y + 32 >= posEnemy.y && posEnemy.y + 32 >= posPlayer.y;
+	
+	bool collisionX = posPlayer.x+32 >= posEnemy.x+(32-hitbox.x) && posEnemy.x+32-(32-hitbox.x) >= posPlayer.x;
+	bool collisionY = posPlayer.y+32 >= posEnemy.y+(32-hitbox.y) && posEnemy.y+32-(32-hitbox.y) >= posPlayer.y;
 
 	return collisionX && collisionY;
 }
