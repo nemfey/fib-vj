@@ -27,6 +27,24 @@ void Enemy::render()
 	sprite->render();
 }
 
+void Enemy::stopwatchEnding(int currentTime)
+{
+	cout << "stopwatch ending" << endl;
+	cout << "hi: " << currentTime << endl;
+	if (currentTime%100 < 50 && firstHalfSecond)
+	{
+		posEnemy.x += 2;
+		firstHalfSecond = false;
+	}
+	if (currentTime%100 >= 50 && !firstHalfSecond)
+	{
+		posEnemy.x -= 2;
+		firstHalfSecond = true;
+	}
+
+	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x), float(tileMapDispl.y + posEnemy.y)));
+}
+
 // Getters & Setters
 
 void Enemy::setPosition(const glm::vec2& pos)
