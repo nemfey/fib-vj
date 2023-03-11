@@ -7,8 +7,8 @@
 
 //#define SCREEN_WIDTH 640
 //#define SCREEN_HEIGHT 480
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
+#define SCREEN_WIDTH 628
+#define SCREEN_HEIGHT 500
 
 
 // Game is a singleton (a class with a single instance) that represents our whole application
@@ -31,6 +31,8 @@ public:
 	void init();
 	bool update(int deltaTime);
 	void render();
+	void reshape(int width, int height);
+	static void reshapeCallback(int width, int height);
 	
 	// Input callback methods
 	void keyPressed(int key);

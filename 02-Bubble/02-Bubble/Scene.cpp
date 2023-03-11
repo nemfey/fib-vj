@@ -8,7 +8,7 @@
 //#define SCREEN_X 144
 //#define SCREEN_Y 99
 #define SCREEN_X 0
-#define SCREEN_Y 0
+#define SCREEN_Y 48
 
 Scene::Scene()
 {
@@ -86,17 +86,30 @@ void Scene::render()
 	player->render();
 }
 
-void Scene::updateRatioWindowSize(float ratio, int width, int height)
+void Scene::updateRatioWindowSize(int width, int height)
 {
-	float aspectRatio = static_cast<float>(width) / static_cast<float>(height);
+	float gameRatio = 1.28f;
+	float windowRatio = width / float(height);
+	float scale = 1.0f;
 
-	if (aspectRatio > ratio) {
-		projection = glm::ortho(0.0f, height*ratio, float(height), 0.0f);
+	if (windowRatio > gameRatio)
+	{
+		scale = height / 400.0f;  // escalate Y axis
+		float offset = (width - 512*scale) / 2;
+		projection = glm::ortho(-offset, float(width)-offset, float(height), 0.f);
 	}
-	else {
-		projection = glm::ortho(0.0f, float(width), width / ratio, 0.0f);
+	else
+	{
+		scale = width / 512.0f;  // escalate X axis
+		float offset = (height - 400*scale) / 2;
+		projection = glm::ortho(0.f, float(width), float(height)-offset, -offset);
+		//projection = glm::ortho(0.f, float(width), float(height), 0.f);
 	}
-	//projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
+	projection = glm::scale(projection, glm::vec3(scale));
+
+	//projection = glm::scale(projection, glm::vec3(1.0f / windowRatio, 1.0f, 1.0f));
+
+	//glViewport(0, 0, width, height);
 }
 
 // Private functions

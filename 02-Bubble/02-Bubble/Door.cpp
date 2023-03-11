@@ -15,8 +15,9 @@ enum DoorAnims
 void Door::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
 	//spritesheet.loadFromFile("images/door_hell.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	spritesheet.loadFromFile("images/door_hell.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(0.25, 1), &spritesheet, &shaderProgram);
+	spritesheet.loadFromFile("images/hell-door-5.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spritesheet.setMagFilter(GL_NEAREST);
+	sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(0.25, 0.5), &spritesheet, &shaderProgram);
 	//Animations
 	sprite->setNumberAnimations(3);
 
@@ -24,14 +25,18 @@ void Door::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	sprite->addKeyframe(CLOSED, glm::vec2(0.f, 0.f));
 
 	sprite->setAnimationSpeed(OPEN, 1);
-	sprite->addKeyframe(OPEN, glm::vec2(0.75f, 0.f));
+	sprite->addKeyframe(OPEN, glm::vec2(0.75f, 0.5f));
 
 	//Set animation
-	sprite->setAnimationSpeed(OPENING, 2);
+	sprite->setAnimationSpeed(OPENING, 4);
 	sprite->addKeyframe(OPENING, glm::vec2(0.f, 0.f));
 	sprite->addKeyframe(OPENING, glm::vec2(0.25f, 0.f));
 	sprite->addKeyframe(OPENING, glm::vec2(0.5f, 0.f));
 	sprite->addKeyframe(OPENING, glm::vec2(0.75f, 0.f));
+	sprite->addKeyframe(OPENING, glm::vec2(0.f, 0.5f));
+	sprite->addKeyframe(OPENING, glm::vec2(0.25f, 0.5f));
+	sprite->addKeyframe(OPENING, glm::vec2(0.5f, 0.5f));
+	sprite->addKeyframe(OPENING, glm::vec2(0.75f, 0.5f));
 
 	posItem = map->getDoorPosition() * 16;
 	//sprite->setPosition(posItem + glm::ivec2(32, 16));
@@ -55,8 +60,6 @@ void Door::update(int deltaTime)
 	{
 		sprite->changeAnimation(OPENING);
 		bOpening = true;
-		//sprite->changeAnimation(OPEN);
-		//showing = true;
 	}
 	else if (showing && collisionPlayer())
 	{
@@ -66,14 +69,15 @@ void Door::update(int deltaTime)
 
 void Door::render()
 {
-	sprite->render();
+	if (showing || bOpening)
+		sprite->render();
 }
 
 // Private functions
 
 void Door::openingProcess()
 {
-	if (sprite->getCurrentKeyFrame() == 3)
+	if (sprite->getCurrentKeyFrame() == 7)
 	{
 		sprite->changeAnimation(OPEN);
 		showing = true;

@@ -17,6 +17,7 @@ enum VampireAnims
 void Vampire::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
 	spritesheet.loadFromFile("images/devil.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spritesheet.setMagFilter(GL_NEAREST);
 	sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(0.25, 0.25), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(7);
 
@@ -126,47 +127,41 @@ void Vampire::update(int deltaTime)
 
 void Vampire::humanBehavior(int deltaTime)
 {
+	posEnemy.y += FALL_STEP;
+
 	if (bMoveRight)
 	{
-		if (sprite->animation() != MOVE_RIGHT)
-			sprite->changeAnimation(MOVE_RIGHT);
-
-		posEnemy.x += 1;
-		posEnemy.y += FALL_STEP;
-
-		bool bFloorDown = map->collisionMoveDown(posEnemy + glm::ivec2(16, 0), glm::ivec2(32, 32), &posEnemy.y);
+		bool bFloorDown = map->collisionMoveDown(posEnemy + glm::ivec2(24, 0), glm::ivec2(32, 32), &posEnemy.y);
 		bool bShouldMoveLeft = map->collisionMoveRight(posEnemy, glm::ivec2(32, 32), false) || !bFloorDown;
-
+		 
 		if (bShouldMoveLeft)
 		{
-			posEnemy.x -= 1;
-			sprite->changeAnimation(STAND_RIGHT);
 			bMoveRight = false;
+			sprite->changeAnimation(STAND_RIGHT);
 
 			if (!bFloorDown)
 				posEnemy.y -= FALL_STEP; // instead of falling, recover original y
 		}
+		else
+			posEnemy.x += 1;
 	}
 	else
 	{
-		if (sprite->animation() != MOVE_LEFT)
-			sprite->changeAnimation(MOVE_LEFT);
-
-		posEnemy.x -= 1;
-		posEnemy.y += FALL_STEP;
-
-		bool bFloorDown = map->collisionMoveDown(posEnemy - glm::ivec2(16, 0), glm::ivec2(32, 32), &posEnemy.y);
+		bool bFloorDown = map->collisionMoveDown(posEnemy - glm::ivec2(24, 0), glm::ivec2(32, 32), &posEnemy.y);
 		bool bShouldMoveRight = map->collisionMoveLeft(posEnemy, glm::ivec2(32, 32), false) || !bFloorDown;
 
 		if (bShouldMoveRight)
 		{
-			posEnemy.x += 1;
+			//posEnemy.x += 1;
+			bMoveRight = true;
 			sprite->changeAnimation(STAND_LEFT);
 			bMoveRight = true;
 
 			if (!bFloorDown)
 				posEnemy.y -= FALL_STEP; // instead of falling, recover original y
 		}
+		else
+			posEnemy.x -= 1;
 	}
 
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x), float(tileMapDispl.y + posEnemy.y)));
@@ -225,6 +220,7 @@ void Vampire::batBehavior(int deltaTime)
 			if (abs(posEnemy.y - heightTransformation) >= 32)
 			{
 				bTransformation = true;
+				bMoveRight = true;
 				sprite->changeAnimation(UNTRANSFORM);
 				//bHumanAspect = true;
 				//humanAspectTime = 0;
@@ -247,6 +243,7 @@ void Vampire::batBehavior(int deltaTime)
 			if (abs(posEnemy.y - heightTransformation) >= 32)
 			{
 				bTransformation = true;
+				bMoveRight = false;
 				sprite->changeAnimation(UNTRANSFORM);
 				//bHumanAspect = true;
 				//humanAspectTime = 0;

@@ -91,7 +91,7 @@ int main(int argc, char **argv)
 	glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 	glutCreateWindow(argv[0]);
 
-	//glutReshapeFunc(reshape);
+	glutReshapeFunc(Game::reshapeCallback); //LA FUNCION ESTA EN LA CLASE GAME
 
 	glutDisplayFunc(drawCallback);
 	glutIdleFunc(idleCallback);
