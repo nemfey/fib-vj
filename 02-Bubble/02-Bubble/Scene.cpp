@@ -36,8 +36,6 @@ void Scene::init()
 	initEnemies();
 	initItems();
 
-	//projection = glm::ortho(0.f, float(windowSize.x - 1), float(windowSize.y - 1), 0.f);
-	//projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	currentTime = 0;
 	remainingSeconds = 60;
 }
@@ -200,6 +198,7 @@ void Scene::initItems()
 void Scene::updateTime(int deltatime)
 {
 	currentTime += deltatime;
+	cout << currentTime << endl;
 	//Previous if statement
 	//if (60 - (currentTime / 1000) < remainingSeconds)
 
