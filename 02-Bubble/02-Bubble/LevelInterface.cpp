@@ -56,7 +56,7 @@ void LevelInterface::updateRemainingTime(int t)
 
 void LevelInterface::updateStage(int s)
 {
-	stage = s
+	stage = s;
 }
 
 void LevelInterface::render()
