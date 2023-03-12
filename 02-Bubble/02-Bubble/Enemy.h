@@ -17,7 +17,7 @@ public:
 	virtual void init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram);
 	virtual void update(int deltaTime);
 	virtual void render();
-	void vibrationMovement(int deltaTime);
+	void stopwatchEnding(int currentTime);
 
 	// Getters & Setters
 	void setPosition(const glm::vec2& pos);
@@ -34,8 +34,7 @@ protected:
 	TileMap* map;
 	glm::ivec2 hitbox;
 
-	int mov = 0;
-
+	bool firstHalfSecond = true;
 };
 
 

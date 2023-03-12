@@ -49,7 +49,14 @@ private:
 	ShaderProgram texProgram;
 	
 	glm::mat4 projection;
+<<<<<<< HEAD
 	float gameRatio = 1.28f;;
+=======
+	float ratioWindowSize;
+	float gameRatio = 1.28f;
+>>>>>>> victor
+
+	glm::ivec2 initPosPlayer;
 
 	int currentTime, remainingSeconds = 60;
 	int timer = 0;

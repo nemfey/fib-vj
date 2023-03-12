@@ -66,6 +66,8 @@ void Vampire::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x), float(tileMapDispl.y + posEnemy.y)));
+
+	hitbox = glm::ivec2(24, 24);
 }
 
 void Vampire::update(int deltaTime)

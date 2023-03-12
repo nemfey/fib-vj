@@ -49,18 +49,39 @@ void Scene::update(int deltaTime)
 	player->update(deltaTime);
 	map->setPosPlayer(player->getPosition());
 
-	if (!map->getHourglassTaken()) {
+	if (!map->getHourglassTaken())
+	{
 		for (auto e : enemies)
 		{
 			e->update(deltaTime);
 			if (e->collisionPlayer())
+			{
 				player->loseLive();
+				player->setPosition(glm::vec2(initPosPlayer.x * map->getTileSize(), initPosPlayer.y * map->getTileSize()));
+				map->setPosPlayer(initPosPlayer);
+			}
+		}
+	}
+	else if (itemTimer==0)
+		itemTimer = 5;
+	else
+	{
+		for (auto e : enemies)
+		{
+			if (itemTimer<=1)
+				e->stopwatchEnding(currentTime);
+			if (e->collisionPlayer())
+			{
+				player->loseLive();
+				player->setPosition(glm::vec2(initPosPlayer.x * map->getTileSize(), initPosPlayer.y * map->getTileSize()));
+				map->setPosPlayer(initPosPlayer);
+			}
 		}
 	}
 	else
 	{
-		if (hourglassTimer <= 0)
-			hourglassTimer = 10;
+		if (itemTimer <= 0)
+			itemTimer = 10;
 	}
 
 	for (auto i : items)
@@ -141,10 +162,11 @@ void Scene::initShaders()
 void Scene::initPlayer()
 {
 	player = new Player();
-	glm::ivec2 posPlayer = map->getPosPlayer();
+	//glm::ivec2 posPlayer = map->getPosPlayer();
+	initPosPlayer = map->getPosPlayer();
 
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	player->setPosition(glm::vec2(posPlayer[0] * map->getTileSize(), posPlayer[1] * map->getTileSize()));
+	player->setPosition(glm::vec2(initPosPlayer.x * map->getTileSize(), initPosPlayer.y * map->getTileSize()));
 	player->setTileMap(map);
 }
 
@@ -183,26 +205,25 @@ void Scene::initItems()
 void Scene::updateTime(int deltatime)
 {
 	currentTime += deltatime;
-
 	//Previous if statement
 	//if (60 - (currentTime / 1000) < remainingSeconds)
 
-	if (currentTime / 1000 != timer)
+	//Game is running at 60FPS, so if the module is divisible by 60 then a second has passed
+	if (currentTime % 60 == 0)
 	{	
-		timer = currentTime / 1000;
 		if (!map->getHourglassTaken()) {
 			--remainingSeconds;
 
 			//DEBUG
 			cout << remainingSeconds << endl;
 		}
-
 		else {
-			if (hourglassTimer > 0) --hourglassTimer;
-			if (hourglassTimer <= 0 && map->getHourglassTaken()) map->setHourglassTaken(false);
+			if (itemTimer > 0) --itemTimer;
+			if (itemTimer <= 0)
+				map->setHourglassTaken(false);
 
 			//DEBUG
-			cout << "item timer is: " << hourglassTimer << endl;
+			cout << "item timer is: " << itemTimer << endl;
 		}
 	}
 }

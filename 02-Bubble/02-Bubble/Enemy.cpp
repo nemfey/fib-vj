@@ -27,21 +27,20 @@ void Enemy::render()
 	sprite->render();
 }
 
-void Enemy::vibrationMovement(int deltaTime)
+void Enemy::stopwatchEnding(int currentTime)
 {
-	//sprite->update(deltaTime);
-	if (mov < 5)
+	if (currentTime%100 < 50 && firstHalfSecond)
 	{
-		if (mov == 0)
-			posEnemy.x += 5;
+		posEnemy.x += 2;
+		firstHalfSecond = false;
 	}
-	else
+	if (currentTime%100 >= 50 && !firstHalfSecond)
 	{
-		if (mov==5)
-			posEnemy.x -= 10;
-		if (mov == 9)
-			mov = 0;
+		posEnemy.x -= 2;
+		firstHalfSecond = true;
 	}
+
+	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x), float(tileMapDispl.y + posEnemy.y)));
 }
 
 // Getters & Setters
@@ -59,8 +58,9 @@ bool Enemy::collisionPlayer()
 	glm::ivec2 posPlayer = map->getPosPlayer();
 	int tileSize = map->getTileSize();
 
-	bool collisionX = posPlayer.x + 32 >= posEnemy.x && posEnemy.x + 32 >= posPlayer.x;
-	bool collisionY = posPlayer.y + 32 >= posEnemy.y && posEnemy.y + 32 >= posPlayer.y;
+	
+	bool collisionX = posPlayer.x+32 >= posEnemy.x+(32-hitbox.x) && posEnemy.x+32-(32-hitbox.x) >= posPlayer.x;
+	bool collisionY = posPlayer.y+32 >= posEnemy.y+(32-hitbox.y) && posEnemy.y+32-(32-hitbox.y) >= posPlayer.y;
 
 	return collisionX && collisionY;
 }
