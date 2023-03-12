@@ -1,9 +1,8 @@
 #ifndef _LEVEL_INTERFACE_INCLUDE
 #define _LEVEL_INTERFACE_INCLUDE
 
-
+#include <map>
 #include "Sprite.h"
-
 
 // LevelInterface contains all the entities of our game.
 // It is responsible for updating and render them.
@@ -29,6 +28,8 @@ private:
 	void initNumberSprite(ShaderProgram& shaderProgram);
 	void initCharacterSprite(ShaderProgram& shaderProgram);
 	void initHeartSprite(ShaderProgram& shaderProgram);
+	void renderNumber(int n, int x, int y);
+	void renderCharacter(char c, int x, int y);
 
 
 private:
@@ -42,6 +43,7 @@ private:
 	Sprite *heartSprite;
 
 	int lives, score, remainingTime, stage;
+	map<char, int> char2id;
 };
 
 

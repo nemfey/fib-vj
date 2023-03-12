@@ -37,6 +37,10 @@ void LevelInterface::init(ShaderProgram& shaderProgram)
 	score = 0;
 	remainingTime = 60;
 	stage = 1;
+	char2id = { {'a',0}, {'c',1}, {'d',2}, {'e',3},
+				{'g',4}, {'l',5}, {'m',6}, {'o',7},
+				{'r',8}, {'s',9}, {'t',10}, {'v',11},
+				{'y',12}, {'?',13}, {'x',14} };
 }
 
 void LevelInterface::updateLives(int l)
@@ -51,8 +55,6 @@ void LevelInterface::addScore(int s)
 
 void LevelInterface::updateRemainingTime(int t)
 {
-	// cada update remaining time le sumaremos 0.1 a la textura del sprite en cuestion para avanzar en numero
-	// esto solo funciona si cuando noos pasamos del `sprite volvemos al principio
 	remainingTime = t;
 }
 
@@ -67,20 +69,25 @@ void LevelInterface::render()
 	heartSprite->changeAnimation(0);
 	heartSprite->setPosition(glm::vec2(16, 16));
 	heartSprite->render();
-	// DIBUJAR LA X
-	numberSprite->changeAnimation(lives);
-	numberSprite->setPosition(glm::vec2(48, 16));
-	numberSprite->render();
+	renderCharacter('x', 32, 16);
+	renderNumber(lives, 48, 16);
+
+	// score
+	//renderNumber(score / 10, 240, 16);
+	//renderNumber(score % 10, 256, 16);
 
 	// time
-	numberSprite->changeAnimation(remainingTime / 10);
-	numberSprite->setPosition(glm::vec2(240, 16));
-	numberSprite->render();
-	numberSprite->changeAnimation(remainingTime % 10);
-	numberSprite->setPosition(glm::vec2(256, 16));
-	numberSprite->render();
+	renderNumber(remainingTime / 10, 240, 16);
+	renderNumber(remainingTime % 10, 256, 16);
 
-	// rendering
+	// stage
+	renderCharacter('s', 384, 16);
+	renderCharacter('t', 400, 16);
+	renderCharacter('a', 416, 16);
+	renderCharacter('g', 432, 16);
+	renderCharacter('e', 448, 16);
+	renderNumber(stage / 10, 480, 16);
+	renderNumber(stage % 10, 496, 16);
 }
 
 // Private functions
@@ -93,42 +100,28 @@ void LevelInterface::initNumberSprite(ShaderProgram& shaderProgram)
 	
 	numberSprite->setNumberAnimations(10);
 
-	numberSprite->setAnimationSpeed(0, 1);
-	numberSprite->addKeyframe(0, glm::vec2(0.f, 0.f));
-
-	numberSprite->setAnimationSpeed(1, 1);
-	numberSprite->addKeyframe(1, glm::vec2(0.1f, 0.f));
-
-	numberSprite->setAnimationSpeed(2, 1);
-	numberSprite->addKeyframe(2, glm::vec2(0.2f, 0.f));
-
-	numberSprite->setAnimationSpeed(3, 1);
-	numberSprite->addKeyframe(3, glm::vec2(0.3f, 0.f));
-
-	numberSprite->setAnimationSpeed(4, 1);
-	numberSprite->addKeyframe(4, glm::vec2(0.4f, 0.f));
-
-	numberSprite->setAnimationSpeed(5, 1);
-	numberSprite->addKeyframe(5, glm::vec2(0.5f, 0.f));
-
-	numberSprite->setAnimationSpeed(6, 1);
-	numberSprite->addKeyframe(6, glm::vec2(0.6f, 0.f));
-
-	numberSprite->setAnimationSpeed(7, 1);
-	numberSprite->addKeyframe(7, glm::vec2(0.7f, 0.f));
-
-	numberSprite->setAnimationSpeed(8, 1);
-	numberSprite->addKeyframe(8, glm::vec2(0.8f, 0.f));
-
-	numberSprite->setAnimationSpeed(9, 1);
-	numberSprite->addKeyframe(9, glm::vec2(0.9f, 0.f));
+	for (int i = 0; i < 10; ++i)
+	{
+		numberSprite->setAnimationSpeed(i, 1);
+		numberSprite->addKeyframe(i, glm::vec2(i/10.f, 0.f));
+	}
 }
 
 void LevelInterface::initCharacterSprite(ShaderProgram& shaderProgram)
 {
-	charactersSpritesheet.loadFromFile("images/numbers.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	charactersSpritesheet.loadFromFile("images/characters.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	charactersSpritesheet.setMagFilter(GL_NEAREST);
-	characterSprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(0.1, 1), &charactersSpritesheet, &shaderProgram);
+	characterSprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(0.25, 0.25), &charactersSpritesheet, &shaderProgram);
+
+	characterSprite->setNumberAnimations(16);
+
+	for (int i = 0; i < 4; ++i)
+		for (int j = 0; j < 4;++j)
+		{
+			int animId = i * 4 + j;
+			characterSprite->setAnimationSpeed(animId, 1);
+			characterSprite->addKeyframe(animId, glm::vec2(j/4.f, i/4.f));
+		}
 }
 
 void LevelInterface::initHeartSprite(ShaderProgram& shaderProgram)
@@ -141,4 +134,18 @@ void LevelInterface::initHeartSprite(ShaderProgram& shaderProgram)
 
 	heartSprite->setAnimationSpeed(0, 1);
 	heartSprite->addKeyframe(0, glm::vec2(0.f, 0.f));
+}
+
+void LevelInterface::renderNumber(int n, int x, int y)
+{
+	numberSprite->changeAnimation(n);
+	numberSprite->setPosition(glm::vec2(x, y));
+	numberSprite->render();
+}
+
+void LevelInterface::renderCharacter(char c, int x, int y)
+{
+	characterSprite->changeAnimation(char2id[c]);
+	characterSprite->setPosition(glm::vec2(x, y));
+	characterSprite->render();
 }
