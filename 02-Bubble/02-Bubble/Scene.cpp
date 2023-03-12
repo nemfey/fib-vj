@@ -49,33 +49,22 @@ void Scene::update(int deltaTime)
 	player->update(deltaTime);
 	map->setPosPlayer(player->getPosition());
 
-	if (!map->getHourglassTaken())
-	{
-		for (auto e : enemies)
-		{
-			e->update(deltaTime);
-			if (e->collisionPlayer())
-			{
-				player->loseLive();
-				player->setPosition(glm::vec2(initPosPlayer.x * map->getTileSize(), initPosPlayer.y * map->getTileSize()));
-				map->setPosPlayer(initPosPlayer);
-			}
-		}
-	}
-	else if (hourglassTimer==0)
+	bool hourglassTaken = map->getHourglassTaken();
+	if (hourglassTaken && hourglassTimer == 0)
 		hourglassTimer = 5;
-	else
+
+	for (auto e : enemies)
 	{
-		for (auto e : enemies)
+		if (!hourglassTaken)
+			e->update(deltaTime);
+		else if (hourglassTimer == 1)
+			e->stopwatchEnding(currentTime);
+
+		if (e->collisionPlayer() && !player->getInmunityState())
 		{
-			if (hourglassTimer<=1)
-				e->stopwatchEnding(currentTime);
-			if (e->collisionPlayer())
-			{
-				player->loseLive();
-				player->setPosition(glm::vec2(initPosPlayer.x * map->getTileSize(), initPosPlayer.y * map->getTileSize()));
-				map->setPosPlayer(initPosPlayer);
-			}
+			player->loseLive();
+			player->setPosition(glm::vec2(initPosPlayer.x * map->getTileSize(), initPosPlayer.y * map->getTileSize()));
+			map->setPosPlayer(initPosPlayer);
 		}
 	}
 

@@ -51,6 +51,8 @@ void LevelInterface::addScore(int s)
 
 void LevelInterface::updateRemainingTime(int t)
 {
+	// cada update remaining time le sumaremos 0.1 a la textura del sprite en cuestion para avanzar en numero
+	// esto solo funciona si cuando noos pasamos del `sprite volvemos al principio
 	remainingTime = t;
 }
 
