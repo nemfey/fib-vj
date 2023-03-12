@@ -59,8 +59,8 @@ void Scene::update(int deltaTime)
 	}
 	else
 	{
-		if (itemTimer <= 0)
-			itemTimer = 10;
+		if (hourglassTimer <= 0)
+			hourglassTimer = 10;
 	}
 
 	for (auto i : items)
@@ -187,21 +187,22 @@ void Scene::updateTime(int deltatime)
 	//Previous if statement
 	//if (60 - (currentTime / 1000) < remainingSeconds)
 
-	//Game is running at 60FPS, so if the module is divisible by 60 then a second has passed
-	if (currentTime % 60 == 0)
+	if (currentTime / 1000 != timer)
 	{	
+		timer = currentTime / 1000;
 		if (!map->getHourglassTaken()) {
 			--remainingSeconds;
 
 			//DEBUG
 			cout << remainingSeconds << endl;
 		}
+
 		else {
-			if (itemTimer > 0) --itemTimer;
-			if (itemTimer <= 0 && map->getHourglassTaken()) map->setHourglassTaken(false);
+			if (hourglassTimer > 0) --hourglassTimer;
+			if (hourglassTimer <= 0 && map->getHourglassTaken()) map->setHourglassTaken(false);
 
 			//DEBUG
-			cout << "item timer is: " << itemTimer << endl;
+			cout << "item timer is: " << hourglassTimer << endl;
 		}
 	}
 }

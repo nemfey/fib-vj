@@ -51,8 +51,9 @@ private:
 	glm::mat4 projection;
 	float gameRatio = 1.28f;;
 
-	int currentTime, remainingSeconds;
-	int itemTimer;
+	int currentTime, remainingSeconds = 60;
+	int timer = 0;
+	int hourglassTimer;
 };
 
 
