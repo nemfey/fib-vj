@@ -12,6 +12,7 @@
 
 Scene::Scene()
 {
+	levelInterface = NULL;
 	map = NULL;
 	player = NULL;
 
@@ -19,6 +20,8 @@ Scene::Scene()
 
 Scene::~Scene()
 {
+	if (levelInterface != NULL)
+		delete levelInterface;
 	if(map != NULL)
 		delete map;
 	if(player != NULL)
@@ -31,6 +34,10 @@ void Scene::init()
 {
 	initShaders();
 	map = TileMap::createTileMap("levels/level28.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	cout << "hola" << endl;
+	levelInterface = new LevelInterface();
+	levelInterface->init(texProgram);
+	cout << "adios·" << endl;
 
 	initPlayer();
 	initEnemies();
@@ -63,6 +70,7 @@ void Scene::update(int deltaTime)
 		if (e->collisionPlayer() && !player->getInmunityState())
 		{
 			player->loseLive();
+			levelInterface->updateLives(player->getLives());
 			player->setPosition(glm::vec2(initPosPlayer.x * map->getTileSize(), initPosPlayer.y * map->getTileSize()));
 			map->setPosPlayer(initPosPlayer);
 		}
@@ -89,6 +97,7 @@ void Scene::render()
 	for (auto e : enemies)
 		e->render();
 	player->render();
+	levelInterface->render();
 }
 
 void Scene::updateRatioWindowSize(int width, int height)
@@ -212,4 +221,6 @@ void Scene::updateTime(int deltatime)
 			cout << "item timer is: " << hourglassTimer << endl;
 		}
 	}
+
+	levelInterface->updateRemainingTime(remainingSeconds);
 }

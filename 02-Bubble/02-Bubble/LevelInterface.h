@@ -2,7 +2,6 @@
 #define _LEVEL_INTERFACE_INCLUDE
 
 
-#include <glm/glm.hpp>
 #include "Sprite.h"
 
 
@@ -18,8 +17,7 @@ public:
 	~LevelInterface();
 
 	void init(ShaderProgram& shaderProgram);
-	void addOneLive();
-	void minusOneLive();
+	void updateLives(int l);
 	void addScore(int s);
 	void updateRemainingTime(int t);
 	void updateStage(int s);
@@ -27,21 +25,23 @@ public:
 
 	// Gettters & Setters
 
+private:
+	void initNumberSprite(ShaderProgram& shaderProgram);
+	void initCharacterSprite(ShaderProgram& shaderProgram);
+	void initHeartSprite(ShaderProgram& shaderProgram);
+
 
 private:
-	Texture numbersSpritesheet, wordsSpritesheet;
+	Texture numbersSpritesheet, charactersSpritesheet, heartSpritesheet;
 
+		// TENEMOS UN SOLO SPRITE PARA CADA COSA Y LO VAMOS COPIANDO A LOS LADOS E IMPREMINEDO VARIAS VECES EN CADA UPDATE
 
-	Sprite* livesSprite;
-	vector<Sprite*> scoreSprites;
-	vector<Sprite*> remainingTimeSprites;
-	vector<Sprite*> stageSprites;
-	
+	//Sprite* livesSprite, scoreSprite, remainingTimeSprite, stageSprite;
+	Sprite *numberSprite;
+	Sprite *characterSprite;
+	Sprite *heartSprite;
 
-	int lives;
-	int score;
-	int remainingTime;
-	int stage;
+	int lives, score, remainingTime, stage;
 };
 
 
