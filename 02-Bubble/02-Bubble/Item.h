@@ -17,6 +17,8 @@ public:
 	virtual void update(int deltaTime);
 	virtual void render();
 
+	bool isTaken() { return taken; };
+
 	// Getters & Setters
 	glm::ivec2 getPosition() { return posItem; };
 

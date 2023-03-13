@@ -45,43 +45,58 @@ void Scene::init()
 
 	//projection = glm::ortho(0.f, float(windowSize.x - 1), float(windowSize.y - 1), 0.f);
 	//projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
-	currentTime = 0;
-	remainingSeconds = 60;
+	remainingSeconds, currentTime = 60;
+	timer = 0;
+	bLevelClear = false;
 }
 
 void Scene::update(int deltaTime)
-{
-	updateTime(deltaTime);
-	int prevPosStepped = map->getPositionsStepped();
-	player->update(deltaTime);
-	int postPosStepped = map->getPositionsStepped();
-	if (postPosStepped > prevPosStepped)
-		levelInterface->addScore((postPosStepped - prevPosStepped) * 10);
-
-	map->setPosPlayer(player->getPosition());
-
-	bool hourglassTaken = map->getHourglassTaken();
-	if (hourglassTaken && hourglassTimer == 0)
-		hourglassTimer = 5;
-
-	for (auto e : enemies)
+{	
+	if (!bLevelClear)
 	{
-		if (!hourglassTaken)
-			e->update(deltaTime);
-		else if (hourglassTimer == 1)
-			e->stopwatchEnding(currentTime);
+		updateTime(deltaTime);
+		int prevPosStepped = map->getPositionsStepped();
+		player->update(deltaTime);
+		int postPosStepped = map->getPositionsStepped();
+		if (postPosStepped > prevPosStepped)
+			levelInterface->addScore((postPosStepped - prevPosStepped) * 10);
 
-		if (e->collisionPlayer() && !player->getInmunityState())
+		map->setPosPlayer(player->getPosition());
+
+		bool hourglassTaken = map->getHourglassTaken();
+		if (hourglassTaken && hourglassTimer == 0)
+			hourglassTimer = 5;
+
+		for (auto e : enemies)
 		{
-			player->loseLive();
-			levelInterface->updateLives(player->getLives());
-			player->setPosition(glm::vec2(initPosPlayer.x * map->getTileSize(), initPosPlayer.y * map->getTileSize()));
-			map->setPosPlayer(initPosPlayer);
+			if (!hourglassTaken)
+				e->update(deltaTime);
+			else if (hourglassTimer == 1)
+				e->stopwatchEnding(currentTime);
+
+			if (e->collisionPlayer() && !player->getInmunityState())
+			{
+				player->loseLive();
+				levelInterface->updateLives(player->getLives());
+				player->setPosition(glm::vec2(initPosPlayer.x * map->getTileSize(), initPosPlayer.y * map->getTileSize()));
+				map->setPosPlayer(initPosPlayer);
+			}
+		}
+
+		for (auto i : items)
+		{
+			Door* d = dynamic_cast<Door*>(i);
+			if (d && d->isTaken())
+			{
+				bLevelClear = true;
+			}
+			i->update(deltaTime);
 		}
 	}
-
-	for (auto i : items)
-		i->update(deltaTime);
+	else
+	{
+		levelInterface->setStageClear(true);
+	}
 }
 
 void Scene::render()

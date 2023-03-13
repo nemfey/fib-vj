@@ -57,8 +57,10 @@ private:
 	glm::ivec2 initPosPlayer;
 
 	int currentTime, remainingSeconds = 60;
-	int timer = 0;
+	int timer;
 	int hourglassTimer;
+
+	bool bLevelClear;
 };
 
 

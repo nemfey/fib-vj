@@ -23,6 +23,7 @@ public:
 	void render();
 
 	// Gettters & Setters
+	void setStageClear(bool b) { bStageClear = b; };
 
 private:
 	void initNumberSprite(ShaderProgram& shaderProgram);
@@ -44,6 +45,8 @@ private:
 
 	int lives, score, remainingTime, stage;
 	map<char, int> char2id;
+
+	bool bStageClear;
 };
 
 

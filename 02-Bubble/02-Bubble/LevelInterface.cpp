@@ -37,6 +37,7 @@ void LevelInterface::init(ShaderProgram& shaderProgram)
 	score = 0;
 	remainingTime = 60;
 	stage = 1;
+	bStageClear = false;
 	char2id = { {'a',0}, {'c',1}, {'d',2}, {'e',3},
 				{'g',4}, {'l',5}, {'m',6}, {'o',7},
 				{'r',8}, {'s',9}, {'t',10}, {'v',11},
@@ -92,6 +93,21 @@ void LevelInterface::render()
 	renderCharacter('e', 432, 16);
 	renderNumber(stage / 10, 464, 16);
 	renderNumber(stage % 10, 480, 16);
+
+	// Stage clear
+	if (bStageClear)
+	{
+		renderCharacter('s', 160, 224);
+		renderCharacter('t', 176, 224);
+		renderCharacter('a', 192, 224);
+		renderCharacter('g', 208, 224);
+		renderCharacter('e', 224, 224);
+		renderCharacter('c', 256, 224);
+		renderCharacter('l', 272, 224);
+		renderCharacter('e', 288, 224);
+		renderCharacter('a', 304, 224);
+		renderCharacter('r', 320, 224);
+	}
 }
 
 // Private functions
