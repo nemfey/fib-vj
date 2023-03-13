@@ -43,6 +43,7 @@ public:
 	// Getters & Setters
 	int getTileSize() const { return tileSize; }
 	glm::ivec2 getPosPlayer() const { return posPlayer; };
+	int getPositionsStepped() const { return positionsStepped.size(); };
 	vector<pair<char, glm::ivec2>> getEnemies() const { return enemies; };
 	glm::ivec2 getDoorPosition() { return posDoor; };
 	bool getKeyTaken() const { return keyTaken; };

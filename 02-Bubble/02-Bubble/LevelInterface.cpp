@@ -73,21 +73,25 @@ void LevelInterface::render()
 	renderNumber(lives, 48, 16);
 
 	// score
-	//renderNumber(score / 10, 240, 16);
-	//renderNumber(score % 10, 256, 16);
+	renderNumber(score / 100000, 104, 16);
+	renderNumber((score%100000) / 10000, 120, 16);
+	renderNumber((score % 10000) / 1000, 136, 16);
+	renderNumber((score % 1000) / 100, 152, 16);
+	renderNumber((score % 100) / 10, 168, 16);
+	renderNumber(score % 10, 184, 16);
 
 	// time
 	renderNumber(remainingTime / 10, 240, 16);
 	renderNumber(remainingTime % 10, 256, 16);
 
 	// stage
-	renderCharacter('s', 384, 16);
-	renderCharacter('t', 400, 16);
-	renderCharacter('a', 416, 16);
-	renderCharacter('g', 432, 16);
-	renderCharacter('e', 448, 16);
-	renderNumber(stage / 10, 480, 16);
-	renderNumber(stage % 10, 496, 16);
+	renderCharacter('s', 368, 16);
+	renderCharacter('t', 384, 16);
+	renderCharacter('a', 400, 16);
+	renderCharacter('g', 416, 16);
+	renderCharacter('e', 432, 16);
+	renderNumber(stage / 10, 464, 16);
+	renderNumber(stage % 10, 480, 16);
 }
 
 // Private functions

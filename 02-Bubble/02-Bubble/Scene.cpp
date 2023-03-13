@@ -52,8 +52,12 @@ void Scene::init()
 void Scene::update(int deltaTime)
 {
 	updateTime(deltaTime);
-
+	int prevPosStepped = map->getPositionsStepped();
 	player->update(deltaTime);
+	int postPosStepped = map->getPositionsStepped();
+	if (postPosStepped > prevPosStepped)
+		levelInterface->addScore((postPosStepped - prevPosStepped) * 10);
+
 	map->setPosPlayer(player->getPosition());
 
 	bool hourglassTaken = map->getHourglassTaken();
