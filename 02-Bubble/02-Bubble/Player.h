@@ -21,6 +21,8 @@ public:
 	
 	// Getters & Setters
 	glm::ivec2 getPosition() const { return posPlayer; };
+	bool getInmunityState() const { return inmunityState; };
+	int getLives() const { return lives; };
 
 	void setTileMap(TileMap* tileMap) { map = tileMap; };
 	void setPosition(const glm::ivec2 &pos);

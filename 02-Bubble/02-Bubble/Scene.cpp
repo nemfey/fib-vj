@@ -12,6 +12,7 @@
 
 Scene::Scene()
 {
+	levelInterface = NULL;
 	map = NULL;
 	player = NULL;
 
@@ -19,6 +20,8 @@ Scene::Scene()
 
 Scene::~Scene()
 {
+	if (levelInterface != NULL)
+		delete levelInterface;
 	if(map != NULL)
 		delete map;
 	if(player != NULL)
@@ -31,6 +34,10 @@ void Scene::init()
 {
 	initShaders();
 	map = TileMap::createTileMap("levels/level28.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	cout << "hola" << endl;
+	levelInterface = new LevelInterface();
+	levelInterface->init(texProgram);
+	cout << "adios·" << endl;
 
 	initPlayer();
 	initEnemies();
@@ -45,37 +52,31 @@ void Scene::init()
 void Scene::update(int deltaTime)
 {
 	updateTime(deltaTime);
-
+	int prevPosStepped = map->getPositionsStepped();
 	player->update(deltaTime);
+	int postPosStepped = map->getPositionsStepped();
+	if (postPosStepped > prevPosStepped)
+		levelInterface->addScore((postPosStepped - prevPosStepped) * 10);
+
 	map->setPosPlayer(player->getPosition());
 
-	if (!map->getHourglassTaken())
-	{
-		for (auto e : enemies)
-		{
-			e->update(deltaTime);
-			if (e->collisionPlayer())
-			{
-				player->loseLive();
-				player->setPosition(glm::vec2(initPosPlayer.x * map->getTileSize(), initPosPlayer.y * map->getTileSize()));
-				map->setPosPlayer(initPosPlayer);
-			}
-		}
-	}
-	else if (hourglassTimer==0)
+	bool hourglassTaken = map->getHourglassTaken();
+	if (hourglassTaken && hourglassTimer == 0)
 		hourglassTimer = 5;
-	else
+
+	for (auto e : enemies)
 	{
-		for (auto e : enemies)
+		if (!hourglassTaken)
+			e->update(deltaTime);
+		else if (hourglassTimer == 1)
+			e->stopwatchEnding(currentTime);
+
+		if (e->collisionPlayer() && !player->getInmunityState())
 		{
-			if (hourglassTimer<=1)
-				e->stopwatchEnding(currentTime);
-			if (e->collisionPlayer())
-			{
-				player->loseLive();
-				player->setPosition(glm::vec2(initPosPlayer.x * map->getTileSize(), initPosPlayer.y * map->getTileSize()));
-				map->setPosPlayer(initPosPlayer);
-			}
+			player->loseLive();
+			levelInterface->updateLives(player->getLives());
+			player->setPosition(glm::vec2(initPosPlayer.x * map->getTileSize(), initPosPlayer.y * map->getTileSize()));
+			map->setPosPlayer(initPosPlayer);
 		}
 	}
 
@@ -100,6 +101,7 @@ void Scene::render()
 	for (auto e : enemies)
 		e->render();
 	player->render();
+	levelInterface->render();
 }
 
 void Scene::updateRatioWindowSize(int width, int height)
@@ -223,4 +225,6 @@ void Scene::updateTime(int deltatime)
 			cout << "item timer is: " << hourglassTimer << endl;
 		}
 	}
+
+	levelInterface->updateRemainingTime(remainingSeconds);
 }

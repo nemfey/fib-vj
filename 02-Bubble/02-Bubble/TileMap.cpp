@@ -9,10 +9,6 @@
 
 using namespace std;
 
-enum Items
-{
-	KEY, DOOR, HOURGLASS
-};
 
 TileMap::TileMap(const string& levelFile, const glm::vec2& minCoords, ShaderProgram& program)
 {

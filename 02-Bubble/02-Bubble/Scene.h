@@ -4,6 +4,7 @@
 
 #include <glm/glm.hpp>
 #include "ShaderProgram.h"
+#include "LevelInterface.h"
 #include "TileMap.h"
 #include "Player.h"
 #include "Enemy.h"
@@ -42,6 +43,7 @@ private:
 	void updateTime(int deltatime);
 
 private:
+	LevelInterface* levelInterface;
 	TileMap *map;
 	Player *player;
 	vector<Enemy*> enemies;
