@@ -11,10 +11,24 @@ enum ReaperAnims
 	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT, ATTACK_LEFT, ATTACK_RIGHT
 };
 
+enum ProjectileAnims
+{
+	LEFT, RIGHT
+};
+
 // Public functions
+
+void Reaper::render()
+{
+	sprite->render();
+
+	if (renderProjectile)
+		projectile->render();
+}
 
 void Reaper::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
+	//Enemy
 	spritesheet.loadFromFile("images/reaper.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	spritesheet.setMagFilter(GL_NEAREST);
 	sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(0.125, 0.25), &spritesheet, &shaderProgram);
@@ -77,12 +91,31 @@ void Reaper::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x), float(tileMapDispl.y + posEnemy.y)));
 
 	hitbox = glm::ivec2(24, 24);
+
+	//Projectile
+	projectileTex.loadFromFile("images/projectile.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	projectileTex.setMagFilter(GL_NEAREST);
+	projectile = Sprite::createSprite(glm::ivec2(80, 32), glm::vec2(0.5, 0.25), &projectileTex, &shaderProgram);
+	projectile->setNumberAnimations(2);
+
+	projectile->setAnimationSpeed(LEFT, 10);
+	projectile->addKeyframe(LEFT, glm::vec2(0.f, 0.f));
+	projectile->addKeyframe(LEFT, glm::vec2(0.5f, 0.f));
+	projectile->addKeyframe(LEFT, glm::vec2(0.f, 0.25f));
+	projectile->addKeyframe(LEFT, glm::vec2(0.5f, 0.25f));
+
+	projectile->setAnimationSpeed(RIGHT, 10);
+	projectile->addKeyframe(RIGHT, glm::vec2(0.f, 0.5f));
+	projectile->addKeyframe(RIGHT, glm::vec2(0.5f, 0.5f));
+	projectile->addKeyframe(RIGHT, glm::vec2(0.f, 0.75f));
+	projectile->addKeyframe(RIGHT, glm::vec2(0.5f, 0.75f));
 }
 
 void Reaper::update(int deltaTime)
 {
 
 	sprite->update(deltaTime);
+	projectile->update(deltaTime);
 
 	//Check if the player is nearby
 	if (((sprite->animation() == MOVE_LEFT && (map->getPosPlayer()).x + 32 > posEnemy.x - 2 * 16 && (map->getPosPlayer()).x < posEnemy.x)
@@ -149,8 +182,18 @@ void Reaper::update(int deltaTime)
 			if (sprite->animation() != ATTACK_RIGHT)
 				sprite->changeAnimation(ATTACK_RIGHT);
 
-			if (sprite->getCurrentKeyFrame() == 12) {
+			if (sprite->getCurrentKeyFrame() == 8)
+				projectile->changeAnimation(RIGHT);
+
+			if (sprite->getCurrentKeyFrame() >= 9 && sprite->getCurrentKeyFrame() < 12) {
+				projectile->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x + 32), float(tileMapDispl.y + posEnemy.y)));
+				
+				renderProjectile = true;
+			}
+
+			else if (sprite->getCurrentKeyFrame() == 12) {
 				attackEnded = true;
+				renderProjectile = false;
 			}
 		}
 
@@ -159,12 +202,48 @@ void Reaper::update(int deltaTime)
 			if (sprite->animation() != ATTACK_LEFT)
 				sprite->changeAnimation(ATTACK_LEFT);
 
+			if (sprite->getCurrentKeyFrame() == 8)
+				projectile->changeAnimation(LEFT);
+
+			if (sprite->getCurrentKeyFrame() >= 9 && sprite->getCurrentKeyFrame() < 12) {
+				projectile->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x - 80), float(tileMapDispl.y + posEnemy.y)));
+
+				renderProjectile = true;
+			}
+
 			if (sprite->getCurrentKeyFrame() == 12) {
 				attackEnded = true;
+				renderProjectile = false;
 			}
 		}
 
 	}
 
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x), float(tileMapDispl.y + posEnemy.y)));
+}
+
+bool Reaper::collisionPlayer()
+{
+	glm::ivec2 posPlayer = map->getPosPlayer();
+	int tileSize = map->getTileSize();
+
+	bool collisionX;
+	bool collisionY;
+
+	//Attacking left
+	if (sprite->animation() == ATTACK_LEFT && sprite->getCurrentKeyFrame() >= 10 && sprite->getCurrentKeyFrame() < 12) {
+		collisionX = posPlayer.x + 32 >= posEnemy.x - 64 && posEnemy.x + hitbox.x - 64 >= posPlayer.x;
+		collisionY = posPlayer.y + 32 >= posEnemy.y + (32 - hitbox.y) && posEnemy.y + 32 - (32 - hitbox.y) >= posPlayer.y;
+	}
+	//Attacking right
+	else if (sprite->animation() == ATTACK_RIGHT && sprite->getCurrentKeyFrame() >= 10 && sprite->getCurrentKeyFrame() < 12) {
+		collisionX = posPlayer.x + 32 >= posEnemy.x + hitbox.x && posEnemy.x + hitbox.x + 64 >= posPlayer.x;
+		collisionY = posPlayer.y + 32 >= posEnemy.y + (32 - hitbox.y) && posEnemy.y + 32 - (32 - hitbox.y) >= posPlayer.y;
+	}
+	else {
+		collisionX = posPlayer.x + 32 >= posEnemy.x + (32 - hitbox.x) && posEnemy.x + 32 - (32 - hitbox.x) >= posPlayer.x;
+		collisionY = posPlayer.y + 32 >= posEnemy.y + (32 - hitbox.y) && posEnemy.y + 32 - (32 - hitbox.y) >= posPlayer.y;
+	}
+
+	return collisionX && collisionY;
 }

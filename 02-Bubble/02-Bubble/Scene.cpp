@@ -57,7 +57,7 @@ void Scene::update(int deltaTime)
 
 		levelInterface->addScore((postPosStepped - prevPosStepped) * 10);
 
-	cout << "pos player: " << player->getPosition().x << " " << player->getPosition().y << endl;;
+	//cout << "pos player: " << player->getPosition().x << " " << player->getPosition().y << endl;;
 
 	map->setPosPlayer(player->getPosition());
 

@@ -23,8 +23,7 @@ public:
 	void setPosition(const glm::vec2& pos);
 	void setTileMap(TileMap* tileMap) { map = tileMap; };
 
-public:
-	bool collisionPlayer();
+	virtual bool collisionPlayer();
 
 protected:
 	Texture spritesheet;
