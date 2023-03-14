@@ -15,7 +15,7 @@ public:
 	LevelInterface();
 	~LevelInterface();
 
-	void init(ShaderProgram& shaderProgram);
+	void init(ShaderProgram &shaderProgram);
 	void updateLives(int l);
 	void addScore(int s);
 	void updateRemainingTime(int t);

@@ -27,7 +27,7 @@ LevelInterface::~LevelInterface()
 
 // Public functions
 
-void LevelInterface::init(ShaderProgram& shaderProgram)
+void LevelInterface::init(ShaderProgram &shaderProgram)
 {
 	initNumberSprite(shaderProgram);
 	initCharacterSprite(shaderProgram);

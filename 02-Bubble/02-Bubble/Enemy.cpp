@@ -18,7 +18,7 @@ enum EnemyAnims
 
 // Public functions
 
-void Enemy::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram) {}
+void Enemy::init(const glm::ivec2& tileMapPos, ShaderProgram &shaderProgram) {}
 
 void Enemy::update(int deltaTime) {}
 

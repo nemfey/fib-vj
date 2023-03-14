@@ -152,6 +152,13 @@ void Player::loseLive()
 		cout << "GAME OVER" << endl;
 }
 
+void Player::resetPosition(const glm::ivec2& pos)
+{
+	bJumping = false;
+	posPlayer = pos;
+	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
+}
+
 // Getters & Setters
 
 void Player::setPosition(const glm::ivec2 &pos)

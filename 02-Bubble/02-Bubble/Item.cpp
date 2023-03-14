@@ -13,7 +13,7 @@ enum ItemAnims
 
 // Public functions
 
-void Item::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram) {}
+void Item::init(const glm::ivec2& tileMapPos, ShaderProgram &shaderProgram) {}
 
 void Item::update(int deltaTime) {}
 

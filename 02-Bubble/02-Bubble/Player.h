@@ -18,6 +18,7 @@ public:
 	void update(int deltaTime);
 	void render();
 	void loseLive();
+	void resetPosition(const glm::ivec2& pos);
 	
 	// Getters & Setters
 	glm::ivec2 getPosition() const { return posPlayer; };

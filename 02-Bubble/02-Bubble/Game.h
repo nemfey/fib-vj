@@ -31,7 +31,6 @@ public:
 	void init();
 	bool update(int deltaTime);
 	void render();
-	void reshape(int width, int height);
 	static void reshapeCallback(int width, int height);
 	
 	// Input callback methods
@@ -48,11 +47,21 @@ public:
 	bool getSpecialKey(int key) const;
 
 private:
+	void initShaders();
+	void renderProjection();
+	void updateRatioWindowSize(int width, int height);
+
+private:
+	ShaderProgram texProgram;
+
+	glm::mat4 projection;
+	float gameRatio = 1.28f;
+	float ratioWindowSize;
+
 	bool bPlay;                       // Continue to play game?
 	Scene scene;                      // Scene to render
 	bool keys[256], specialKeys[256]; // Store key states so that 
 	                                  // we can have access at any time
-	float ratioWindowSize;
 };
 
 
