@@ -34,6 +34,7 @@ public:
 
 	// Gettters & Setters
 	int getCurrentTime() { return currentTime; };
+	bool getLevelFinished() { return bLevelFinished; };
 
 private:
 	void initShaders();
@@ -41,6 +42,7 @@ private:
 	void initEnemies();
 	void initItems();
 	void updateTime(int deltatime);
+	void renderProjection();
 
 private:
 	LevelInterface* levelInterface;
@@ -60,7 +62,7 @@ private:
 	int timer;
 	int hourglassTimer;
 
-	bool bLevelClear;
+	bool bLevelFinished;
 };
 
 

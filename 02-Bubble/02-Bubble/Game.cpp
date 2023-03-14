@@ -15,9 +15,15 @@ void Game::init()
 	//glutSetCursor(GLUT_CURSOR_NONE);
 }
 
+#include <iostream>
+
 bool Game::update(int deltaTime)
 {
-	scene.update(deltaTime);
+	if (!scene.getLevelFinished())
+		scene.update(deltaTime);
+	else
+		cout << "GAME FINISHED" << endl;
+	//else if (scene.)
 	
 	return bPlay;
 }

@@ -47,68 +47,60 @@ void Scene::init()
 	//projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	remainingSeconds, currentTime = 60;
 	timer = 0;
-	bLevelClear = false;
+	bLevelFinished = false;
 }
 
 void Scene::update(int deltaTime)
 {	
-	if (!bLevelClear)
+	updateTime(deltaTime);
+	
+	int prevPosStepped = map->getPositionsStepped();
+	player->update(deltaTime);
+	int postPosStepped = map->getPositionsStepped();
+	if (postPosStepped > prevPosStepped)
+		levelInterface->addScore((postPosStepped - prevPosStepped) * 10);
+
+	map->setPosPlayer(player->getPosition());
+
+	bool hourglassTaken = map->getHourglassTaken();
+	if (hourglassTaken && hourglassTimer == 0)
+		hourglassTimer = 5;
+
+	for (auto e : enemies)
 	{
-		updateTime(deltaTime);
-		int prevPosStepped = map->getPositionsStepped();
-		player->update(deltaTime);
-		int postPosStepped = map->getPositionsStepped();
-		if (postPosStepped > prevPosStepped)
-			levelInterface->addScore((postPosStepped - prevPosStepped) * 10);
+		if (!hourglassTaken)
+			e->update(deltaTime);
+		else if (hourglassTimer == 1)
+			e->stopwatchEnding(currentTime);
 
-		map->setPosPlayer(player->getPosition());
-
-		bool hourglassTaken = map->getHourglassTaken();
-		if (hourglassTaken && hourglassTimer == 0)
-			hourglassTimer = 5;
-
-		for (auto e : enemies)
+		if (e->collisionPlayer() && !player->getInmunityState())
 		{
-			if (!hourglassTaken)
-				e->update(deltaTime);
-			else if (hourglassTimer == 1)
-				e->stopwatchEnding(currentTime);
-
-			if (e->collisionPlayer() && !player->getInmunityState())
-			{
-				player->loseLive();
-				levelInterface->updateLives(player->getLives());
-				player->setPosition(glm::vec2(initPosPlayer.x * map->getTileSize(), initPosPlayer.y * map->getTileSize()));
-				map->setPosPlayer(initPosPlayer);
-			}
-		}
-
-		for (auto i : items)
-		{
-			Door* d = dynamic_cast<Door*>(i);
-			if (d && d->isTaken())
-			{
-				bLevelClear = true;
-			}
-			i->update(deltaTime);
+			player->loseLive();
+			levelInterface->updateLives(player->getLives());
+			player->setPosition(glm::vec2(initPosPlayer.x * map->getTileSize(), initPosPlayer.y * map->getTileSize()));
+			map->setPosPlayer(initPosPlayer);
 		}
 	}
-	else
+
+	for (auto i : items)
 	{
-		levelInterface->setStageClear(true);
+		Door* d = dynamic_cast<Door*>(i);
+		if (d && d->isTaken())
+		{
+			bLevelFinished = true;
+		}
+		i->update(deltaTime);
 	}
+	
+	//else
+	//{
+	//	levelInterface->setStageClear(true);
+	//}
 }
 
 void Scene::render()
 {
-	glm::mat4 modelview;
-
-	texProgram.use();
-	texProgram.setUniformMatrix4f("projection", projection);
-	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
-	modelview = glm::mat4(1.0f);
-	texProgram.setUniformMatrix4f("modelview", modelview);
-	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
+	renderProjection();
 
 	map->render();
 	for (auto i : items)
@@ -242,4 +234,16 @@ void Scene::updateTime(int deltatime)
 	}
 
 	levelInterface->updateRemainingTime(remainingSeconds);
+}
+
+void Scene::renderProjection()
+{
+	glm::mat4 modelview;
+
+	texProgram.use();
+	texProgram.setUniformMatrix4f("projection", projection);
+	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
+	modelview = glm::mat4(1.0f);
+	texProgram.setUniformMatrix4f("modelview", modelview);
+	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 }
