@@ -56,7 +56,7 @@ void Reaper::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.75f, 0.f));
 	sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.625f, 0.f));
 
-	sprite->setAnimationSpeed(ATTACK_LEFT, 10);
+	sprite->setAnimationSpeed(ATTACK_LEFT, 12);
 	sprite->addKeyframe(ATTACK_LEFT, glm::vec2(0.f, 0.25));
 	sprite->addKeyframe(ATTACK_LEFT, glm::vec2(0.125f, 0.25));
 	sprite->addKeyframe(ATTACK_LEFT, glm::vec2(0.25f, 0.25));
@@ -71,7 +71,7 @@ void Reaper::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	sprite->addKeyframe(ATTACK_LEFT, glm::vec2(0.375f, 0.5));
 	sprite->addKeyframe(ATTACK_LEFT, glm::vec2(0.f, 0.25));
 
-	sprite->setAnimationSpeed(ATTACK_RIGHT, 10);
+	sprite->setAnimationSpeed(ATTACK_RIGHT, 12);
 	sprite->addKeyframe(ATTACK_RIGHT, glm::vec2(0.5f, 0.5));
 	sprite->addKeyframe(ATTACK_RIGHT, glm::vec2(0.625f, 0.5));
 	sprite->addKeyframe(ATTACK_RIGHT, glm::vec2(0.75f, 0.5));
@@ -98,13 +98,13 @@ void Reaper::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	projectile = Sprite::createSprite(glm::ivec2(80, 32), glm::vec2(0.5, 0.25), &projectileTex, &shaderProgram);
 	projectile->setNumberAnimations(2);
 
-	projectile->setAnimationSpeed(LEFT, 10);
+	projectile->setAnimationSpeed(LEFT, 12);
 	projectile->addKeyframe(LEFT, glm::vec2(0.f, 0.f));
 	projectile->addKeyframe(LEFT, glm::vec2(0.5f, 0.f));
 	projectile->addKeyframe(LEFT, glm::vec2(0.f, 0.25f));
 	projectile->addKeyframe(LEFT, glm::vec2(0.5f, 0.25f));
 
-	projectile->setAnimationSpeed(RIGHT, 10);
+	projectile->setAnimationSpeed(RIGHT, 12);
 	projectile->addKeyframe(RIGHT, glm::vec2(0.f, 0.5f));
 	projectile->addKeyframe(RIGHT, glm::vec2(0.5f, 0.5f));
 	projectile->addKeyframe(RIGHT, glm::vec2(0.f, 0.75f));
