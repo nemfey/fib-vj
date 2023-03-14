@@ -30,21 +30,17 @@ Scene::~Scene()
 
 // Public functions
 
-void Scene::init()
+void Scene::init(ShaderProgram &shaderProgram)
 {
-	initShaders();
+	texProgram = shaderProgram;
 	map = TileMap::createTileMap("levels/level28.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-	cout << "hola" << endl;
 	levelInterface = new LevelInterface();
 	levelInterface->init(texProgram);
-	cout << "adios·" << endl;
 
 	initPlayer();
 	initEnemies();
 	initItems();
 
-	//projection = glm::ortho(0.f, float(windowSize.x - 1), float(windowSize.y - 1), 0.f);
-	//projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	remainingSeconds, currentTime = 60;
 	timer = 0;
 	bLevelFinished = false;
@@ -58,7 +54,10 @@ void Scene::update(int deltaTime)
 	player->update(deltaTime);
 	int postPosStepped = map->getPositionsStepped();
 	if (postPosStepped > prevPosStepped)
+
 		levelInterface->addScore((postPosStepped - prevPosStepped) * 10);
+
+	cout << "pos player: " << player->getPosition().x << " " << player->getPosition().y << endl;;
 
 	map->setPosPlayer(player->getPosition());
 
@@ -77,7 +76,7 @@ void Scene::update(int deltaTime)
 		{
 			player->loseLive();
 			levelInterface->updateLives(player->getLives());
-			player->setPosition(glm::vec2(initPosPlayer.x * map->getTileSize(), initPosPlayer.y * map->getTileSize()));
+			player->resetPosition(glm::vec2(initPosPlayer.x * map->getTileSize(), initPosPlayer.y * map->getTileSize()));
 			map->setPosPlayer(initPosPlayer);
 		}
 	}
@@ -100,8 +99,6 @@ void Scene::update(int deltaTime)
 
 void Scene::render()
 {
-	renderProjection();
-
 	map->render();
 	for (auto i : items)
 		i->render();
@@ -111,62 +108,9 @@ void Scene::render()
 	levelInterface->render();
 }
 
-void Scene::updateRatioWindowSize(int width, int height)
-{
-	float windowRatio = width / float(height);
-	float scale = 1.0f;
-
-	if (windowRatio > gameRatio)
-	{
-		scale = height / 400.0f;  // escalate Y axis
-		float offset = (width - 512*scale) / 2;
-		projection = glm::ortho(-offset, float(width)-offset, float(height), 0.f);
-	}
-	else
-	{
-		scale = width / 512.0f;  // escalate X axis
-		float offset = (height - 400*scale) / 2;
-		projection = glm::ortho(0.f, float(width), float(height)-offset, -offset);
-	}
-	projection = glm::scale(projection, glm::vec3(scale));
-}
-
-// Private functions
-
-void Scene::initShaders()
-{
-	Shader vShader, fShader;
-
-	vShader.initFromFile(VERTEX_SHADER, "shaders/texture.vert");
-	if(!vShader.isCompiled())
-	{
-		cout << "Vertex Shader Error" << endl;
-		cout << "" << vShader.log() << endl << endl;
-	}
-	fShader.initFromFile(FRAGMENT_SHADER, "shaders/texture.frag");
-	if(!fShader.isCompiled())
-	{
-		cout << "Fragment Shader Error" << endl;
-		cout << "" << fShader.log() << endl << endl;
-	}
-	texProgram.init();
-	texProgram.addShader(vShader);
-	texProgram.addShader(fShader);
-	texProgram.link();
-	if(!texProgram.isLinked())
-	{
-		cout << "Shader Linking Error" << endl;
-		cout << "" << texProgram.log() << endl << endl;
-	}
-	texProgram.bindFragmentOutput("outColor");
-	vShader.free();
-	fShader.free();
-}
-
 void Scene::initPlayer()
 {
 	player = new Player();
-	//glm::ivec2 posPlayer = map->getPosPlayer();
 	initPosPlayer = map->getPosPlayer();
 
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -234,16 +178,4 @@ void Scene::updateTime(int deltatime)
 	}
 
 	levelInterface->updateRemainingTime(remainingSeconds);
-}
-
-void Scene::renderProjection()
-{
-	glm::mat4 modelview;
-
-	texProgram.use();
-	texProgram.setUniformMatrix4f("projection", projection);
-	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
-	modelview = glm::mat4(1.0f);
-	texProgram.setUniformMatrix4f("modelview", modelview);
-	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 }

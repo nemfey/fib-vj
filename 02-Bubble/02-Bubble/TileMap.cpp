@@ -20,7 +20,7 @@ TileMap::TileMap(const string& levelFile, const glm::vec2& minCoords, ShaderProg
 }
 
 // Public functions
-TileMap* TileMap::createTileMap(const string& levelFile, const glm::vec2& minCoords, ShaderProgram& program)
+TileMap* TileMap::createTileMap(const string& levelFile, const glm::vec2& minCoords, ShaderProgram &program)
 {
 	TileMap* map = new TileMap(levelFile, minCoords, program);
 	return map;
