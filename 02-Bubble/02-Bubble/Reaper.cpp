@@ -186,7 +186,7 @@ void Reaper::update(int deltaTime)
 				projectile->changeAnimation(RIGHT);
 
 			if (sprite->getCurrentKeyFrame() >= 9 && sprite->getCurrentKeyFrame() < 12) {
-				projectile->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x + 32), float(tileMapDispl.y + posEnemy.y)));
+				projectile->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x + 16), float(tileMapDispl.y + posEnemy.y)));
 				
 				renderProjectile = true;
 			}
@@ -206,7 +206,7 @@ void Reaper::update(int deltaTime)
 				projectile->changeAnimation(LEFT);
 
 			if (sprite->getCurrentKeyFrame() >= 9 && sprite->getCurrentKeyFrame() < 12) {
-				projectile->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x - 80), float(tileMapDispl.y + posEnemy.y)));
+				projectile->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x - 64), float(tileMapDispl.y + posEnemy.y)));
 
 				renderProjectile = true;
 			}
@@ -232,12 +232,12 @@ bool Reaper::collisionPlayer()
 
 	//Attacking left
 	if (sprite->animation() == ATTACK_LEFT && sprite->getCurrentKeyFrame() >= 10 && sprite->getCurrentKeyFrame() < 12) {
-		collisionX = posPlayer.x + 32 >= posEnemy.x - 64 && posEnemy.x + hitbox.x - 64 >= posPlayer.x;
+		collisionX = posPlayer.x + 32 >= posEnemy.x - 48 && posEnemy.x + hitbox.x - 48 >= posPlayer.x;
 		collisionY = posPlayer.y + 32 >= posEnemy.y + (32 - hitbox.y) && posEnemy.y + 32 - (32 - hitbox.y) >= posPlayer.y;
 	}
 	//Attacking right
 	else if (sprite->animation() == ATTACK_RIGHT && sprite->getCurrentKeyFrame() >= 10 && sprite->getCurrentKeyFrame() < 12) {
-		collisionX = posPlayer.x + 32 >= posEnemy.x + hitbox.x && posEnemy.x + hitbox.x + 64 >= posPlayer.x;
+		collisionX = posPlayer.x + 32 >= posEnemy.x + hitbox.x && posEnemy.x + hitbox.x + 48 >= posPlayer.x;
 		collisionY = posPlayer.y + 32 >= posEnemy.y + (32 - hitbox.y) && posEnemy.y + 32 - (32 - hitbox.y) >= posPlayer.y;
 	}
 	else {
