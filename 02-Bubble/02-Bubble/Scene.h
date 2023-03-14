@@ -10,6 +10,7 @@
 #include "Enemy.h"
 #include "Skeleton.h"
 #include "Vampire.h"
+#include "Reaper.h"
 #include "Item.h"
 #include "Key.h"
 #include "Door.h"

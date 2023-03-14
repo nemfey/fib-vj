@@ -243,6 +243,11 @@ bool TileMap::loadLevel(const string& levelFile)
 				enemies.push_back(make_pair('V', glm::ivec2(i, j)));
 				map[j * mapSize.x + i] = 0;
 			}
+			// Reaper
+			else if (tile == 'R') {
+				enemies.push_back(make_pair('R', glm::ivec2(i, j)));
+				map[j * mapSize.x + i] = 0;
+			}
 			//Player
 			else if (tile == 'P') {
 				posPlayer = glm::ivec2(i, j);

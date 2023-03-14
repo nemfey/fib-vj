@@ -186,6 +186,10 @@ void Scene::initEnemies()
 		{
 			enemies.push_back(new Vampire());
 		}
+		else if (tileMapEnemies[i].first == 'R')
+		{
+			enemies.push_back(new Reaper());
+		}
 		auto e = enemies[i];
 		e->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 		e->setPosition(glm::vec2(tileMapEnemies[i].second[0] * map->getTileSize(), tileMapEnemies[i].second[1] * map->getTileSize()));

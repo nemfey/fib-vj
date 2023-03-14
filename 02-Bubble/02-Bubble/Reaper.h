@@ -11,5 +11,7 @@ public:
 private:
 	bool moveRight = true;
 
-};
+	bool attacking = false;
+	bool attackEnded = true;
 
+};
