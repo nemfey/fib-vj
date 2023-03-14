@@ -45,13 +45,15 @@ void Scene::init()
 
 	//projection = glm::ortho(0.f, float(windowSize.x - 1), float(windowSize.y - 1), 0.f);
 	//projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
-	currentTime = 0;
-	remainingSeconds = 60;
+	remainingSeconds, currentTime = 60;
+	timer = 0;
+	bLevelFinished = false;
 }
 
 void Scene::update(int deltaTime)
-{
+{	
 	updateTime(deltaTime);
+	
 	int prevPosStepped = map->getPositionsStepped();
 	player->update(deltaTime);
 	int postPosStepped = map->getPositionsStepped();
@@ -81,19 +83,24 @@ void Scene::update(int deltaTime)
 	}
 
 	for (auto i : items)
+	{
+		Door* d = dynamic_cast<Door*>(i);
+		if (d && d->isTaken())
+		{
+			bLevelFinished = true;
+		}
 		i->update(deltaTime);
+	}
+	
+	//else
+	//{
+	//	levelInterface->setStageClear(true);
+	//}
 }
 
 void Scene::render()
 {
-	glm::mat4 modelview;
-
-	texProgram.use();
-	texProgram.setUniformMatrix4f("projection", projection);
-	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
-	modelview = glm::mat4(1.0f);
-	texProgram.setUniformMatrix4f("modelview", modelview);
-	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
+	renderProjection();
 
 	map->render();
 	for (auto i : items)
@@ -227,4 +234,16 @@ void Scene::updateTime(int deltatime)
 	}
 
 	levelInterface->updateRemainingTime(remainingSeconds);
+}
+
+void Scene::renderProjection()
+{
+	glm::mat4 modelview;
+
+	texProgram.use();
+	texProgram.setUniformMatrix4f("projection", projection);
+	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
+	modelview = glm::mat4(1.0f);
+	texProgram.setUniformMatrix4f("modelview", modelview);
+	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 }

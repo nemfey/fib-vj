@@ -63,6 +63,7 @@ void Door::update(int deltaTime)
 	}
 	else if (showing && collisionPlayer())
 	{
+		taken = true;
 		cout << "LEVEL FINISHED" << endl;
 	}
 }
