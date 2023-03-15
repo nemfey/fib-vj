@@ -40,7 +40,6 @@ private:
 	void initPlayer();
 	void initEnemies();
 	void initItems();
-	void updateScene(int deltaTime);
 	void stageClearMessage();
 	void gameOverMessage();
 	void updateTime(int deltaTime);

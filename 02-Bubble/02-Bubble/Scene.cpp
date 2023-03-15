@@ -63,16 +63,15 @@ void Scene::update(int deltaTime)
 	else
 	{
 		updatePlayer(deltaTime);
-		
+		updateEnemies(deltaTime);
+		updateItems(deltaTime);
+		updateLevelInterface(deltaTime);
+
 		if (map->getHourglassTaken())
 		{
 			hourglassTimer = 5;
 			map->setHourglassTaken(false);
 		}
-		//bool hourglassTaken = map->getHourglassTaken(); // meterlo esto en una variable de la clase y no local(?)
-														// se podria tener solo el timer del hourgalss y ver si es == 5
-														// si es asi esq se cogido hace poco si es 0 es que no esta cogido
-
 		else if (hourglassTimer > 0) // esto que hace(?)
 		{
 			if (currentTime / 1000 != timer)
@@ -81,27 +80,10 @@ void Scene::update(int deltaTime)
 				--hourglassTimer;
 				cout << "item timer is: " << hourglassTimer << endl;
 			}
-			// FALTA QUE CUANDO HAY STOPWATCH NO SE COMPRUEBA SI HAY CHOQUE CON EL PLAYER
-			// PROBABLEMENTE AHACER FUNCION PARA CHEQUEAR SI COLISIONES
-			if (hourglassTimer == 1)
-			{
-				updateEnemies(deltaTime);
-			}
-			//if (hourglassTimer == 0)
-			//{
-			//	map->setHourglassTaken(false);
-			//}
-			//hourglassTimer = 5;
-			//if (hourglassTimer == 1)
-			//	bHourglassEnding = true;
 		}
 		else 
 		{
-			cout << "UPDATING" << endl;
 			updateTime(deltaTime);
-			updateEnemies(deltaTime);
-			updateItems(deltaTime);
-			updateLevelInterface(deltaTime);
 		}
 	}
 }
@@ -171,19 +153,6 @@ void Scene::initItems()
 	}
 }
 
-void Scene::updateScene(int deltaTime)
-{
-	updateTime(deltaTime);
-
-	updatePlayer(deltaTime);
-
-	bool hourglassTaken = map->getHourglassTaken();
-	if (hourglassTaken && hourglassTimer == 0)
-		hourglassTimer = 5;
-
-	
-}
-
 void Scene::stageClearMessage()
 {
 	// que se muestre el mensaje durante 3-5 segundos y luego state = StageClear;
@@ -205,23 +174,11 @@ void Scene::updateTime(int deltaTime)
 	if (currentTime / 1000 != timer)
 	{	
 		timer = currentTime / 1000;
-		//if (!map->getHourglassTaken()) {
 			--remainingSeconds;
 
 			//DEBUG
 			cout << remainingSeconds << endl;
-		//}
-		//else {
-		//	if (hourglassTimer > 0) --hourglassTimer;
-		//	if (hourglassTimer <= 0)
-		//		map->setHourglassTaken(false);
-
-			//DEBUG
-		//	cout << "item timer is: " << hourglassTimer << endl;
-		//}
 	}
-
-	//levelInterface->updateRemainingTime(remainingSeconds);
 }
 
 void Scene::updatePlayer(int deltaTime)
@@ -241,24 +198,22 @@ void Scene::updateEnemies(int deltaTime)
 {
 	for (auto e : enemies)
 	{
-		if (hourglassTimer == 1)
-			e->stopwatchEnding(currentTime);
+		if (hourglassTimer > 0 && !e->getIsPlayerKiller())
+		{
+			if (hourglassTimer == 1)
+				e->stopwatchEnding(currentTime);
+		}
 		else
 			e->update(deltaTime);
-
+		
 		if (e->collisionPlayer() && !player->getInmunityState())
-		{
-			if (player->getLives() > 1)
+			if (player->getLives() > 0)
 			{
 				player->loseLive();
-				//levelInterface->updateLives(player->getLives());
 				player->resetPosition(glm::vec2(initPosPlayer.x * map->getTileSize(), initPosPlayer.y * map->getTileSize()));
 				map->setPosPlayer(initPosPlayer);
 			}
-			//else
-			//	// PRIMERO MOSTRAS MENSAJE GAME OVER Y LUEGO YA STATE
-			//	//state = GameOver;
-		}
+
 	}
 }
 
@@ -270,8 +225,6 @@ void Scene::updateItems(int deltaTime)
 		if (d && d->isTaken())
 		{
 			bDoorTaken = true;
-			// PRIMERO MOSTRAR MENSAJE DE STAGE CLEARED Y LUEGO YA STATE
-			//state = StageCleared;
 		}
 		i->update(deltaTime);
 	}
