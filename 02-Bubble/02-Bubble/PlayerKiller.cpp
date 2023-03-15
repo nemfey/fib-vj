@@ -21,22 +21,26 @@ void PlayerKiller::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgr
 {
 	isPlayerKiller = true;
 
-	spritesheet.loadFromFile("images/blocks2.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spritesheet.loadFromFile("images/playerkiller.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	spritesheet.setMagFilter(GL_NEAREST);
-	sprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(0.5, 0.5), &spritesheet, &shaderProgram);
+	sprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(0.125, 0.25), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(5);
 
-	sprite->setAnimationSpeed(LAVA, 8);
-	sprite->addKeyframe(LAVA, glm::vec2(0.0f, 0.f));
-	sprite->addKeyframe(LAVA, glm::vec2(0.0f, 0.5f));
+	sprite->setAnimationSpeed(LAVA, 6);
+	sprite->addKeyframe(LAVA, glm::vec2(0.f, 0.f));
+	sprite->addKeyframe(LAVA, glm::vec2(0.125f, 0.0f));
+	sprite->addKeyframe(LAVA, glm::vec2(0.25f, 0.f));
+	sprite->addKeyframe(LAVA, glm::vec2(0.375f, 0.f));
 
 	sprite->setAnimationSpeed(SPIKES, 8);
 	sprite->addKeyframe(SPIKES, glm::vec2(0.5f, 0.f));
 	sprite->addKeyframe(SPIKES, glm::vec2(0.5f, 0.5f));
 
-	sprite->setAnimationSpeed(SAW, 8);
+	sprite->setAnimationSpeed(SAW, 10);
 	sprite->addKeyframe(SAW, glm::vec2(0.5f, 0.f));
-	sprite->addKeyframe(SAW, glm::vec2(0.5f, 0.5f));
+	sprite->addKeyframe(SAW, glm::vec2(0.625f, 0.f));
+	sprite->addKeyframe(SAW, glm::vec2(0.75f, 0.f));
+	sprite->addKeyframe(SAW, glm::vec2(0.875f, 0.f));
 
 	sprite->setAnimationSpeed(POISON, 8);
 	sprite->addKeyframe(POISON, glm::vec2(0.5f, 0.5f));
