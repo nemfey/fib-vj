@@ -248,6 +248,16 @@ bool TileMap::loadLevel(const string& levelFile)
 				enemies.push_back(make_pair('R', glm::ivec2(i, j)));
 				map[j * mapSize.x + i] = 0;
 			}
+			//Lava
+			else if (tile == 'X') {
+				enemies.push_back(make_pair('X', glm::ivec2(i, j)));
+				map[j * mapSize.x + i] = 0;
+			}
+			//Saw
+			else if (tile == 'x') {
+				enemies.push_back(make_pair('x', glm::ivec2(i, j)));
+				map[j * mapSize.x + i] = 0;
+			}
 			//Player
 			else if (tile == 'P') {
 				posPlayer = glm::ivec2(i, j);

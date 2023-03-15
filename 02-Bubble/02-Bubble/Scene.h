@@ -11,6 +11,7 @@
 #include "Skeleton.h"
 #include "Vampire.h"
 #include "Reaper.h"
+#include "PlayerKiller.h"
 #include "Item.h"
 #include "Key.h"
 #include "Door.h"

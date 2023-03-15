@@ -10,6 +10,10 @@
 #define SCREEN_X 0
 #define SCREEN_Y 48
 
+enum playerKillers {
+	LAVA, SPIKES, SAW, POISON, MUSHROOMS
+};
+
 Scene::Scene()
 {
 	levelInterface = NULL;
@@ -67,7 +71,7 @@ void Scene::update(int deltaTime)
 
 	for (auto e : enemies)
 	{
-		if (!hourglassTaken)
+		if (!hourglassTaken || e->getIsPlayerKiller())
 			e->update(deltaTime);
 		else if (hourglassTimer == 1)
 			e->stopwatchEnding(currentTime);
@@ -133,6 +137,14 @@ void Scene::initEnemies()
 		else if (tileMapEnemies[i].first == 'R')
 		{
 			enemies.push_back(new Reaper());
+		}
+		else if (tileMapEnemies[i].first == 'X')
+		{
+			enemies.push_back(new PlayerKiller(LAVA));
+		}
+		else if (tileMapEnemies[i].first == 'x')
+		{
+			enemies.push_back(new PlayerKiller(SAW));
 		}
 		auto e = enemies[i];
 		e->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);

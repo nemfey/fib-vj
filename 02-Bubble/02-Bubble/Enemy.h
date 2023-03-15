@@ -18,6 +18,7 @@ public:
 	virtual void update(int deltaTime);
 	virtual void render();
 	void stopwatchEnding(int currentTime);
+	bool getIsPlayerKiller();
 
 	// Getters & Setters
 	void setPosition(const glm::vec2& pos);
@@ -34,6 +35,8 @@ protected:
 	glm::ivec2 hitbox;
 
 	bool firstHalfSecond = true;
+
+	bool isPlayerKiller = false;
 };
 
 
