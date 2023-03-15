@@ -72,7 +72,7 @@ void Scene::update(int deltaTime)
 			hourglassTimer = 5;
 			map->setHourglassTaken(false);
 		}
-		else if (hourglassTimer > 0) // esto que hace(?)
+		else if (hourglassTimer > 0)
 		{
 			if (currentTime / 1000 != timer)
 			{
@@ -188,8 +188,7 @@ void Scene::updatePlayer(int deltaTime)
 	int postPosStepped = map->getPositionsStepped();
 	
 	if (postPosStepped > prevPosStepped)
-		levelInterface->addScore((postPosStepped - prevPosStepped) * 10); // hacer un getscore del player
-																			// meter variable score en player
+		player->addScore((postPosStepped - prevPosStepped) * 10);
 
 	map->setPosPlayer(player->getPosition());
 }
@@ -232,6 +231,7 @@ void Scene::updateItems(int deltaTime)
 
 void Scene::updateLevelInterface(int deltaTime)
 {
-	levelInterface->updateRemainingTime(remainingSeconds);
 	levelInterface->updateLives(player->getLives());
+	levelInterface->updateScore(player->getScore());
+	levelInterface->updateRemainingTime(remainingSeconds);
 }

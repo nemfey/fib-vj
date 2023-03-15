@@ -49,9 +49,9 @@ void LevelInterface::updateLives(int l)
 	lives = l;
 }
 
-void LevelInterface::addScore(int s)
+void LevelInterface::updateScore(int s)
 {
-	score += s;
+	score = s;
 }
 
 void LevelInterface::updateRemainingTime(int t)

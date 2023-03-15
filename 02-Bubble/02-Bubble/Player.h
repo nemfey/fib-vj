@@ -19,11 +19,13 @@ public:
 	void render();
 	void loseLive();
 	void resetPosition(const glm::ivec2& pos);
+	void addScore(int s);
 	
 	// Getters & Setters
 	glm::ivec2 getPosition() const { return posPlayer; };
 	bool getInmunityState() const { return inmunityState; };
 	int getLives() const { return lives; };
+	int getScore() const { return score; };
 
 	void setTileMap(TileMap* tileMap) { map = tileMap; };
 	void setPosition(const glm::ivec2 &pos);
@@ -41,6 +43,8 @@ private:
 	int lives = 3;
 	bool inmunityState = false;
 	int inmunityTime = 0;
+
+	int score = 0;
 
 };
 

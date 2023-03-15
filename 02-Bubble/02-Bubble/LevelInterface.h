@@ -17,7 +17,7 @@ public:
 
 	void init(ShaderProgram &shaderProgram);
 	void updateLives(int l);
-	void addScore(int s);
+	void updateScore(int s);
 	void updateRemainingTime(int t);
 	void updateStage(int s);
 	void render();

@@ -46,7 +46,6 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 
 	bJumping = false;
-	
 }
 
 void Player::update(int deltaTime)
@@ -157,6 +156,11 @@ void Player::resetPosition(const glm::ivec2& pos)
 	bJumping = false;
 	posPlayer = pos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
+}
+
+void Player::addScore(int s)
+{
+	score += s;
 }
 
 // Getters & Setters
