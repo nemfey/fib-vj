@@ -28,13 +28,9 @@ void PlayerKiller::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgr
 
 	sprite->setAnimationSpeed(LAVA, 6);
 	sprite->addKeyframe(LAVA, glm::vec2(0.f, 0.f));
-	sprite->addKeyframe(LAVA, glm::vec2(0.125f, 0.0f));
+	sprite->addKeyframe(LAVA, glm::vec2(0.125f, 0.f));
 	sprite->addKeyframe(LAVA, glm::vec2(0.25f, 0.f));
 	sprite->addKeyframe(LAVA, glm::vec2(0.375f, 0.f));
-
-	sprite->setAnimationSpeed(SPIKES, 8);
-	sprite->addKeyframe(SPIKES, glm::vec2(0.5f, 0.f));
-	sprite->addKeyframe(SPIKES, glm::vec2(0.5f, 0.5f));
 
 	sprite->setAnimationSpeed(SAW, 10);
 	sprite->addKeyframe(SAW, glm::vec2(0.5f, 0.f));
@@ -43,10 +39,22 @@ void PlayerKiller::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgr
 	sprite->addKeyframe(SAW, glm::vec2(0.875f, 0.f));
 
 	sprite->setAnimationSpeed(POISON, 8);
-	sprite->addKeyframe(POISON, glm::vec2(0.5f, 0.5f));
+	sprite->addKeyframe(POISON, glm::vec2(0.f, 0.25f));
+	sprite->addKeyframe(POISON, glm::vec2(0.125f, 0.25f));
+	sprite->addKeyframe(POISON, glm::vec2(0.25f, 0.25f));
+	sprite->addKeyframe(POISON, glm::vec2(0.375f, 0.25f));
+
+	sprite->setAnimationSpeed(SPIKES, 8);
+	sprite->addKeyframe(SPIKES, glm::vec2(0.5f, 0.25f));
+	sprite->addKeyframe(SPIKES, glm::vec2(0.625f, 0.25f));
+	sprite->addKeyframe(SPIKES, glm::vec2(0.75f, 0.25f));
+	sprite->addKeyframe(SPIKES, glm::vec2(0.875f, 0.25f));
 
 	sprite->setAnimationSpeed(MUSHROOMS, 8);
-	sprite->addKeyframe(MUSHROOMS, glm::vec2(0.5f, 0.5f));
+	sprite->addKeyframe(MUSHROOMS, glm::vec2(0.f, 0.5f));
+	sprite->addKeyframe(MUSHROOMS, glm::vec2(0.125f, 0.5f));
+	sprite->addKeyframe(MUSHROOMS, glm::vec2(0.25f, 0.5f));
+	sprite->addKeyframe(MUSHROOMS, glm::vec2(0.375f, 0.5f));
 
 	sprite->changeAnimation(type);
 	tileMapDispl = tileMapPos;
