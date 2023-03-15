@@ -198,9 +198,9 @@ void Scene::updateEnemies(int deltaTime)
 {
 	for (auto e : enemies)
 	{
-		if (hourglassTimer > 0 && !e->getIsPlayerKiller())
+		if (hourglassTimer > 0)
 		{
-			if (hourglassTimer == 1)
+			if (hourglassTimer == 1 && !e->getIsPlayerKiller())
 				e->stopwatchEnding(currentTime);
 		}
 		else

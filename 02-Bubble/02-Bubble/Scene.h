@@ -47,6 +47,7 @@ private:
 	void updateEnemies(int deltaTime);
 	void updateItems(int deltaTime);
 	void updateLevelInterface(int deltaTime);
+	void checkCollisionsWithPlayer();
 
 public:
 	enum State { Playing, StageCleared, GameOver };
