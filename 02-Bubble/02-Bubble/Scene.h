@@ -40,8 +40,14 @@ private:
 	void initPlayer();
 	void initEnemies();
 	void initItems();
+	void updateScene(int deltaTime);
+	void stageClearMessage();
+	void gameOverMessage();
 	void updateTime(int deltaTime);
 	void updatePlayer(int deltaTime);
+	void updateEnemies(int deltaTime);
+	void updateItems(int deltaTime);
+	void updateLevelInterface(int deltaTime);
 
 public:
 	enum State { Playing, StageCleared, GameOver };
@@ -60,6 +66,9 @@ private:
 	int currentTime, remainingSeconds = 60;
 	int timer;
 	int hourglassTimer;
+
+	bool bDoorTaken;
+	bool bHourglassEnding = false;
 };
 
 
