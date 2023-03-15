@@ -76,12 +76,12 @@ bool PlayerKiller::collisionPlayer()
 	bool collisionY;
 
 	//LAVA
-	if (sprite->animation() == LAVA) {
+	if (type == LAVA) {
 		collisionX = posPlayer.x + 32 >= posEnemy.x && posEnemy.x + hitbox.x >= posPlayer.x;
 		collisionY = posPlayer.y + 32 >= posEnemy.y + 6 && posEnemy.y + 6 >= posPlayer.y;
 	}
 	//SAW
-	else if (sprite->animation() == SAW) {
+	else if (type == SAW) {
 		collisionX = posPlayer.x + 32 >= posEnemy.x + 2 && posEnemy.x + hitbox.x - 2 >= posPlayer.x;
 		collisionY = posPlayer.y + 32 >= posEnemy.y + 2 && posEnemy.y + hitbox.y - 2 >= posPlayer.y;
 	}
