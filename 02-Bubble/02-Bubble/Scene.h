@@ -35,13 +35,17 @@ public:
 
 	// Gettters & Setters
 	int getCurrentTime() { return currentTime; };
-	bool getLevelFinished() { return bLevelFinished; };
 
 private:
 	void initPlayer();
 	void initEnemies();
 	void initItems();
-	void updateTime(int deltatime);
+	void updateTime(int deltaTime);
+	void updatePlayer(int deltaTime);
+
+public:
+	enum State { Playing, StageCleared, GameOver };
+	State state;
 
 private:
 	LevelInterface* levelInterface;
@@ -56,8 +60,6 @@ private:
 	int currentTime, remainingSeconds = 60;
 	int timer;
 	int hourglassTimer;
-
-	bool bLevelFinished;
 };
 
 

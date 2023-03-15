@@ -20,11 +20,7 @@ void Game::init()
 
 bool Game::update(int deltaTime)
 {
-	if (!scene.getLevelFinished())
-		scene.update(deltaTime);
-	else
-		cout << "GAME FINISHED" << endl;
-	//else if (scene.)
+	updateScene(deltaTime);
 	
 	return bPlay;
 }
@@ -33,6 +29,8 @@ void Game::render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	renderProjection();
+
+	// Si se esta ejecutando una escena, si se esta ejecutnado menu render menu
 	scene.render();
 }
 
@@ -131,6 +129,26 @@ void Game::renderProjection()
 	modelview = glm::mat4(1.0f);
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
+}
+
+void Game::updateScene(int deltaTime)
+{
+	switch (scene.state)
+	{
+	case Scene::Playing:
+		scene.update(deltaTime);
+		break;
+	case Scene::StageCleared:
+		// load next stage and if last end game
+		cout << "loading next stage..." << endl;
+		break;
+	case Scene::GameOver:
+		// Show menu again
+		cout << "Going back to menu..." << endl;
+		break;
+	default:
+		break;
+	}
 }
 
 void Game::updateRatioWindowSize(int width, int height)

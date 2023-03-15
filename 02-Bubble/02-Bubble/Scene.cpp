@@ -47,23 +47,15 @@ void Scene::init(ShaderProgram &shaderProgram)
 
 	remainingSeconds, currentTime = 60;
 	timer = 0;
-	bLevelFinished = false;
+
+	state = Playing;
 }
 
 void Scene::update(int deltaTime)
 {	
 	updateTime(deltaTime);
 	
-	int prevPosStepped = map->getPositionsStepped();
-	player->update(deltaTime);
-	int postPosStepped = map->getPositionsStepped();
-	if (postPosStepped > prevPosStepped)
-
-		levelInterface->addScore((postPosStepped - prevPosStepped) * 10);
-
-	//cout << "pos player: " << player->getPosition().x << " " << player->getPosition().y << endl;;
-
-	map->setPosPlayer(player->getPosition());
+	updatePlayer(deltaTime);
 
 	bool hourglassTaken = map->getHourglassTaken();
 	if (hourglassTaken && hourglassTimer == 0)
@@ -78,10 +70,16 @@ void Scene::update(int deltaTime)
 
 		if (e->collisionPlayer() && !player->getInmunityState())
 		{
-			player->loseLive();
-			levelInterface->updateLives(player->getLives());
-			player->resetPosition(glm::vec2(initPosPlayer.x * map->getTileSize(), initPosPlayer.y * map->getTileSize()));
-			map->setPosPlayer(initPosPlayer);
+			if (player->getLives() > 1)
+			{
+				player->loseLive();
+				levelInterface->updateLives(player->getLives());
+				player->resetPosition(glm::vec2(initPosPlayer.x * map->getTileSize(), initPosPlayer.y * map->getTileSize()));
+				map->setPosPlayer(initPosPlayer);
+			}
+			else
+				// PRIMERO MOSTRAS MENSAJE GAME OVER Y LUEGO YA STATE
+				state = GameOver;
 		}
 	}
 
@@ -90,7 +88,8 @@ void Scene::update(int deltaTime)
 		Door* d = dynamic_cast<Door*>(i);
 		if (d && d->isTaken())
 		{
-			bLevelFinished = true;
+			// PRIMERO MOSTRAR MENSAJE DE STAGE CLEARED Y LUEGO YA STATE
+			state = StageCleared;
 		}
 		i->update(deltaTime);
 	}
@@ -194,4 +193,16 @@ void Scene::updateTime(int deltatime)
 	}
 
 	levelInterface->updateRemainingTime(remainingSeconds);
+}
+
+void Scene::updatePlayer(int deltaTime)
+{
+	int prevPosStepped = map->getPositionsStepped();
+	player->update(deltaTime);
+	int postPosStepped = map->getPositionsStepped();
+	
+	if (postPosStepped > prevPosStepped)
+		levelInterface->addScore((postPosStepped - prevPosStepped) * 10);
+
+	map->setPosPlayer(player->getPosition());
 }

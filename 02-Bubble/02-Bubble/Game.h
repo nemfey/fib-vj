@@ -49,6 +49,7 @@ public:
 private:
 	void initShaders();
 	void renderProjection();
+	void updateScene(int deltaTime);
 	void updateRatioWindowSize(int width, int height);
 
 private:
