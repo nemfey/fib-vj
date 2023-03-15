@@ -16,7 +16,7 @@ enum VampireAnims
 
 void Vampire::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
-	spritesheet.loadFromFile("images/devil_tail.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spritesheet.loadFromFile("images/devil.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	spritesheet.setMagFilter(GL_NEAREST);
 	sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(0.25, 0.25), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(7);
