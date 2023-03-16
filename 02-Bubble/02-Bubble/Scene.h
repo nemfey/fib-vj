@@ -17,6 +17,8 @@
 #include "Door.h"
 #include "Hourglass.h"
 
+#include "StageState.h"
+
 
 // Scene contains all the entities of our game.
 // It is responsible for updating and render them.
@@ -49,8 +51,8 @@ private:
 	void updateLevelInterface(int deltaTime);
 
 public:
-	enum State { Playing, StageCleared, GameOver };
-	State state;
+	//enum State { Playing, StageCleared, GameOver };
+	StageState state;
 
 private:
 	LevelInterface* levelInterface;
@@ -65,8 +67,9 @@ private:
 	int currentTime, remainingSeconds = 60;
 	int timer;
 	int hourglassTimer;
+	int messageTimer;
 
-	bool bDoorTaken;
+	bool bDoorTaken, bPlayerDead;
 	bool bHourglassEnding = false;
 };
 

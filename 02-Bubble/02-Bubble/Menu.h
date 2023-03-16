@@ -17,25 +17,14 @@ public:
 	Menu();
 	~Menu();
 
-	void init();
+	void init(ShaderProgram& shaderProgram);
 	void update(int deltaTime);
 	void render();
-	void updateRatioWindowSize(int width, int height);
-
-	// Gettters & Setters
-	int getCurrentTime() { return currentTime; };
-
-private:
-	void initShaders();
-	void updateTime(int deltatime);
 
 private:
 	ShaderProgram texProgram;
-
-	glm::mat4 projection;
-	float ratioWindowSize;
-
-	int currentTime;
+	Texture spritesheet;
+	Sprite* sprite;
 };
 
 

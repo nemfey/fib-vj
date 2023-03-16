@@ -50,6 +50,9 @@ void Scene::init(ShaderProgram &shaderProgram)
 
 	state = Playing;
 	bDoorTaken = false;
+	bPlayerDead = false;
+	messageTimer = 0;
+	bHourglassEnding = false;
 }
 
 void Scene::update(int deltaTime)
@@ -58,7 +61,7 @@ void Scene::update(int deltaTime)
 
 	if (bDoorTaken)
 		stageClearMessage();
-	else if (player->getLives() == 0)
+	else if (bPlayerDead)
 		gameOverMessage();
 	else
 	{
@@ -155,12 +158,38 @@ void Scene::initItems()
 
 void Scene::stageClearMessage()
 {
+	if (messageTimer == 0)
+	{
+		state = StageCleared;
+	}
+	else
+	{
+		if (currentTime / 1000 != timer)
+		{
+			timer = currentTime / 1000;
+			--messageTimer;
+			cout << "message timer is: " << messageTimer << endl;
+		}
+	}
 	// que se muestre el mensaje durante 3-5 segundos y luego state = StageClear;
 }
 
 void Scene::gameOverMessage()
 {
 	// que se muestre el mensaje durante 3-5 segundos y luego state = GameOver;
+	if (messageTimer == 0)
+	{
+		state = GameOver;
+	}
+	else
+	{
+		if (currentTime / 1000 != timer)
+		{
+			timer = currentTime / 1000;
+			--messageTimer;
+			cout << "message timer is: " << messageTimer << endl;
+		}
+	}
 }
 
 void Scene::updateTime(int deltaTime)
@@ -206,11 +235,17 @@ void Scene::updateEnemies(int deltaTime)
 			e->update(deltaTime);
 		
 		if (e->collisionPlayer() && !player->getInmunityState())
-			if (player->getLives() > 0)
+			if (player->getLives() > 1)
 			{
 				player->loseLive();
 				player->resetPosition(glm::vec2(initPosPlayer.x * map->getTileSize(), initPosPlayer.y * map->getTileSize()));
 				map->setPosPlayer(initPosPlayer);
+			}
+			else
+			{
+				levelInterface->setState(GameOver);
+				bPlayerDead = true;
+				messageTimer = 5;
 			}
 
 	}
@@ -223,7 +258,9 @@ void Scene::updateItems(int deltaTime)
 		Door* d = dynamic_cast<Door*>(i);
 		if (d && d->isTaken())
 		{
+			levelInterface->setState(StageCleared);
 			bDoorTaken = true;
+			messageTimer = 5;
 		}
 		i->update(deltaTime);
 	}
