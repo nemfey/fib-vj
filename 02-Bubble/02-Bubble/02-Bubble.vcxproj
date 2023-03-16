@@ -28,6 +28,7 @@
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Skeleton.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="StageState.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="Vampire.h" />

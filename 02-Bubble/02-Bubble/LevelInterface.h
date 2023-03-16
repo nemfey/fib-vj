@@ -4,6 +4,8 @@
 #include <map>
 #include "Sprite.h"
 
+#include "StageState.h"
+
 // LevelInterface contains all the entities of our game.
 // It is responsible for updating and render them.
 
@@ -23,12 +25,13 @@ public:
 	void render();
 
 	// Gettters & Setters
-	void setStageClear(bool b) { bStageClear = b; };
+	void setState(StageState s) { state = s; };
 
 private:
 	void initNumberSprite(ShaderProgram& shaderProgram);
 	void initCharacterSprite(ShaderProgram& shaderProgram);
 	void initHeartSprite(ShaderProgram& shaderProgram);
+	void renderMessages();
 	void renderNumber(int n, int x, int y);
 	void renderCharacter(char c, int x, int y);
 
@@ -46,7 +49,7 @@ private:
 	int lives, score, remainingTime, stage;
 	map<char, int> char2id;
 
-	bool bStageClear;
+	StageState state;
 };
 
 

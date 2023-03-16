@@ -10,8 +10,10 @@ void Game::init()
 	initShaders();
 	bPlay = true;
 	glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
+	menu.init(texProgram);
 	scene.init(texProgram);
 
+	bMenuShowing = true;
 	// Descomentar la linea de abajo si no se quiere ver el cursor en la pantalla
 	//glutSetCursor(GLUT_CURSOR_NONE);
 }
@@ -20,7 +22,10 @@ void Game::init()
 
 bool Game::update(int deltaTime)
 {
-	updateScene(deltaTime);
+	if (bMenuShowing)
+		updateMenu(deltaTime);
+	else
+		updateScene(deltaTime);
 	
 	return bPlay;
 }
@@ -31,7 +36,10 @@ void Game::render()
 	renderProjection();
 
 	// Si se esta ejecutando una escena, si se esta ejecutnado menu render menu
-	scene.render();
+	if (bMenuShowing)
+		menu.render();
+	else
+		scene.render();
 }
 
 void Game::reshapeCallback(int width, int height)
@@ -44,8 +52,11 @@ void Game::reshapeCallback(int width, int height)
 
 void Game::keyPressed(int key)
 {
-	if(key == 27) // Escape code
+	cout << key << endl;
+	if (key == 27) // Escape code
 		bPlay = false;
+	if (key == 13)
+		bMenuShowing = false;
 	keys[key] = true;
 }
 
@@ -131,19 +142,26 @@ void Game::renderProjection()
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 }
 
+void Game::updateMenu(int deltaTime)
+{
+	menu.update(deltaTime);
+}
+
 void Game::updateScene(int deltaTime)
 {
 	switch (scene.state)
 	{
-	case Scene::Playing:
+	case StageState::Playing:
 		scene.update(deltaTime);
 		break;
-	case Scene::StageCleared:
+	case StageState::StageCleared:
 		// load next stage and if last end game
 		cout << "loading next stage..." << endl;
 		break;
-	case Scene::GameOver:
+	case StageState::GameOver:
 		// Show menu again
+		bMenuShowing = true;
+		scene.init(texProgram);
 		cout << "Going back to menu..." << endl;
 		break;
 	default:
