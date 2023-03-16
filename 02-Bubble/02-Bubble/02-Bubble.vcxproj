@@ -31,6 +31,7 @@
     <ClInclude Include="StageState.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TileMap.h" />
+    <ClInclude Include="Treasure.h" />
     <ClInclude Include="Vampire.h" />
   </ItemGroup>
   <ItemGroup>
@@ -53,6 +54,7 @@
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="Treasure.cpp" />
     <ClCompile Include="Vampire.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

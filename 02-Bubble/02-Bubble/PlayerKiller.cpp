@@ -5,7 +5,7 @@
 
 #define FALL_STEP 4
 
-enum Types
+enum playerKillers
 {
 	LAVA, SPIKES, SAW, POISON, MUSHROOMS
 };
