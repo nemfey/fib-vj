@@ -14,6 +14,8 @@ class Enemy
 {
 
 public:
+	~Enemy();
+
 	virtual void init(const glm::ivec2& tileMapPos, ShaderProgram &shaderProgram);
 	virtual void update(int deltaTime);
 	virtual void render();

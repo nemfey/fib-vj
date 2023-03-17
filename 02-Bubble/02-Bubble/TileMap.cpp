@@ -26,10 +26,19 @@ TileMap* TileMap::createTileMap(const string& levelFile, const glm::vec2& minCoo
 	return map;
 }
 
+TileMap::TileMap()
+{
+	map = NULL;
+	steppedFloorSprite = NULL;
+
+}
+
 TileMap::~TileMap()
 {
 	if (map != NULL)
 		delete map;
+	if (steppedFloorSprite != NULL)
+		delete steppedFloorSprite;
 }
 
 void TileMap::render() const

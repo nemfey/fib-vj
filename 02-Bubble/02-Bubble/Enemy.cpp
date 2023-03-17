@@ -16,6 +16,14 @@ enum EnemyAnims
 	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT
 };
 
+Enemy::~Enemy()
+{
+	if (sprite != NULL)
+		delete sprite;
+	if (map != NULL)
+		delete map;
+}
+
 // Public functions
 
 void Enemy::init(const glm::ivec2& tileMapPos, ShaderProgram &shaderProgram) {}

@@ -31,7 +31,7 @@ public:
 	Scene();
 	~Scene();
 
-	void init(ShaderProgram &shaderProgram);
+	void init(ShaderProgram &shaderProgram, string level);
 	void update(int deltaTime);
 	void render();
 
@@ -64,13 +64,14 @@ private:
 
 	glm::ivec2 initPosPlayer;
 
-	int currentTime, remainingSeconds = 60;
-	int timer;
-	int hourglassTimer;
-	int messageTimer;
+	int currentTime = 60;
+	int remainingSeconds = 60;
+	int timer = 0;
+	int hourglassTimer = 0;
+	int messageTimer = 0;
 
 	bool bDoorTaken, bPlayerDead;
-	bool bHourglassEnding = false;
+	bool bHourglassEnding;
 };
 
 
