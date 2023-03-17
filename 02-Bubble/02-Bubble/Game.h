@@ -58,11 +58,12 @@ private:
 	ShaderProgram texProgram;
 
 	glm::mat4 projection;
-	float gameRatio = 1.28f;
+	float sceneRatio = 1.28f;
+	float menuRatio = 1.256f;
 	float ratioWindowSize;
 
 	bool bPlay;                       // Continue to play game?
-	Scene scene;                      // Scene to render
+	Scene *scene;                      // Scene to render
 	Menu menu;
 	bool keys[256], specialKeys[256]; // Store key states so that 
 	                                  // we can have access at any time

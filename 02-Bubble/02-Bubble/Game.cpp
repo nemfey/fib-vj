@@ -11,7 +11,6 @@ void Game::init()
 	bPlay = true;
 	glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
 	menu.init(texProgram);
-	scene.init(texProgram);
 
 	bMenuShowing = true;
 	// Descomentar la linea de abajo si no se quiere ver el cursor en la pantalla
@@ -35,11 +34,10 @@ void Game::render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	renderProjection();
 
-	// Si se esta ejecutando una escena, si se esta ejecutnado menu render menu
 	if (bMenuShowing)
 		menu.render();
 	else
-		scene.render();
+		scene->render();
 }
 
 void Game::reshapeCallback(int width, int height)
@@ -52,11 +50,14 @@ void Game::reshapeCallback(int width, int height)
 
 void Game::keyPressed(int key)
 {
-	cout << key << endl;
 	if (key == 27) // Escape code
 		bPlay = false;
-	if (key == 13)
+	if (key == 13 && bMenuShowing) // Enter code
+	{
+		scene = new Scene();
+		scene->init(texProgram, "levels/level28.txt");
 		bMenuShowing = false;
+	}
 	keys[key] = true;
 }
 
@@ -149,10 +150,10 @@ void Game::updateMenu(int deltaTime)
 
 void Game::updateScene(int deltaTime)
 {
-	switch (scene.state)
+	switch (scene->state)
 	{
 	case StageState::Playing:
-		scene.update(deltaTime);
+		scene->update(deltaTime);
 		break;
 	case StageState::StageCleared:
 		// load next stage and if last end game
@@ -161,7 +162,6 @@ void Game::updateScene(int deltaTime)
 	case StageState::GameOver:
 		// Show menu again
 		bMenuShowing = true;
-		scene.init(texProgram);
 		cout << "Going back to menu..." << endl;
 		break;
 	default:
@@ -173,8 +173,9 @@ void Game::updateRatioWindowSize(int width, int height)
 {
 	float windowRatio = width / float(height);
 	float scale = 1.0f;
+	float currentRatio = bMenuShowing ? menuRatio : sceneRatio;
 
-	if (windowRatio > gameRatio)
+	if (windowRatio > currentRatio)
 	{
 		scale = height / 400.0f;  // escalate Y axis
 		float offset = (width - 512 * scale) / 2;

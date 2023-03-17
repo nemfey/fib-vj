@@ -16,6 +16,14 @@ enum PlayerAnims
 	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT
 };
 
+Player::~Player()
+{
+	if (sprite != NULL)
+		delete sprite;
+	if (map != NULL)
+		delete map;
+}
+
 // Public functions
 
 void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
@@ -44,8 +52,6 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
-
-	bJumping = false;
 }
 
 void Player::update(int deltaTime)

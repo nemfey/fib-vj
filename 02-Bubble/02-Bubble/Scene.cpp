@@ -34,10 +34,11 @@ Scene::~Scene()
 
 // Public functions
 
-void Scene::init(ShaderProgram &shaderProgram)
+void Scene::init(ShaderProgram &shaderProgram, string level)
 {
 	texProgram = shaderProgram;
-	map = TileMap::createTileMap("levels/level28.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	map = TileMap::createTileMap(level, glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	//map = TileMap::createTileMap("levels/level28.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	levelInterface = new LevelInterface();
 	levelInterface->init(texProgram);
 
@@ -45,13 +46,10 @@ void Scene::init(ShaderProgram &shaderProgram)
 	initEnemies();
 	initItems();
 
-	remainingSeconds, currentTime = 60;
-	timer = 0;
-
 	state = Playing;
+
 	bDoorTaken = false;
 	bPlayerDead = false;
-	messageTimer = 0;
 	bHourglassEnding = false;
 }
 
@@ -62,7 +60,10 @@ void Scene::update(int deltaTime)
 	if (bDoorTaken)
 		stageClearMessage();
 	else if (bPlayerDead)
+	{
+		levelInterface->updateLives(player->getLives());
 		gameOverMessage();
+	}
 	else
 	{
 		updatePlayer(deltaTime);
@@ -243,6 +244,7 @@ void Scene::updateEnemies(int deltaTime)
 			}
 			else
 			{
+				player->loseLive();
 				levelInterface->setState(GameOver);
 				bPlayerDead = true;
 				messageTimer = 5;
