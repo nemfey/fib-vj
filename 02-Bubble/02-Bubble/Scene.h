@@ -16,6 +16,7 @@
 #include "Key.h"
 #include "Door.h"
 #include "Hourglass.h"
+#include "Treasure.h"
 
 #include "StageState.h"
 
@@ -69,6 +70,12 @@ private:
 	int timer = 0;
 	int hourglassTimer = 0;
 	int messageTimer = 0;
+
+	int itemCountDown = 0;
+	int itemSpawnCounter = 20 - (rand() % 5);
+	bool itemSpawned = false;
+
+	int itemRNG = rand() % 100;
 
 	bool bDoorTaken, bPlayerDead;
 	bool bHourglassEnding;

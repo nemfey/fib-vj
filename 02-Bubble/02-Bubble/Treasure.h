@@ -13,5 +13,4 @@ public:
 
 private:
 
-	int type = 0;
 };

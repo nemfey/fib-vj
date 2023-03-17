@@ -82,7 +82,6 @@ private:
 	bool keyTaken = false;
 
 	bool hourglassTaken = false;
-	int counter = 0;
 
 };
 

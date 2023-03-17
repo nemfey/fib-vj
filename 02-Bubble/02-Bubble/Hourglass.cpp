@@ -35,6 +35,8 @@ void Hourglass::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	// Change to animation IDLE
 	sprite->changeAnimation(IDLE);
 
+	//bIsPickup = true;
+
 	itemSize = glm::ivec2(8, 8);
 }
 

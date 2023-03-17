@@ -55,7 +55,10 @@ void Treasure::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	// Change to animation the random type
 	sprite->changeAnimation(type);
 
-	itemSize = glm::ivec2(8, 8);
+	//bIsTreasure = true;
+	//bIsPickup = true;
+
+	itemSize = glm::ivec2(12, 12);
 }
 
 void Treasure::update(int deltaTime)
@@ -67,9 +70,6 @@ void Treasure::update(int deltaTime)
 
 		//DEBUG
 		cout << "Treasure taken" << endl;
-
-		//Give points to player
-		//...
 	}
 
 	sprite->update(deltaTime);
@@ -78,6 +78,17 @@ void Treasure::update(int deltaTime)
 void Treasure::render()
 {
 	if (!showing) {
+
+		//Set type to random between 0 and 7
+		srand(time(NULL));
+		type = rand() % 8;
+
+		//DEBUG
+		cout << "Setted treasure type to " << type << endl;
+
+		// Change to animation the random type
+		sprite->changeAnimation(type);
+
 		// Depending of the value it spawns further
 		posItem = map->getRandomPosition(7 + type) - glm::vec2(0, 24);
 		glm::ivec2 screenCoords = map->getScreenCoords();

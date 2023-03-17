@@ -95,8 +95,23 @@ void Scene::update(int deltaTime)
 void Scene::render()
 {
 	map->render();
-	for (auto i : items)
-		i->render();
+	for (auto i : items) {
+
+		Treasure* pTreasure = dynamic_cast<Treasure*>(i);
+		Hourglass* pHourglass = dynamic_cast<Hourglass*>(i);
+
+		if (itemSpawned) {
+			//1/3 chance of the item spawned to be a hourglass
+			if (itemRNG <= 100 && pHourglass) {
+				pHourglass->render();
+			}
+			else if (itemRNG > 33 && pTreasure) {
+				pTreasure->render();
+			}
+		}
+		else if (pHourglass || pTreasure) i->setShowing(false);
+		if (!pTreasure && !pHourglass) i->render();
+	}
 	for (auto e : enemies)
 		e->render();
 	player->render();
@@ -149,6 +164,7 @@ void Scene::initItems()
 	items.push_back(new Key());
 	items.push_back(new Door());
 	items.push_back(new Hourglass());
+	items.push_back(new Treasure());
 
 	for (auto i : items)
 	{
@@ -206,8 +222,25 @@ void Scene::updateTime(int deltaTime)
 		timer = currentTime / 1000;
 			--remainingSeconds;
 
+			if (!itemSpawned) {
+				--itemSpawnCounter;
+			}
+			else --itemCountDown;
+
+			if (itemSpawnCounter <= 0) {
+				itemSpawnCounter = 20 - (rand() % 5);
+				itemCountDown = 10;
+				itemSpawned = true;
+				itemRNG = rand() % 100;
+			}
+			if (itemCountDown <= 0) {
+				itemSpawned = false;
+			}
+
 			//DEBUG
-			cout << remainingSeconds << endl;
+			//cout << remainingSeconds << endl;
+			if (itemSpawned) cout << "Countdown: " << itemCountDown << endl;
+			else cout << "SpawnTime: " << itemSpawnCounter << endl;
 	}
 }
 
@@ -257,13 +290,25 @@ void Scene::updateItems(int deltaTime)
 {
 	for (auto i : items)
 	{
-		Door* d = dynamic_cast<Door*>(i);
-		if (d && d->isTaken())
+		Door* pDoor = dynamic_cast<Door*>(i);
+		Treasure* pTreasure = dynamic_cast<Treasure*>(i);
+		Hourglass* pHourglass = dynamic_cast<Hourglass*>(i);
+
+		if (pDoor && pDoor->isTaken())
 		{
 			levelInterface->setState(StageCleared);
 			bDoorTaken = true;
 			messageTimer = 5;
 		}
+
+		if (pTreasure && pTreasure->collisionPlayer()) {
+			player->addScore(i->getType()*150);
+			itemSpawnCounter = 20 - (rand() % 5);
+			itemSpawned = false;
+			pTreasure->setShowing(false);
+			pTreasure->setPosition(glm::vec2(0, 0));
+		}
+
 		i->update(deltaTime);
 	}
 }

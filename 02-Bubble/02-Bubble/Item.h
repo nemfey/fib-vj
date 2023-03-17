@@ -18,14 +18,17 @@ public:
 	virtual void render();
 
 	bool isTaken() { return taken; };
+	//bool isTreasure() { return bIsTreasure; }
+	//bool isPickup() { return bIsPickup; }
+	int getType() { return type; }
 
 	// Getters & Setters
 	glm::ivec2 getPosition() { return posItem; };
 
 	void setTileMap(TileMap* tileMap) { map = tileMap; };
 	void setPosition(const glm::vec2& pos);
+	void setShowing(bool b) { showing = b; }
 
-protected:
 	bool collisionPlayer();
 
 protected:
@@ -38,6 +41,11 @@ protected:
 
 	bool taken = false;
 	bool showing = false;
+
+	//bool bIsTreasure = false;
+	//bool bIsPickup = false;
+
+	int type = 0;
 };
 
 
