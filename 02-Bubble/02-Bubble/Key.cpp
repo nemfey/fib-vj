@@ -14,7 +14,7 @@ enum KeyAnims
 
 void Key::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
-	spritesheet.loadFromFile("images/key.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spritesheet.loadFromFile("images/key_static.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	spritesheet.setMagFilter(GL_NEAREST);
 	sprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(0.25, 0.5), &spritesheet, &shaderProgram);
 	
@@ -55,16 +55,29 @@ void Key::render()
 {
 	if (map->allPlattformsStepped() && !taken)
 	{
+		glm::ivec2 screenCoords = map->getScreenCoords();
 		if (!showing)
 		{
 			posItem = map->getRandomPosition(7) - glm::vec2(0, 24);
-			glm::ivec2 screenCoords = map->getScreenCoords();
+			
 			sprite->setPosition(glm::vec2(screenCoords.x + posItem.x, screenCoords.y + posItem.y));
 
 			//DEBUG
 			cout << "position assinged is: " << posItem.x << " " << posItem.y - 24 << endl;
 			showing = true;
 		}
+
+		//Key movement
+		if (sprite->getCurrentKeyFrame() % 4 == 0) {
+			sprite->setPosition(glm::vec2(screenCoords.x + posItem.x, screenCoords.y + posItem.y - 1));
+		}
+		else if (sprite->getCurrentKeyFrame() % 4 == 1 || sprite->getCurrentKeyFrame() % 4 == 3) {
+			sprite->setPosition(glm::vec2(screenCoords.x + posItem.x, screenCoords.y + posItem.y));
+		}
+		else if (sprite->getCurrentKeyFrame() % 4 == 2) {
+			sprite->setPosition(glm::vec2(screenCoords.x + posItem.x, screenCoords.y + posItem.y + 1));
+		}
+
 		sprite->render();
 	}
 }

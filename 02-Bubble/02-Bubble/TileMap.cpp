@@ -145,7 +145,7 @@ bool TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, i
 
 bool TileMap::allPlattformsStepped() const
 {
-	return nStepTiles == 0;
+	return nStepTiles <= 100;
 }
 
 bool TileMap::doorOpen()

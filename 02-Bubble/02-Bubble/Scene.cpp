@@ -101,11 +101,11 @@ void Scene::render()
 		Hourglass* pHourglass = dynamic_cast<Hourglass*>(i);
 
 		if (itemSpawned) {
-			//1/3 chance of the item spawned to be a hourglass
+			//1 in 3 chance of the item spawned to be a hourglass
 			if (itemRNG <= 100 && pHourglass) {
 				pHourglass->render();
 			}
-			else if (itemRNG > 33 && pTreasure) {
+			else if (itemRNG > 0 && pTreasure) {
 				pTreasure->render();
 			}
 		}
