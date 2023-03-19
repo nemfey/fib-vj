@@ -102,10 +102,10 @@ void Scene::render()
 
 		if (itemSpawned) {
 			//1 in 3 chance of the item spawned to be a hourglass
-			if (itemRNG <= 100 && pHourglass) {
+			if (itemRNG <= 33 && pHourglass) {
 				pHourglass->render();
 			}
-			else if (itemRNG > 0 && pTreasure) {
+			else if (itemRNG > 33 && pTreasure) {
 				pTreasure->render();
 			}
 		}
