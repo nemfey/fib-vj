@@ -50,14 +50,17 @@ void Game::reshapeCallback(int width, int height)
 
 void Game::keyPressed(int key)
 {
+	cout << "key: " << key << endl;
 	if (key == 27) // Escape code
 		bPlay = false;
 	if (key == 13 && bMenuShowing) // Enter code
-	{
-		scene = new Scene();
-		scene->init(texProgram, "levels/level28.txt");
-		bMenuShowing = false;
-	}
+		loadScene("levels/level01.txt");
+	if (key==49)
+		loadScene("levels/level01.txt");
+	if (key==50)
+		loadScene("levels/level02.txt");
+	if (key == 51)
+		loadScene("levels/level03.txt");
 	keys[key] = true;
 }
 
@@ -157,6 +160,7 @@ void Game::updateScene(int deltaTime)
 		break;
 	case StageState::StageCleared:
 		// load next stage and if last end game
+		loadScene("levels/level02.txt");
 		cout << "loading next stage..." << endl;
 		break;
 	case StageState::GameOver:
@@ -190,5 +194,11 @@ void Game::updateRatioWindowSize(int width, int height)
 	projection = glm::scale(projection, glm::vec3(scale));
 }
 
-
+void Game::loadScene(string level)
+{
+	scene = new Scene();
+	//scene->init(texProgram, "levels/level28.txt");
+	scene->init(texProgram, level);
+	bMenuShowing = false;
+}
 

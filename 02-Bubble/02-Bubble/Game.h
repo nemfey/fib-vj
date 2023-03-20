@@ -53,6 +53,7 @@ private:
 	void updateMenu(int deltaTime);
 	void updateScene(int deltaTime);
 	void updateRatioWindowSize(int width, int height);
+	void loadScene(string level);
 
 private:
 	ShaderProgram texProgram;
