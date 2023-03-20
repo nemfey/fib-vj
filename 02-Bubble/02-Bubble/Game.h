@@ -54,6 +54,7 @@ private:
 	void updateScene(int deltaTime);
 	void updateRatioWindowSize(int width, int height);
 	void loadScene(string level);
+	void optionSelected();
 
 private:
 	ShaderProgram texProgram;
@@ -69,6 +70,11 @@ private:
 	bool keys[256], specialKeys[256]; // Store key states so that 
 	                                  // we can have access at any time
 	bool bMenuShowing;
+
+	enum Option { Play, Instructions, HighScores, Credits, Exit }; // There will be 4 saprites of the menu
+														// everyone with one button selected
+	map<int, Option> dictOptions;
+	int option_nth;
 };
 
 

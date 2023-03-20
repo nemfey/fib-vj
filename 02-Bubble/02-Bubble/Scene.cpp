@@ -86,9 +86,7 @@ void Scene::update(int deltaTime)
 			}
 		}
 		else 
-		{
 			updateTime(deltaTime);
-		}
 	}
 }
 
@@ -102,18 +100,20 @@ void Scene::render()
 
 		if (itemSpawned) {
 			//1 in 3 chance of the item spawned to be a hourglass
-			if (itemRNG <= 33 && pHourglass) {
+			if (itemRNG <= 33 && pHourglass)
 				pHourglass->render();
-			}
-			else if (itemRNG > 33 && pTreasure) {
+			else if (itemRNG > 33 && pTreasure)
 				pTreasure->render();
-			}
 		}
-		else if (pHourglass || pTreasure) i->setShowing(false);
-		if (!pTreasure && !pHourglass) i->render();
+		else if (pHourglass || pTreasure)
+			i->setShowing(false);
+		if (!pTreasure && !pHourglass)
+			i->render();
 	}
+
 	for (auto e : enemies)
 		e->render();
+
 	player->render();
 	levelInterface->render();
 }
@@ -176,9 +176,7 @@ void Scene::initItems()
 void Scene::stageClearMessage()
 {
 	if (messageTimer == 0)
-	{
 		state = StageCleared;
-	}
 	else
 	{
 		if (currentTime / 1000 != timer)
@@ -195,9 +193,7 @@ void Scene::gameOverMessage()
 {
 	// que se muestre el mensaje durante 3-5 segundos y luego state = GameOver;
 	if (messageTimer == 0)
-	{
 		state = GameOver;
-	}
 	else
 	{
 		if (currentTime / 1000 != timer)
@@ -222,25 +218,26 @@ void Scene::updateTime(int deltaTime)
 		timer = currentTime / 1000;
 			--remainingSeconds;
 
-			if (!itemSpawned) {
-				--itemSpawnCounter;
-			}
-			else --itemCountDown;
+		if (!itemSpawned) 
+			--itemSpawnCounter;
+		else
+			--itemCountDown;
 
-			if (itemSpawnCounter <= 0) {
-				itemSpawnCounter = 20 - (rand() % 5);
-				itemCountDown = 10;
-				itemSpawned = true;
-				itemRNG = rand() % 100;
-			}
-			if (itemCountDown <= 0) {
-				itemSpawned = false;
-			}
+		if (itemSpawnCounter <= 0) {
+			itemSpawnCounter = 20 - (rand() % 5);
+			itemCountDown = 10;
+			itemSpawned = true;
+			itemRNG = rand() % 100;
+		}
+		if (itemCountDown <= 0)
+			itemSpawned = false;
 
-			//DEBUG
-			//cout << remainingSeconds << endl;
-			if (itemSpawned) cout << "Countdown: " << itemCountDown << endl;
-			else cout << "SpawnTime: " << itemSpawnCounter << endl;
+		//DEBUG
+		//cout << remainingSeconds << endl;
+		if (itemSpawned)
+			cout << "Countdown: " << itemCountDown << endl;
+		else
+			cout << "SpawnTime: " << itemSpawnCounter << endl;
 	}
 }
 

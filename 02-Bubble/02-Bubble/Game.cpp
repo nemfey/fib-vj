@@ -13,6 +13,9 @@ void Game::init()
 	menu.init(texProgram);
 
 	bMenuShowing = true;
+
+	dictOptions = { {0,Play}, {1,Instructions}, {2,HighScores}, {3,Credits}, {4,Exit} };
+	option_nth = 0;
 	// Descomentar la linea de abajo si no se quiere ver el cursor en la pantalla
 	//glutSetCursor(GLUT_CURSOR_NONE);
 }
@@ -50,17 +53,17 @@ void Game::reshapeCallback(int width, int height)
 
 void Game::keyPressed(int key)
 {
-	cout << "key: " << key << endl;
 	if (key == 27) // Escape code
 		bPlay = false;
 	if (key == 13 && bMenuShowing) // Enter code
-		loadScene("levels/level01.txt");
+		optionSelected();
 	if (key==49)
 		loadScene("levels/level01.txt");
 	if (key==50)
 		loadScene("levels/level02.txt");
 	if (key == 51)
 		loadScene("levels/level03.txt");
+
 	keys[key] = true;
 }
 
@@ -71,6 +74,23 @@ void Game::keyReleased(int key)
 
 void Game::specialKeyPressed(int key)
 {
+	if (key == 101 && option_nth > 0)
+	{
+		--option_nth;
+		cout << "opcion " << option_nth << endl;
+		//menu change animation options[option_nth]
+		// cambiar sprite al que diga el diccionario
+		// para que se muestre el sprite del menu con dicho boton marcado
+	}
+	if (key == 103 && option_nth < 4)
+	{
+		++option_nth;
+		cout << "opcion " << option_nth << endl;
+		//menu change animation options[option_nth]
+		// cambiar sprite al que diga el diccionario
+		// para que se muestre el sprite del menu con dicho boton marcado
+	}
+
 	specialKeys[key] = true;
 }
 
@@ -197,8 +217,38 @@ void Game::updateRatioWindowSize(int width, int height)
 void Game::loadScene(string level)
 {
 	scene = new Scene();
-	//scene->init(texProgram, "levels/level28.txt");
 	scene->init(texProgram, level);
 	bMenuShowing = false;
+}
+
+void Game::optionSelected()
+{
+	cout << dictOptions[option_nth] << endl;
+	switch (dictOptions[option_nth])
+	{
+	case Play:
+		cout << "playing..." << endl;
+		loadScene("levels/level01.txt");
+		break;
+	case Instructions:
+		// Mostrar instrucciones
+		cout << "showing intructions..." << endl;
+		break;
+	case HighScores:
+		// Mostras top 5 records (por ejemplo)
+		cout << "showing highscores..." << endl;
+		break;
+	case Credits:
+		// Mostrar pantalla de creditos
+		cout << "showing credits..." << endl;
+		break;
+	case Exit:
+		cout << "Exiting..." << endl;
+		bPlay = false;
+		break;
+	default:
+		break;
+	}
+
 }
 
