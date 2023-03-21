@@ -58,10 +58,10 @@ void Hourglass::update(int deltaTime)
 
 void Hourglass::render()
 {
+	glm::ivec2 screenCoords = map->getScreenCoords();
 	if (!showing) {
 		// usar get random position?
 		posItem = map->getRandomPosition(7) - glm::vec2(0, 24);
-		glm::ivec2 screenCoords = map->getScreenCoords();
 		sprite->setPosition(glm::vec2(screenCoords.x + posItem.x, screenCoords.y + posItem.y));
 
 		//DEBUG
@@ -69,6 +69,18 @@ void Hourglass::render()
 
 		showing = true;
 	}
+
+	//Movement
+	if (sprite->getCurrentKeyFrame() % 4 == 0) {
+		sprite->setPosition(glm::vec2(screenCoords.x + posItem.x, screenCoords.y + posItem.y - 1));
+	}
+	else if (sprite->getCurrentKeyFrame() % 4 == 1 || sprite->getCurrentKeyFrame() % 4 == 3) {
+		sprite->setPosition(glm::vec2(screenCoords.x + posItem.x, screenCoords.y + posItem.y));
+	}
+	else if (sprite->getCurrentKeyFrame() % 4 == 2) {
+		sprite->setPosition(glm::vec2(screenCoords.x + posItem.x, screenCoords.y + posItem.y + 1));
+	}
+
 		
 	sprite->render();
 	
