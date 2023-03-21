@@ -129,6 +129,20 @@ void Scene::render()
 	sceneInterface->render();
 }
 
+
+void Scene::makeKeyAppear()
+{
+	for (auto i : items)
+	{
+		// HAY QUE INDICAR EN EL TXT LAPOSICION DE LA LLAVE PORQUE SERA MAS FACIL
+		Key* pKey = dynamic_cast<Key*>(i);
+		if (pKey)
+			pKey->setShowing(true);
+	}
+}
+
+// Private functions
+
 void Scene::initPlayer()
 {
 	player = new Player();

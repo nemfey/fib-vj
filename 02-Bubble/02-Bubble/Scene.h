@@ -46,6 +46,7 @@ public:
 	void setPlayerScore(int score) { player->addScore(score); };
 	void setStageNumber(int stageNumber) { sceneInterface->updateStageNumber(stageNumber); };
 	void setPlayerInvencible(bool b) { bPlayerInvencible = b; };
+	void makeKeyAppear();
 
 private:
 	void initPlayer();
