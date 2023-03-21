@@ -16,7 +16,7 @@ enum playerKillers {
 
 Scene::Scene()
 {
-	levelInterface = NULL;
+	sceneInterface = NULL;
 	map = NULL;
 	player = NULL;
 
@@ -24,8 +24,8 @@ Scene::Scene()
 
 Scene::~Scene()
 {
-	if (levelInterface != NULL)
-		delete levelInterface;
+	if (sceneInterface != NULL)
+		delete sceneInterface;
 	if(map != NULL)
 		delete map;
 	if(player != NULL)
@@ -34,13 +34,13 @@ Scene::~Scene()
 
 // Public functions
 
-void Scene::init(ShaderProgram &shaderProgram, string level)
+void Scene::init(ShaderProgram &shaderProgram, string scene)
 {
 	texProgram = shaderProgram;
-	map = TileMap::createTileMap(level, glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-	//map = TileMap::createTileMap("levels/level28.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-	levelInterface = new LevelInterface();
-	levelInterface->init(texProgram);
+	map = TileMap::createTileMap(scene, glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	//map = TileMap::createTileMap("scenes/scene28.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	sceneInterface = new SceneInterface();
+	sceneInterface->init(texProgram);
 
 	initPlayer();
 	initEnemies();
@@ -61,7 +61,7 @@ void Scene::update(int deltaTime)
 		stageClearMessage();
 	else if (bPlayerDead)
 	{
-		levelInterface->updateLives(player->getLives());
+		sceneInterface->updateLives(player->getLives());
 		gameOverMessage();
 	}
 	else
@@ -69,7 +69,7 @@ void Scene::update(int deltaTime)
 		updatePlayer(deltaTime);
 		updateEnemies(deltaTime);
 		updateItems(deltaTime);
-		updateLevelInterface(deltaTime);
+		updateSceneInterface(deltaTime);
 
 		if (map->getHourglassTaken())
 		{
@@ -86,9 +86,7 @@ void Scene::update(int deltaTime)
 			}
 		}
 		else 
-		{
 			updateTime(deltaTime);
-		}
 	}
 }
 
@@ -102,20 +100,22 @@ void Scene::render()
 
 		if (itemSpawned) {
 			//1 in 3 chance of the item spawned to be a hourglass
-			if (itemRNG <= 33 && pHourglass) {
+			if (itemRNG <= 33 && pHourglass)
 				pHourglass->render();
-			}
-			else if (itemRNG > 33 && pTreasure) {
+			else if (itemRNG > 33 && pTreasure)
 				pTreasure->render();
-			}
 		}
-		else if (pHourglass || pTreasure) i->setShowing(false);
-		if (!pTreasure && !pHourglass) i->render();
+		else if (pHourglass || pTreasure)
+			i->setShowing(false);
+		if (!pTreasure && !pHourglass)
+			i->render();
 	}
+
 	for (auto e : enemies)
 		e->render();
+
 	player->render();
-	levelInterface->render();
+	sceneInterface->render();
 }
 
 void Scene::initPlayer()
@@ -176,9 +176,7 @@ void Scene::initItems()
 void Scene::stageClearMessage()
 {
 	if (messageTimer == 0)
-	{
 		state = StageCleared;
-	}
 	else
 	{
 		if (currentTime / 1000 != timer)
@@ -195,9 +193,7 @@ void Scene::gameOverMessage()
 {
 	// que se muestre el mensaje durante 3-5 segundos y luego state = GameOver;
 	if (messageTimer == 0)
-	{
 		state = GameOver;
-	}
 	else
 	{
 		if (currentTime / 1000 != timer)
@@ -217,30 +213,38 @@ void Scene::updateTime(int deltaTime)
 	//if (60 - (currentTime / 1000) < remainingSeconds)
 
 	//Game is running at 60FPS, so if the module is divisible by 60 then a second has passed
-	if (currentTime / 1000 != timer)
+	if (remainingSeconds == 0)
+	{
+		sceneInterface->setState(GameOver);
+		sceneInterface->setState(GameOver);
+		bPlayerDead = true;
+		messageTimer = 5;
+	}
+	else if (currentTime / 1000 != timer)
 	{	
 		timer = currentTime / 1000;
-			--remainingSeconds;
+		--remainingSeconds;
+		
+		if (!itemSpawned) 
+			--itemSpawnCounter;
+		else
+			--itemCountDown;
 
-			if (!itemSpawned) {
-				--itemSpawnCounter;
-			}
-			else --itemCountDown;
+		if (itemSpawnCounter <= 0) {
+			itemSpawnCounter = 20 - (rand() % 5);
+			itemCountDown = 10;
+			itemSpawned = true;
+			itemRNG = rand() % 100;
+		}
+		if (itemCountDown <= 0)
+			itemSpawned = false;
 
-			if (itemSpawnCounter <= 0) {
-				itemSpawnCounter = 20 - (rand() % 5);
-				itemCountDown = 10;
-				itemSpawned = true;
-				itemRNG = rand() % 100;
-			}
-			if (itemCountDown <= 0) {
-				itemSpawned = false;
-			}
-
-			//DEBUG
-			//cout << remainingSeconds << endl;
-			if (itemSpawned) cout << "Countdown: " << itemCountDown << endl;
-			else cout << "SpawnTime: " << itemSpawnCounter << endl;
+		//DEBUG
+		//cout << remainingSeconds << endl;
+		if (itemSpawned)
+			cout << "Countdown: " << itemCountDown << endl;
+		else
+			cout << "SpawnTime: " << itemSpawnCounter << endl;
 	}
 }
 
@@ -268,7 +272,7 @@ void Scene::updateEnemies(int deltaTime)
 		else
 			e->update(deltaTime);
 		
-		if (e->collisionPlayer() && !player->getInmunityState())
+		if (e->collisionPlayer() && !player->getInmunityState() && !bPlayerInvencible)
 			if (player->getLives() > 1)
 			{
 				player->loseLive();
@@ -278,7 +282,7 @@ void Scene::updateEnemies(int deltaTime)
 			else
 			{
 				player->loseLive();
-				levelInterface->setState(GameOver);
+				sceneInterface->setState(GameOver);
 				bPlayerDead = true;
 				messageTimer = 5;
 			}
@@ -296,7 +300,7 @@ void Scene::updateItems(int deltaTime)
 
 		if (pDoor && pDoor->isTaken())
 		{
-			levelInterface->setState(StageCleared);
+			sceneInterface->setState(StageCleared);
 			bDoorTaken = true;
 			messageTimer = 5;
 		}
@@ -313,9 +317,9 @@ void Scene::updateItems(int deltaTime)
 	}
 }
 
-void Scene::updateLevelInterface(int deltaTime)
+void Scene::updateSceneInterface(int deltaTime)
 {
-	levelInterface->updateLives(player->getLives());
-	levelInterface->updateScore(player->getScore());
-	levelInterface->updateRemainingTime(remainingSeconds);
+	sceneInterface->updateLives(player->getLives());
+	sceneInterface->updateScore(player->getScore());
+	sceneInterface->updateRemainingTime(remainingSeconds);
 }

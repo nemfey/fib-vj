@@ -13,8 +13,14 @@ void Game::init()
 	menu.init(texProgram);
 
 	bMenuShowing = true;
-	// Descomentar la linea de abajo si no se quiere ver el cursor en la pantalla
-	//glutSetCursor(GLUT_CURSOR_NONE);
+
+	dictOptions = { {0,Play}, {1,Instructions}, {2,Credits}, {3,Exit} };
+	option_nth = 0;
+	
+	stages.push_back("levels/level01.txt");
+	stages.push_back("levels/level02.txt");
+	stages.push_back("levels/level03.txt");
+	stageIterator = 0;
 }
 
 #include <iostream>
@@ -53,11 +59,38 @@ void Game::keyPressed(int key)
 	if (key == 27) // Escape code
 		bPlay = false;
 	if (key == 13 && bMenuShowing) // Enter code
+		optionSelected();
+	if (key == 49)
 	{
-		scene = new Scene();
-		scene->init(texProgram, "levels/level28.txt");
-		bMenuShowing = false;
+		stageIterator = 0;
+		loadFirstStage();
 	}
+	if (key == 50)
+	{
+		stageIterator = 1;
+		loadFirstStage();
+	}
+	if (key == 51)
+	{
+		stageIterator = 2;
+		loadFirstStage();
+	}
+	if (key == 103)
+	{
+		if (!scene->getPlayerInvencible())
+		{
+			cout << "Entering invencible mode..." << endl;
+			scene->setPlayerInvencible(true);
+		}
+		else
+		{
+			cout << "Exiting invencible mode..." << endl;
+			scene->setPlayerInvencible(false);
+		}
+	}
+	if(key == 107)
+		// que aparezca la llave
+
 	keys[key] = true;
 }
 
@@ -68,6 +101,23 @@ void Game::keyReleased(int key)
 
 void Game::specialKeyPressed(int key)
 {
+	if (key == 101 && option_nth > 0)
+	{
+		--option_nth;
+		cout << "opcion " << option_nth << endl;
+		//menu change animation options[option_nth]
+		// cambiar sprite al que diga el diccionario
+		// para que se muestre el sprite del menu con dicho boton marcado
+	}
+	if (key == 103 && option_nth < 3)
+	{
+		++option_nth;
+		cout << "opcion " << option_nth << endl;
+		//menu change animation options[option_nth]
+		// cambiar sprite al que diga el diccionario
+		// para que se muestre el sprite del menu con dicho boton marcado
+	}
+
 	specialKeys[key] = true;
 }
 
@@ -157,6 +207,11 @@ void Game::updateScene(int deltaTime)
 		break;
 	case StageState::StageCleared:
 		// load next stage and if last end game
+		++stageIterator;
+		if (stageIterator < stages.size())
+			loadNextStage();
+		else
+			cout << "GAME FINISHED. CONGRATULATIONS!" << endl;
 		cout << "loading next stage..." << endl;
 		break;
 	case StageState::GameOver:
@@ -190,5 +245,54 @@ void Game::updateRatioWindowSize(int width, int height)
 	projection = glm::scale(projection, glm::vec3(scale));
 }
 
+void Game::loadFirstStage()
+{
+	scene = new Scene();
+	scene->init(texProgram, stages[stageIterator]);
+	bMenuShowing = false;
 
+	scene->setStageNumber(stageIterator + 1);
+}
+
+void Game::loadNextStage()
+{
+	int playerLives = scene->getPlayerLives();
+	int playerScore = scene->getPlayerScore();
+
+	scene = new Scene();
+	scene->init(texProgram, stages[stageIterator]);
+	bMenuShowing = false;
+	
+	scene->setPlayerLives(playerLives);
+	scene->setPlayerScore(playerScore);
+	scene->setStageNumber(stageIterator + 1);
+}
+
+void Game::optionSelected()
+{
+	cout << dictOptions[option_nth] << endl;
+	switch (dictOptions[option_nth])
+	{
+	case Play:
+		cout << "playing..." << endl;
+		stageIterator = 0;
+		loadFirstStage();
+		break;
+	case Instructions:
+		// Mostrar instrucciones
+		cout << "showing intructions..." << endl;
+		break;
+	case Credits:
+		// Mostrar pantalla de creditos
+		cout << "showing credits..." << endl;
+		break;
+	case Exit:
+		cout << "Exiting..." << endl;
+		bPlay = false;
+		break;
+	default:
+		break;
+	}
+
+}
 
