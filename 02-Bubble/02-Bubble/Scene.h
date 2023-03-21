@@ -70,6 +70,9 @@ private:
 	vector<Item*> items;
 	ShaderProgram texProgram;
 
+	Texture spritesheet;
+	Sprite* sprite;
+
 	glm::ivec2 initPosPlayer;
 
 	int currentTime = 60;

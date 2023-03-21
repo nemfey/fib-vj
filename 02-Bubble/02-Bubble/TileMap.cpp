@@ -16,7 +16,10 @@ TileMap::TileMap(const string& levelFile, const glm::vec2& minCoords, ShaderProg
 	prepareArrays(minCoords, program);
 	screenCoords = minCoords;
 
-	steppedFloorSprite = Sprite::createSprite(glm::ivec2(tileSize, tileSize), glm::vec2(0.5, 0.5), &tilesheet, &program);
+	steppedFloorSprite = Sprite::createSprite(glm::ivec2(tileSize, tileSize), glm::vec2(0.25, 0.5), &tilesheet, &program);
+	steppedFloorSprite->setNumberAnimations(2);
+	steppedFloorSprite->addKeyframe(0, glm::vec2(0.5f, 0.f));
+	steppedFloorSprite->addKeyframe(1, glm::vec2(0.75f, 0.f));
 }
 
 // Public functions
@@ -53,6 +56,11 @@ void TileMap::render() const
 
 	for (auto p : positionsStepped)
 	{
+		int tile = map[p.y * mapSize.x + p.x];
+		steppedFloorSprite->changeAnimation(0);
+		if (tile == 4)
+			steppedFloorSprite->changeAnimation(1);
+
 		steppedFloorSprite->setPosition(glm::vec2(screenCoords.x + p[0]*tileSize, screenCoords.y + p[1] *tileSize));
 		steppedFloorSprite->render();
 	}
@@ -77,8 +85,12 @@ bool TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, b
 	for (int y = y0; y <= y1; y++)
 	{
 		int tile = map[y * mapSize.x + x];
-		if (tile == 3 || (!bCrossPlattforms && tile != 0))
+		if (!bCrossPlattforms && tile != 0)
 			return true;
+		else if (tile == 6)
+			return true;
+		//if ((tile == 5 || tile == 6) || (!bCrossPlattforms && tile != 0))
+		//	return true;
 
 		//if (map[y * mapSize.x + x] == 3)
 		//	return true;
@@ -96,8 +108,12 @@ bool TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 	for (int y = y0; y <= y1; y++)
 	{
 		int tile = map[y * mapSize.x + x];
-		if (tile == 3 || (!bCrossPlattforms && tile != 0))
+		if (!bCrossPlattforms && tile != 0)
 			return true;
+		else if (tile == 6)
+			return true;
+		//if ((tile == 5 || tile == 6) || (!bCrossPlattforms && tile != 0))
+		//	return true;
 		//if (map[y * mapSize.x + x] == 3)
 		//	return true;
 	}
@@ -115,7 +131,8 @@ bool TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, int
 	{
 		int tile = map[y * mapSize.x + x];
 
-		if (tile == 3 || (!bCrossPlattforms && tile != 0))
+		//if (tile == 3 || (!bCrossPlattforms && tile != 0))
+		if (!bCrossPlattforms && tile != 0)
 			if (*posY - tileSize * y < tileSize)
 				return true;
 	}
@@ -131,7 +148,8 @@ bool TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, i
 	y = (pos.y + size.y - 1) / tileSize;
 	for (int x = x0; x <= x1; x++)
 	{
-		if (map[y * mapSize.x + x] != 0)
+		int tile = map[y * mapSize.x + x];
+		if (tile != 0 && tile != 5 && tile != 6)
 		{
 			if (*posY - tileSize * y + size.y <= 4)
 			{
@@ -183,9 +201,10 @@ void TileMap::positionStepped(const glm::ivec2& pos, const glm::ivec2& size, int
 	{
 		if (*posY - tileSize * y + size.y <= 4)
 		{
-			if (map[y * mapSize.x + x] == 2)
+			int tile = map[y * mapSize.x + x];
+			if (tile == 1 || tile == 2)
 			{
-				map[y * mapSize.x + x] = 1;
+				map[y * mapSize.x + x] = tile + 2;
 				positionsStepped.push_back(glm::ivec2(x, y));
 				--nStepTiles;
 			}
@@ -232,7 +251,7 @@ bool TileMap::loadLevel(const string& levelFile)
 	getline(fin, line);
 	sstream.str(line);
 	sstream >> tilesheetSize.x >> tilesheetSize.y;
-	tileTexSize = glm::vec2(0.5f, 0.5f);
+	tileTexSize = glm::vec2(0.25f, 0.5f);
 
 	map = new int[mapSize.x * mapSize.y];
 	for (int j = 0; j < mapSize.y; j++)
@@ -281,7 +300,7 @@ bool TileMap::loadLevel(const string& levelFile)
 			}
 			else {
 				//Steppable platform
-				if (tile == '2')
+				if (tile == '1' || tile == '2')
 				{
 					++nStepTiles;
 					plattforms.push_back(glm::ivec2(i, j));
@@ -307,7 +326,7 @@ void TileMap::prepareArrays(const glm::vec2& minCoords, ShaderProgram& program)
 	vector<float> vertices;
 
 	nTiles = 0;
-	halfTexel = glm::vec2(0.5f / tilesheet.width(), 0.5f / tilesheet.height());
+	halfTexel = glm::vec2(0.25f / tilesheet.width(), 0.5f / tilesheet.height());
 	for (int j = 0; j < mapSize.y; j++)
 	{
 		for (int i = 0; i < mapSize.x; i++)

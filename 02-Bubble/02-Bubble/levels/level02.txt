@@ -1,31 +1,34 @@
 TILEMAP
 32 22 							-- Size of tile map in tiles
 16 16 							-- Tile size & block size
-images/blocks5.png 	-- Tilesheet
-2 2 								-- Number of tiles in tilesheet
-33333333333333333333333333333333
-33                            33
-33                            33
-33      P                     33
-33                            33
-33    22222222    22222222    33
-33    3333V           3333    33
-33    3333            3333    33
-33    33332222222222223333    33
-33      33S           33      33
-33      33            33      33
-33      3322222222222233      33
-33        33      S 33        33
-33        33        33        33
-33        332222222233        33
-33        33S       33        33
-33        33        33        33
-33        332222222233        33
-33                S   D       33
-33                            33
-33    22222222222222222222    33
-33XXXX33333333333333333333XXXX33                          
+images/theblocks.png 	-- Tilesheet
+4 2 								-- Number of tiles in tilesheet
+66555555555555555555555555555566
+66                            66
+66                            66
+66      P                     66
+66                            66
+66    22221111    11112222    66
+66    5555V           5555    66
+66    5555            5555    66
+66    55551111111111115555    66
+66      55S           55      66
+66      55            55      66
+66      5522111111112255      66
+66        55      S 55        66
+66        55        55        66
+66        551111111155        66
+66        55S       55        66
+66        55        55        66
+66        551111111155        66
+66                S   D       66
+66                            66
+66    22222222222222222222    66
+66XXXX66666666666666666666XXXX66                          
 
--- 1 Floor stepped
--- 2 Floor normal
--- 3 Walls
+-- 1 Floor no stepped
+-- 2 Floor no stepped w/ wall
+-- 3 Floor stepped
+-- 4 Floor stepped w/ wall
+-- 5 Traspassable wall
+-- 6 No traspassable wall
