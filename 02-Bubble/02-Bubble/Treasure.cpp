@@ -7,16 +7,16 @@
 
 enum Treasures
 {
-	GEM1, GEM2, GEM3, COINS, FRUIT1, FRUIT2, FRUIT3, STAR
+	COINS, GEM1, GEM2, GEM3, FRUIT1, FRUIT2, FRUIT3, STAR
 };
 
 // Public functions
 
 void Treasure::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
-	spritesheet.loadFromFile("images/varied.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spritesheet.loadFromFile("images/treasures.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	spritesheet.setMagFilter(GL_NEAREST);
-	sprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(0.25, 0.25), &spritesheet, &shaderProgram);
+	sprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(0.125, 0.125), &spritesheet, &shaderProgram);
 
 	//Animation
 	sprite->setNumberAnimations(8);
