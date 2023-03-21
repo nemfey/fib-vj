@@ -75,6 +75,21 @@ void Game::keyPressed(int key)
 		stageIterator = 2;
 		loadFirstStage();
 	}
+	if (key == 103)
+	{
+		if (!scene->getPlayerInvencible())
+		{
+			cout << "Entering invencible mode..." << endl;
+			scene->setPlayerInvencible(true);
+		}
+		else
+		{
+			cout << "Exiting invencible mode..." << endl;
+			scene->setPlayerInvencible(false);
+		}
+	}
+	if(key == 107)
+		// que aparezca la llave
 
 	keys[key] = true;
 }

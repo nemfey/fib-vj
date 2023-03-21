@@ -213,11 +213,18 @@ void Scene::updateTime(int deltaTime)
 	//if (60 - (currentTime / 1000) < remainingSeconds)
 
 	//Game is running at 60FPS, so if the module is divisible by 60 then a second has passed
-	if (currentTime / 1000 != timer)
+	if (remainingSeconds == 0)
+	{
+		sceneInterface->setState(GameOver);
+		sceneInterface->setState(GameOver);
+		bPlayerDead = true;
+		messageTimer = 5;
+	}
+	else if (currentTime / 1000 != timer)
 	{	
 		timer = currentTime / 1000;
-			--remainingSeconds;
-
+		--remainingSeconds;
+		
 		if (!itemSpawned) 
 			--itemSpawnCounter;
 		else
@@ -265,7 +272,7 @@ void Scene::updateEnemies(int deltaTime)
 		else
 			e->update(deltaTime);
 		
-		if (e->collisionPlayer() && !player->getInmunityState())
+		if (e->collisionPlayer() && !player->getInmunityState() && !bPlayerInvencible)
 			if (player->getLives() > 1)
 			{
 				player->loseLive();

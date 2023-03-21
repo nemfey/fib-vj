@@ -40,9 +40,12 @@ public:
 	int getCurrentTime() { return currentTime; };
 	int getPlayerLives() { return player->getLives(); };
 	int getPlayerScore() { return player->getScore(); };
+	bool getPlayerInvencible() { return bPlayerInvencible; };
+
 	void setPlayerLives(int lives) { player->setLives(lives); };
 	void setPlayerScore(int score) { player->addScore(score); };
 	void setStageNumber(int stageNumber) { sceneInterface->updateStageNumber(stageNumber); };
+	void setPlayerInvencible(bool b) { bPlayerInvencible = b; };
 
 private:
 	void initPlayer();
@@ -57,7 +60,6 @@ private:
 	void updateSceneInterface(int deltaTime);
 
 public:
-	//enum State { Playing, StageCleared, GameOver };
 	StageState state;
 
 private:
@@ -84,6 +86,8 @@ private:
 
 	bool bDoorTaken, bPlayerDead;
 	bool bHourglassEnding;
+
+	bool bPlayerInvencible = false;
 };
 
 
