@@ -16,7 +16,7 @@ enum playerKillers {
 
 Scene::Scene()
 {
-	levelInterface = NULL;
+	sceneInterface = NULL;
 	map = NULL;
 	player = NULL;
 
@@ -24,8 +24,8 @@ Scene::Scene()
 
 Scene::~Scene()
 {
-	if (levelInterface != NULL)
-		delete levelInterface;
+	if (sceneInterface != NULL)
+		delete sceneInterface;
 	if(map != NULL)
 		delete map;
 	if(player != NULL)
@@ -34,13 +34,13 @@ Scene::~Scene()
 
 // Public functions
 
-void Scene::init(ShaderProgram &shaderProgram, string level)
+void Scene::init(ShaderProgram &shaderProgram, string scene)
 {
 	texProgram = shaderProgram;
-	map = TileMap::createTileMap(level, glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-	//map = TileMap::createTileMap("levels/level28.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-	levelInterface = new LevelInterface();
-	levelInterface->init(texProgram);
+	map = TileMap::createTileMap(scene, glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	//map = TileMap::createTileMap("scenes/scene28.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	sceneInterface = new SceneInterface();
+	sceneInterface->init(texProgram);
 
 	initPlayer();
 	initEnemies();
@@ -61,7 +61,7 @@ void Scene::update(int deltaTime)
 		stageClearMessage();
 	else if (bPlayerDead)
 	{
-		levelInterface->updateLives(player->getLives());
+		sceneInterface->updateLives(player->getLives());
 		gameOverMessage();
 	}
 	else
@@ -69,7 +69,7 @@ void Scene::update(int deltaTime)
 		updatePlayer(deltaTime);
 		updateEnemies(deltaTime);
 		updateItems(deltaTime);
-		updateLevelInterface(deltaTime);
+		updateSceneInterface(deltaTime);
 
 		if (map->getHourglassTaken())
 		{
@@ -115,7 +115,7 @@ void Scene::render()
 		e->render();
 
 	player->render();
-	levelInterface->render();
+	sceneInterface->render();
 }
 
 void Scene::initPlayer()
@@ -275,7 +275,7 @@ void Scene::updateEnemies(int deltaTime)
 			else
 			{
 				player->loseLive();
-				levelInterface->setState(GameOver);
+				sceneInterface->setState(GameOver);
 				bPlayerDead = true;
 				messageTimer = 5;
 			}
@@ -293,7 +293,7 @@ void Scene::updateItems(int deltaTime)
 
 		if (pDoor && pDoor->isTaken())
 		{
-			levelInterface->setState(StageCleared);
+			sceneInterface->setState(StageCleared);
 			bDoorTaken = true;
 			messageTimer = 5;
 		}
@@ -310,9 +310,9 @@ void Scene::updateItems(int deltaTime)
 	}
 }
 
-void Scene::updateLevelInterface(int deltaTime)
+void Scene::updateSceneInterface(int deltaTime)
 {
-	levelInterface->updateLives(player->getLives());
-	levelInterface->updateScore(player->getScore());
-	levelInterface->updateRemainingTime(remainingSeconds);
+	sceneInterface->updateLives(player->getLives());
+	sceneInterface->updateScore(player->getScore());
+	sceneInterface->updateRemainingTime(remainingSeconds);
 }

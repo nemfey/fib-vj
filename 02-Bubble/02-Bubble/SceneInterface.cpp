@@ -2,20 +2,20 @@
 #include <cmath>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include "LevelInterface.h"
+#include "SceneInterface.h"
 
 
 //#define SCREEN_X 144
 // 003450
 
-LevelInterface::LevelInterface()
+SceneInterface::SceneInterface()
 {
 	numberSprite = NULL;
 	characterSprite = NULL;
 	heartSprite = NULL;
 }
 
-LevelInterface::~LevelInterface()
+SceneInterface::~SceneInterface()
 {
 	if (numberSprite != NULL)
 		delete numberSprite;
@@ -27,7 +27,7 @@ LevelInterface::~LevelInterface()
 
 // Public functions
 
-void LevelInterface::init(ShaderProgram &shaderProgram)
+void SceneInterface::init(ShaderProgram &shaderProgram)
 {
 	initNumberSprite(shaderProgram);
 	initCharacterSprite(shaderProgram);
@@ -36,7 +36,7 @@ void LevelInterface::init(ShaderProgram &shaderProgram)
 	lives = 3;
 	score = 0;
 	remainingTime = 60;
-	stage = 1;
+	stageNumber = 1;
 	//bStageClear = false;
 	char2id = { {'a',0}, {'c',1}, {'d',2}, {'e',3},
 				{'g',4}, {'l',5}, {'m',6}, {'o',7},
@@ -45,27 +45,27 @@ void LevelInterface::init(ShaderProgram &shaderProgram)
 	state = Playing;
 }
 
-void LevelInterface::updateLives(int l)
+void SceneInterface::updateLives(int l)
 {
 	lives = l;
 }
 
-void LevelInterface::updateScore(int s)
+void SceneInterface::updateScore(int s)
 {
 	score = s;
 }
 
-void LevelInterface::updateRemainingTime(int t)
+void SceneInterface::updateRemainingTime(int t)
 {
 	remainingTime = t;
 }
 
-void LevelInterface::updateStage(int s)
+void SceneInterface::updateStageNumber(int s)
 {
-	stage = s;
+	stageNumber = s;
 }
 
-void LevelInterface::render()
+void SceneInterface::render()
 {
 	// lives
 	heartSprite->changeAnimation(0);
@@ -92,15 +92,15 @@ void LevelInterface::render()
 	renderCharacter('a', 400, 16);
 	renderCharacter('g', 416, 16);
 	renderCharacter('e', 432, 16);
-	renderNumber(stage / 10, 464, 16);
-	renderNumber(stage % 10, 480, 16);
+	renderNumber(stageNumber / 10, 464, 16);
+	renderNumber(stageNumber % 10, 480, 16);
 
 	renderMessages();
 }
 
 // Private functions
 
-void LevelInterface::initNumberSprite(ShaderProgram& shaderProgram)
+void SceneInterface::initNumberSprite(ShaderProgram& shaderProgram)
 {
 	numbersSpritesheet.loadFromFile("images/numbers.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	numbersSpritesheet.setMagFilter(GL_NEAREST);
@@ -115,7 +115,7 @@ void LevelInterface::initNumberSprite(ShaderProgram& shaderProgram)
 	}
 }
 
-void LevelInterface::initCharacterSprite(ShaderProgram& shaderProgram)
+void SceneInterface::initCharacterSprite(ShaderProgram& shaderProgram)
 {
 	charactersSpritesheet.loadFromFile("images/characters.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	charactersSpritesheet.setMagFilter(GL_NEAREST);
@@ -132,7 +132,7 @@ void LevelInterface::initCharacterSprite(ShaderProgram& shaderProgram)
 		}
 }
 
-void LevelInterface::initHeartSprite(ShaderProgram& shaderProgram)
+void SceneInterface::initHeartSprite(ShaderProgram& shaderProgram)
 {
 	heartSpritesheet.loadFromFile("images/heart.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	heartSpritesheet.setMagFilter(GL_NEAREST);
@@ -144,7 +144,7 @@ void LevelInterface::initHeartSprite(ShaderProgram& shaderProgram)
 	heartSprite->addKeyframe(0, glm::vec2(0.f, 0.f));
 }
 
-void LevelInterface::renderMessages()
+void SceneInterface::renderMessages()
 {
 	//cout << state << endl;
 	//cout << "hola" << endl;
@@ -176,14 +176,14 @@ void LevelInterface::renderMessages()
 	}
 }
 
-void LevelInterface::renderNumber(int n, int x, int y)
+void SceneInterface::renderNumber(int n, int x, int y)
 {
 	numberSprite->changeAnimation(n);
 	numberSprite->setPosition(glm::vec2(x, y));
 	numberSprite->render();
 }
 
-void LevelInterface::renderCharacter(char c, int x, int y)
+void SceneInterface::renderCharacter(char c, int x, int y)
 {
 	characterSprite->changeAnimation(char2id[c]);
 	characterSprite->setPosition(glm::vec2(x, y));

@@ -17,10 +17,10 @@ void Game::init()
 	dictOptions = { {0,Play}, {1,Instructions}, {2,Credits}, {3,Exit} };
 	option_nth = 0;
 	
-	levels.push_back("levels/level01.txt");
-	levels.push_back("levels/level02.txt");
-	levels.push_back("levels/level03.txt");
-	levelIterator = 0;
+	stages.push_back("levels/level01.txt");
+	stages.push_back("levels/level02.txt");
+	stages.push_back("levels/level03.txt");
+	stageIterator = 0;
 }
 
 #include <iostream>
@@ -62,18 +62,18 @@ void Game::keyPressed(int key)
 		optionSelected();
 	if (key == 49)
 	{
-		levelIterator = 0;
-		loadFirstScene();
+		stageIterator = 0;
+		loadFirstStage();
 	}
 	if (key == 50)
 	{
-		levelIterator = 1;
-		loadFirstScene();
+		stageIterator = 1;
+		loadFirstStage();
 	}
 	if (key == 51)
 	{
-		levelIterator = 2;
-		loadFirstScene();
+		stageIterator = 2;
+		loadFirstStage();
 	}
 
 	keys[key] = true;
@@ -192,9 +192,9 @@ void Game::updateScene(int deltaTime)
 		break;
 	case StageState::StageCleared:
 		// load next stage and if last end game
-		++levelIterator;
-		if (levelIterator < levels.size())
-			loadNextScene();
+		++stageIterator;
+		if (stageIterator < stages.size())
+			loadNextStage();
 		else
 			cout << "GAME FINISHED. CONGRATULATIONS!" << endl;
 		cout << "loading next stage..." << endl;
@@ -230,24 +230,27 @@ void Game::updateRatioWindowSize(int width, int height)
 	projection = glm::scale(projection, glm::vec3(scale));
 }
 
-void Game::loadFirstScene()
+void Game::loadFirstStage()
 {
 	scene = new Scene();
-	scene->init(texProgram, levels[levelIterator]);
+	scene->init(texProgram, stages[stageIterator]);
 	bMenuShowing = false;
+
+	scene->setStageNumber(stageIterator + 1);
 }
 
-void Game::loadNextScene()
+void Game::loadNextStage()
 {
 	int playerLives = scene->getPlayerLives();
 	int playerScore = scene->getPlayerScore();
 
 	scene = new Scene();
-	scene->init(texProgram, levels[levelIterator]);
+	scene->init(texProgram, stages[stageIterator]);
 	bMenuShowing = false;
 	
 	scene->setPlayerLives(playerLives);
 	scene->setPlayerScore(playerScore);
+	scene->setStageNumber(stageIterator + 1);
 }
 
 void Game::optionSelected()
@@ -257,8 +260,8 @@ void Game::optionSelected()
 	{
 	case Play:
 		cout << "playing..." << endl;
-		levelIterator = 0;
-		loadFirstScene();
+		stageIterator = 0;
+		loadFirstStage();
 		break;
 	case Instructions:
 		// Mostrar instrucciones

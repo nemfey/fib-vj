@@ -53,8 +53,8 @@ private:
 	void updateMenu(int deltaTime);
 	void updateScene(int deltaTime);
 	void updateRatioWindowSize(int width, int height);
-	void loadFirstScene();
-	void loadNextScene();
+	void loadFirstStage();
+	void loadNextStage();
 	void optionSelected();
 
 private:
@@ -77,8 +77,8 @@ private:
 	map<int, Option> dictOptions;
 	int option_nth;
 
-	vector<string> levels;
-	int levelIterator;
+	vector<string> stages;
+	int stageIterator;
 };
 
 

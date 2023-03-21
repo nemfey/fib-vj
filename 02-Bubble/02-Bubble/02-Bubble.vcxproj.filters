@@ -63,7 +63,7 @@
     <ClInclude Include="hourglass.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="LevelInterface.h">
+    <ClInclude Include="SceneInterface.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="Menu.h">
@@ -131,7 +131,7 @@
     <ClCompile Include="hourglass.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="LevelInterface.cpp">
+    <ClCompile Include="SceneInterface.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
     <ClCompile Include="Menu.cpp">

@@ -6,22 +6,22 @@
 
 #include "StageState.h"
 
-// LevelInterface contains all the entities of our game.
+// SceneInterface contains all the entities of our game.
 // It is responsible for updating and render them.
 
 
-class LevelInterface
+class SceneInterface
 {
 
 public:
-	LevelInterface();
-	~LevelInterface();
+	SceneInterface();
+	~SceneInterface();
 
 	void init(ShaderProgram &shaderProgram);
 	void updateLives(int l);
 	void updateScore(int s);
 	void updateRemainingTime(int t);
-	void updateStage(int s);
+	void updateStageNumber(int s);
 	void render();
 
 	// Gettters & Setters
@@ -46,7 +46,7 @@ private:
 	Sprite *characterSprite;
 	Sprite *heartSprite;
 
-	int lives, score, remainingTime, stage;
+	int lives, score, remainingTime, stageNumber;
 	map<char, int> char2id;
 
 	StageState state;

@@ -4,7 +4,7 @@
 
 #include <glm/glm.hpp>
 #include "ShaderProgram.h"
-#include "LevelInterface.h"
+#include "SceneInterface.h"
 #include "TileMap.h"
 #include "Player.h"
 #include "Enemy.h"
@@ -32,7 +32,7 @@ public:
 	Scene();
 	~Scene();
 
-	void init(ShaderProgram &shaderProgram, string level);
+	void init(ShaderProgram &shaderProgram, string scene);
 	void update(int deltaTime);
 	void render();
 
@@ -42,6 +42,7 @@ public:
 	int getPlayerScore() { return player->getScore(); };
 	void setPlayerLives(int lives) { player->setLives(lives); };
 	void setPlayerScore(int score) { player->addScore(score); };
+	void setStageNumber(int stageNumber) { sceneInterface->updateStageNumber(stageNumber); };
 
 private:
 	void initPlayer();
@@ -53,14 +54,14 @@ private:
 	void updatePlayer(int deltaTime);
 	void updateEnemies(int deltaTime);
 	void updateItems(int deltaTime);
-	void updateLevelInterface(int deltaTime);
+	void updateSceneInterface(int deltaTime);
 
 public:
 	//enum State { Playing, StageCleared, GameOver };
 	StageState state;
 
 private:
-	LevelInterface* levelInterface;
+	SceneInterface* sceneInterface;
 	TileMap *map;
 	Player *player;
 	vector<Enemy*> enemies;

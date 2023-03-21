@@ -18,7 +18,7 @@
     <ClInclude Include="Hourglass.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Key.h" />
-    <ClInclude Include="LevelInterface.h" />
+    <ClInclude Include="SceneInterface.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerKiller.h" />
@@ -41,7 +41,7 @@
     <ClCompile Include="Hourglass.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Key.cpp" />
-    <ClCompile Include="LevelInterface.cpp" />
+    <ClCompile Include="SceneInterface.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Player.cpp" />
