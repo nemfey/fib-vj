@@ -64,7 +64,10 @@ void Scene::update(int deltaTime)
 	currentTime += deltaTime;
 
 	if (bDoorTaken)
+	{
 		stageClearMessage();
+		updateSceneInterface(deltaTime);
+	}
 	else if (bPlayerDead)
 	{
 		sceneInterface->updateLives(player->getLives());
@@ -126,6 +129,20 @@ void Scene::render()
 	sceneInterface->render();
 }
 
+
+void Scene::makeKeyAppear()
+{
+	for (auto i : items)
+	{
+		// HAY QUE INDICAR EN EL TXT LAPOSICION DE LA LLAVE PORQUE SERA MAS FACIL
+		Key* pKey = dynamic_cast<Key*>(i);
+		if (pKey)
+			pKey->setShowing(true);
+	}
+}
+
+// Private functions
+
 void Scene::initPlayer()
 {
 	player = new Player();
@@ -183,15 +200,15 @@ void Scene::initItems()
 
 void Scene::stageClearMessage()
 {
-	if (messageTimer == 0)
+	if (remainingSeconds == 0)
 		state = StageCleared;
 	else
 	{
-		if (currentTime / 1000 != timer)
+		if (currentTime / 250 != timer)
 		{
-			timer = currentTime / 1000;
-			--messageTimer;
-			cout << "message timer is: " << messageTimer << endl;
+			timer = currentTime / 250;
+			--remainingSeconds;
+			player->addScore(10);
 		}
 	}
 	// que se muestre el mensaje durante 3-5 segundos y luego state = StageClear;
@@ -223,7 +240,6 @@ void Scene::updateTime(int deltaTime)
 	//Game is running at 60FPS, so if the module is divisible by 60 then a second has passed
 	if (remainingSeconds == 0)
 	{
-		sceneInterface->setState(GameOver);
 		sceneInterface->setState(GameOver);
 		bPlayerDead = true;
 		messageTimer = 5;

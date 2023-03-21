@@ -88,8 +88,8 @@ void Game::keyPressed(int key)
 			scene->setPlayerInvencible(false);
 		}
 	}
-	if(key == 107)
-		// que aparezca la llave
+	if (key == 107)
+		scene->makeKeyAppear();
 
 	keys[key] = true;
 }
