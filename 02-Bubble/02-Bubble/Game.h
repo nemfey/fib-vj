@@ -53,7 +53,8 @@ private:
 	void updateMenu(int deltaTime);
 	void updateScene(int deltaTime);
 	void updateRatioWindowSize(int width, int height);
-	void loadScene(string level);
+	void loadFirstScene();
+	void loadNextScene();
 	void optionSelected();
 
 private:
@@ -71,10 +72,13 @@ private:
 	                                  // we can have access at any time
 	bool bMenuShowing;
 
-	enum Option { Play, Instructions, HighScores, Credits, Exit }; // There will be 4 saprites of the menu
+	enum Option { Play, Instructions, Credits, Exit }; // There will be 4 saprites of the menu
 														// everyone with one button selected
 	map<int, Option> dictOptions;
 	int option_nth;
+
+	vector<string> levels;
+	int levelIterator;
 };
 
 

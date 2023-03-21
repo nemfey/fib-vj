@@ -31,6 +31,7 @@ public:
 
 	void setTileMap(TileMap* tileMap) { map = tileMap; };
 	void setPosition(const glm::ivec2 &pos);
+	void setLives(int l) { lives = l; };
 	
 private:
 	Texture spritesheet;

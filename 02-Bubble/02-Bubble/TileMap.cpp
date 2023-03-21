@@ -169,7 +169,7 @@ glm::vec2 TileMap::getRandomPosition(int radius)
 	}
 
 	// in pixels
-	return (available[rand() % available.size()]) * tileSize;
+	return (available[rand() % available.size()]) * tileSize; // ESTA MIERDA HA PETADO UNA VEZ
 }
 
 void TileMap::positionStepped(const glm::ivec2& pos, const glm::ivec2& size, int* posY)

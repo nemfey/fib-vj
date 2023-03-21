@@ -38,6 +38,10 @@ public:
 
 	// Gettters & Setters
 	int getCurrentTime() { return currentTime; };
+	int getPlayerLives() { return player->getLives(); };
+	int getPlayerScore() { return player->getScore(); };
+	void setPlayerLives(int lives) { player->setLives(lives); };
+	void setPlayerScore(int score) { player->addScore(score); };
 
 private:
 	void initPlayer();

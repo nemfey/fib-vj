@@ -14,10 +14,13 @@ void Game::init()
 
 	bMenuShowing = true;
 
-	dictOptions = { {0,Play}, {1,Instructions}, {2,HighScores}, {3,Credits}, {4,Exit} };
+	dictOptions = { {0,Play}, {1,Instructions}, {2,Credits}, {3,Exit} };
 	option_nth = 0;
-	// Descomentar la linea de abajo si no se quiere ver el cursor en la pantalla
-	//glutSetCursor(GLUT_CURSOR_NONE);
+	
+	levels.push_back("levels/level01.txt");
+	levels.push_back("levels/level02.txt");
+	levels.push_back("levels/level03.txt");
+	levelIterator = 0;
 }
 
 #include <iostream>
@@ -57,12 +60,21 @@ void Game::keyPressed(int key)
 		bPlay = false;
 	if (key == 13 && bMenuShowing) // Enter code
 		optionSelected();
-	if (key==49)
-		loadScene("levels/level01.txt");
-	if (key==50)
-		loadScene("levels/level02.txt");
+	if (key == 49)
+	{
+		levelIterator = 0;
+		loadFirstScene();
+	}
+	if (key == 50)
+	{
+		levelIterator = 1;
+		loadFirstScene();
+	}
 	if (key == 51)
-		loadScene("levels/level03.txt");
+	{
+		levelIterator = 2;
+		loadFirstScene();
+	}
 
 	keys[key] = true;
 }
@@ -82,7 +94,7 @@ void Game::specialKeyPressed(int key)
 		// cambiar sprite al que diga el diccionario
 		// para que se muestre el sprite del menu con dicho boton marcado
 	}
-	if (key == 103 && option_nth < 4)
+	if (key == 103 && option_nth < 3)
 	{
 		++option_nth;
 		cout << "opcion " << option_nth << endl;
@@ -180,7 +192,11 @@ void Game::updateScene(int deltaTime)
 		break;
 	case StageState::StageCleared:
 		// load next stage and if last end game
-		loadScene("levels/level02.txt");
+		++levelIterator;
+		if (levelIterator < levels.size())
+			loadNextScene();
+		else
+			cout << "GAME FINISHED. CONGRATULATIONS!" << endl;
 		cout << "loading next stage..." << endl;
 		break;
 	case StageState::GameOver:
@@ -214,11 +230,24 @@ void Game::updateRatioWindowSize(int width, int height)
 	projection = glm::scale(projection, glm::vec3(scale));
 }
 
-void Game::loadScene(string level)
+void Game::loadFirstScene()
 {
 	scene = new Scene();
-	scene->init(texProgram, level);
+	scene->init(texProgram, levels[levelIterator]);
 	bMenuShowing = false;
+}
+
+void Game::loadNextScene()
+{
+	int playerLives = scene->getPlayerLives();
+	int playerScore = scene->getPlayerScore();
+
+	scene = new Scene();
+	scene->init(texProgram, levels[levelIterator]);
+	bMenuShowing = false;
+	
+	scene->setPlayerLives(playerLives);
+	scene->setPlayerScore(playerScore);
 }
 
 void Game::optionSelected()
@@ -228,15 +257,12 @@ void Game::optionSelected()
 	{
 	case Play:
 		cout << "playing..." << endl;
-		loadScene("levels/level01.txt");
+		levelIterator = 0;
+		loadFirstScene();
 		break;
 	case Instructions:
 		// Mostrar instrucciones
 		cout << "showing intructions..." << endl;
-		break;
-	case HighScores:
-		// Mostras top 5 records (por ejemplo)
-		cout << "showing highscores..." << endl;
 		break;
 	case Credits:
 		// Mostrar pantalla de creditos
