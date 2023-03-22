@@ -31,7 +31,9 @@ public:
 
 	void setTileMap(TileMap* tileMap) { map = tileMap; };
 	void setPosition(const glm::ivec2 &pos);
+	void setImmune(int time);
 	void setLives(int l) { lives = l; };
+	void setInvincible(bool b) { bInvincible = b; }
 	
 private:
 	Texture spritesheet;
@@ -48,6 +50,12 @@ private:
 	int inmunityTime = 0;
 
 	int score = 0;
+
+	bool bInvincible = false;
+
+	bool bFacingRight = true;
+
+	bool spawning = true;
 
 };
 

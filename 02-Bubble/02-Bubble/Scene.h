@@ -45,7 +45,7 @@ public:
 	void setPlayerLives(int lives) { player->setLives(lives); };
 	void setPlayerScore(int score) { player->addScore(score); };
 	void setStageNumber(int stageNumber) { sceneInterface->updateStageNumber(stageNumber); };
-	void setPlayerInvencible(bool b) { bPlayerInvencible = b; };
+	void setPlayerInvencible(bool b) { bPlayerInvencible = b; player->setInvincible(b); };
 	void makeKeyAppear();
 
 private:
