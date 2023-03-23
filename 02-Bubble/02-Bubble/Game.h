@@ -62,7 +62,7 @@ private:
 
 	glm::mat4 projection;
 	float sceneRatio = 1.28f;
-	float menuRatio = 1.778f;
+	float menuRatio = 720.f/405.f;
 	float ratioWindowSize;
 
 	bool bPlay;                       // Continue to play game?

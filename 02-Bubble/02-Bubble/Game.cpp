@@ -9,7 +9,7 @@ void Game::init()
 {	
 	initShaders();
 	bPlay = true;
-	glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
+	glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 	menu.init(texProgram);
 
 	bMenuShowing = true;
@@ -48,7 +48,7 @@ void Game::render()
 
 void Game::reshapeCallback(int width, int height)
 {
-	glViewport(0, 0, width, height);
+
 	Game::instance().updateRatioWindowSize(width, height);
 }
 
@@ -228,30 +228,24 @@ void Game::updateScene(int deltaTime)
 
 void Game::updateRatioWindowSize(int width, int height)
 {
+	glViewport(0, 0, width, height);
+
 	float windowRatio = width / float(height);
 	float scale = 1.0f;
 	float currentRatio = bMenuShowing ? menuRatio : sceneRatio;
+	float currentWidth = bMenuShowing ? 405.f : 400.f;
+	float currentHeight = bMenuShowing ? 720.f : 512.f;
 
 	if (windowRatio > currentRatio)
 	{
-		scale = height / 405.f;
-		float offset = (width - 720.f * scale) / 2;
-		if (!bMenuShowing) {
-			scale = height / 400.0f;  // escalate Y axis
-			offset = (width - 512 * scale) / 2;
-		
-		}
+		scale = height / currentWidth;
+		float offset = (width - currentHeight * scale) / 2;
 		projection = glm::ortho(-offset, float(width) - offset, float(height), 0.f);
 	}
 	else
 	{
-		scale = height / 720.f;
-		float offset = (height - 405.f * scale) / 2;
-		if (!bMenuShowing)
-		{
-			scale = width / 512.0f;  // escalate X axis
-			offset = (height - 400 * scale) / 2;
-		}
+		scale = width / currentHeight;
+		float offset = (height - currentWidth * scale) / 2;
 		projection = glm::ortho(0.f, float(width), float(height) - offset, -offset);
 	}
 	projection = glm::scale(projection, glm::vec3(scale));
@@ -261,7 +255,9 @@ void Game::loadFirstStage()
 {
 	scene = new Scene();
 	scene->init(texProgram, stages[stageIterator]);
+	
 	bMenuShowing = false;
+	updateRatioWindowSize(glutGet(GLUT_WINDOW_WIDTH),glutGet(GLUT_WINDOW_HEIGHT));
 
 	scene->setStageNumber(stageIterator + 1);
 }

@@ -132,7 +132,7 @@ bool TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, int
 		int tile = map[y * mapSize.x + x];
 
 		//if (tile == 3 || (!bCrossPlattforms && tile != 0))
-		if (!bCrossPlattforms && tile != 0)
+		if ((!bCrossPlattforms && tile != 0) || tile == 6)
 			if (*posY - tileSize * y < tileSize)
 				return true;
 	}
@@ -149,7 +149,7 @@ bool TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, i
 	for (int x = x0; x <= x1; x++)
 	{
 		int tile = map[y * mapSize.x + x];
-		if (tile == 5 || tile == 6)
+		if (tile == 5 || tile == 6) //Y ES PLAYER
 			return false;
 		else if (tile != 0)
 		//if (tile != 0 && tile != 5 && tile != 6)
