@@ -107,10 +107,10 @@ void Scene::render()
 
 		if (itemSpawned) {
 			//30% chance of the item spawned to be a hourglass or a Bible
-			if (itemRNG <= 300) {
-				if (itemRNG < 0 && pHourglass)
+			if (itemRNG <= 30) {
+				if (itemRNG < 15 && pHourglass)
 					pHourglass->render();
-				else if (itemRNG >= 0 && pBible)
+				else if (itemRNG >= 15 && pBible)
 					pBible->render();
 			}
 			else if (itemRNG > 30 && pTreasure)

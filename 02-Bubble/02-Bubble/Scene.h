@@ -84,7 +84,7 @@ private:
 	int messageTimer = 0;
 
 	int itemCountDown = 0;
-	int itemSpawnCounter = 7 - (rand() % 5);
+	int itemSpawnCounter = 20 - (rand() % 5);
 	bool itemSpawned = false;
 
 	int itemRNG = rand() % 100;
