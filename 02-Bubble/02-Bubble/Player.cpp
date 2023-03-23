@@ -191,14 +191,17 @@ void Player::render()
 {
 	if (!inmunityState)
 		sprite->render();
-	else
+	else if (!bInvincible) {
 		if (inmunityTime < 1000) {
 			if (inmunityTime % 125 <= 65)
 				sprite->render();
 		}
-		else 
-			if (inmunityTime % 250 <= 125)
+		else {
+			if (inmunityTime % 250 <= 200)
 				sprite->render();
+		}
+	}
+	else sprite->render();
 }
 
 void Player::loseLive()

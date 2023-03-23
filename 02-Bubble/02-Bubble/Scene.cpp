@@ -80,6 +80,11 @@ void Scene::update(int deltaTime)
 		updateItems(deltaTime);
 		updateSceneInterface(deltaTime);
 
+		if (map->getBibleTaken()) {
+			player->setImmune(5000);
+			map->setBibleTaken(false);
+		}
+
 		if (map->getHourglassTaken())
 		{
 			hourglassTimer = 5;
@@ -108,17 +113,22 @@ void Scene::render()
 
 		Treasure* pTreasure = dynamic_cast<Treasure*>(i);
 		Hourglass* pHourglass = dynamic_cast<Hourglass*>(i);
+		Bible* pBible = dynamic_cast<Bible*>(i);
 
 		if (itemSpawned) {
-			//1 in 3 chance of the item spawned to be a hourglass
-			if (itemRNG <= 33 && pHourglass)
-				pHourglass->render();
-			else if (itemRNG > 33 && pTreasure)
+			//30% chance of the item spawned to be a hourglass or a Bible
+			if (itemRNG <= 30) {
+				if (itemRNG < 15 && pHourglass)
+					pHourglass->render();
+				else if (itemRNG >= 15 && pBible)
+					pBible->render();
+			}
+			else if (itemRNG > 30 && pTreasure)
 				pTreasure->render();
 		}
-		else if (pHourglass || pTreasure)
+		else if (pHourglass || pTreasure || pBible)
 			i->setShowing(false);
-		if (!pTreasure && !pHourglass)
+		if (!pTreasure && !pHourglass && !pBible)
 			i->render();
 	}
 
@@ -190,6 +200,7 @@ void Scene::initItems()
 	items.push_back(new Door());
 	items.push_back(new Hourglass());
 	items.push_back(new Treasure());
+	items.push_back(new Bible());
 
 	for (auto i : items)
 	{

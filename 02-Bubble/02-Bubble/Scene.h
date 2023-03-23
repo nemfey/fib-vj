@@ -17,6 +17,7 @@
 #include "Door.h"
 #include "Hourglass.h"
 #include "Treasure.h"
+#include "Bible.h"
 
 #include "StageState.h"
 
