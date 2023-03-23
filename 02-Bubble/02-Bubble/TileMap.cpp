@@ -149,7 +149,10 @@ bool TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, i
 	for (int x = x0; x <= x1; x++)
 	{
 		int tile = map[y * mapSize.x + x];
-		if (tile != 0 && tile != 5 && tile != 6)
+		if (tile == 5 || tile == 6)
+			return false;
+		else if (tile != 0)
+		//if (tile != 0 && tile != 5 && tile != 6)
 		{
 			if (*posY - tileSize * y + size.y <= 4)
 			{

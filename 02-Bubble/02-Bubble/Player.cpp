@@ -170,6 +170,7 @@ void Player::update(int deltaTime)
 			*/
 
 			posPlayer.y += FALL_STEP;
+			// y no estamos dentro de pierda 5 o 6
 			if (map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
 			{
 				posPlayer.y += FALL_STEP;
