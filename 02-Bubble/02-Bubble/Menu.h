@@ -20,6 +20,7 @@ public:
 	void init(ShaderProgram& shaderProgram);
 	void update(int deltaTime);
 	void render();
+	void setSelection(int i);
 
 private:
 	ShaderProgram texProgram;

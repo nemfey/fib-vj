@@ -14,7 +14,7 @@ void Game::init()
 
 	bMenuShowing = true;
 
-	dictOptions = { {0,Play}, {1,Instructions}, {2,Credits}, {3,Exit} };
+	dictOptions = { {0,Play}, {1,Instructions}, {2,Exit} };
 	option_nth = 0;
 	
 	stages.push_back("levels/level01.txt");
@@ -101,17 +101,19 @@ void Game::keyReleased(int key)
 
 void Game::specialKeyPressed(int key)
 {
-	if (key == 101 && option_nth > 0)
+	if (key == 101 && option_nth > 0 && bMenuShowing)
 	{
 		--option_nth;
+		menu.setSelection(option_nth);
 		cout << "opcion " << option_nth << endl;
 		//menu change animation options[option_nth]
 		// cambiar sprite al que diga el diccionario
 		// para que se muestre el sprite del menu con dicho boton marcado
 	}
-	if (key == 103 && option_nth < 3)
+	if (key == 103 && option_nth < 2 && bMenuShowing)
 	{
 		++option_nth;
+		menu.setSelection(option_nth);
 		cout << "opcion " << option_nth << endl;
 		//menu change animation options[option_nth]
 		// cambiar sprite al que diga el diccionario
@@ -232,14 +234,24 @@ void Game::updateRatioWindowSize(int width, int height)
 
 	if (windowRatio > currentRatio)
 	{
-		scale = height / 400.0f;  // escalate Y axis
-		float offset = (width - 512 * scale) / 2;
+		scale = height / 405.f;
+		float offset = (width - 720.f * scale) / 2;
+		if (!bMenuShowing) {
+			scale = height / 400.0f;  // escalate Y axis
+			offset = (width - 512 * scale) / 2;
+		
+		}
 		projection = glm::ortho(-offset, float(width) - offset, float(height), 0.f);
 	}
 	else
 	{
-		scale = width / 512.0f;  // escalate X axis
-		float offset = (height - 400 * scale) / 2;
+		scale = height / 720.f;
+		float offset = (height - 405.f * scale) / 2;
+		if (!bMenuShowing)
+		{
+			scale = width / 512.0f;  // escalate X axis
+			offset = (height - 400 * scale) / 2;
+		}
 		projection = glm::ortho(0.f, float(width), float(height) - offset, -offset);
 	}
 	projection = glm::scale(projection, glm::vec3(scale));
@@ -281,10 +293,6 @@ void Game::optionSelected()
 	case Instructions:
 		// Mostrar instrucciones
 		cout << "showing intructions..." << endl;
-		break;
-	case Credits:
-		// Mostrar pantalla de creditos
-		cout << "showing credits..." << endl;
 		break;
 	case Exit:
 		cout << "Exiting..." << endl;
