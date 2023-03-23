@@ -2,19 +2,19 @@
 #include <iostream>
 #include <GL/glew.h>
 #include <GL/glut.h>
-#include "Hourglass.h"
+#include "Bible.h"
 #include "Game.h"
 
-enum HourglassAnims
+enum BibleAnims
 {
 	IDLE
 };
 
 // Public functions
 
-void Hourglass::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
+void Bible::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
-	spritesheet.loadFromFile("images/hourglass.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spritesheet.loadFromFile("images/bible_cross.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	spritesheet.setMagFilter(GL_NEAREST);
 	sprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(0.25, 0.5), &spritesheet, &shaderProgram);
 
@@ -40,7 +40,7 @@ void Hourglass::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	itemSize = glm::ivec2(8, 8);
 }
 
-void Hourglass::update(int deltaTime)
+void Bible::update(int deltaTime)
 {
 	if (showing && collisionPlayer())
 	{
@@ -48,15 +48,13 @@ void Hourglass::update(int deltaTime)
 		showing = false;
 
 		//DEBUG
-		cout << "Hourglass taken" << endl;
-
-		map->setHourglassTaken(true);
+		cout << "Bible taken" << endl;
 	}
 
 	sprite->update(deltaTime);
 }
 
-void Hourglass::render()
+void Bible::render()
 {
 	glm::ivec2 screenCoords = map->getScreenCoords();
 	if (!showing) {
@@ -81,7 +79,7 @@ void Hourglass::render()
 		sprite->setPosition(glm::vec2(screenCoords.x + posItem.x, screenCoords.y + posItem.y + 1));
 	}
 
-		
+
 	sprite->render();
-	
+
 }

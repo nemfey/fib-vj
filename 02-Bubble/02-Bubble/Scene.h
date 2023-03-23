@@ -17,6 +17,7 @@
 #include "Door.h"
 #include "Hourglass.h"
 #include "Treasure.h"
+#include "Bible.h"
 
 #include "StageState.h"
 
@@ -45,7 +46,7 @@ public:
 	void setPlayerLives(int lives) { player->setLives(lives); };
 	void setPlayerScore(int score) { player->addScore(score); };
 	void setStageNumber(int stageNumber) { sceneInterface->updateStageNumber(stageNumber); };
-	void setPlayerInvencible(bool b) { bPlayerInvencible = b; };
+	void setPlayerInvencible(bool b) { bPlayerInvencible = b; player->setInvincible(b); };
 	void makeKeyAppear();
 
 private:
@@ -83,7 +84,7 @@ private:
 	int messageTimer = 0;
 
 	int itemCountDown = 0;
-	int itemSpawnCounter = 7 - (rand() % 5);
+	int itemSpawnCounter = 20 - (rand() % 5);
 	bool itemSpawned = false;
 
 	int itemRNG = rand() % 100;

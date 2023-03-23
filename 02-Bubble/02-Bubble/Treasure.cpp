@@ -22,85 +22,13 @@ void Treasure::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	//Animation
 	sprite->setNumberAnimations(8);
 
-	sprite->setAnimationSpeed(GEM1, 8);
-	sprite->addKeyframe(GEM1, glm::vec2(0.f, 0.125f));
-	sprite->addKeyframe(GEM1, glm::vec2(0.125f, 0.125f));
-	sprite->addKeyframe(GEM1, glm::vec2(0.25f, 0.125f));
-	sprite->addKeyframe(GEM1, glm::vec2(0.375f, 0.125f));
-	sprite->addKeyframe(GEM1, glm::vec2(0.5f, 0.125f));
-	sprite->addKeyframe(GEM1, glm::vec2(0.625f, 0.125f));
-	sprite->addKeyframe(GEM1, glm::vec2(0.75f, 0.125f));
-	sprite->addKeyframe(GEM1, glm::vec2(0.875f, 0.125f));
-
-	sprite->setAnimationSpeed(GEM2, 8);
-	sprite->addKeyframe(GEM2, glm::vec2(0.f, 0.25f));
-	sprite->addKeyframe(GEM2, glm::vec2(0.125f, 0.25f));
-	sprite->addKeyframe(GEM2, glm::vec2(0.25f, 0.25f));
-	sprite->addKeyframe(GEM2, glm::vec2(0.375f, 0.25f));
-	sprite->addKeyframe(GEM2, glm::vec2(0.5f, 0.25f));
-	sprite->addKeyframe(GEM2, glm::vec2(0.625f, 0.25f));
-	sprite->addKeyframe(GEM2, glm::vec2(0.75f, 0.25f));
-	sprite->addKeyframe(GEM2, glm::vec2(0.875f, 0.25f));
-
-	sprite->setAnimationSpeed(GEM3, 8);
-	sprite->addKeyframe(GEM3, glm::vec2(0.f, 0.375f));
-	sprite->addKeyframe(GEM3, glm::vec2(0.125f, 0.375f));
-	sprite->addKeyframe(GEM3, glm::vec2(0.25f, 0.375f));
-	sprite->addKeyframe(GEM3, glm::vec2(0.375f, 0.375f));
-	sprite->addKeyframe(GEM3, glm::vec2(0.5f, 0.375f));
-	sprite->addKeyframe(GEM3, glm::vec2(0.625f, 0.375f));
-	sprite->addKeyframe(GEM3, glm::vec2(0.75f, 0.375f));
-	sprite->addKeyframe(GEM3, glm::vec2(0.875f, 0.375f));
-
-	sprite->setAnimationSpeed(COINS, 8);
-	sprite->addKeyframe(COINS, glm::vec2(0.f, 0.f));
-	sprite->addKeyframe(COINS, glm::vec2(0.125f, 0.f));
-	sprite->addKeyframe(COINS, glm::vec2(0.25f, 0.f));
-	sprite->addKeyframe(COINS, glm::vec2(0.375f, 0.f));
-	sprite->addKeyframe(COINS, glm::vec2(0.5f, 0.f));
-	sprite->addKeyframe(COINS, glm::vec2(0.625f, 0.f));
-	sprite->addKeyframe(COINS, glm::vec2(0.75f, 0.f));
-	sprite->addKeyframe(COINS, glm::vec2(0.875f, 0.f));
-
-	sprite->setAnimationSpeed(FRUIT1, 8);
-	sprite->addKeyframe(FRUIT1, glm::vec2(0.f, 0.5f));
-	sprite->addKeyframe(FRUIT1, glm::vec2(0.125f, 0.5f));
-	sprite->addKeyframe(FRUIT1, glm::vec2(0.25f, 0.5f));
-	sprite->addKeyframe(FRUIT1, glm::vec2(0.375f, 0.5f));
-	sprite->addKeyframe(FRUIT1, glm::vec2(0.5f, 0.5f));
-	sprite->addKeyframe(FRUIT1, glm::vec2(0.625f, 0.5f));
-	sprite->addKeyframe(FRUIT1, glm::vec2(0.75f, 0.5f));
-	sprite->addKeyframe(FRUIT1, glm::vec2(0.875f, 0.5f));
-
-	sprite->setAnimationSpeed(FRUIT2, 8);
-	sprite->addKeyframe(FRUIT2, glm::vec2(0.f, 0.625f));
-	sprite->addKeyframe(FRUIT2, glm::vec2(0.125f, 0.625f));
-	sprite->addKeyframe(FRUIT2, glm::vec2(0.25f, 0.625f));
-	sprite->addKeyframe(FRUIT2, glm::vec2(0.375f, 0.625f));
-	sprite->addKeyframe(FRUIT2, glm::vec2(0.5f, 0.625f));
-	sprite->addKeyframe(FRUIT2, glm::vec2(0.625f, 0.625f));
-	sprite->addKeyframe(FRUIT2, glm::vec2(0.75f, 0.625f));
-	sprite->addKeyframe(FRUIT2, glm::vec2(0.875f, 0.625f));
-
-	sprite->setAnimationSpeed(FRUIT3, 8);
-	sprite->addKeyframe(FRUIT3, glm::vec2(0.f, 0.75f));
-	sprite->addKeyframe(FRUIT3, glm::vec2(0.125f, 0.75f));
-	sprite->addKeyframe(FRUIT3, glm::vec2(0.25f, 0.75f));
-	sprite->addKeyframe(FRUIT3, glm::vec2(0.375f, 0.75f));
-	sprite->addKeyframe(FRUIT3, glm::vec2(0.5f, 0.75f));
-	sprite->addKeyframe(FRUIT3, glm::vec2(0.625f, 0.75f));
-	sprite->addKeyframe(FRUIT3, glm::vec2(0.75f, 0.75f));
-	sprite->addKeyframe(FRUIT3, glm::vec2(0.875f, 0.75f));
-
-	sprite->setAnimationSpeed(STAR, 8);
-	sprite->addKeyframe(STAR, glm::vec2(0.f, 0.875f));
-	sprite->addKeyframe(STAR, glm::vec2(0.125f, 0.875f));
-	sprite->addKeyframe(STAR, glm::vec2(0.25f, 0.875f));
-	sprite->addKeyframe(STAR, glm::vec2(0.375f, 0.875f));
-	sprite->addKeyframe(STAR, glm::vec2(0.5f, 0.875f));
-	sprite->addKeyframe(STAR, glm::vec2(0.625f, 0.875f));
-	sprite->addKeyframe(STAR, glm::vec2(0.75f, 0.875f));
-	sprite->addKeyframe(STAR, glm::vec2(0.875f, 0.875f));
+	//Set all frames (They are in order in the spriteSheet)
+	for (int i = 0; i < 8; ++i) {
+		sprite->setAnimationSpeed(i, 8);
+		for (int j = 0; j < 8; ++j) {
+			sprite->addKeyframe(i, glm::vec2(0.125*j, 0.125*i));
+		}
+	}
 
 	//Set type to random between 0 and 7
 	srand(time(NULL));
@@ -134,6 +62,7 @@ void Treasure::update(int deltaTime)
 
 void Treasure::render()
 {
+	glm::ivec2 screenCoords = map->getScreenCoords();
 	if (!showing) {
 
 		//Set type to random between 0 and 7
@@ -148,13 +77,23 @@ void Treasure::render()
 
 		// Depending of the value it spawns further
 		posItem = map->getRandomPosition(7 + type) - glm::vec2(0, 24);
-		glm::ivec2 screenCoords = map->getScreenCoords();
 		sprite->setPosition(glm::vec2(screenCoords.x + posItem.x, screenCoords.y + posItem.y));
 
 		//DEBUG
 		cout << "position assinged is: " << posItem.x << " " << posItem.y - 24 << endl;
 
 		showing = true;
+	}
+
+	//Movement
+	if (sprite->getCurrentKeyFrame() % 4 == 0) {
+		sprite->setPosition(glm::vec2(screenCoords.x + posItem.x, screenCoords.y + posItem.y - 1));
+	}
+	else if (sprite->getCurrentKeyFrame() % 4 == 1 || sprite->getCurrentKeyFrame() % 4 == 3) {
+		sprite->setPosition(glm::vec2(screenCoords.x + posItem.x, screenCoords.y + posItem.y));
+	}
+	else if (sprite->getCurrentKeyFrame() % 4 == 2) {
+		sprite->setPosition(glm::vec2(screenCoords.x + posItem.x, screenCoords.y + posItem.y + 1));
 	}
 
 	sprite->render();

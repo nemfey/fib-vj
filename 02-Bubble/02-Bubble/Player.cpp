@@ -63,6 +63,9 @@ void Player::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 
 	sprite->setAnimationSpeed(SPAWN, 8);
 	sprite->addKeyframe(SPAWN, glm::vec2(0.75f, 0.f));
+	sprite->addKeyframe(SPAWN, glm::vec2(0.75f, 0.25f));
+	sprite->addKeyframe(SPAWN, glm::vec2(0.75f, 0.5f));
+	sprite->addKeyframe(SPAWN, glm::vec2(0.75f, 0.f));
 
 	sprite->changeAnimation(SPAWN);
 	tileMapDispl = tileMapPos;
@@ -72,105 +75,133 @@ void Player::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 void Player::update(int deltaTime)
 {
 	sprite->update(deltaTime);
-	if (Game::instance().getSpecialKey(GLUT_KEY_LEFT))
-	{
-		if (sprite->animation() != MOVE_LEFT)
-			sprite->changeAnimation(MOVE_LEFT);
-		posPlayer.x -= 2;
-		if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32), bJumping))
-		{
-			posPlayer.x += 2;
-			sprite->changeAnimation(STAND_LEFT);
+
+	if (spawning) {
+
+		if (sprite->getCurrentKeyFrame() >= 3) {
+			spawning = false;
 		}
 	}
-	else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
-	{
-		if (sprite->animation() != MOVE_RIGHT)
-			sprite->changeAnimation(MOVE_RIGHT);
-		posPlayer.x += 2;
-		if (map->collisionMoveRight(posPlayer, glm::ivec2(32, 32), bJumping))
+
+	else {
+
+		if (bInvincible) {
+			if (sprite->animation() != INVINCIBLE)
+				sprite->changeAnimation(INVINCIBLE);
+		}
+
+		else if (inmunityState)
 		{
+			if (sprite->animation() != INVINCIBLE)
+				sprite->changeAnimation(INVINCIBLE);
+
+			inmunityTime -= deltaTime;
+			if (inmunityTime < 0)
+			{
+				cout << "my inmunity state ended :(" << endl;
+				inmunityState = false;
+				inmunityTime = 0;
+			}
+		}
+
+
+		if (Game::instance().getSpecialKey(GLUT_KEY_LEFT))
+		{
+			bFacingRight = false;
+			if (sprite->animation() != MOVE_LEFT && !bInvincible && !inmunityState)
+				sprite->changeAnimation(MOVE_LEFT);
 			posPlayer.x -= 2;
-			sprite->changeAnimation(STAND_RIGHT);
+			if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32), bJumping))
+			{
+				posPlayer.x += 2;
+
+				if (!bInvincible && !inmunityState)
+					sprite->changeAnimation(STAND_LEFT);
+			}
 		}
-	}
-	else
-	{
-		if (sprite->animation() == MOVE_LEFT)
-			sprite->changeAnimation(STAND_LEFT);
-		else if (sprite->animation() == MOVE_RIGHT)
-			sprite->changeAnimation(STAND_RIGHT);
-	}
-
-	if (bJumping)
-	{
-		if ((sprite->animation() == MOVE_LEFT || sprite->animation() == STAND_LEFT) && sprite->animation() != JUMP_LEFT)
-			sprite->changeAnimation(JUMP_LEFT);
-		else if ((sprite->animation() == MOVE_RIGHT || sprite->animation() == STAND_RIGHT) && sprite->animation() != JUMP_RIGHT)
-			sprite->changeAnimation(JUMP_RIGHT);
-
-		jumpAngle += JUMP_ANGLE_STEP;
-		if (jumpAngle == 180)
+		else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
 		{
-			bJumping = false;
-			posPlayer.y = startY;
+			bFacingRight = true;
+			if (sprite->animation() != MOVE_RIGHT && !bInvincible && !inmunityState)
+				sprite->changeAnimation(MOVE_RIGHT);
+			posPlayer.x += 2;
+			if (map->collisionMoveRight(posPlayer, glm::ivec2(32, 32), bJumping))
+			{
+				posPlayer.x -= 2;
+				if (!bInvincible && !inmunityState)
+				sprite->changeAnimation(STAND_RIGHT);
+			}
 		}
 		else
 		{
-			posPlayer.y = int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
-			if (jumpAngle > 90)
-				bJumping = !map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y);
+			if (!bFacingRight && sprite->animation() != STAND_LEFT && !bInvincible && !inmunityState)
+				sprite->changeAnimation(STAND_LEFT);
+			else if (bFacingRight && sprite->animation() != STAND_RIGHT && !bInvincible && !inmunityState)
+				sprite->changeAnimation(STAND_RIGHT);
 		}
-		if (map->collisionMoveUp(posPlayer, glm::ivec2(32, 32), &posPlayer.y, true))
-			bJumping = false;
-	}
-	else
-	{
-
-		if (sprite->animation() == JUMP_LEFT && sprite->animation() != STAND_LEFT)
-			sprite->changeAnimation(STAND_LEFT);
-		if (sprite->animation() == JUMP_RIGHT && sprite->animation() != STAND_RIGHT)
-			sprite->changeAnimation(STAND_RIGHT);
-
-		posPlayer.y += FALL_STEP;
-		if (map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
+		if (bJumping)
 		{
-			posPlayer.y += FALL_STEP;
-			map->positionStepped(posPlayer, glm::ivec2(32, 32), &posPlayer.y);
-
-			if (Game::instance().getSpecialKey(GLUT_KEY_UP))
+			if (!bFacingRight && sprite->animation() != JUMP_LEFT && !bInvincible && !inmunityState)
+				sprite->changeAnimation(JUMP_LEFT);
+			else if (bFacingRight && sprite->animation() != JUMP_RIGHT && !bInvincible && !inmunityState)
+				sprite->changeAnimation(JUMP_RIGHT);
+			jumpAngle += JUMP_ANGLE_STEP;
+			if (jumpAngle == 180)
 			{
-				bJumping = true;
-				jumpAngle = 0;
-				startY = posPlayer.y;
+				bJumping = false;
+				posPlayer.y = startY;
+			}
+			else
+			{
+				posPlayer.y = int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
+				if (jumpAngle > 90)
+					bJumping = !map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y);
+			}
+			if (map->collisionMoveUp(posPlayer, glm::ivec2(32, 32), &posPlayer.y, true))
+				bJumping = false;
+		}
+		else
+		{
+			/*
+			if (!bFacingRight && sprite->animation() != STAND_LEFT)
+				sprite->changeAnimation(STAND_LEFT);
+			if (bFacingRight && sprite->animation() != STAND_RIGHT && !bInvincible && !inmunityState)
+				sprite->changeAnimation(STAND_RIGHT);
+			*/
+
+			posPlayer.y += FALL_STEP;
+			if (map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
+			{
+				posPlayer.y += FALL_STEP;
+				map->positionStepped(posPlayer, glm::ivec2(32, 32), &posPlayer.y);
+				if (Game::instance().getSpecialKey(GLUT_KEY_UP))
+				{
+					bJumping = true;
+					jumpAngle = 0;
+					startY = posPlayer.y;
+				}
 			}
 		}
 	}
 
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
-
-	if (inmunityState)
-	{
-		if (sprite->animation() != INVINCIBLE)
-			sprite->changeAnimation(INVINCIBLE);
-
-		inmunityTime += deltaTime;
-		if (inmunityTime > 3000)
-		{
-			cout << "my inmunity state ended :(" << endl;
-			inmunityState = false;
-			inmunityTime = 0;
-		}
-	}
 }
 
 void Player::render()
 {
 	if (!inmunityState)
 		sprite->render();
-	else
-		if (inmunityTime % 250 <= 125)
-			sprite->render();
+	else if (!bInvincible) {
+		if (inmunityTime < 1000) {
+			if (inmunityTime % 125 <= 65)
+				sprite->render();
+		}
+		else {
+			if (inmunityTime % 250 <= 200)
+				sprite->render();
+		}
+	}
+	else sprite->render();
 }
 
 void Player::loseLive()
@@ -178,7 +209,7 @@ void Player::loseLive()
 	if (lives > 0 && !inmunityState)
 	{
 		--lives;
-		inmunityState = true;
+		setImmune(3000);
 		cout << "you lost a live but now im inmune" << endl;
 		// AÑADIR INMUNIDAD
 	}
@@ -204,4 +235,9 @@ void Player::setPosition(const glm::ivec2& pos)
 {
 	posPlayer = pos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
+}
+
+void Player::setImmune(int time) {
+	inmunityState = true;
+	inmunityTime = time;
 }
