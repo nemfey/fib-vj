@@ -49,8 +49,6 @@ void Bible::update(int deltaTime)
 
 		//DEBUG
 		cout << "Bible taken" << endl;
-
-		map->setBibleTaken(true);
 	}
 
 	sprite->update(deltaTime);

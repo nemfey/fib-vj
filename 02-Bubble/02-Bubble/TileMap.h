@@ -48,14 +48,12 @@ public:
 	glm::ivec2 getDoorPosition() { return posDoor; };
 	bool getKeyTaken() const { return keyTaken; };
 	bool getHourglassTaken() const { return hourglassTaken; };
-	bool getBibleTaken() const { return bibleTaken; }
 	glm::ivec2 getMapSize() const { return mapSize; };
 	glm::ivec2 getScreenCoords() const { return screenCoords; };
 
 	void setPosPlayer(glm::ivec2 pos) { posPlayer = pos; };
 	void setKeyTaken(bool b) { keyTaken = b; };
 	void setHourglassTaken(bool b);
-	void setBibleTaken(bool b) { bibleTaken = b; }
 
 
 private:
@@ -84,8 +82,6 @@ private:
 	bool keyTaken = false;
 
 	bool hourglassTaken = false;
-
-	bool bibleTaken = false;
 
 };
 

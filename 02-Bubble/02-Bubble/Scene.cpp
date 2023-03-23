@@ -80,17 +80,7 @@ void Scene::update(int deltaTime)
 		updateItems(deltaTime);
 		updateSceneInterface(deltaTime);
 
-		if (map->getBibleTaken()) {
-			player->setImmune(5000);
-			map->setBibleTaken(false);
-		}
-
-		if (map->getHourglassTaken())
-		{
-			hourglassTimer = 5;
-			map->setHourglassTaken(false);
-		}
-		else if (hourglassTimer > 0)
+		if (hourglassTimer > 0)
 		{
 			if (currentTime / 1000 != timer)
 			{
@@ -117,10 +107,10 @@ void Scene::render()
 
 		if (itemSpawned) {
 			//30% chance of the item spawned to be a hourglass or a Bible
-			if (itemRNG <= 30) {
-				if (itemRNG < 15 && pHourglass)
+			if (itemRNG <= 300) {
+				if (itemRNG < 0 && pHourglass)
 					pHourglass->render();
-				else if (itemRNG >= 15 && pBible)
+				else if (itemRNG >= 0 && pBible)
 					pBible->render();
 			}
 			else if (itemRNG > 30 && pTreasure)
@@ -243,12 +233,6 @@ void Scene::gameOverMessage()
 
 void Scene::updateTime(int deltaTime)
 {
-	//currentTime += deltaTime; // scarlo al principio de la funcion update
-
-	//Previous if statement
-	//if (60 - (currentTime / 1000) < remainingSeconds)
-
-	//Game is running at 60FPS, so if the module is divisible by 60 then a second has passed
 	if (remainingSeconds == 0)
 	{
 		sceneInterface->setState(GameOver);
@@ -332,6 +316,7 @@ void Scene::updateItems(int deltaTime)
 		Door* pDoor = dynamic_cast<Door*>(i);
 		Treasure* pTreasure = dynamic_cast<Treasure*>(i);
 		Hourglass* pHourglass = dynamic_cast<Hourglass*>(i);
+		Bible* pBible = dynamic_cast<Bible*>(i);
 
 		if (pDoor && pDoor->isTaken())
 		{
@@ -346,6 +331,21 @@ void Scene::updateItems(int deltaTime)
 			itemSpawned = false;
 			pTreasure->setShowing(false);
 			pTreasure->setPosition(glm::vec2(0, 0));
+		}
+
+		if (pBible && pBible->collisionPlayer()) {
+			player->setImmune(5000);
+			itemSpawned = false;
+			pBible->setShowing(false);
+			pBible->setPosition(glm::vec2(0, 0));
+		}
+
+		if (pHourglass && pHourglass->collisionPlayer()) {
+			hourglassTimer = 5;
+			map->setHourglassTaken(false);
+			itemSpawned = false;
+			pHourglass->setShowing(false);
+			pHourglass->setPosition(glm::vec2(0, 0));
 		}
 
 		i->update(deltaTime);
