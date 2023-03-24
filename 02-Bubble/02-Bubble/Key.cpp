@@ -53,7 +53,7 @@ void Key::update(int deltaTime)
 
 void Key::render()
 {
-	if (showing && !bPositioned)
+	if (showing)
 	{
 		glm::ivec2 screenCoords = map->getScreenCoords();
 		if (!bPositioned)
@@ -75,7 +75,8 @@ void Key::render()
 		}
 	}
 	
-	showing = map->allPlattformsStepped() && !taken;
+	if (!bPositioned && map->allPlattformsStepped() && !taken)
+		showing = true;
 	if (showing)
 		sprite->render();
 }
