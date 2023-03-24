@@ -10,6 +10,6 @@ public:
 	void render() override;
 
 private:
-
+	bool bPositioned = false;
 };
 

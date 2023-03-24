@@ -53,20 +53,16 @@ void Key::update(int deltaTime)
 
 void Key::render()
 {
-	if (map->allPlattformsStepped() && !taken)
+	if (showing && !bPositioned)
 	{
 		glm::ivec2 screenCoords = map->getScreenCoords();
-		if (!showing)
+		if (!bPositioned)
 		{
 			posItem = map->getRandomPosition(7) - glm::vec2(0, 24);
-			
 			sprite->setPosition(glm::vec2(screenCoords.x + posItem.x, screenCoords.y + posItem.y));
-
-			//DEBUG
 			cout << "position assinged is: " << posItem.x << " " << posItem.y - 24 << endl;
-			showing = true;
+			bPositioned = true;
 		}
-
 		//Key movement
 		if (sprite->getCurrentKeyFrame() % 4 == 0) {
 			sprite->setPosition(glm::vec2(screenCoords.x + posItem.x, screenCoords.y + posItem.y - 1));
@@ -77,7 +73,9 @@ void Key::render()
 		else if (sprite->getCurrentKeyFrame() % 4 == 2) {
 			sprite->setPosition(glm::vec2(screenCoords.x + posItem.x, screenCoords.y + posItem.y + 1));
 		}
-
-		sprite->render();
 	}
+	
+	showing = map->allPlattformsStepped() && !taken;
+	if (showing)
+		sprite->render();
 }
