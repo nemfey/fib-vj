@@ -62,7 +62,7 @@ private:
 
 	glm::mat4 projection;
 	float sceneRatio = 1.28f;
-	float menuRatio = 1.256f;
+	float menuRatio = 720.f/405.f;
 	float ratioWindowSize;
 
 	bool bPlay;                       // Continue to play game?
@@ -72,7 +72,7 @@ private:
 	                                  // we can have access at any time
 	bool bMenuShowing;
 
-	enum Option { Play, Instructions, Credits, Exit }; // There will be 4 saprites of the menu
+	enum Option { Play, Instructions, Exit }; // There will be 4 saprites of the menu
 														// everyone with one button selected
 	map<int, Option> dictOptions;
 	int option_nth;
