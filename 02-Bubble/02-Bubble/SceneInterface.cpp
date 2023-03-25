@@ -102,7 +102,8 @@ void SceneInterface::render()
 
 void SceneInterface::initNumberSprite(ShaderProgram& shaderProgram)
 {
-	numbersSpritesheet.loadFromFile("images/numbers.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	//numbersSpritesheet.loadFromFile("images/numbers.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	numbersSpritesheet.loadFromFile("images/numberss.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	numbersSpritesheet.setMagFilter(GL_NEAREST);
 	numberSprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(0.1, 1), &numbersSpritesheet, &shaderProgram);
 	
@@ -117,7 +118,8 @@ void SceneInterface::initNumberSprite(ShaderProgram& shaderProgram)
 
 void SceneInterface::initCharacterSprite(ShaderProgram& shaderProgram)
 {
-	charactersSpritesheet.loadFromFile("images/characters.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	//charactersSpritesheet.loadFromFile("images/characters.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	charactersSpritesheet.loadFromFile("images/chars.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	charactersSpritesheet.setMagFilter(GL_NEAREST);
 	characterSprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(0.25, 0.25), &charactersSpritesheet, &shaderProgram);
 

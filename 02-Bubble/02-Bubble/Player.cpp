@@ -136,7 +136,7 @@ void Player::update(int deltaTime)
 			if (sprite->animation() != MOVE_LEFT && !bInvincible && !inmunityState && !bJumping)
 				sprite->changeAnimation(MOVE_LEFT);
 			posPlayer.x -= 2;
-			if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32), bJumping))
+			if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32), true))
 			{
 				posPlayer.x += 2;
 
@@ -150,7 +150,7 @@ void Player::update(int deltaTime)
 			if (sprite->animation() != MOVE_RIGHT && !bInvincible && !inmunityState && !bJumping)
 				sprite->changeAnimation(MOVE_RIGHT);
 			posPlayer.x += 2;
-			if (map->collisionMoveRight(posPlayer, glm::ivec2(32, 32), bJumping))
+			if (map->collisionMoveRight(posPlayer, glm::ivec2(32, 32), true))
 			{
 				posPlayer.x -= 2;
 				if (!bInvincible && !inmunityState)

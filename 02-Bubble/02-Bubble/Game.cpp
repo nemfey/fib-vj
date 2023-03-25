@@ -10,6 +10,7 @@ void Game::init()
 	initShaders();
 	bPlay = true;
 	glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
+	//glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	menu.init(texProgram);
 
 	bMenuShowing = true;
@@ -41,7 +42,10 @@ void Game::render()
 	renderProjection();
 
 	if (bMenuShowing)
+	{
 		menu.render();
+		updateRatioWindowSize(glutGet(GLUT_WINDOW_WIDTH),glutGet(GLUT_WINDOW_HEIGHT));
+	}
 	else
 		scene->render();
 }
