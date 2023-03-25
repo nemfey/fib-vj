@@ -110,9 +110,8 @@ void Player::update(int deltaTime)
 
 	else {
 
-		if (bInvincible) {
-			if (sprite->animation() != INVINCIBLE)
-				sprite->changeAnimation(INVINCIBLE);
+		if (bInvincible && sprite->animation() != INVINCIBLE) {
+			sprite->changeAnimation(INVINCIBLE);
 		}
 
 		else if (inmunityState)
