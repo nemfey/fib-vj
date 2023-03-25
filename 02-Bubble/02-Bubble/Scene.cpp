@@ -38,9 +38,9 @@ void Scene::init(ShaderProgram &shaderProgram, string scene)
 {
 	texProgram = shaderProgram;
 
-	spritesheet.loadFromFile("images/background.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spritesheet.loadFromFile("images/b.jpg", TEXTURE_PIXEL_FORMAT_RGBA);
 	spritesheet.setMagFilter(GL_NEAREST);
-	sprite = Sprite::createSprite(glm::ivec2(64, 64), glm::vec2(1.f, 1.f), &spritesheet, &shaderProgram);
+	sprite = Sprite::createSprite(glm::ivec2(512, 400), glm::vec2(1.f, 1.f), &spritesheet, &shaderProgram);
 	sprite->setPosition(glm::vec2(0.f, 0.f));
 
 	map = TileMap::createTileMap(scene, glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -96,6 +96,8 @@ void Scene::update(int deltaTime)
 
 void Scene::render()
 {
+	sprite->render();
+
 	sprite->render();
 	
 	map->render();
