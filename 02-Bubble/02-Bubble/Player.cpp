@@ -86,10 +86,11 @@ void Player::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	sprite->addKeyframe(INVINCIBLE, glm::vec2(0.375f, 0.75f));
 	sprite->addKeyframe(INVINCIBLE, glm::vec2(0.25f, 0.75f));
 
-	sprite->setAnimationSpeed(SPAWN, 8);
+	sprite->setAnimationSpeed(SPAWN, 12);
 	sprite->addKeyframe(SPAWN, glm::vec2(0.5f, 0.75f));
 	sprite->addKeyframe(SPAWN, glm::vec2(0.625f, 0.75f));
 	sprite->addKeyframe(SPAWN, glm::vec2(0.75f, 0.75f));
+	sprite->addKeyframe(SPAWN, glm::vec2(0.875f, 0.75f));
 	sprite->addKeyframe(SPAWN, glm::vec2(0.875f, 0.75f));
 
 	sprite->changeAnimation(SPAWN);
@@ -103,7 +104,7 @@ void Player::update(int deltaTime)
 
 	if (spawning) {
 
-		if (sprite->getCurrentKeyFrame() >= 3) {
+		if (sprite->getCurrentKeyFrame() >= 4) {
 			spawning = false;
 		}
 	}
@@ -158,9 +159,9 @@ void Player::update(int deltaTime)
 		}
 		else
 		{
-			if (!bFacingRight && sprite->animation() != STAND_LEFT && !bInvincible && !inmunityState)
+			if (!bFacingRight && sprite->animation() != STAND_LEFT && !bInvincible && !inmunityState && !bJumping)
 				sprite->changeAnimation(STAND_LEFT);
-			else if (bFacingRight && sprite->animation() != STAND_RIGHT && !bInvincible && !inmunityState)
+			else if (bFacingRight && sprite->animation() != STAND_RIGHT && !bInvincible && !inmunityState && !bJumping)
 				sprite->changeAnimation(STAND_RIGHT);
 		}
 		if (bJumping)
