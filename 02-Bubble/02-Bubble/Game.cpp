@@ -115,19 +115,11 @@ void Game::specialKeyPressed(int key)
 	{
 		--option_nth;
 		menu.setSelection(option_nth);
-		cout << "opcion " << option_nth << endl;
-		//menu change animation options[option_nth]
-		// cambiar sprite al que diga el diccionario
-		// para que se muestre el sprite del menu con dicho boton marcado
 	}
 	if (key == 103 && option_nth < 2 && bMenuShowing)
 	{
 		++option_nth;
 		menu.setSelection(option_nth);
-		cout << "opcion " << option_nth << endl;
-		//menu change animation options[option_nth]
-		// cambiar sprite al que diga el diccionario
-		// para que se muestre el sprite del menu con dicho boton marcado
 	}
 
 	specialKeys[key] = true;
@@ -224,12 +216,9 @@ void Game::updateScene(int deltaTime)
 			loadNextStage();
 		else
 			cout << "GAME FINISHED. CONGRATULATIONS!" << endl;
-		cout << "loading next stage..." << endl;
 		break;
 	case StageState::GameOver:
-		// Show menu again
 		bMenuShowing = true;
-		cout << "Going back to menu..." << endl;
 		break;
 	default:
 		break;
@@ -292,17 +281,13 @@ void Game::optionSelected()
 	switch (dictOptions[option_nth])
 	{
 	case Play:
-		cout << "playing..." << endl;
 		stageIterator = 0;
 		loadFirstStage();
 		break;
 	case Instructions:
-		// Mostrar instrucciones
-		cout << "showing intructions..." << endl;
 		menu.setMenuState(Help);
 		break;
 	case Exit:
-		cout << "Exiting..." << endl;
 		bPlay = false;
 		break;
 	default:
