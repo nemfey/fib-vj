@@ -327,27 +327,29 @@ void Scene::updateItems(int deltaTime)
 			messageTimer = 5;
 		}
 
-		if (pTreasure && pTreasure->collisionPlayer()) {
-			player->addScore(i->getType()*150);
-			itemSpawnCounter = 20 - (rand() % 5);
-			itemSpawned = false;
-			pTreasure->setShowing(false);
-			pTreasure->setPosition(glm::vec2(0, 0));
-		}
+		if (itemSpawned) {
+			if (pTreasure && pTreasure->collisionPlayer()) {
+				player->addScore(i->getType() * 150);
+				itemSpawnCounter = 20 - (rand() % 5);
+				itemSpawned = false;
+				pTreasure->setShowing(false);
+				pTreasure->setPosition(glm::vec2(0, 0));
+			}
 
-		if (pBible && pBible->collisionPlayer()) {
-			player->setImmune(5000);
-			itemSpawned = false;
-			pBible->setShowing(false);
-			pBible->setPosition(glm::vec2(0, 0));
-		}
+			if (pBible && pBible->collisionPlayer()) {
+				player->setImmune(5000);
+				itemSpawned = false;
+				pBible->setShowing(false);
+				pBible->setPosition(glm::vec2(0, 0));
+			}
 
-		if (pHourglass && pHourglass->collisionPlayer()) {
-			hourglassTimer = 5;
-			map->setHourglassTaken(false);
-			itemSpawned = false;
-			pHourglass->setShowing(false);
-			pHourglass->setPosition(glm::vec2(0, 0));
+			if (pHourglass && pHourglass->collisionPlayer()) {
+				hourglassTimer = 5;
+				map->setHourglassTaken(false);
+				itemSpawned = false;
+				pHourglass->setShowing(false);
+				pHourglass->setPosition(glm::vec2(0, 0));
+			}
 		}
 
 		i->update(deltaTime);

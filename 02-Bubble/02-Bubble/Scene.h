@@ -3,6 +3,7 @@
 
 
 #include <glm/glm.hpp>
+#include <irrKlang.h>
 #include "ShaderProgram.h"
 #include "SceneInterface.h"
 #include "TileMap.h"
@@ -20,6 +21,8 @@
 #include "Bible.h"
 
 #include "StageState.h"
+
+using namespace irrklang;
 
 
 // Scene contains all the entities of our game.
@@ -71,6 +74,10 @@ private:
 	vector<Enemy*> enemies;
 	vector<Item*> items;
 	ShaderProgram texProgram;
+
+	//Sound engine
+	ISoundEngine* engine = createIrrKlangDevice();
+	ISound* sound;
 
 	Texture spritesheet;
 	Sprite* sprite;
