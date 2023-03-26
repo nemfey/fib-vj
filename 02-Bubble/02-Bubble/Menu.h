@@ -4,6 +4,7 @@
 
 #include <glm/glm.hpp>
 #include "ShaderProgram.h"
+#include "MenuState.h"
 
 
 // Menu contains all the entities of our game.
@@ -21,15 +22,16 @@ public:
 	void update(int deltaTime);
 	void render();
 	void setSelection(int i);
-	void setOptionsShowing(bool b) { bOptionsShowing = b; };
+	void setMenuState(MenuState m) { state = m; };
 
 private:
 	ShaderProgram texProgram;
-	Texture menuSpritesheet, creditsSpriteSheet;
-	Sprite* menuSprite;
+	Texture mainSpritesheet, helpSpriteSheet, creditsSpriteSheet;
+	Sprite* mainSprite;
+	Sprite* helpSprite;
 	Sprite* creditsSprite;
 
-	bool bOptionsShowing = true;
+	MenuState state = Main;
 };
 
 

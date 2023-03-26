@@ -62,7 +62,11 @@ void Game::keyPressed(int key)
 {
 	cout << key << endl;
 	if (key == 27) // Escape code
-		bPlay = false;
+	{
+		bMenuShowing = true;
+		menu.setMenuState(Main);
+	}
+		//bPlay = false;
 	if (key == 13 && bMenuShowing) // Enter code
 		optionSelected();
 	if (key == 49)
@@ -81,7 +85,7 @@ void Game::keyPressed(int key)
 		loadFirstStage();
 	}
 	if (key == 99) // 'c'
-		menu.setOptionsShowing(false);
+		menu.setMenuState(Credits);
 	if (key == 103)
 	{
 		if (!scene->getPlayerInvencible())
@@ -97,8 +101,6 @@ void Game::keyPressed(int key)
 	}
 	if (key == 107)
 		scene->makeKeyAppear();
-	if (key == 109) // 'm'
-		menu.setOptionsShowing(true);
 	keys[key] = true;
 }
 
@@ -297,6 +299,7 @@ void Game::optionSelected()
 	case Instructions:
 		// Mostrar instrucciones
 		cout << "showing intructions..." << endl;
+		menu.setMenuState(Help);
 		break;
 	case Exit:
 		cout << "Exiting..." << endl;
