@@ -21,11 +21,15 @@ public:
 	void update(int deltaTime);
 	void render();
 	void setSelection(int i);
+	void setOptionsShowing(bool b) { bOptionsShowing = b; };
 
 private:
 	ShaderProgram texProgram;
-	Texture spritesheet;
-	Sprite* sprite;
+	Texture menuSpritesheet, creditsSpriteSheet;
+	Sprite* menuSprite;
+	Sprite* creditsSprite;
+
+	bool bOptionsShowing = true;
 };
 
 
