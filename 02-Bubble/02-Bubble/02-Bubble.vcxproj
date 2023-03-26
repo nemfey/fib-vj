@@ -91,7 +91,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\pacma\OneDrive\Escritorio\joan\Cosas de educación\Uni\VJ\game2D\02-Bubble\02-Bubble\libraries\irrKlang32bits\include;C:\Users\pacma\OneDrive\Escritorio\joan\Cosas de educación\Uni\VJ\game2D\02-Bubble\02-Bubble\libraries\irrKlang32bits\plugins;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\02-Bubble\libraries\irrKlang32bits\include;$(SolutionDir)\02-Bubble\libraries\irrKlang32bits\plugins;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -108,7 +108,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\pacma\OneDrive\Escritorio\joan\Cosas de educación\Uni\VJ\game2D\02-Bubble\02-Bubble\libraries\irrKlang32bits\lib\Win32-visualStudio;..\..\..\libs\Simple OpenGL Image Library\projects\VC9\Debug;..\..\..\libs\freeglut\lib;..\..\..\libs\glew-1.13.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\02-Bubble\libraries\irrKlang32bits\lib\Win32-visualStudio;..\..\..\libs\Simple OpenGL Image Library\projects\VC9\Debug;..\..\..\libs\freeglut\lib;..\..\..\libs\glew-1.13.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SOIL.lib;glew32.lib;irrKlang.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
