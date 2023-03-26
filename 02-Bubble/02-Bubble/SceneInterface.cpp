@@ -42,7 +42,7 @@ void SceneInterface::init(ShaderProgram &shaderProgram)
 				{'g',4}, {'l',5}, {'m',6}, {'o',7},
 				{'r',8}, {'s',9}, {'t',10}, {'v',11},
 				{'y',12}, {'?',13}, {'x',14} };
-	state = Playing;
+	state = Starting;
 }
 
 void SceneInterface::updateLives(int l)
@@ -150,13 +150,23 @@ void SceneInterface::renderMessages()
 {
 	//cout << state << endl;
 	//cout << "hola" << endl;
-	if (state == StageCleared)
+	if (state == Starting)
+	{
+		renderCharacter('r', 192, 224);
+		renderCharacter('e', 208, 224);
+		renderCharacter('a', 224, 224);
+		renderCharacter('d', 240, 224);
+		renderCharacter('y', 256, 224);
+		renderCharacter('?', 272, 224);
+	}
+	else if (state == StageCleared)
 	{
 		renderCharacter('s', 160, 224);
 		renderCharacter('t', 176, 224);
 		renderCharacter('a', 192, 224);
 		renderCharacter('g', 208, 224);
 		renderCharacter('e', 224, 224);
+
 		renderCharacter('c', 256, 224);
 		renderCharacter('l', 272, 224);
 		renderCharacter('e', 288, 224);
@@ -169,8 +179,7 @@ void SceneInterface::renderMessages()
 		renderCharacter('a', 176, 224);
 		renderCharacter('m', 192, 224);
 		renderCharacter('e', 208, 224);
-		//renderCharacter('e', 224, 224);
-		//renderCharacter('c', 256, 224);
+
 		renderCharacter('o', 272, 224);
 		renderCharacter('v', 288, 224);
 		renderCharacter('e', 304, 224);

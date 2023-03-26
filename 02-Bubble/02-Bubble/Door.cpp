@@ -43,7 +43,7 @@ void Door::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	glm::ivec2 screenCoords = map->getScreenCoords();
 	sprite->setPosition(posItem + screenCoords);
 
-	itemSize = glm::ivec2(32, 32);
+	hitbox = glm::ivec2(2, 2);
 
 	cout << "Door position: " << posItem.x << " " << posItem.y << endl;
 }

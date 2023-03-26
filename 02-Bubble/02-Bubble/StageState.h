@@ -3,6 +3,7 @@
 
 enum StageState
 { 
+	Starting,
 	Playing,
 	StageCleared,
 	GameOver

@@ -52,8 +52,10 @@ void Scene::init(ShaderProgram &shaderProgram, string scene)
 	initEnemies();
 	initItems();
 
-	state = Playing;
+	state = Starting;
+	messageTimer = 2;
 
+	bStarting = true;
 	bDoorTaken = false;
 	bPlayerDead = false;
 	bHourglassEnding = false;
@@ -63,7 +65,12 @@ void Scene::update(int deltaTime)
 {	
 	currentTime += deltaTime;
 
-	if (bDoorTaken)
+	if (bStarting)
+	{
+		readyMessage();
+		updateSceneInterface(deltaTime);
+	}
+	else if (bDoorTaken)
 	{
 		stageClearMessage();
 		updateSceneInterface(deltaTime);
@@ -97,8 +104,6 @@ void Scene::update(int deltaTime)
 void Scene::render()
 {
 	sprite->render();
-
-	sprite->render();
 	
 	map->render();
 	for (auto i : items) {
@@ -127,7 +132,8 @@ void Scene::render()
 	for (auto e : enemies)
 		e->render();
 
-	player->render();
+	if (!bStarting)
+		player->render();
 	sceneInterface->render();
 }
 
@@ -201,15 +207,33 @@ void Scene::initItems()
 	}
 }
 
+void Scene::readyMessage()
+{
+	if (messageTimer == 0)
+	{
+		sceneInterface->setState(Playing);
+		state = Playing;
+		bStarting = false;
+	}
+	else
+	{
+		if (currentTime / 1000 != timer)
+		{
+			timer = currentTime / 1000;
+			--messageTimer;
+		}
+	}
+}
+
 void Scene::stageClearMessage()
 {
 	if (remainingSeconds == 0)
 		state = StageCleared;
 	else
 	{
-		if (currentTime / 250 != timer)
+		if (currentTime / 100 != timer)
 		{
-			timer = currentTime / 250;
+			timer = currentTime / 100;
 			--remainingSeconds;
 			player->addScore(10);
 		}
@@ -228,7 +252,6 @@ void Scene::gameOverMessage()
 		{
 			timer = currentTime / 1000;
 			--messageTimer;
-			cout << "message timer is: " << messageTimer << endl;
 		}
 	}
 }

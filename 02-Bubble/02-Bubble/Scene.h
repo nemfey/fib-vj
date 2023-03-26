@@ -56,6 +56,7 @@ private:
 	void initPlayer();
 	void initEnemies();
 	void initItems();
+	void readyMessage();
 	void stageClearMessage();
 	void gameOverMessage();
 	void updateTime(int deltaTime);
@@ -96,7 +97,7 @@ private:
 
 	int itemRNG = rand() % 100;
 
-	bool bDoorTaken, bPlayerDead;
+	bool bStarting, bDoorTaken, bPlayerDead;
 	bool bHourglassEnding;
 
 	bool bPlayerInvencible = false;

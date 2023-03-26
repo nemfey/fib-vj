@@ -35,7 +35,7 @@ void Key::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	// Change to animation IDLE
 	sprite->changeAnimation(IDLE);
 
-	itemSize = glm::ivec2(8, 8);
+	hitbox = glm::ivec2(8, 8);
 }
 
 void Key::update(int deltaTime)

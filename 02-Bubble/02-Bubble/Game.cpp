@@ -209,6 +209,9 @@ void Game::updateScene(int deltaTime)
 	case StageState::Playing:
 		scene->update(deltaTime);
 		break;
+	case StageState::Starting:
+		scene->update(deltaTime);
+		break;
 	case StageState::StageCleared:
 		// load next stage and if last end game
 		++stageIterator;

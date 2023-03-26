@@ -37,7 +37,7 @@ void Bible::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 
 	//bIsPickup = true;
 
-	itemSize = glm::ivec2(8, 8);
+	hitbox = glm::ivec2(8, 8);
 }
 
 void Bible::update(int deltaTime)
