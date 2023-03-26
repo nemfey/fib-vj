@@ -52,7 +52,6 @@ void Game::render()
 
 void Game::reshapeCallback(int width, int height)
 {
-
 	Game::instance().updateRatioWindowSize(width, height);
 }
 
@@ -64,6 +63,7 @@ void Game::keyPressed(int key)
 	if (key == 27) // Escape code
 	{
 		bMenuShowing = true;
+
 		menu.setMenuState(Main);
 	}
 		//bPlay = false;
