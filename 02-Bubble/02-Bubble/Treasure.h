@@ -10,6 +10,7 @@ public:
 	void render() override;
 
 	int getType();
+	void resetType();
 
 private:
 

@@ -66,8 +66,7 @@ void Treasure::render()
 	if (!showing) {
 
 		//Set type to random between 0 and 7
-		srand(time(NULL));
-		type = rand() % 8;
+		resetType();
 
 		//DEBUG
 		cout << "Setted treasure type to " << type << endl;
@@ -102,4 +101,9 @@ void Treasure::render()
 
 int Treasure::getType() {
 	return type;
+}
+
+void Treasure::resetType() {
+	srand(time(NULL));
+	type = rand() % 8;
 }

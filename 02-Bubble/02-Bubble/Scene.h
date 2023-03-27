@@ -53,6 +53,7 @@ public:
 	void makeKeyAppear();
 
 	void setItemSpawnCounter(int i) { itemSpawnCounter = i; };
+	void setItemSpawned(bool b) { itemSpawned = b; };
 
 private:
 	void initPlayer();
