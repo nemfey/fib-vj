@@ -52,6 +52,8 @@ public:
 	void setPlayerInvencible(bool b) { bPlayerInvencible = b; player->setInvincible(b); };
 	void makeKeyAppear();
 
+	void setItemSpawnCounter(int i) { itemSpawnCounter = i; };
+
 private:
 	void initPlayer();
 	void initEnemies();

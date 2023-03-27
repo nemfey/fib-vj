@@ -76,7 +76,7 @@ void Treasure::render()
 		sprite->changeAnimation(type);
 
 		// Depending of the value it spawns further
-		posItem = map->getRandomPosition(7 + type) - glm::vec2(0, 24);
+		posItem = map->getRandomPosition(7) - glm::vec2(0, 24);
 		sprite->setPosition(glm::vec2(screenCoords.x + posItem.x, screenCoords.y + posItem.y));
 
 		//DEBUG

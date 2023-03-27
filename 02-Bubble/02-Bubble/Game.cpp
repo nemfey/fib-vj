@@ -60,6 +60,8 @@ void Game::reshapeCallback(int width, int height)
 void Game::keyPressed(int key)
 {
 	cout << key << endl;
+	if (key == 105)
+		scene->setItemSpawnCounter(0);
 	if (key == 27) // Escape code
 	{
 		bMenuShowing = true;
