@@ -268,6 +268,7 @@ void Game::loadFirstStage()
 
 void Game::loadNextStage()
 {
+	int playerLiveScore = scene->getLiveScore();
 	int playerLives = scene->getPlayerLives();
 	int playerScore = scene->getPlayerScore();
 
@@ -275,6 +276,7 @@ void Game::loadNextStage()
 	scene->init(texProgram, stages[stageIterator]);
 	bMenuShowing = false;
 	
+	scene->setLiveScore(playerLiveScore);
 	scene->setPlayerLives(playerLives);
 	scene->setPlayerScore(playerScore);
 	scene->setStageNumber(stageIterator + 1);
