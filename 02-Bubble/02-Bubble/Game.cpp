@@ -88,20 +88,14 @@ void Game::keyPressed(int key)
 	}
 	if (key == 99) // 'c'
 		menu.setMenuState(Credits);
-	if (key == 103)
+	if (key == 103 && !bMenuShowing)
 	{
 		if (!scene->getPlayerInvencible())
-		{
-			cout << "Entering invencible mode..." << endl;
 			scene->setPlayerInvencible(true);
-		}
 		else
-		{
-			cout << "Exiting invencible mode..." << endl;
 			scene->setPlayerInvencible(false);
-		}
 	}
-	if (key == 107)
+	if (key == 107 && !bMenuShowing)
 		scene->makeKeyAppear();
 	keys[key] = true;
 }

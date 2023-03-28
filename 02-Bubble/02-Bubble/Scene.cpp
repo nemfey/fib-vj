@@ -326,6 +326,7 @@ void Scene::updateEnemies(int deltaTime)
 			if (player->getLives() > 1)
 			{
 				player->loseLive();
+				player->setSpawning(true);
 				player->resetPosition(glm::vec2(initPosPlayer.x * map->getTileSize(), initPosPlayer.y * map->getTileSize()));
 				map->setPosPlayer(initPosPlayer);
 			}
