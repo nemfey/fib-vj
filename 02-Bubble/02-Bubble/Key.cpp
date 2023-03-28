@@ -49,10 +49,7 @@ void Key::update(int deltaTime)
 		taken = true;
 		showing = false;
 
-		//Game::instance().init();
 		SoundFactory::instance().playKeyTaken();
-		//engine->play2D("sounds/key.wav", false);
-
 		map->setKeyTaken(true);
 	}
 	

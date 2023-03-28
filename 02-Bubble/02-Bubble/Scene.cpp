@@ -305,6 +305,13 @@ void Scene::updateTime(int deltaTime)
 
 void Scene::updatePlayer(int deltaTime)
 {
+	if (player->getRespawn())
+	{
+		player->resetPosition(glm::vec2(initPosPlayer.x * map->getTileSize(), initPosPlayer.y * map->getTileSize()));
+		player->setRespawn(false);
+		player->setSpawning(true);
+	}
+	
 	int prevPosStepped = map->getPositionsStepped();
 	player->update(deltaTime);
 	int postPosStepped = map->getPositionsStepped();
@@ -335,9 +342,9 @@ void Scene::updateEnemies(int deltaTime)
 			if (player->getLives() > 1)
 			{
 				player->loseLive();
-				player->setSpawning(true);
-				player->resetPosition(glm::vec2(initPosPlayer.x * map->getTileSize(), initPosPlayer.y * map->getTileSize()));
-				map->setPosPlayer(initPosPlayer);
+				//player->setSpawning(true);
+				//player->resetPosition(glm::vec2(initPosPlayer.x * map->getTileSize(), initPosPlayer.y * map->getTileSize()));
+				//map->setPosPlayer(initPosPlayer);
 			}
 			else
 			{
