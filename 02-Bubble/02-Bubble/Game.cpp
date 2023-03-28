@@ -86,16 +86,16 @@ void Game::keyPressed(int key)
 		stageIterator = 2;
 		loadFirstStage();
 	}
-	if (key == 99) // 'c'
+	if (key == 99)
 		menu.setMenuState(Credits);
-	if (key == 103 && !bMenuShowing)
+	if ((key == 103 || key == 71) && !bMenuShowing)
 	{
 		if (!scene->getPlayerInvencible())
 			scene->setPlayerInvencible(true);
 		else
 			scene->setPlayerInvencible(false);
 	}
-	if (key == 107 && !bMenuShowing)
+	if ((key == 107 || key == 75) && !bMenuShowing)
 		scene->makeKeyAppear();
 	keys[key] = true;
 }

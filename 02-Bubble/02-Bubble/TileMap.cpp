@@ -197,7 +197,6 @@ void TileMap::positionStepped(const glm::ivec2& pos, const glm::ivec2& size, int
 			int tile = map[y * mapSize.x + x];
 			if (tile == 1 || tile == 2)
 			{
-				cout << "STEPPED" << endl;
 				map[y * mapSize.x + x] = tile + 2;
 				positionsStepped.push_back(glm::ivec2(x, y));
 				--nStepTiles;
