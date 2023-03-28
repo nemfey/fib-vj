@@ -35,6 +35,7 @@ void Key::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	// Change to animation IDLE
 	sprite->changeAnimation(IDLE);
 
+	itemSize = glm::ivec2(16, 16);
 	hitbox = glm::ivec2(8, 8);
 }
 
@@ -45,7 +46,7 @@ void Key::update(int deltaTime)
 		taken = true;
 		showing = false;
 
-		engine->play2D("sounds/key.wav", false);
+		//engine->play2D("sounds/key.wav", false);
 
 		map->setKeyTaken(true);
 	}

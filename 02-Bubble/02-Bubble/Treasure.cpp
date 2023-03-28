@@ -43,6 +43,7 @@ void Treasure::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	//bIsTreasure = true;
 	//bIsPickup = true;
 
+	itemSize = glm::ivec2(16, 16);
 	hitbox = glm::ivec2(12, 12);
 }
 

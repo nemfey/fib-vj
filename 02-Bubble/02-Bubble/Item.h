@@ -36,7 +36,7 @@ protected:
 	Texture spritesheet;
 	Sprite* sprite;
 
-	glm::ivec2 tileMapDispl, posItem, hitbox;
+	glm::ivec2 tileMapDispl, posItem, hitbox, itemSize;
 	TileMap* map;
 
 	bool taken = false;

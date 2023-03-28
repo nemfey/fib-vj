@@ -75,17 +75,24 @@ void TileMap::free()
 // Method collisionMoveDown also corrects Y coordinate if the box is
 // already intersecting a tile below.
 
-bool TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, bool bCrossPlattforms) const
+bool TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, bool bIsPlayer) const
 {
 	int x, y0, y1;
 
-	x = pos.x / tileSize;
-	y0 = pos.y / tileSize;
-	y1 = (pos.y + size.y - 1) / tileSize;
+	if (bIsPlayer) {
+		x = (pos.x + 6) / tileSize;
+		y0 = (pos.y + 5) / tileSize;
+		y1 = (pos.y + size.y - 1) / tileSize;
+	}
+	else {
+		x = pos.x / tileSize;
+		y0 = pos.y / tileSize;
+		y1 = (pos.y + size.y - 1) / tileSize;
+	}
 	for (int y = y0; y <= y1; y++)
 	{
 		int tile = map[y * mapSize.x + x];
-		if (!bCrossPlattforms && tile != 0)
+		if (!bIsPlayer && tile != 0)
 			return true;
 		else if (tile == 6 || tile == 2 || tile == 4)
 			return true;
@@ -93,17 +100,24 @@ bool TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, b
 	return false;
 }
 
-bool TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, bool bCrossPlattforms) const
+bool TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, bool bIsPlayer) const
 {
 	int x, y0, y1;
 
-	x = (pos.x + size.x - 1) / tileSize;
-	y0 = pos.y / tileSize;
-	y1 = (pos.y + size.y - 1) / tileSize;
+	if (bIsPlayer) {
+		x = (pos.x + size.x - 6) / tileSize;
+		y0 = pos.y / tileSize;
+		y1 = (pos.y + size.y - 1) / tileSize;
+	}
+	else {
+		x = (pos.x + size.x - 1) / tileSize;
+		y0 = pos.y / tileSize;
+		y1 = (pos.y + size.y - 1) / tileSize;
+	}
 	for (int y = y0; y <= y1; y++)
 	{
 		int tile = map[y * mapSize.x + x];
-		if (!bCrossPlattforms && tile != 0)
+		if (!bIsPlayer && tile != 0)
 			return true;
 		else if (tile == 6 || tile == 2 || tile == 4)
 			return true;
@@ -111,32 +125,46 @@ bool TileMap::collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, 
 	return false;
 }
 
-bool TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, int* posY, bool bCrossPlattforms) const
+bool TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, int* posY, bool bIsPlayer) const
 {
 	int x0, x1, y;
 
-	x0 = pos.x / tileSize;
-	x1 = (pos.x + size.x - 1) / tileSize;
-	y = pos.y / tileSize;
+	if (bIsPlayer) {
+		x0 = (pos.x + 6) / tileSize;
+		x1 = (pos.x + size.x - 6) / tileSize;
+		y = pos.y / tileSize;
+	}
+	else {
+		x0 = pos.x / tileSize;
+		x1 = (pos.x + size.x - 1) / tileSize;
+		y = pos.y / tileSize;
+	}
 	for (int x = x0; x <= x1; x++)
 	{
 		int tile = map[y * mapSize.x + x];
 
-		//if (tile == 3 || (!bCrossPlattforms && tile != 0))
-		if ((!bCrossPlattforms && tile != 0) || tile == 6)
+		//if (tile == 3 || (!bIsPlayer && tile != 0))
+		if ((!bIsPlayer && tile != 0) || tile == 6)
 			if (*posY - tileSize * y < tileSize)
 				return true;
 	}
 	return false;
 }
 
-bool TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const
+bool TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, int* posY, bool bIsPlayer) const
 {
 	int x0, x1, y;
 
-	x0 = pos.x / tileSize;
-	x1 = (pos.x + size.x - 1) / tileSize;
-	y = (pos.y + size.y - 1) / tileSize;
+	if (bIsPlayer) {
+		x0 = (pos.x + 10) / tileSize;
+		x1 = (pos.x + size.x - 10) / tileSize;
+		y = (pos.y + size.y - 1) / tileSize;
+	}
+	else {
+		x0 = pos.x / tileSize;
+		x1 = (pos.x + size.x - 1) / tileSize;
+		y = (pos.y + size.y - 1) / tileSize;
+	}
 	for (int x = x0; x <= x1; x++)
 	{
 		int tile = map[y * mapSize.x + x];
@@ -187,8 +215,8 @@ void TileMap::positionStepped(const glm::ivec2& pos, const glm::ivec2& size, int
 {
 	int x0, x1, y;
 
-	x0 = pos.x / tileSize;
-	x1 = (pos.x + size.x - 1) / tileSize;
+	x0 = (pos.x + 10) / tileSize;
+	x1 = (pos.x + size.x - 10) / tileSize;
 	y = (pos.y + size.y - 1) / tileSize;
 	for (int x = x0; x <= x1; x++)
 	{

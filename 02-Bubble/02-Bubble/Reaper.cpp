@@ -136,7 +136,7 @@ void Reaper::update(int deltaTime)
 			//posEnemy.x += 1;
 			posEnemy.y += FALL_STEP;
 
-			bool bFloorDown = map->collisionMoveDown(posEnemy + glm::ivec2(24, 0), glm::ivec2(32, 32), &posEnemy.y);
+			bool bFloorDown = map->collisionMoveDown(posEnemy + glm::ivec2(24, 0), glm::ivec2(32, 32), &posEnemy.y, false);
 			bool bShouldMoveLeft = map->collisionMoveRight(posEnemy, glm::ivec2(32, 32), false) || !bFloorDown;
 
 			if (bShouldMoveLeft)
@@ -159,7 +159,7 @@ void Reaper::update(int deltaTime)
 			//posEnemy.x -= 1;
 			posEnemy.y += FALL_STEP;
 
-			bool bFloorDown = map->collisionMoveDown(posEnemy - glm::ivec2(24, 0), glm::ivec2(32, 32), &posEnemy.y);
+			bool bFloorDown = map->collisionMoveDown(posEnemy - glm::ivec2(24, 0), glm::ivec2(32, 32), &posEnemy.y, false);
 			bool bShouldMoveRight = map->collisionMoveLeft(posEnemy, glm::ivec2(32, 32), false) || !bFloorDown;
 
 			if (bShouldMoveRight)
