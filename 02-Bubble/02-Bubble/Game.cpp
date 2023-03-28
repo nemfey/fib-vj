@@ -211,12 +211,16 @@ void Game::updateScene(int deltaTime)
 		scene->update(deltaTime);
 		break;
 	case StageState::StageCleared:
-		// load next stage and if last end game
 		++stageIterator;
 		if (stageIterator < stages.size())
 			loadNextStage();
 		else
-			cout << "GAME FINISHED. CONGRATULATIONS!" << endl;
+		{
+			menu.setPlayerFinalScore(scene->getPlayerScore());
+			menu.setMenuState(Win);
+			menu.setScreenShowTime(8);
+			bMenuShowing = true;
+		}
 		break;
 	case StageState::GameOver:
 		bMenuShowing = true;
