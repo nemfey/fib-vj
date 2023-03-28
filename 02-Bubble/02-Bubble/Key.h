@@ -13,9 +13,5 @@ public:
 
 private:
 	bool bPositioned = false;
-
-	//Sound engine
-	ISoundEngine* engine;
-	ISoundSource* sound;
 };
 

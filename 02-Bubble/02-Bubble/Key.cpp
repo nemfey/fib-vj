@@ -4,6 +4,7 @@
 #include <GL/glut.h>
 #include "Key.h"
 #include "Game.h"
+#include "SoundFactory.h"
 
 enum KeyAnims
 {
@@ -38,7 +39,7 @@ void Key::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	itemSize = glm::ivec2(16, 16);
 	hitbox = glm::ivec2(8, 8);
 
-	engine = createIrrKlangDevice();
+	//engine = createIrrKlangDevice();
 }
 
 void Key::update(int deltaTime)
@@ -48,6 +49,8 @@ void Key::update(int deltaTime)
 		taken = true;
 		showing = false;
 
+		//Game::instance().init();
+		SoundFactory::instance().playKeyTaken();
 		//engine->play2D("sounds/key.wav", false);
 
 		map->setKeyTaken(true);
