@@ -32,7 +32,7 @@ void Menu::init(ShaderProgram& shaderProgram)
 	//spritesheet.loadFromFile("images/menu_img.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	//spritesheet.setMagFilter(GL_NEAREST);
 	//sprite = Sprite::createSprite(glm::ivec2(720, 405), glm::vec2(1, 1), &spritesheet, &shaderProgram);
-	mainSpritesheet.loadFromFile("images/menu_title_new.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	mainSpritesheet.loadFromFile("images/menu.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	mainSpritesheet.setMagFilter(GL_NEAREST);
 	mainSprite = Sprite::createSprite(glm::ivec2(720, 405), glm::vec2(0.5f, 0.5f), &mainSpritesheet, &shaderProgram);
 	

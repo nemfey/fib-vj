@@ -102,15 +102,24 @@ void Player::update(int deltaTime)
 {
 	sprite->update(deltaTime);
 
-	if (spawning) {
+	if (bSpawning) {
 		if (sprite->animation() != SPAWN)
 			sprite->changeAnimation(SPAWN);
 
 		if (sprite->getCurrentKeyFrame() >= 4) {
-			spawning = false;
+			bSpawning = false;
 		}
 	}
+	else if (bDying)
+	{
+		if (sprite->animation() != DEATH)
+			sprite->changeAnimation(DEATH);
 
+		if (sprite->getCurrentKeyFrame() >= 4) {
+			bDying = false;
+			bRespawn = true;
+		}
+	}
 	else {
 
 		if (bInvincible && sprite->animation() != INVINCIBLE) {
@@ -240,6 +249,7 @@ void Player::render()
 
 void Player::loseLive()
 {
+	bDying = true;
 	if (lives > 0 && !inmunityState)
 	{
 		--lives;

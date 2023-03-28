@@ -28,13 +28,16 @@ public:
 	bool getInmunityState() const { return inmunityState; };
 	int getLives() const { return lives; };
 	int getScore() const { return score; };
+	bool getRespawn() { return bRespawn; };
+	bool getSpawning() { return bSpawning; };
 
 	void setTileMap(TileMap* tileMap) { map = tileMap; };
 	void setPosition(const glm::ivec2 &pos);
 	void setImmune(int time);
 	void setLives(int l) { lives = l; };
 	void setInvincible(bool b) { bInvincible = b; }
-	void setSpawning(bool b) { spawning = b; };
+	void setRespawn(bool b) { bRespawn = b; };
+	void setSpawning(bool b) { bSpawning = b; };
 	
 private:
 	Texture spritesheet;
@@ -56,7 +59,9 @@ private:
 
 	bool bFacingRight = true;
 
-	bool spawning = true;
+	bool bDying = false;
+	bool bRespawn = false;
+	bool bSpawning = true;
 
 };
 

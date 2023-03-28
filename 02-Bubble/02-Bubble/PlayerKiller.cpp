@@ -21,7 +21,7 @@ void PlayerKiller::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgr
 {
 	isPlayerKiller = true;
 
-	spritesheet.loadFromFile("images/playerkiller.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spritesheet.loadFromFile("images/playerkiller2.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	spritesheet.setMagFilter(GL_NEAREST);
 	sprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(0.125, 0.25), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(5);

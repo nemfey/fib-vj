@@ -38,7 +38,7 @@ void Scene::init(ShaderProgram &shaderProgram, string scene)
 {
 	texProgram = shaderProgram;
 
-	spritesheet.loadFromFile("images/b.jpg", TEXTURE_PIXEL_FORMAT_RGBA);
+	spritesheet.loadFromFile("images/background.jpg", TEXTURE_PIXEL_FORMAT_RGBA);
 	spritesheet.setMagFilter(GL_NEAREST);
 	sprite = Sprite::createSprite(glm::ivec2(512, 400), glm::vec2(1.f, 1.f), &spritesheet, &shaderProgram);
 	sprite->setPosition(glm::vec2(0.f, 0.f));
@@ -72,8 +72,13 @@ void Scene::update(int deltaTime)
 	}
 	else if (bDoorTaken)
 	{
-		stageClearMessage();
-		updateSceneInterface(deltaTime);
+		if (player->getSpawning())
+			updatePlayer(deltaTime);
+		else if (!player->getSpawning())
+		{
+			stageClearMessage();
+			updateSceneInterface(deltaTime);
+		}
 	}
 	else if (bPlayerDead)
 	{
@@ -136,7 +141,7 @@ void Scene::render()
 	for (auto e : enemies)
 		e->render();
 
-	if (!bStarting)
+	if (!bStarting && (!bDoorTaken || player->getSpawning()))
 		player->render();
 	sceneInterface->render();
 }
@@ -300,6 +305,13 @@ void Scene::updateTime(int deltaTime)
 
 void Scene::updatePlayer(int deltaTime)
 {
+	if (player->getRespawn())
+	{
+		player->resetPosition(glm::vec2(initPosPlayer.x * map->getTileSize(), initPosPlayer.y * map->getTileSize()));
+		player->setRespawn(false);
+		player->setSpawning(true);
+	}
+	
 	int prevPosStepped = map->getPositionsStepped();
 	player->update(deltaTime);
 	int postPosStepped = map->getPositionsStepped();
@@ -330,9 +342,9 @@ void Scene::updateEnemies(int deltaTime)
 			if (player->getLives() > 1)
 			{
 				player->loseLive();
-				player->setSpawning(true);
-				player->resetPosition(glm::vec2(initPosPlayer.x * map->getTileSize(), initPosPlayer.y * map->getTileSize()));
-				map->setPosPlayer(initPosPlayer);
+				//player->setSpawning(true);
+				//player->resetPosition(glm::vec2(initPosPlayer.x * map->getTileSize(), initPosPlayer.y * map->getTileSize()));
+				//map->setPosPlayer(initPosPlayer);
 			}
 			else
 			{
@@ -356,6 +368,7 @@ void Scene::updateItems(int deltaTime)
 
 		if (pDoor && pDoor->isTaken())
 		{
+			player->setSpawning(true);
 			sceneInterface->setState(StageCleared);
 			bDoorTaken = true;
 			messageTimer = 5;
@@ -363,8 +376,9 @@ void Scene::updateItems(int deltaTime)
 
 		if (itemSpawned) {
 			if (pTreasure && pTreasure->collisionPlayer()) {
-				player->addScore(150 + i->getType() * 150);
-				liveScore += 150 + i->getType() * 150;
+				player->addScore(150 + i->getType()*150);
+				liveScore += 150 + i->getType()*150;
+
 				score2newLive();
 				itemSpawnCounter = 20 - (rand() % 5);
 				itemSpawned = false;
