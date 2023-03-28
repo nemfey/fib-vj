@@ -28,6 +28,7 @@ public:
 	bool getInmunityState() const { return inmunityState; };
 	int getLives() const { return lives; };
 	int getScore() const { return score; };
+	bool getSpawning() { return spawning; };
 
 	void setTileMap(TileMap* tileMap) { map = tileMap; };
 	void setPosition(const glm::ivec2 &pos);

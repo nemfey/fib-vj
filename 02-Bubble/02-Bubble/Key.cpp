@@ -36,6 +36,8 @@ void Key::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	sprite->changeAnimation(IDLE);
 
 	hitbox = glm::ivec2(8, 8);
+
+	engine = createIrrKlangDevice();
 }
 
 void Key::update(int deltaTime)

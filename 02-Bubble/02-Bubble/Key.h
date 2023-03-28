@@ -15,7 +15,7 @@ private:
 	bool bPositioned = false;
 
 	//Sound engine
-	ISoundEngine* engine = createIrrKlangDevice();
-	ISound* sound;
+	ISoundEngine* engine;
+	ISoundSource* sound;
 };
 

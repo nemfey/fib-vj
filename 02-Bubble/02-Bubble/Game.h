@@ -22,7 +22,7 @@ private:
 	Game() {}
 	
 public:
-	static Game &instance()
+	static Game& instance()
 	{
 		static Game G;
 	
