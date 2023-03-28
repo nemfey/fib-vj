@@ -369,13 +369,9 @@ void Scene::updateItems(int deltaTime)
 
 		if (itemSpawned) {
 			if (pTreasure && pTreasure->collisionPlayer()) {
-<<<<<<< HEAD
 				player->addScore(150 + i->getType()*150);
 				liveScore += 150 + i->getType()*150;
-=======
-				player->addScore(150 + i->getType() * 150);
-				liveScore += 150 + i->getType() * 150;
->>>>>>> joan
+
 				score2newLive();
 				itemSpawnCounter = 20 - (rand() % 5);
 				itemSpawned = false;
