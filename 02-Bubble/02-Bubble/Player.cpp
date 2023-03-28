@@ -103,6 +103,8 @@ void Player::update(int deltaTime)
 	sprite->update(deltaTime);
 
 	if (spawning) {
+		if (sprite->animation() != SPAWN)
+			sprite->changeAnimation(SPAWN);
 
 		if (sprite->getCurrentKeyFrame() >= 4) {
 			spawning = false;
@@ -154,7 +156,7 @@ void Player::update(int deltaTime)
 			{
 				posPlayer.x -= 2;
 				if (!bInvincible && !inmunityState)
-				sprite->changeAnimation(STAND_RIGHT);
+					sprite->changeAnimation(STAND_RIGHT);
 			}
 		}
 		else

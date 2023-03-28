@@ -82,7 +82,7 @@ bool TileMap::collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, b
 	x = pos.x / tileSize;
 	y0 = pos.y / tileSize;
 	y1 = (pos.y + size.y - 1) / tileSize;
-	for (int y = y0; y < y1; y++)
+	for (int y = y0; y <= y1; y++)
 	{
 		int tile = map[y * mapSize.x + x];
 		if (!bCrossPlattforms && tile != 0)
@@ -197,6 +197,7 @@ void TileMap::positionStepped(const glm::ivec2& pos, const glm::ivec2& size, int
 			int tile = map[y * mapSize.x + x];
 			if (tile == 1 || tile == 2)
 			{
+				cout << "STEPPED" << endl;
 				map[y * mapSize.x + x] = tile + 2;
 				positionsStepped.push_back(glm::ivec2(x, y));
 				--nStepTiles;

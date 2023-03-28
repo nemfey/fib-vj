@@ -34,6 +34,7 @@ public:
 	void setImmune(int time);
 	void setLives(int l) { lives = l; };
 	void setInvincible(bool b) { bInvincible = b; }
+	void setSpawning(bool b) { spawning = b; };
 	
 private:
 	Texture spritesheet;

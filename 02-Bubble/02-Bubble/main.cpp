@@ -92,7 +92,7 @@ int main(int argc, char **argv)
 	glutCreateWindow(argv[0]);
 
 	glutReshapeFunc(Game::reshapeCallback); //LA FUNCION ESTA EN LA CLASE GAME
-	//glutSetCursor(GLUT_CURSOR_NONE);
+	glutSetCursor(GLUT_CURSOR_NONE);
 
 	glutDisplayFunc(drawCallback);
 	glutIdleFunc(idleCallback);

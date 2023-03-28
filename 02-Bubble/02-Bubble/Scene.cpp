@@ -240,6 +240,8 @@ void Scene::stageClearMessage()
 			timer = currentTime / 100;
 			--remainingSeconds;
 			player->addScore(10);
+			liveScore += 10;
+			score2newLive();
 		}
 	}
 	// que se muestre el mensaje durante 3-5 segundos y luego state = StageClear;
@@ -303,7 +305,11 @@ void Scene::updatePlayer(int deltaTime)
 	int postPosStepped = map->getPositionsStepped();
 	
 	if (postPosStepped > prevPosStepped)
+	{
 		player->addScore((postPosStepped - prevPosStepped) * 10);
+		liveScore += (postPosStepped - prevPosStepped) * 10;
+		score2newLive();
+	}
 
 	map->setPosPlayer(player->getPosition());
 }
@@ -324,6 +330,7 @@ void Scene::updateEnemies(int deltaTime)
 			if (player->getLives() > 1)
 			{
 				player->loseLive();
+				player->setSpawning(true);
 				player->resetPosition(glm::vec2(initPosPlayer.x * map->getTileSize(), initPosPlayer.y * map->getTileSize()));
 				map->setPosPlayer(initPosPlayer);
 			}
@@ -357,6 +364,8 @@ void Scene::updateItems(int deltaTime)
 		if (itemSpawned) {
 			if (pTreasure && pTreasure->collisionPlayer()) {
 				player->addScore(i->getType() * 150);
+				liveScore += i->getType() * 150;
+				score2newLive();
 				itemSpawnCounter = 20 - (rand() % 5);
 				itemSpawned = false;
 				pTreasure->setShowing(false);
@@ -388,4 +397,16 @@ void Scene::updateSceneInterface(int deltaTime)
 	sceneInterface->updateLives(player->getLives());
 	sceneInterface->updateScore(player->getScore());
 	sceneInterface->updateRemainingTime(remainingSeconds);
+}
+
+void Scene::score2newLive()
+{
+	cout << liveScore << " " << player->getScore() << endl;
+	if (liveScore >= 2500)
+	{
+		int currentLives = player->getLives();
+		if (currentLives < 3)
+			player->setLives(currentLives + 1);
+		liveScore = 0;
+	}
 }
