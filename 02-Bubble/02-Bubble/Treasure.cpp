@@ -43,6 +43,7 @@ void Treasure::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	//bIsTreasure = true;
 	//bIsPickup = true;
 
+	itemSize = glm::ivec2(16, 16);
 	hitbox = glm::ivec2(12, 12);
 }
 
@@ -66,8 +67,7 @@ void Treasure::render()
 	if (!showing) {
 
 		//Set type to random between 0 and 7
-		srand(time(NULL));
-		type = rand() % 8;
+		resetType();
 
 		//DEBUG
 		cout << "Setted treasure type to " << type << endl;
@@ -102,4 +102,9 @@ void Treasure::render()
 
 int Treasure::getType() {
 	return type;
+}
+
+void Treasure::resetType() {
+	srand(time(NULL));
+	type = rand() % 8;
 }

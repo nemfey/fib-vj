@@ -36,7 +36,7 @@ void Hourglass::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	sprite->changeAnimation(IDLE);
 
 	//bIsPickup = true;
-
+	itemSize = glm::ivec2(16, 16);
 	hitbox = glm::ivec2(8, 8);
 }
 

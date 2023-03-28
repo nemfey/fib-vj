@@ -103,7 +103,7 @@ void Vampire::humanBehavior(int deltaTime)
 
 	if (bMoveRight)
 	{
-		bool bFloorDown = map->collisionMoveDown(posEnemy + glm::ivec2(24, 0), glm::ivec2(32, 32), &posEnemy.y);
+		bool bFloorDown = map->collisionMoveDown(posEnemy + glm::ivec2(24, 0), glm::ivec2(32, 32), &posEnemy.y, false);
 		bool bShouldMoveLeft = map->collisionMoveRight(posEnemy, glm::ivec2(32, 32), false) || !bFloorDown;
 		 
 		if (bShouldMoveLeft)
@@ -119,7 +119,7 @@ void Vampire::humanBehavior(int deltaTime)
 	}
 	else
 	{
-		bool bFloorDown = map->collisionMoveDown(posEnemy - glm::ivec2(24, 0), glm::ivec2(32, 32), &posEnemy.y);
+		bool bFloorDown = map->collisionMoveDown(posEnemy - glm::ivec2(24, 0), glm::ivec2(32, 32), &posEnemy.y, false);
 		bool bShouldMoveRight = map->collisionMoveLeft(posEnemy, glm::ivec2(32, 32), false) || !bFloorDown;
 
 		if (bShouldMoveRight)
@@ -181,7 +181,7 @@ void Vampire::batBehavior(int deltaTime)
 		posEnemy.x += 1;
 		posEnemy.y += 1;
 
-		bool bShouldMoveUp = map->collisionMoveDown(posEnemy, glm::ivec2(32, 32), &posEnemy.y);
+		bool bShouldMoveUp = map->collisionMoveDown(posEnemy, glm::ivec2(32, 32), &posEnemy.y, false);
 		bool bShouldMoveLeft = map->collisionMoveRight(posEnemy, glm::ivec2(32, 32), false);
 		
 		if (bShouldMoveUp && !map->collisionMoveRight(posEnemy + glm::ivec2(1, -1), glm::ivec2(32, 32), false))
@@ -196,7 +196,7 @@ void Vampire::batBehavior(int deltaTime)
 				//humanAspectTime = 0;
 			}
 		}
-		else if (bShouldMoveLeft && !map->collisionMoveDown(posEnemy + glm::ivec2(-1, 1), glm::ivec2(32, 32), &posEnemy.y+1))
+		else if (bShouldMoveLeft && !map->collisionMoveDown(posEnemy + glm::ivec2(-1, 1), glm::ivec2(32, 32), &posEnemy.y+1, false))
 			batMov = LeftDown;
 	}
 	else if (batMov == LeftDown)
@@ -204,7 +204,7 @@ void Vampire::batBehavior(int deltaTime)
 		posEnemy.x -= 1;
 		posEnemy.y += 1;
 
-		bool bShouldMoveUp = map->collisionMoveDown(posEnemy, glm::ivec2(32, 32), &posEnemy.y);
+		bool bShouldMoveUp = map->collisionMoveDown(posEnemy, glm::ivec2(32, 32), &posEnemy.y, false);
 		bool bShouldMoveRight = map->collisionMoveLeft(posEnemy, glm::ivec2(32, 32), false);
 
 		if (bShouldMoveUp && !map->collisionMoveLeft(posEnemy + glm::ivec2(-1, -1), glm::ivec2(32, 32), false))
@@ -219,7 +219,7 @@ void Vampire::batBehavior(int deltaTime)
 				//humanAspectTime = 0;
 			}
 		}
-		else if (bShouldMoveRight && !map->collisionMoveDown(posEnemy + glm::ivec2(1, 1), glm::ivec2(32, 32), &posEnemy.y+1))
+		else if (bShouldMoveRight && !map->collisionMoveDown(posEnemy + glm::ivec2(1, 1), glm::ivec2(32, 32), &posEnemy.y+1, false))
 			batMov = RightDown;
 	}
 

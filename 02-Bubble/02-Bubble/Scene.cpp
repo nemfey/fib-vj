@@ -120,13 +120,17 @@ void Scene::render()
 		if (itemSpawned) {
 			//30% chance of the item spawned to be a hourglass or a Bible
 			if (itemRNG <= 30) {
-				if (itemRNG < 15 && pHourglass)
+				if (itemRNG < 15 && pHourglass) {
 					pHourglass->render();
-				else if (itemRNG >= 15 && pBible)
+				}
+				else if (itemRNG >= 15 && pBible) {
 					pBible->render();
+				}
 			}
-			else if (itemRNG > 30 && pTreasure)
+			else if (itemRNG > 30 && pTreasure) {
 				pTreasure->render();
+				pTreasure->resetType();
+			}
 		}
 		else if (pHourglass || pTreasure || pBible)
 			i->setShowing(false);
@@ -365,8 +369,13 @@ void Scene::updateItems(int deltaTime)
 
 		if (itemSpawned) {
 			if (pTreasure && pTreasure->collisionPlayer()) {
+<<<<<<< HEAD
 				player->addScore(150 + i->getType()*150);
 				liveScore += 150 + i->getType()*150;
+=======
+				player->addScore(150 + i->getType() * 150);
+				liveScore += 150 + i->getType() * 150;
+>>>>>>> joan
 				score2newLive();
 				itemSpawnCounter = 20 - (rand() % 5);
 				itemSpawned = false;

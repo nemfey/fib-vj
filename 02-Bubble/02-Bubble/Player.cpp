@@ -182,7 +182,7 @@ void Player::update(int deltaTime)
 			{
 				posPlayer.y = int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
 				if (jumpAngle > 90)
-					bJumping = !map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y);
+					bJumping = !map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y, true);
 			}
 			if (map->collisionMoveUp(posPlayer, glm::ivec2(32, 32), &posPlayer.y, true))
 				bJumping = false;
@@ -198,7 +198,7 @@ void Player::update(int deltaTime)
 
 			posPlayer.y += FALL_STEP;
 			// y no estamos dentro de pierda 5 o 6
-			if (map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
+			if (map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y, true))
 			{
 				posPlayer.y += FALL_STEP;
 				map->positionStepped(posPlayer, glm::ivec2(32, 32), &posPlayer.y);

@@ -33,7 +33,7 @@ public:
 	bool collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, bool bCrossPlattforms) const;
 	bool collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, bool bCrossPlattforms) const;
 	bool collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, int* posY, bool bCrossPlattforms) const;
-	bool collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const;
+	bool collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, int* posY, bool bIsPlayer) const;
 	bool allPlattformsStepped() const;
 	bool doorOpen();
 	glm::vec2 getRandomPosition(int radius);

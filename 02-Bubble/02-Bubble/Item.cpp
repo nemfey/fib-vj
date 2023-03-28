@@ -36,8 +36,8 @@ bool Item::collisionPlayer()
 	
 	//bool collisionX = posPlayer.x + 32 >= posItem.x && posItem.x + itemSize.x >= posPlayer.x;
 	//bool collisionY = posPlayer.y + 32 >= posItem.y && posItem.y + itemSize.y >= posPlayer.y;
-	bool collisionX = posPlayer.x + 32 >= posItem.x+((32-hitbox.x)/2) && posItem.x+32-(32 - hitbox.x)/2 >= posPlayer.x;
-	bool collisionY = posPlayer.y + 32 >= posItem.y+ (32 - hitbox.y)/2 && posItem.y + 32-(32 - hitbox.y)/2 >= posPlayer.y;
+	bool collisionX = posPlayer.x + 32 >= posItem.x+((itemSize.x-hitbox.x)/2) && posItem.x+itemSize.x-(itemSize.x - hitbox.x)/2 >= posPlayer.x;
+	bool collisionY = posPlayer.y + 32 >= posItem.y+ (itemSize.y - hitbox.y)/2 && posItem.y + itemSize.y-(itemSize.y - hitbox.y)/2 >= posPlayer.y;
 
 	return collisionX && collisionY;
 }

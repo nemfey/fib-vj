@@ -55,6 +55,7 @@ public:
 	void setLiveScore(int l) { liveScore = l; };
 
 	void setItemSpawnCounter(int i) { itemSpawnCounter = i; };
+	void setItemSpawned(bool b) { itemSpawned = b; };
 
 private:
 	void initPlayer();
