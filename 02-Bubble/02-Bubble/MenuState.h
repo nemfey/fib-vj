@@ -6,7 +6,8 @@ enum MenuState
 	Main,
 	Help,
 	Credits,
-	Win
+	Win,
+	Lose
 };
 
 #endif

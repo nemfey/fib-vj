@@ -218,11 +218,12 @@ void Game::updateScene(int deltaTime)
 		{
 			menu.setPlayerFinalScore(scene->getPlayerScore());
 			menu.setMenuState(Win);
-			menu.setScreenShowTime(8);
 			bMenuShowing = true;
 		}
 		break;
 	case StageState::GameOver:
+		menu.setPlayerFinalScore(scene->getPlayerScore());
+		menu.setMenuState(Lose);
 		bMenuShowing = true;
 		break;
 	default:

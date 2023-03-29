@@ -74,15 +74,16 @@ void Menu::init(ShaderProgram& shaderProgram)
 	winSprite = Sprite::createSprite(glm::ivec2(720, 405), glm::vec2(1.f, 1.f), &winSpriteSheet, &shaderProgram);
 	winSprite->setPosition(glm::vec2(0.f, 0.f));
 
-	initNumberSprite(shaderProgram);
+	loseSpriteSheet.loadFromFile("images/lose_screen.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	loseSpriteSheet.setMagFilter(GL_NEAREST);
+	loseSprite = Sprite::createSprite(glm::ivec2(720, 405), glm::vec2(1.f, 1.f), &loseSpriteSheet, &shaderProgram);
+	loseSprite->setPosition(glm::vec2(0.f, 0.f));
 
-	currentTime = 0;
+	initNumberSprite(shaderProgram);
 }
 
 void Menu::update(int deltaTime)
 {
-	currentTime += deltaTime;
-
 	switch (state)
 	{
 	case Main:
@@ -96,7 +97,9 @@ void Menu::update(int deltaTime)
 		break;
 	case Win:
 		winSprite->update(deltaTime);
-		winScreenTime(deltaTime);
+		break;
+	case Lose:
+		loseSprite->update(deltaTime);
 		break;
 	default:
 		break;
@@ -120,6 +123,10 @@ void Menu::render()
 		winSprite->render();
 		renderScore();
 		break;
+	case Lose:
+		loseSprite->render();
+		renderScore();
+		break;
 	default:
 		break;
 	}
@@ -128,21 +135,6 @@ void Menu::render()
 void Menu::setSelection(int i)
 {
 	mainSprite->changeAnimation(i);
-}
-
-void Menu::winScreenTime(int deltaTime)
-{
-	if (currentTime / 1000 >= 1)
-	{
-		currentTime /= 1000;
-		--winScreenShowTime;
-
-		if (winScreenShowTime == 0)
-		{
-			state = Credits;
-		}
-		cout << "One second less: " << winScreenShowTime << endl;
-	}
 }
 
 void Menu::initNumberSprite(ShaderProgram& shaderProgram)
