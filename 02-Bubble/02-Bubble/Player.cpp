@@ -125,14 +125,25 @@ void Player::update(int deltaTime)
 	}
 	else {
 
-		if (bInvincible && sprite->animation() != INVINCIBLE) {
-			sprite->changeAnimation(INVINCIBLE);
+		if (bInvincible) {
+			if (sprite->animation() != INVINCIBLE)
+				sprite->changeAnimation(INVINCIBLE);
+
+			if (!bImmuneSoundPlayed) {
+				SoundFactory::instance().playImmune();
+				bImmuneSoundPlayed = true;
+			}
 		}
 
 		else if (inmunityState)
 		{
 			if (sprite->animation() != INVINCIBLE)
 				sprite->changeAnimation(INVINCIBLE);
+
+			if (!bImmuneSoundPlayed) {
+				SoundFactory::instance().playImmune();
+				bImmuneSoundPlayed = true;
+			}
 
 			inmunityTime -= deltaTime;
 			if (inmunityTime < 0)
@@ -141,6 +152,11 @@ void Player::update(int deltaTime)
 				inmunityState = false;
 				inmunityTime = 0;
 			}
+		}
+
+		else {
+			SoundFactory::instance().stopImmune();
+			bImmuneSoundPlayed = false;
 		}
 
 

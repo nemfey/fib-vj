@@ -29,3 +29,13 @@ void SoundFactory::playReaperAttack()
 {
 	engine->play2D("sounds/reaper_attack.wav", false);
 }
+
+void SoundFactory::playImmune()
+{
+	immuneSound = engine->play2D("sounds/immune.wav", true, false, true);
+}
+
+void SoundFactory::stopImmune()
+{
+	immuneSound->stop();
+}

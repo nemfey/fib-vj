@@ -10,6 +10,7 @@ class SoundFactory
 private:
 	SoundFactory() {
 		engine = createIrrKlangDevice();
+		immuneSound = engine->play2D("sounds/immune.wav", false, false, true);
 	}
 
 public:
@@ -26,10 +27,14 @@ public:
 	void playReaperCharge();
 	void playReaperAttack();
 
+	void playImmune();
+	void stopImmune();
+
 
 private:
 	ISoundEngine* engine;
-	//ISoundSource* sound;
+
+	ISound* immuneSound;
 };
 
 

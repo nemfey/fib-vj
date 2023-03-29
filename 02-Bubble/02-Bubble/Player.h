@@ -64,6 +64,8 @@ private:
 	bool bDying = false;
 	bool bRespawn = false;
 	bool bSpawning = true;
+
+	bool bImmuneSoundPlayed = false;
 };
 
 
