@@ -394,6 +394,7 @@ void Scene::updateItems(int deltaTime)
 			}
 
 			if (pHourglass && pHourglass->collisionPlayer()) {
+				engine->play2D("sounds/timestop.wav", false);
 				hourglassTimer = 5;
 				map->setHourglassTaken(false);
 				itemSpawned = false;
