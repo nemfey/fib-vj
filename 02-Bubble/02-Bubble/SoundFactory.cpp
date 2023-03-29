@@ -10,6 +10,11 @@ void SoundFactory::playTimeStop()
 	engine->play2D("sounds/timestop.wav", false);
 }
 
+void SoundFactory::playTimeResume()
+{
+	engine->play2D("sounds/timeresume.wav", false);
+}
+
 void SoundFactory::playPlayerDie()
 {
 	engine->play2D("sounds/death2.wav", false);

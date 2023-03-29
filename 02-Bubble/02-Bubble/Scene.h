@@ -100,7 +100,7 @@ private:
 	int itemRNG = rand() % 100;
 
 	bool bStarting, bDoorTaken, bPlayerDead;
-	bool bHourglassEnding;
+	bool bHourglassEnding = false;
 
 	bool bPlayerInvencible = false;
 	int liveScore = 0;

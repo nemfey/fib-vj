@@ -95,15 +95,24 @@ void Scene::update(int deltaTime)
 
 		if (hourglassTimer > 0)
 		{
+
+			if (hourglassTimer == 1 && !bHourglassEnding) {
+				SoundFactory::instance().playTimeResume();
+				bHourglassEnding = true;
+			}
+
 			if (currentTime / 1000 != timer)
 			{
 				timer = currentTime / 1000;
 				--hourglassTimer;
 				cout << "item timer is: " << hourglassTimer << endl;
 			}
+
 		}
-		else 
+		else {
+			bHourglassEnding = false;
 			updateTime(deltaTime);
+		}
 	}
 }
 

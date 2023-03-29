@@ -22,6 +22,7 @@ public:
 
 	void playTimeTick();
 	void playTimeStop();
+	void playTimeResume();
 	void playPlayerDie();
 	void playKeyTaken();
 	void playReaperCharge();
