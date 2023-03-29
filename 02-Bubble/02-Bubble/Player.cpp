@@ -4,6 +4,7 @@
 #include <GL/glut.h>
 #include "Player.h"
 #include "Game.h"
+#include "SoundFactory.h"
 
 
 #define JUMP_ANGLE_STEP 4
@@ -113,7 +114,7 @@ void Player::update(int deltaTime)
 	else if (bDying)
 	{
 		if (sprite->animation() != DEATH) {
-			engine->play2D("sounds/death2.wav", false);
+			SoundFactory::instance().playPlayerDie();
 			sprite->changeAnimation(DEATH);
 		}
 

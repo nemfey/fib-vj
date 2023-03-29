@@ -3,6 +3,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "Scene.h"
 #include "Game.h"
+#include "SoundFactory.h"
 
 
 //#define SCREEN_X 144
@@ -279,7 +280,7 @@ void Scene::updateTime(int deltaTime)
 	{	
 		timer = currentTime / 1000;
 		--remainingSeconds;
-		engine->play2D("sounds/time_tick.wav", false);
+		SoundFactory::instance().playTimeTick();
 		
 		if (!itemSpawned) 
 			--itemSpawnCounter;
@@ -395,7 +396,7 @@ void Scene::updateItems(int deltaTime)
 			}
 
 			if (pHourglass && pHourglass->collisionPlayer()) {
-				engine->play2D("sounds/timestop.wav", false);
+				SoundFactory::instance().playTimeStop();
 				hourglassTimer = 5;
 				map->setHourglassTaken(false);
 				itemSpawned = false;

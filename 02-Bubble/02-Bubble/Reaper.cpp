@@ -3,6 +3,7 @@
 #include <GL/glew.h>
 #include <GL/glut.h>
 #include "Reaper.h"
+#include "SoundFactory.h"
 
 #define FALL_STEP 4
 
@@ -183,7 +184,7 @@ void Reaper::update(int deltaTime)
 				sprite->changeAnimation(ATTACK_RIGHT);
 
 			if (sprite->getCurrentKeyFrame() == 4 && !bChargeSoundPlayed) {
-				engine->play2D("sounds/charge3.wav", false);
+				SoundFactory::instance().playReaperCharge();
 				bChargeSoundPlayed = true;
 			}
 
@@ -192,7 +193,7 @@ void Reaper::update(int deltaTime)
 			}
 
 			if (sprite->getCurrentKeyFrame() == 9 && !bAttackSoundPlayed) {
-				engine->play2D("sounds/reaper_attack.wav", false);
+				SoundFactory::instance().playReaperAttack();
 				bAttackSoundPlayed = true;
 			}
 
@@ -217,7 +218,7 @@ void Reaper::update(int deltaTime)
 				sprite->changeAnimation(ATTACK_LEFT);
 
 			if (sprite->getCurrentKeyFrame() == 4 && !bChargeSoundPlayed) {
-				engine->play2D("sounds/charge3.wav", false);
+				SoundFactory::instance().playReaperCharge();
 				bChargeSoundPlayed = true;
 			}
 
@@ -227,7 +228,7 @@ void Reaper::update(int deltaTime)
 			}
 
 			if (sprite->getCurrentKeyFrame() == 9 && !bAttackSoundPlayed) {
-				engine->play2D("sounds/reaper_attack.wav", false);
+				SoundFactory::instance().playReaperAttack();
 				bAttackSoundPlayed = true;
 			}
 

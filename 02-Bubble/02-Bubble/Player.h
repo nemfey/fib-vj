@@ -64,11 +64,6 @@ private:
 	bool bDying = false;
 	bool bRespawn = false;
 	bool bSpawning = true;
-
-	//Sound engine
-	ISoundEngine* engine = createIrrKlangDevice();
-	ISound* sound;
-
 };
 
 
