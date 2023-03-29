@@ -1,5 +1,7 @@
 #pragma once
 #include "Enemy.h"
+#include <irrKlang.h>
+using namespace irrklang;
 
 class Reaper : public Enemy
 {
@@ -18,6 +20,12 @@ private:
 	bool attackEnded = true;
 
 	bool renderProjectile = false;
+
+	//Sound engine
+	ISoundEngine* engine = createIrrKlangDevice();
+	ISound* sound;
+	bool bChargeSoundPlayed = false;
+	bool bAttackSoundPlayed = false;
 
 	Texture projectileTex;
 	Sprite* projectile;

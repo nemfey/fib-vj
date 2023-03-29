@@ -1,9 +1,11 @@
 #ifndef _PLAYER_INCLUDE
 #define _PLAYER_INCLUDE
 
-
+#include <irrKlang.h>
 #include "Sprite.h"
 #include "TileMap.h"
+
+using namespace irrklang;
 
 
 // Player is basically a Sprite that represents the player. As such it has
@@ -62,6 +64,10 @@ private:
 	bool bDying = false;
 	bool bRespawn = false;
 	bool bSpawning = true;
+
+	//Sound engine
+	ISoundEngine* engine = createIrrKlangDevice();
+	ISound* sound;
 
 };
 

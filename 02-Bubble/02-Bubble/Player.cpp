@@ -73,7 +73,7 @@ void Player::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	sprite->addKeyframe(JUMP_RIGHT, glm::vec2(0.25f, 0.5f));
 	sprite->addKeyframe(JUMP_RIGHT, glm::vec2(0.375f, 0.5f));
 
-	sprite->setAnimationSpeed(DEATH, 8);
+	sprite->setAnimationSpeed(DEATH, 10);
 	sprite->addKeyframe(DEATH, glm::vec2(0.5f, 0.5f));
 	sprite->addKeyframe(DEATH, glm::vec2(0.625f, 0.5f));
 	sprite->addKeyframe(DEATH, glm::vec2(0.75f, 0.5f));
@@ -112,8 +112,10 @@ void Player::update(int deltaTime)
 	}
 	else if (bDying)
 	{
-		if (sprite->animation() != DEATH)
+		if (sprite->animation() != DEATH) {
+			engine->play2D("sounds/death2.wav", false);
 			sprite->changeAnimation(DEATH);
+		}
 
 		if (sprite->getCurrentKeyFrame() >= 4) {
 			bDying = false;

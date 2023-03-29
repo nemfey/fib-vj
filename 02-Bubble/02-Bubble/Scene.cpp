@@ -279,6 +279,7 @@ void Scene::updateTime(int deltaTime)
 	{	
 		timer = currentTime / 1000;
 		--remainingSeconds;
+		engine->play2D("sounds/time_tick.wav", false);
 		
 		if (!itemSpawned) 
 			--itemSpawnCounter;
