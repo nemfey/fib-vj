@@ -5,7 +5,9 @@ enum MenuState
 {
 	Main,
 	Help,
-	Credits
+	Credits,
+	Win,
+	Lose
 };
 
 #endif

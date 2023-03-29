@@ -82,10 +82,6 @@ private:
 	vector<Item*> items;
 	ShaderProgram texProgram;
 
-	//Sound engine
-	ISoundEngine* engine = createIrrKlangDevice();
-	ISound* sound;
-
 	Texture spritesheet;
 	Sprite* sprite;
 

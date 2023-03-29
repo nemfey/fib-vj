@@ -19,7 +19,13 @@ public:
 		return SF;
 	}
 
+	void playTimeTick();
+	void playTimeStop();
+	void playPlayerDie();
 	void playKeyTaken();
+	void playReaperCharge();
+	void playReaperAttack();
+
 
 private:
 	ISoundEngine* engine;
