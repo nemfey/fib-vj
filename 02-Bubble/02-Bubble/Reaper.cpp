@@ -182,8 +182,19 @@ void Reaper::update(int deltaTime)
 			if (sprite->animation() != ATTACK_RIGHT)
 				sprite->changeAnimation(ATTACK_RIGHT);
 
-			if (sprite->getCurrentKeyFrame() == 8)
+			if (sprite->getCurrentKeyFrame() == 4 && !bChargeSoundPlayed) {
+				engine->play2D("sounds/charge3.wav", false);
+				bChargeSoundPlayed = true;
+			}
+
+			if (sprite->getCurrentKeyFrame() == 8) {
 				projectile->changeAnimation(RIGHT);
+			}
+
+			if (sprite->getCurrentKeyFrame() == 9 && !bAttackSoundPlayed) {
+				engine->play2D("sounds/reaper_attack.wav", false);
+				bAttackSoundPlayed = true;
+			}
 
 			if (sprite->getCurrentKeyFrame() >= 9 && sprite->getCurrentKeyFrame() < 12) {
 				projectile->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x + 16), float(tileMapDispl.y + posEnemy.y)));
@@ -194,6 +205,9 @@ void Reaper::update(int deltaTime)
 			else if (sprite->getCurrentKeyFrame() == 12) {
 				attackEnded = true;
 				renderProjectile = false;
+
+				bChargeSoundPlayed = false;
+				bAttackSoundPlayed = false;
 			}
 		}
 
@@ -202,8 +216,20 @@ void Reaper::update(int deltaTime)
 			if (sprite->animation() != ATTACK_LEFT)
 				sprite->changeAnimation(ATTACK_LEFT);
 
-			if (sprite->getCurrentKeyFrame() == 8)
+			if (sprite->getCurrentKeyFrame() == 4 && !bChargeSoundPlayed) {
+				engine->play2D("sounds/charge3.wav", false);
+				bChargeSoundPlayed = true;
+			}
+
+
+			if (sprite->getCurrentKeyFrame() == 8) {
 				projectile->changeAnimation(LEFT);
+			}
+
+			if (sprite->getCurrentKeyFrame() == 9 && !bAttackSoundPlayed) {
+				engine->play2D("sounds/reaper_attack.wav", false);
+				bAttackSoundPlayed = true;
+			}
 
 			if (sprite->getCurrentKeyFrame() >= 9 && sprite->getCurrentKeyFrame() < 12) {
 				projectile->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x - 64), float(tileMapDispl.y + posEnemy.y)));
@@ -214,6 +240,9 @@ void Reaper::update(int deltaTime)
 			if (sprite->getCurrentKeyFrame() == 12) {
 				attackEnded = true;
 				renderProjectile = false;
+
+				bChargeSoundPlayed = false;
+				bAttackSoundPlayed = false;
 			}
 		}
 

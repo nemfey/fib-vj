@@ -156,8 +156,8 @@ bool TileMap::collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, i
 	int x0, x1, y;
 
 	if (bIsPlayer) {
-		x0 = (pos.x + 10) / tileSize;
-		x1 = (pos.x + size.x - 10) / tileSize;
+		x0 = (pos.x + 9) / tileSize;
+		x1 = (pos.x + size.x - 9) / tileSize;
 		y = (pos.y + size.y - 1) / tileSize;
 	}
 	else {

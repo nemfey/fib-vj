@@ -279,6 +279,7 @@ void Scene::updateTime(int deltaTime)
 	{	
 		timer = currentTime / 1000;
 		--remainingSeconds;
+		engine->play2D("sounds/time_tick.wav", false);
 		
 		if (!itemSpawned) 
 			--itemSpawnCounter;
@@ -394,6 +395,7 @@ void Scene::updateItems(int deltaTime)
 			}
 
 			if (pHourglass && pHourglass->collisionPlayer()) {
+				engine->play2D("sounds/timestop.wav", false);
 				hourglassTimer = 5;
 				map->setHourglassTaken(false);
 				itemSpawned = false;
