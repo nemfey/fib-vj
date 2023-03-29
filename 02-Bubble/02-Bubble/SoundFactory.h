@@ -32,6 +32,7 @@ public:
 	void playImmune();
 	void stopImmune();
 
+	void stopAllSounds();
 
 private:
 	ISoundEngine* engine;

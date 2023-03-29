@@ -49,3 +49,8 @@ void SoundFactory::stopImmune()
 {
 	immuneSound->stop();
 }
+
+void SoundFactory::stopAllSounds()
+{
+	engine->stopAllSounds();
+}
