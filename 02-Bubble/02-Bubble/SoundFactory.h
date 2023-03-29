@@ -26,6 +26,7 @@ public:
 	void playKeyTaken();
 	void playReaperCharge();
 	void playReaperAttack();
+	void playJump();
 
 	void playImmune();
 	void stopImmune();

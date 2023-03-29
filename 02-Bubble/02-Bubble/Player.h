@@ -66,6 +66,7 @@ private:
 	bool bSpawning = true;
 
 	bool bImmuneSoundPlayed = false;
+	bool bJumpSoundPlayed = false;
 };
 
 
