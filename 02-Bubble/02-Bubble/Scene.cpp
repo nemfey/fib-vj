@@ -65,8 +65,11 @@ void Scene::init(ShaderProgram &shaderProgram, string scene)
 void Scene::update(int deltaTime)
 {	
 	currentTime += deltaTime;
-
-	if (bStarting)
+	if (state == Pause)
+	{
+		sceneInterface->setState(Pause);
+	}
+	else if (bStarting)
 	{
 		readyMessage();
 		updateSceneInterface(deltaTime);

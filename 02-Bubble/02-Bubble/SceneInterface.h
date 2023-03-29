@@ -31,13 +31,14 @@ private:
 	void initNumberSprite(ShaderProgram& shaderProgram);
 	void initCharacterSprite(ShaderProgram& shaderProgram);
 	void initHeartSprite(ShaderProgram& shaderProgram);
+	void initPauseSprite(ShaderProgram& shaderProgram);
 	void renderMessages();
 	void renderNumber(int n, int x, int y);
 	void renderCharacter(char c, int x, int y);
 
 
 private:
-	Texture numbersSpritesheet, charactersSpritesheet, heartSpritesheet;
+	Texture numbersSpritesheet, charactersSpritesheet, heartSpritesheet, pauseSpriteSheet;
 
 		// TENEMOS UN SOLO SPRITE PARA CADA COSA Y LO VAMOS COPIANDO A LOS LADOS E IMPREMINEDO VARIAS VECES EN CADA UPDATE
 
@@ -45,6 +46,7 @@ private:
 	Sprite *numberSprite;
 	Sprite *characterSprite;
 	Sprite *heartSprite;
+	Sprite* pauseSprite;
 
 	int lives, score, remainingTime, stageNumber;
 	map<char, int> char2id;

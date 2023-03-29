@@ -56,6 +56,7 @@ public:
 
 	void setItemSpawnCounter(int i) { itemSpawnCounter = i; };
 	void setItemSpawned(bool b) { itemSpawned = b; };
+	void setSceneInterfaceState(StageState s) { sceneInterface->setState(s); };
 
 private:
 	void initPlayer();

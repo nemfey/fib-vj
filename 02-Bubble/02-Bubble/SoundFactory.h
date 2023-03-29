@@ -32,10 +32,11 @@ public:
 	void playImmune();
 	void stopImmune();
 
+	ISoundEngine* getEngine() { return engine; };
+
 
 private:
 	ISoundEngine* engine;
-
 	ISound* immuneSound;
 };
 

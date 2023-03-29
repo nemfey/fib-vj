@@ -141,9 +141,6 @@ void Vampire::batBehavior(int deltaTime)
 {	
 	if (batMov == RightUp)
 	{
-		//if (sprite->animation() != MOVE_RIGHT)
-		//	sprite->changeAnimation(FLY);
-
 		posEnemy.x += 1;
 		posEnemy.y -= 1;
 

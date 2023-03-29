@@ -2,6 +2,7 @@
 #include <GL/glut.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include "Game.h"
+#include "SoundFactory.h"
 
 // Public functions
 
@@ -67,10 +68,8 @@ void Game::keyPressed(int key)
 	if (key == 27) // Escape code
 	{
 		bMenuShowing = true;
-
 		menu.setMenuState(Main);
 	}
-		//bPlay = false;
 	if (key == 13 && bMenuShowing) // Enter code
 		optionSelected();
 	if (key == 49)
@@ -99,6 +98,21 @@ void Game::keyPressed(int key)
 	}
 	if ((key == 107 || key == 75) && !bMenuShowing)
 		scene->makeKeyAppear();
+	if (key == 112 && !bMenuShowing)
+	{
+		StageState s = scene->state;
+		if (s == Playing)
+		{
+			scene->state = Pause;
+			SoundFactory::instance().getEngine()->setAllSoundsPaused(true);
+		}
+		else if (s == Pause)
+		{
+			scene->state = Playing;
+			scene->setSceneInterfaceState(Playing);
+			SoundFactory::instance().getEngine()->setAllSoundsPaused(false);
+		}
+	}
 	keys[key] = true;
 }
 
@@ -204,10 +218,13 @@ void Game::updateScene(int deltaTime)
 {
 	switch (scene->state)
 	{
+	case StageState::Starting:
+		scene->update(deltaTime);
+		break;
 	case StageState::Playing:
 		scene->update(deltaTime);
 		break;
-	case StageState::Starting:
+	case StageState::Pause:
 		scene->update(deltaTime);
 		break;
 	case StageState::StageCleared:

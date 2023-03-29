@@ -32,12 +32,12 @@ void SceneInterface::init(ShaderProgram &shaderProgram)
 	initNumberSprite(shaderProgram);
 	initCharacterSprite(shaderProgram);
 	initHeartSprite(shaderProgram);
+	initPauseSprite(shaderProgram);
 	
 	lives = 3;
 	score = 0;
 	remainingTime = 60;
 	stageNumber = 1;
-	//bStageClear = false;
 	char2id = { {'a',0}, {'c',1}, {'d',2}, {'e',3},
 				{'g',4}, {'l',5}, {'m',6}, {'o',7},
 				{'r',8}, {'s',9}, {'t',10}, {'v',11},
@@ -102,8 +102,7 @@ void SceneInterface::render()
 
 void SceneInterface::initNumberSprite(ShaderProgram& shaderProgram)
 {
-	//numbersSpritesheet.loadFromFile("images/numbers.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	numbersSpritesheet.loadFromFile("images/numberss.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	numbersSpritesheet.loadFromFile("images/numbers.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	numbersSpritesheet.setMagFilter(GL_NEAREST);
 	numberSprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(0.1, 1), &numbersSpritesheet, &shaderProgram);
 	
@@ -118,7 +117,6 @@ void SceneInterface::initNumberSprite(ShaderProgram& shaderProgram)
 
 void SceneInterface::initCharacterSprite(ShaderProgram& shaderProgram)
 {
-	//charactersSpritesheet.loadFromFile("images/characters.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	charactersSpritesheet.loadFromFile("images/chars.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	charactersSpritesheet.setMagFilter(GL_NEAREST);
 	characterSprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(0.25, 0.25), &charactersSpritesheet, &shaderProgram);
@@ -146,10 +144,22 @@ void SceneInterface::initHeartSprite(ShaderProgram& shaderProgram)
 	heartSprite->addKeyframe(0, glm::vec2(0.f, 0.f));
 }
 
+void SceneInterface::initPauseSprite(ShaderProgram& shaderProgram)
+{
+	pauseSpriteSheet.loadFromFile("images/pause_text.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	pauseSpriteSheet.setMagFilter(GL_NEAREST);
+	pauseSprite = Sprite::createSprite(glm::ivec2(160, 48), glm::vec2(1, 1), &pauseSpriteSheet, &shaderProgram);
+
+	pauseSprite->setNumberAnimations(1);
+
+	pauseSprite->setAnimationSpeed(0, 1);
+	pauseSprite->addKeyframe(0, glm::vec2(0.f, 0.f));
+	pauseSprite->changeAnimation(0);
+	pauseSprite->setPosition(glm::vec2(172, 172));
+}
+
 void SceneInterface::renderMessages()
 {
-	//cout << state << endl;
-	//cout << "hola" << endl;
 	if (state == Starting)
 	{
 		renderCharacter('r', 192, 224);
@@ -158,6 +168,13 @@ void SceneInterface::renderMessages()
 		renderCharacter('d', 240, 224);
 		renderCharacter('y', 256, 224);
 		renderCharacter('?', 272, 224);
+	}
+
+	else if (state == Pause)
+	{
+		//heartSprite->setPosition(glm::vec2(250, 60));
+		//heartSprite->render();
+		pauseSprite->render();
 	}
 	else if (state == StageCleared)
 	{

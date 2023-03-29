@@ -5,6 +5,7 @@ enum StageState
 { 
 	Starting,
 	Playing,
+	Pause,
 	StageCleared,
 	GameOver
 };
