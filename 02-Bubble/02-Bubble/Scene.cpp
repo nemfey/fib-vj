@@ -400,9 +400,9 @@ void Scene::updateItems(int deltaTime)
 
 		if (itemSpawned) {
 			if (pTreasure && pTreasure->collisionPlayer()) {
+				SoundFactory::instance().playTreasureTaken();
 				player->addScore(150 + i->getType()*150);
 				liveScore += 150 + i->getType()*150;
-				SoundFactory::instance().playPointsObtained();
 				score2newLive();
 
 				itemSpawnCounter = 20 - (rand() % 5);
@@ -412,6 +412,7 @@ void Scene::updateItems(int deltaTime)
 			}
 
 			if (pBible && pBible->collisionPlayer()) {
+				SoundFactory::instance().playBibleTaken();
 				player->setImmune(5000, true);
 				itemSpawned = false;
 				pBible->setShowing(false);

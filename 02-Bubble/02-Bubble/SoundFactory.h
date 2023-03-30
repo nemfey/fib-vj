@@ -31,6 +31,8 @@ public:
 	void playTimeStop();
 	void playTimeResume();
 	void playPlayerDie();
+	void playBibleTaken();
+	void playTreasureTaken();
 	void playKeyTaken();
 	void playKeySpawn();
 	void playVampireTransform();

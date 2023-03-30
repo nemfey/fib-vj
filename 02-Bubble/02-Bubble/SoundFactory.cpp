@@ -30,7 +30,7 @@ void SoundFactory::playTimeTick()
 	if (timeTicks >= 40)
 		tickSound->setDefaultVolume(0.3);
 	if (timeTicks >= 50)
-		tickSound->setDefaultVolume(0.8);
+		tickSound->setDefaultVolume(1.0);
 	engine->play2D(tickSound);
 	++timeTicks;
 }
@@ -51,6 +51,16 @@ void SoundFactory::playTimeResume()
 void SoundFactory::playPlayerDie()
 {
 	engine->play2D("sounds/death2.wav", false);
+}
+
+void SoundFactory::playBibleTaken()
+{
+	engine->play2D("sounds/bible.wav", false);
+}
+
+void SoundFactory::playTreasureTaken()
+{
+	engine->play2D("sounds/prize2.wav", false);
 }
 
 void SoundFactory::playKeyTaken()
