@@ -60,7 +60,7 @@ void SoundFactory::playReaperAttack()
 
 void SoundFactory::playJump()
 {
-	engine->play2D("sounds/jump.wav", false);
+	engine->play2D("sounds/jump2.wav", false);
 }
 
 void SoundFactory::playPointsObtained()
