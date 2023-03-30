@@ -27,15 +27,16 @@ public:
 	
 	// Getters & Setters
 	glm::ivec2 getPosition() const { return posPlayer; };
-	bool getInmunityState() const { return inmunityState; };
+	bool getInmunityState() const { return inmunityState || inmunityStateBible; };
 	int getLives() const { return lives; };
 	int getScore() const { return score; };
 	bool getRespawn() { return bRespawn; };
 	bool getSpawning() { return bSpawning; };
+	bool getDying() { return bDying; }
 
 	void setTileMap(TileMap* tileMap) { map = tileMap; };
 	void setPosition(const glm::ivec2 &pos);
-	void setImmune(int time);
+	void setImmune(int time, bool bible);
 	void setLives(int l) { lives = l; };
 	void setInvincible(bool b) { bInvincible = b; }
 	void setRespawn(bool b) { bRespawn = b; };
@@ -53,6 +54,7 @@ private:
 
 	int lives = 3;
 	bool inmunityState = false;
+	bool inmunityStateBible = false;
 	int inmunityTime = 0;
 
 	int score = 0;

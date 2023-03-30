@@ -50,7 +50,7 @@ void SoundFactory::playJump()
 
 void SoundFactory::playPointsObtained()
 {
-	//engine->play2D("sounds/point.wav", false);
+	engine->play2D("sounds/point_low.wav", false);
 }
 
 void SoundFactory::playLifeUp()

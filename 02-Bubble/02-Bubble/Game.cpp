@@ -70,7 +70,7 @@ void Game::keyPressed(int key)
 		bMenuShowing = true;
 		menu.setMenuState(Main);
 	}
-	if (key == 13 && bMenuShowing) // Enter code
+	if ((key == 13 || key == 32) && bMenuShowing) // Enter code
 		optionSelected();
 	if (key == 49)
 	{

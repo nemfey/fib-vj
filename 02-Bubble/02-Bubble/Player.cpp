@@ -137,12 +137,14 @@ void Player::update(int deltaTime)
 
 		else if (inmunityState)
 		{
-			if (sprite->animation() != INVINCIBLE)
-				sprite->changeAnimation(INVINCIBLE);
+			if (inmunityStateBible) {
+				if (sprite->animation() != INVINCIBLE)
+					sprite->changeAnimation(INVINCIBLE);
 
-			if (!bImmuneSoundPlayed) {
-				SoundFactory::instance().playImmune();
-				bImmuneSoundPlayed = true;
+				if (!bImmuneSoundPlayed) {
+					SoundFactory::instance().playImmune();
+					bImmuneSoundPlayed = true;
+				}
 			}
 
 			inmunityTime -= deltaTime;
@@ -150,6 +152,7 @@ void Player::update(int deltaTime)
 			{
 				cout << "my inmunity state ended :(" << endl;
 				inmunityState = false;
+				inmunityStateBible = false;
 				inmunityTime = 0;
 			}
 		}
@@ -163,35 +166,35 @@ void Player::update(int deltaTime)
 		if (Game::instance().getSpecialKey(GLUT_KEY_LEFT))
 		{
 			bFacingRight = false;
-			if (sprite->animation() != MOVE_LEFT && !bInvincible && !inmunityState && !bJumping)
+			if (sprite->animation() != MOVE_LEFT && !bInvincible && !inmunityStateBible && !bJumping)
 				sprite->changeAnimation(MOVE_LEFT);
 			posPlayer.x -= 2;
 			if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32), true))
 			{
 				posPlayer.x += 2;
 
-				if (!bInvincible && !inmunityState)
+				if (!bInvincible && !inmunityStateBible)
 					sprite->changeAnimation(STAND_LEFT);
 			}
 		}
 		else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
 		{
 			bFacingRight = true;
-			if (sprite->animation() != MOVE_RIGHT && !bInvincible && !inmunityState && !bJumping)
+			if (sprite->animation() != MOVE_RIGHT && !bInvincible && !inmunityStateBible && !bJumping)
 				sprite->changeAnimation(MOVE_RIGHT);
 			posPlayer.x += 2;
 			if (map->collisionMoveRight(posPlayer, glm::ivec2(32, 32), true))
 			{
 				posPlayer.x -= 2;
-				if (!bInvincible && !inmunityState)
+				if (!bInvincible && !inmunityStateBible)
 					sprite->changeAnimation(STAND_RIGHT);
 			}
 		}
 		else
 		{
-			if (!bFacingRight && sprite->animation() != STAND_LEFT && !bInvincible && !inmunityState && !bJumping)
+			if (!bFacingRight && sprite->animation() != STAND_LEFT && !bInvincible && !inmunityStateBible && !bJumping)
 				sprite->changeAnimation(STAND_LEFT);
-			else if (bFacingRight && sprite->animation() != STAND_RIGHT && !bInvincible && !inmunityState && !bJumping)
+			else if (bFacingRight && sprite->animation() != STAND_RIGHT && !bInvincible && !inmunityStateBible && !bJumping)
 				sprite->changeAnimation(STAND_RIGHT);
 		}
 		if (bJumping)
@@ -201,9 +204,9 @@ void Player::update(int deltaTime)
 				bJumpSoundPlayed = true;
 			}
 
-			if (!bFacingRight && sprite->animation() != JUMP_LEFT && !bInvincible && !inmunityState)
+			if (!bFacingRight && sprite->animation() != JUMP_LEFT && !bInvincible && !inmunityStateBible)
 				sprite->changeAnimation(JUMP_LEFT);
-			else if (bFacingRight && sprite->animation() != JUMP_RIGHT && !bInvincible && !inmunityState)
+			else if (bFacingRight && sprite->animation() != JUMP_RIGHT && !bInvincible && !inmunityStateBible)
 				sprite->changeAnimation(JUMP_RIGHT);
 			jumpAngle += JUMP_ANGLE_STEP;
 			if (jumpAngle == 180)
@@ -225,7 +228,7 @@ void Player::update(int deltaTime)
 			/*
 			if (!bFacingRight && sprite->animation() != STAND_LEFT)
 				sprite->changeAnimation(STAND_LEFT);
-			if (bFacingRight && sprite->animation() != STAND_RIGHT && !bInvincible && !inmunityState)
+			if (bFacingRight && sprite->animation() != STAND_RIGHT && !bInvincible )
 				sprite->changeAnimation(STAND_RIGHT);
 			*/
 
@@ -279,7 +282,7 @@ void Player::loseLive()
 	if (lives > 0 && !inmunityState)
 	{
 		--lives;
-		setImmune(3000);
+		setImmune(3000, false);
 		cout << "you lost a live but now im inmune" << endl;
 		// AÑADIR INMUNIDAD
 	}
@@ -307,7 +310,8 @@ void Player::setPosition(const glm::ivec2& pos)
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
 
-void Player::setImmune(int time) {
+void Player::setImmune(int time, bool bible) {
+	if (bible) inmunityStateBible = true;
 	inmunityState = true;
 	inmunityTime = time;
 }

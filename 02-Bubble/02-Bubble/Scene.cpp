@@ -67,7 +67,7 @@ void Scene::update(int deltaTime)
 	//currentTime += deltaTime;
 
 	//DEBUG
-	cout << currentTime << endl;
+	//cout << currentTime << endl;
 
 	if (state == Pause)
 	{
@@ -92,6 +92,7 @@ void Scene::update(int deltaTime)
 		}
 		else if (bPlayerDead)
 		{
+			SoundFactory::instance().stopImmune();
 			sceneInterface->updateLives(player->getLives());
 			gameOverMessage();
 		}
@@ -360,7 +361,7 @@ void Scene::updateEnemies(int deltaTime)
 		else
 			e->update(deltaTime);
 		
-		if (e->collisionPlayer() && !player->getInmunityState() && !bPlayerInvencible)
+		if (e->collisionPlayer() && ((!player->getInmunityState() && !bPlayerInvencible) || e->getIsPlayerKiller())) {
 			if (player->getLives() > 1)
 			{
 				player->loseLive();
@@ -375,7 +376,7 @@ void Scene::updateEnemies(int deltaTime)
 				bPlayerDead = true;
 				messageTimer = 5;
 			}
-
+		}
 	}
 }
 
@@ -410,7 +411,7 @@ void Scene::updateItems(int deltaTime)
 			}
 
 			if (pBible && pBible->collisionPlayer()) {
-				player->setImmune(5000);
+				player->setImmune(5000, true);
 				itemSpawned = false;
 				pBible->setShowing(false);
 				pBible->setPosition(glm::vec2(0, 0));
