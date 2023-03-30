@@ -23,6 +23,7 @@ public:
 	void render();
 	void setSelection(int i);
 	void setMenuState(MenuState m) { state = m; };
+	MenuState getMenuState() { return state; };
 	void setPlayerFinalScore(int i) { playerFinalScore = i; };
 	void initNumberSprite(ShaderProgram& shaderProgram);
 	void renderNumber(int n, int x, int y);

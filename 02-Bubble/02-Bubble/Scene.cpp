@@ -178,8 +178,11 @@ void Scene::makeKeyAppear()
 	{
 		// HAY QUE INDICAR EN EL TXT LAPOSICION DE LA LLAVE PORQUE SERA MAS FACIL
 		Key* pKey = dynamic_cast<Key*>(i);
-		if (pKey)
+		if (pKey && !pKey->getShowing() && !pKey->getTaken())
+		{
+			SoundFactory::instance().playKeySpawn();
 			pKey->setShowing(true);
+		}
 	}
 }
 

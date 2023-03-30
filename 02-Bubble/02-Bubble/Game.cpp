@@ -7,7 +7,7 @@
 // Public functions
 
 void Game::init()
-{	
+{
 	initShaders();
 	bPlay = true;
 	glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
@@ -18,7 +18,7 @@ void Game::init()
 
 	dictOptions = { {0,Play}, {1,Instructions}, {2,Exit} };
 	option_nth = 0;
-	
+
 	stages.push_back("levels/level01.txt");
 	stages.push_back("levels/level02.txt");
 	stages.push_back("levels/level03.txt");
@@ -33,7 +33,7 @@ bool Game::update(int deltaTime)
 		updateMenu(deltaTime);
 	else
 		updateScene(deltaTime);
-	
+
 	return bPlay;
 }
 
@@ -45,7 +45,7 @@ void Game::render()
 	if (bMenuShowing)
 	{
 		menu.render();
-		updateRatioWindowSize(glutGet(GLUT_WINDOW_WIDTH),glutGet(GLUT_WINDOW_HEIGHT));
+		updateRatioWindowSize(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 	}
 	else
 		scene->render();
@@ -68,6 +68,7 @@ void Game::keyPressed(int key)
 	if (key == 27) // Escape code
 	{
 		bMenuShowing = true;
+		SoundFactory::instance().playSelectOption();
 		menu.setMenuState(Main);
 	}
 	if ((key == 13 || key == 32) && bMenuShowing) // Enter code
@@ -90,7 +91,7 @@ void Game::keyPressed(int key)
 		stageIterator = 2;
 		loadFirstStage();
 	}
-	if (key == 99)
+	if (key == 99 && menu.getMenuState() == Main)
 	{
 		SoundFactory::instance().playSelectOption();
 		menu.setMenuState(Credits);
@@ -104,7 +105,6 @@ void Game::keyPressed(int key)
 	}
 	if ((key == 107 || key == 75) && !bMenuShowing)
 	{
-		SoundFactory::instance().playKeySpawn();
 		scene->makeKeyAppear();
 	}
 	if (key == 112 && !bMenuShowing)

@@ -24,6 +24,8 @@ public:
 
 	// Getters & Setters
 	glm::ivec2 getPosition() { return posItem; };
+	bool getShowing() { return showing; };
+	bool getTaken() { return taken; };
 
 	void setTileMap(TileMap* tileMap) { map = tileMap; };
 	void setPosition(const glm::vec2& pos);
