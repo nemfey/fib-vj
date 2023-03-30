@@ -64,57 +64,64 @@ void Scene::init(ShaderProgram &shaderProgram, string scene)
 
 void Scene::update(int deltaTime)
 {	
-	currentTime += deltaTime;
+	//currentTime += deltaTime;
+
+	//DEBUG
+	cout << currentTime << endl;
+
 	if (state == Pause)
 	{
 		sceneInterface->setState(Pause);
 	}
-	else if (bStarting)
-	{
-		readyMessage();
-		updateSceneInterface(deltaTime);
-	}
-	else if (bDoorTaken)
-	{
-		if (player->getSpawning())
-			updatePlayer(deltaTime);
-		else if (!player->getSpawning())
+	else {
+		currentTime += deltaTime;
+		if (bStarting)
 		{
-			stageClearMessage();
+			readyMessage();
 			updateSceneInterface(deltaTime);
 		}
-	}
-	else if (bPlayerDead)
-	{
-		sceneInterface->updateLives(player->getLives());
-		gameOverMessage();
-	}
-	else
-	{
-		updatePlayer(deltaTime);
-		updateEnemies(deltaTime);
-		updateItems(deltaTime);
-		updateSceneInterface(deltaTime);
-
-		if (hourglassTimer > 0)
+		else if (bDoorTaken)
 		{
-
-			if (hourglassTimer == 1 && !bHourglassEnding) {
-				SoundFactory::instance().playTimeResume();
-				bHourglassEnding = true;
-			}
-
-			if (currentTime / 1000 != timer)
+			if (player->getSpawning())
+				updatePlayer(deltaTime);
+			else if (!player->getSpawning())
 			{
-				timer = currentTime / 1000;
-				--hourglassTimer;
-				cout << "item timer is: " << hourglassTimer << endl;
+				stageClearMessage();
+				updateSceneInterface(deltaTime);
 			}
-
 		}
-		else {
-			bHourglassEnding = false;
-			updateTime(deltaTime);
+		else if (bPlayerDead)
+		{
+			sceneInterface->updateLives(player->getLives());
+			gameOverMessage();
+		}
+		else
+		{
+			updatePlayer(deltaTime);
+			updateEnemies(deltaTime);
+			updateItems(deltaTime);
+			updateSceneInterface(deltaTime);
+
+			if (hourglassTimer > 0)
+			{
+
+				if (hourglassTimer == 1 && !bHourglassEnding) {
+					SoundFactory::instance().playTimeResume();
+					bHourglassEnding = true;
+				}
+
+				if (currentTime / 1000 != timer)
+				{
+					timer = currentTime / 1000;
+					--hourglassTimer;
+					cout << "item timer is: " << hourglassTimer << endl;
+				}
+
+			}
+			else {
+				bHourglassEnding = false;
+				updateTime(deltaTime);
+			}
 		}
 	}
 }

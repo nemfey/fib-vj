@@ -13,7 +13,7 @@ void SoundFactory::playTimeTick()
 void SoundFactory::playTimeStop()
 {
 	ISound* sound = engine->play2D("sounds/timestop.wav", false, false, true);
-	sound->setPlayPosition(1000);
+	sound->setPlayPosition(500);
 	sound->drop();
 	//engine->play2D("sounds/timestop.wav", false);
 }
