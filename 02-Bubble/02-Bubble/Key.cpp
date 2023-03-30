@@ -81,7 +81,10 @@ void Key::render()
 	}
 	
 	if (!bPositioned && map->allPlattformsStepped() && !taken)
+	{
+		SoundFactory::instance().playKeySpawn();
 		showing = true;
+	}
 	if (showing)
 		sprite->render();
 }
