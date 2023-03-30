@@ -229,7 +229,7 @@ void Game::updateScene(int deltaTime)
 		break;
 	case StageState::StageCleared:
 		++stageIterator;
-		if (stageIterator < stages.size())
+		if (stageIterator < int(stages.size()))
 			loadNextStage();
 		else
 		{
