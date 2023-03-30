@@ -140,17 +140,20 @@ void Scene::render()
 		Bible* pBible = dynamic_cast<Bible*>(i);
 
 		if (itemSpawned) {
-			//30% chance of the item spawned to be a hourglass or a Bible
+			//50% chance of the item spawned to be a hourglass or a Bible
 			if (itemRNG <= 30) {
 				if (itemRNG < 15 && pHourglass) {
-					pHourglass->render();
+					if (itemCountDown > 3 || currentTime % 125 >= 50)
+						pHourglass->render();
 				}
 				else if (itemRNG >= 15 && pBible) {
-					pBible->render();
+					if (itemCountDown > 3 || currentTime % 125 >= 50)
+						pBible->render();
 				}
 			}
 			else if (itemRNG > 30 && pTreasure) {
-				pTreasure->render();
+				if (itemCountDown > 3 || currentTime % 125 >= 50)
+					pTreasure->render();
 				pTreasure->resetType();
 			}
 		}
