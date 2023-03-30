@@ -275,6 +275,8 @@ void Game::updateRatioWindowSize(int width, int height)
 
 void Game::loadFirstStage()
 {
+	SoundFactory::instance().stopImmune();
+
 	scene = new Scene();
 	scene->init(texProgram, stages[stageIterator]);
 	
