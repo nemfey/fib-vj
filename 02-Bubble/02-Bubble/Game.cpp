@@ -104,13 +104,13 @@ void Game::keyPressed(int key)
 		if (s == Playing)
 		{
 			scene->state = Pause;
-			SoundFactory::instance().getEngine()->setAllSoundsPaused(true);
+			SoundFactory::instance().setAllSoundsPaused(true);
 		}
 		else if (s == Pause)
 		{
 			scene->state = Playing;
 			scene->setSceneInterfaceState(Playing);
-			SoundFactory::instance().getEngine()->setAllSoundsPaused(false);
+			SoundFactory::instance().setAllSoundsPaused(false);
 		}
 	}
 	keys[key] = true;

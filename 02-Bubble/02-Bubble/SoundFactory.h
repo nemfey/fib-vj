@@ -20,6 +20,9 @@ public:
 		return SF;
 	}
 
+	void setAllSoundsPaused(bool b);
+	//void stopAllSounds(bool b);
+
 	void playTimeTick();
 	void playTimeStop();
 	void playTimeResume();
@@ -31,8 +34,6 @@ public:
 
 	void playImmune();
 	void stopImmune();
-
-	void stopAllSounds();
 
 private:
 	ISoundEngine* engine;

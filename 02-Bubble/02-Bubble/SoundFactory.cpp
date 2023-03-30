@@ -1,5 +1,10 @@
 #include "SoundFactory.h"
 
+void SoundFactory::setAllSoundsPaused(bool b)
+{
+	engine->setAllSoundsPaused(b);
+}
+
 void SoundFactory::playTimeTick()
 {
 	engine->play2D("sounds/time_tick.wav", false);
@@ -50,7 +55,7 @@ void SoundFactory::stopImmune()
 	immuneSound->stop();
 }
 
-void SoundFactory::stopAllSounds()
-{
-	engine->stopAllSounds();
-}
+//void SoundFactory::stopAllSounds()
+//{
+//	engine->stopAllSounds();
+//}
