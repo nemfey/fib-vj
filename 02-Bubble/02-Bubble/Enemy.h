@@ -23,7 +23,7 @@ public:
 	bool getIsPlayerKiller();
 
 	// Getters & Setters
-	void setPosition(const glm::vec2& pos);
+	virtual void setPosition(const glm::vec2& pos);
 	void setTileMap(TileMap* tileMap) { map = tileMap; };
 
 	virtual bool collisionPlayer();

@@ -8,6 +8,7 @@ public:
 	void init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram) override;
 	void update(int deltaTime) override;
 	void render() override;
+	void setPosition(const glm::vec2& pos) override;
 
 	bool collisionPlayer() override;
 

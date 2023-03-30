@@ -95,6 +95,21 @@ void Vampire::update(int deltaTime)
 		batBehavior(deltaTime);
 }
 
+void Vampire::setPosition(const glm::vec2& pos)
+{
+	posEnemy = pos;
+
+	sprite->changeAnimation(STAND_RIGHT);
+	bMoveRight = true;
+	if (pos.x > 200)
+	{
+		sprite->changeAnimation(STAND_LEFT);
+		bMoveRight = false;
+	}
+
+	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x), float(tileMapDispl.y + posEnemy.y)));
+}
+
 // Private functions
 
 void Vampire::humanBehavior(int deltaTime)

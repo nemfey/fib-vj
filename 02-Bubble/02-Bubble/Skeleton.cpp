@@ -100,3 +100,18 @@ void Skeleton::update(int deltaTime)
 
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x), float(tileMapDispl.y + posEnemy.y)));
 }
+
+void Skeleton::setPosition(const glm::vec2& pos)
+{
+	posEnemy = pos;
+	
+	sprite->changeAnimation(STAND_RIGHT);
+	moveRight = true;
+	if (pos.x > 200)
+	{
+		sprite->changeAnimation(STAND_LEFT);
+		moveRight = false;
+	}
+	
+	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x), float(tileMapDispl.y + posEnemy.y)));
+}
