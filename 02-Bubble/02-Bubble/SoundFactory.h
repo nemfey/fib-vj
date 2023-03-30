@@ -10,7 +10,9 @@ class SoundFactory
 private:
 	SoundFactory() {
 		engine = createIrrKlangDevice();
-		immuneSound = engine->play2D("sounds/immune.wav", false, false, true);
+		immuneSound = engine->addSoundSourceFromFile("sounds/immune.wav");
+		tickSound = engine->addSoundSourceFromFile("sounds/time_tick.wav");
+		timeTicks = 0;
 	}
 
 public:
@@ -37,9 +39,15 @@ public:
 	void playImmune();
 	void stopImmune();
 
+	void setTimeTicks(int n) { timeTicks = n; }
+
 private:
 	ISoundEngine* engine;
-	ISound* immuneSound;
+
+	ISoundSource* immuneSound;
+	ISoundSource* tickSound;
+
+	int timeTicks;
 };
 
 

@@ -52,6 +52,7 @@ void Scene::init(ShaderProgram &shaderProgram, string scene)
 	initPlayer();
 	initEnemies();
 	initItems();
+	SoundFactory::instance().setTimeTicks(0);
 
 	state = Starting;
 	messageTimer = 2;

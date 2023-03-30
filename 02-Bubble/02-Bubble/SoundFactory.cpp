@@ -1,4 +1,6 @@
 #include "SoundFactory.h"
+#include <iostream>
+using namespace std;
 
 void SoundFactory::setAllSoundsPaused(bool b)
 {
@@ -7,7 +9,20 @@ void SoundFactory::setAllSoundsPaused(bool b)
 
 void SoundFactory::playTimeTick()
 {
-	engine->play2D("sounds/time_tick.wav", false);
+	if (timeTicks < 10)
+		tickSound->setDefaultVolume(0.0);
+	if (timeTicks >= 10)
+		tickSound->setDefaultVolume(0.05);
+	if (timeTicks >= 20)
+		tickSound->setDefaultVolume(0.1);
+	if (timeTicks >= 30)
+		tickSound->setDefaultVolume(0.2);
+	if (timeTicks >= 40)
+		tickSound->setDefaultVolume(0.3);
+	if (timeTicks >= 50)
+		tickSound->setDefaultVolume(0.8);
+	engine->play2D(tickSound);
+	++timeTicks;
 }
 
 void SoundFactory::playTimeStop()
@@ -62,12 +77,12 @@ void SoundFactory::playLifeUp()
 
 void SoundFactory::playImmune()
 {
-	immuneSound = engine->play2D("sounds/immune.wav", true, false, true);
+	engine->play2D(immuneSound, true);
 }
 
 void SoundFactory::stopImmune()
 {
-	immuneSound->stop();
+	engine->stopAllSoundsOfSoundSource(immuneSound);
 }
 
 //void SoundFactory::stopAllSounds()
