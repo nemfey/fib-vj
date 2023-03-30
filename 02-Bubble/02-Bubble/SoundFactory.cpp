@@ -45,6 +45,11 @@ void SoundFactory::playJump()
 	engine->play2D("sounds/jump.wav", false);
 }
 
+void SoundFactory::playPointsObtained()
+{
+	//engine->play2D("sounds/point.wav", false);
+}
+
 void SoundFactory::playImmune()
 {
 	immuneSound = engine->play2D("sounds/immune.wav", true, false, true);

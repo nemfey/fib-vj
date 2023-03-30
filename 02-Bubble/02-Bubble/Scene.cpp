@@ -259,6 +259,7 @@ void Scene::stageClearMessage()
 			--remainingSeconds;
 			player->addScore(10);
 			liveScore += 10;
+			SoundFactory::instance().playPointsObtained();
 			score2newLive();
 		}
 	}
@@ -333,6 +334,7 @@ void Scene::updatePlayer(int deltaTime)
 	{
 		player->addScore((postPosStepped - prevPosStepped) * 10);
 		liveScore += (postPosStepped - prevPosStepped) * 10;
+		SoundFactory::instance().playPointsObtained();
 		score2newLive();
 	}
 
@@ -391,8 +393,9 @@ void Scene::updateItems(int deltaTime)
 			if (pTreasure && pTreasure->collisionPlayer()) {
 				player->addScore(150 + i->getType()*150);
 				liveScore += 150 + i->getType()*150;
-
+				SoundFactory::instance().playPointsObtained();
 				score2newLive();
+
 				itemSpawnCounter = 20 - (rand() % 5);
 				itemSpawned = false;
 				pTreasure->setShowing(false);
