@@ -206,7 +206,7 @@ void Vampire::batBehavior(int deltaTime)
 				bTransformation = true;
 				bMoveRight = true;
 				sprite->changeAnimation(UNTRANSFORM);
-				SoundFactory::instance().playVampireTransform();
+				SoundFactory::instance().playVampireUntransform();
 				//bHumanAspect = true;
 				//humanAspectTime = 0;
 			}
@@ -230,7 +230,7 @@ void Vampire::batBehavior(int deltaTime)
 				bTransformation = true;
 				bMoveRight = false;
 				sprite->changeAnimation(UNTRANSFORM);
-				SoundFactory::instance().playVampireTransform();
+				SoundFactory::instance().playVampireUntransform();
 				//bHumanAspect = true;
 				//humanAspectTime = 0;
 			}

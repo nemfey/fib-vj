@@ -68,6 +68,11 @@ void SoundFactory::playVampireTransform()
 	engine->play2D("sounds/transform2.wav", false);
 }
 
+void SoundFactory::playVampireUntransform()
+{
+	engine->play2D("sounds/untransform.wav", false);
+}
+
 void SoundFactory::playReaperCharge()
 {
 	engine->play2D("sounds/charge3.wav", false);

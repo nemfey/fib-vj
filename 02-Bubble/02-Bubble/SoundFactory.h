@@ -34,6 +34,7 @@ public:
 	void playKeyTaken();
 	void playKeySpawn();
 	void playVampireTransform();
+	void playVampireUntransform();
 	void playReaperCharge();
 	void playReaperAttack();
 	void playPlayerSpawn();
