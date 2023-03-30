@@ -134,7 +134,6 @@ void Player::update(int deltaTime)
 				bImmuneSoundPlayed = true;
 			}
 		}
-
 		else if (inmunityState)
 		{
 			if (inmunityStateBible) {
@@ -156,7 +155,6 @@ void Player::update(int deltaTime)
 				inmunityTime = 0;
 			}
 		}
-
 		else {
 			SoundFactory::instance().stopImmune();
 			bImmuneSoundPlayed = false;

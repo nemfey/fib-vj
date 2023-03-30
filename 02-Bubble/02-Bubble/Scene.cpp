@@ -362,7 +362,7 @@ void Scene::updateEnemies(int deltaTime)
 		else
 			e->update(deltaTime);
 		
-		if (e->collisionPlayer() && ((!player->getInmunityState() && !bPlayerInvencible) || e->getIsPlayerKiller())) {
+		if (e->collisionPlayer() && ((!player->getInmunityState() && !bPlayerInvencible))) {
 			if (player->getLives() > 1)
 			{
 				player->loseLive();
