@@ -25,6 +25,5 @@ private:
 	bool bTransformation = false;
 	batMovement batMov;
 
-	bool bTransformSoundPlayed = false;
 };
 

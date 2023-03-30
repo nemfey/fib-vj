@@ -4,7 +4,6 @@
 #include <GL/glut.h>
 #include "Vampire.h"
 #include "Game.h"
-#include "SoundFactory.h"
 
 #define FALL_STEP 4
 
@@ -88,9 +87,8 @@ void Vampire::update(int deltaTime)
 		}
 		else
 		{
-			sprite->changeAnimation(TRANSFORM);
-			SoundFactory::instance().playVampireTransform();
 			bTransformation = true;
+			sprite->changeAnimation(TRANSFORM);
 		}
 	}
 	else
@@ -206,7 +204,6 @@ void Vampire::batBehavior(int deltaTime)
 				bTransformation = true;
 				bMoveRight = true;
 				sprite->changeAnimation(UNTRANSFORM);
-				SoundFactory::instance().playVampireTransform();
 				//bHumanAspect = true;
 				//humanAspectTime = 0;
 			}

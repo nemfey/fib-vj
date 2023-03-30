@@ -25,18 +25,13 @@ public:
 	void setAllSoundsPaused(bool b);
 	//void stopAllSounds(bool b);
 
-	void playChangeOption();
-	void playSelectOption();
 	void playTimeTick();
 	void playTimeStop();
 	void playTimeResume();
 	void playPlayerDie();
 	void playKeyTaken();
-	void playKeySpawn();
-	void playVampireTransform();
 	void playReaperCharge();
 	void playReaperAttack();
-	void playPlayerSpawn();
 	void playJump();
 	void playPointsObtained();
 	void playLifeUp();

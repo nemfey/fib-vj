@@ -7,16 +7,6 @@ void SoundFactory::setAllSoundsPaused(bool b)
 	engine->setAllSoundsPaused(b);
 }
 
-void SoundFactory::playChangeOption()
-{
-	engine->play2D("sounds/select1.wav", false);
-}
-
-void SoundFactory::playSelectOption()
-{
-	engine->play2D("sounds/select2.wav", false);
-}
-
 void SoundFactory::playTimeTick()
 {
 	if (timeTicks < 10)
@@ -58,16 +48,6 @@ void SoundFactory::playKeyTaken()
 	engine->play2D("sounds/key.wav", false);
 }
 
-void SoundFactory::playKeySpawn()
-{
-	engine->play2D("sounds/key_spawn.wav", false);
-}
-
-void SoundFactory::playVampireTransform()
-{
-	engine->play2D("sounds/transform2.wav", false);
-}
-
 void SoundFactory::playReaperCharge()
 {
 	engine->play2D("sounds/charge3.wav", false);
@@ -76,11 +56,6 @@ void SoundFactory::playReaperCharge()
 void SoundFactory::playReaperAttack()
 {
 	engine->play2D("sounds/reaper_attack.wav", false);
-}
-
-void SoundFactory::playPlayerSpawn()
-{
-	engine->play2D("sounds/spawn.wav", false);
 }
 
 void SoundFactory::playJump()

@@ -95,7 +95,6 @@ void Player::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	sprite->addKeyframe(SPAWN, glm::vec2(0.875f, 0.75f));
 
 	sprite->changeAnimation(SPAWN);
-	bSpawning = true;
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
@@ -105,18 +104,11 @@ void Player::update(int deltaTime)
 	sprite->update(deltaTime);
 
 	if (bSpawning) {
-		if (!bSpawnSoundPlayed)
-		{
-			SoundFactory::instance().playPlayerSpawn();
-			bSpawnSoundPlayed = true;
-		}
-
 		if (sprite->animation() != SPAWN)
 			sprite->changeAnimation(SPAWN);
 
 		if (sprite->getCurrentKeyFrame() >= 4) {
 			bSpawning = false;
-			bSpawnSoundPlayed = false;
 		}
 	}
 	else if (bDying)
