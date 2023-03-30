@@ -146,61 +146,60 @@ void SceneInterface::initHeartSprite(ShaderProgram& shaderProgram)
 
 void SceneInterface::initPauseSprite(ShaderProgram& shaderProgram)
 {
-	pauseSpriteSheet.loadFromFile("images/pause_text.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	//pauseSpriteSheet.loadFromFile("images/pause_text.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	pauseSpriteSheet.loadFromFile("images/pause.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	pauseSpriteSheet.setMagFilter(GL_NEAREST);
-	pauseSprite = Sprite::createSprite(glm::ivec2(160, 48), glm::vec2(1, 1), &pauseSpriteSheet, &shaderProgram);
+	pauseSprite = Sprite::createSprite(glm::ivec2(200, 108), glm::vec2(1, 1), &pauseSpriteSheet, &shaderProgram);
 
 	pauseSprite->setNumberAnimations(1);
 
 	pauseSprite->setAnimationSpeed(0, 1);
 	pauseSprite->addKeyframe(0, glm::vec2(0.f, 0.f));
 	pauseSprite->changeAnimation(0);
-	pauseSprite->setPosition(glm::vec2(172, 172));
+	pauseSprite->setPosition(glm::vec2(156, 146));
 }
 
 void SceneInterface::renderMessages()
 {
 	if (state == Starting)
 	{
-		renderCharacter('r', 192, 224);
-		renderCharacter('e', 208, 224);
-		renderCharacter('a', 224, 224);
-		renderCharacter('d', 240, 224);
-		renderCharacter('y', 256, 224);
-		renderCharacter('?', 272, 224);
+		renderCharacter('r', 208, 192);
+		renderCharacter('e', 224, 192);
+		renderCharacter('a', 240, 192);
+		renderCharacter('d', 256, 192);
+		renderCharacter('y', 272, 192);
+		renderCharacter('?', 288, 192);
 	}
 
 	else if (state == Pause)
 	{
-		//heartSprite->setPosition(glm::vec2(250, 60));
-		//heartSprite->render();
 		pauseSprite->render();
 	}
 	else if (state == StageCleared)
 	{
-		renderCharacter('s', 160, 224);
-		renderCharacter('t', 176, 224);
-		renderCharacter('a', 192, 224);
-		renderCharacter('g', 208, 224);
-		renderCharacter('e', 224, 224);
+		renderCharacter('s', 168, 192);
+		renderCharacter('t', 184, 192);
+		renderCharacter('a', 200, 192);
+		renderCharacter('g', 216, 192);
+		renderCharacter('e', 232, 192);
 
-		renderCharacter('c', 256, 224);
-		renderCharacter('l', 272, 224);
-		renderCharacter('e', 288, 224);
-		renderCharacter('a', 304, 224);
-		renderCharacter('r', 320, 224);
+		renderCharacter('c', 264, 192);
+		renderCharacter('l', 280, 192);
+		renderCharacter('e', 296, 192);
+		renderCharacter('a', 312, 192);
+		renderCharacter('r', 328, 192);
 	}
 	else if (state == GameOver)
 	{
-		renderCharacter('g', 160, 224);
-		renderCharacter('a', 176, 224);
-		renderCharacter('m', 192, 224);
-		renderCharacter('e', 208, 224);
+		renderCharacter('g', 184, 192);
+		renderCharacter('a', 200, 192);
+		renderCharacter('m', 216, 192);
+		renderCharacter('e', 232, 192);
 
-		renderCharacter('o', 272, 224);
-		renderCharacter('v', 288, 224);
-		renderCharacter('e', 304, 224);
-		renderCharacter('r', 320, 224);
+		renderCharacter('o', 264, 192);
+		renderCharacter('v', 280, 192);
+		renderCharacter('e', 296, 192);
+		renderCharacter('r', 312, 192);
 	}
 }
 

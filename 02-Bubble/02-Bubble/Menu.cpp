@@ -139,8 +139,7 @@ void Menu::setSelection(int i)
 
 void Menu::initNumberSprite(ShaderProgram& shaderProgram)
 {
-	//numbersSpritesheet.loadFromFile("images/numbers.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	numbersSpritesheet.loadFromFile("images/numberss.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	numbersSpritesheet.loadFromFile("images/numbers.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	numbersSpritesheet.setMagFilter(GL_NEAREST);
 	numberSprite = Sprite::createSprite(glm::ivec2(24, 24), glm::vec2(0.1, 1), &numbersSpritesheet, &shaderProgram);
 
