@@ -267,6 +267,7 @@ void Scene::stageClearMessage()
 
 void Scene::gameOverMessage()
 {
+	SoundFactory::instance().stopAllSounds();
 	// que se muestre el mensaje durante 3-5 segundos y luego state = GameOver;
 	if (messageTimer == 0)
 		state = GameOver;
