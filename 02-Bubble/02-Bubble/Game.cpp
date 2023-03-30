@@ -71,7 +71,10 @@ void Game::keyPressed(int key)
 		menu.setMenuState(Main);
 	}
 	if ((key == 13 || key == 32) && bMenuShowing) // Enter code
+	{
+		SoundFactory::instance().playSelectOption();
 		optionSelected();
+	}
 	if (key == 49)
 	{
 		stageIterator = 0;
@@ -88,7 +91,10 @@ void Game::keyPressed(int key)
 		loadFirstStage();
 	}
 	if (key == 99)
+	{
+		SoundFactory::instance().playSelectOption();
 		menu.setMenuState(Credits);
+	}
 	if ((key == 103 || key == 71) && !bMenuShowing)
 	{
 		if (!scene->getPlayerInvencible())
@@ -97,7 +103,10 @@ void Game::keyPressed(int key)
 			scene->setPlayerInvencible(false);
 	}
 	if ((key == 107 || key == 75) && !bMenuShowing)
+	{
+		SoundFactory::instance().playKeySpawn();
 		scene->makeKeyAppear();
+	}
 	if (key == 112 && !bMenuShowing)
 	{
 		StageState s = scene->state;
@@ -126,11 +135,13 @@ void Game::specialKeyPressed(int key)
 	if (key == 101 && option_nth > 0 && bMenuShowing)
 	{
 		--option_nth;
+		SoundFactory::instance().playChangeOption();
 		menu.setSelection(option_nth);
 	}
 	if (key == 103 && option_nth < 2 && bMenuShowing)
 	{
 		++option_nth;
+		SoundFactory::instance().playChangeOption();
 		menu.setSelection(option_nth);
 	}
 
