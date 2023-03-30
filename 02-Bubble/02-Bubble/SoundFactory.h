@@ -32,6 +32,7 @@ public:
 	void playReaperAttack();
 	void playJump();
 	void playPointsObtained();
+	void playLifeUp();
 
 	void playImmune();
 	void stopImmune();

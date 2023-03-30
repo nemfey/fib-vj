@@ -12,7 +12,10 @@ void SoundFactory::playTimeTick()
 
 void SoundFactory::playTimeStop()
 {
-	engine->play2D("sounds/timestop.wav", false);
+	ISound* sound = engine->play2D("sounds/timestop.wav", false, false, true);
+	sound->setPlayPosition(1000);
+	sound->drop();
+	//engine->play2D("sounds/timestop.wav", false);
 }
 
 void SoundFactory::playTimeResume()
@@ -48,6 +51,13 @@ void SoundFactory::playJump()
 void SoundFactory::playPointsObtained()
 {
 	//engine->play2D("sounds/point.wav", false);
+}
+
+void SoundFactory::playLifeUp()
+{ 
+	ISound* sound = engine->play2D("sounds/life_up.wav", false, false, true);
+	sound->setVolume(0.1f);
+	sound->drop();
 }
 
 void SoundFactory::playImmune()

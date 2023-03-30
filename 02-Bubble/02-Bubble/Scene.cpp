@@ -437,7 +437,10 @@ void Scene::score2newLive()
 	{
 		int currentLives = player->getLives();
 		if (currentLives < 3)
+		{
 			player->setLives(currentLives + 1);
+			SoundFactory::instance().playLifeUp();
+		}
 		liveScore = 0;
 	}
 }
