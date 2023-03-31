@@ -95,12 +95,16 @@ void SoundFactory::playReaperAttack()
 
 void SoundFactory::playPlayerSpawn()
 {
-	engine->play2D("sounds/spawn.wav", false);
+	ISound* sound = engine->play2D("sounds/spawn.wav", false, false, true);
+	sound->setVolume(0.3f);
+	sound->drop();
 }
 
 void SoundFactory::playJump()
 {
-	engine->play2D("sounds/jump2.wav", false);
+	ISound* sound = engine->play2D("sounds/jump2.wav", false, false, true);
+	sound->setVolume(0.3f);
+	sound->drop();
 }
 
 void SoundFactory::playPointsObtained()
@@ -111,7 +115,7 @@ void SoundFactory::playPointsObtained()
 void SoundFactory::playLifeUp()
 { 
 	ISound* sound = engine->play2D("sounds/life_up.wav", false, false, true);
-	sound->setVolume(0.1f);
+	sound->setVolume(0.3f);
 	sound->drop();
 }
 
