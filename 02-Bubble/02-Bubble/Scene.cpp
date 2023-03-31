@@ -461,12 +461,11 @@ void Scene::score2newLive()
 	if (liveScore >= 2500)
 	{
 		int currentLives = player->getLives();
-		if (currentLives < 3)
-		{
-			player->setLives(currentLives + 1);
-			sceneInterface->setCurrentPosPlayer(map->getPosPlayer());
-			sceneInterface->setLifeUp(true);
-		}
+		
+		player->setLives(currentLives + 1);
+		sceneInterface->setCurrentPosPlayer(map->getPosPlayer());
+		sceneInterface->setLifeUp(true);
+
 		liveScore = liveScore - 2500;
 	}
 }

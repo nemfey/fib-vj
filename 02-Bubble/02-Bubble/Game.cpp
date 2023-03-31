@@ -11,7 +11,7 @@ void Game::init()
 	initShaders();
 	bPlay = true;
 	glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
-	//glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	//glClearColor(0.f, 0.f, 0.f, 1.0f);
 	menu.init(texProgram);
 
 	bMenuShowing = true;
