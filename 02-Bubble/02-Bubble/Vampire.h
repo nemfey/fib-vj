@@ -21,9 +21,9 @@ private:
 	bool bMoveRight = true;
 	bool bHumanAspect = true;
 	int humanAspectTime = 0;
-	int heightTransformation;
+	int heightTransformation = 0;
 	bool bTransformation = false;
-	batMovement batMov;
+	batMovement batMov = RightUp;
 
 };
 

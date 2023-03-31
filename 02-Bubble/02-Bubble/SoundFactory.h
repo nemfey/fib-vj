@@ -64,12 +64,13 @@ private:
 	ISoundSource* immuneSound;
 	ISoundSource* tickSound;
 	
+public:
 	ISound* readySound;
 	ISound* gameOverSound;
 	ISound* stageClearSound;
 	ISound* lifeUpSound;
 
-	int timeTicks;
+	int timeTicks = 0;
 };
 
 

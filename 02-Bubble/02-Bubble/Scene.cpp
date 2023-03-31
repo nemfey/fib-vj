@@ -95,7 +95,6 @@ void Scene::update(int deltaTime)
 			{
 				if (!bMessageSoundPlaying)
 				{
-					cout << "PLAY SOME MUSIC" << endl;
 					SoundFactory::instance().playStageClear();
 					bMessageSoundPlaying = true;
 				}
@@ -185,6 +184,7 @@ void Scene::render()
 
 	if (!bStarting && (!bDoorTaken || player->getSpawning()))
 		player->render();
+
 	sceneInterface->render();
 }
 

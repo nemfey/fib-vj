@@ -67,6 +67,7 @@ void Game::keyPressed(int key)
 	}
 	if (key == 27 && (!bMenuShowing || menu.getMenuState() != Main)) // Escape code
 	{
+		SoundFactory::instance().setAllSoundsPaused(true);
 		bMenuShowing = true;
 		SoundFactory::instance().playSelectOption();
 		menu.setMenuState(Main);
@@ -78,16 +79,19 @@ void Game::keyPressed(int key)
 	}
 	if (key == 49)
 	{
+		SoundFactory::instance().setAllSoundsPaused(true);
 		stageIterator = 0;
 		loadFirstStage();
 	}
 	if (key == 50)
 	{
+		SoundFactory::instance().setAllSoundsPaused(true);
 		stageIterator = 1;
 		loadFirstStage();
 	}
 	if (key == 51)
 	{
+		SoundFactory::instance().setAllSoundsPaused(true);
 		stageIterator = 2;
 		loadFirstStage();
 	}
