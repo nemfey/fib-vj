@@ -208,7 +208,7 @@ void Vampire::batBehavior(int deltaTime)
 				bMoveRight = true;
 				sprite->changeAnimation(UNTRANSFORM);
 				SoundFactory::instance().playVampireUntransform();
-				hitbox = glm::ivec2(24, 16);
+				hitbox = glm::ivec2(24, 24);
 				//bHumanAspect = true;
 				//humanAspectTime = 0;
 			}
@@ -233,9 +233,7 @@ void Vampire::batBehavior(int deltaTime)
 				bMoveRight = false;
 				sprite->changeAnimation(UNTRANSFORM);
 				SoundFactory::instance().playVampireUntransform();
-				hitbox = glm::ivec2(24, 16);
-				//bHumanAspect = true;
-				//humanAspectTime = 0;
+				hitbox = glm::ivec2(24, 24);
 			}
 		}
 		else if (bShouldMoveRight && !map->collisionMoveDown(posEnemy + glm::ivec2(1, 1), glm::ivec2(32, 32), &posEnemy.y+1, false))

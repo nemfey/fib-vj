@@ -448,7 +448,6 @@ void Scene::updateSceneInterface(int deltaTime)
 
 void Scene::score2newLive()
 {
-	cout << liveScore << " " << player->getScore() << endl;
 	if (liveScore >= 2500)
 	{
 		int currentLives = player->getLives();

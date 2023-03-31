@@ -78,6 +78,8 @@ void Key::render()
 		else if (sprite->getCurrentKeyFrame() % 4 == 2) {
 			sprite->setPosition(glm::vec2(screenCoords.x + posItem.x, screenCoords.y + posItem.y + 1));
 		}
+
+		sprite->render();
 	}
 	
 	if (!bPositioned && map->allPlattformsStepped() && !taken)
@@ -85,6 +87,4 @@ void Key::render()
 		SoundFactory::instance().playKeySpawn();
 		showing = true;
 	}
-	if (showing)
-		sprite->render();
 }
