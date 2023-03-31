@@ -28,6 +28,14 @@ public:
 	void playChangeOption();
 	void playSelectOption();
 	void playTimeTick();
+
+	void playReady();
+	bool getReadySoundFinished() { return readySound->isFinished(); };
+	void playGameOver();
+	bool getGameOverSoundFinished() { return gameOverSound->isFinished(); };
+	void playStageClear();
+	bool getStageClearSoundFinished() { return stageClearSound->isFinished(); };
+
 	void playTimeStop();
 	void playTimeResume();
 	void playPlayerDie();
@@ -54,6 +62,10 @@ private:
 
 	ISoundSource* immuneSound;
 	ISoundSource* tickSound;
+	
+	ISound* readySound;
+	ISound* gameOverSound;
+	ISound* stageClearSound;
 
 	int timeTicks;
 };

@@ -100,6 +100,8 @@ private:
 
 	int itemRNG = rand() % 100;
 
+	bool bMessageSoundPlaying;
+
 	bool bStarting, bDoorTaken, bPlayerDead;
 	bool bHourglassEnding = false;
 

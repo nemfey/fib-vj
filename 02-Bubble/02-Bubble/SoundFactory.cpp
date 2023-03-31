@@ -20,7 +20,7 @@ void SoundFactory::playSelectOption()
 void SoundFactory::playTimeTick()
 {
 	if (timeTicks < 10)
-		tickSound->setDefaultVolume(0.0);
+		tickSound->setDefaultVolume(0.05);
 	if (timeTicks >= 10)
 		tickSound->setDefaultVolume(0.05);
 	if (timeTicks >= 20)
@@ -28,11 +28,26 @@ void SoundFactory::playTimeTick()
 	if (timeTicks >= 30)
 		tickSound->setDefaultVolume(0.2);
 	if (timeTicks >= 40)
-		tickSound->setDefaultVolume(0.3);
+		tickSound->setDefaultVolume(0.5);
 	if (timeTicks >= 50)
 		tickSound->setDefaultVolume(1.0);
 	engine->play2D(tickSound);
 	++timeTicks;
+}
+
+void SoundFactory::playReady()
+{
+	readySound = engine->play2D("sounds/ready.wav", false, false, true);
+}
+
+void SoundFactory::playGameOver()
+{
+	gameOverSound = engine->play2D("sounds/game_over.wav", false, false, true);
+}
+
+void SoundFactory::playStageClear()
+{
+	stageClearSound = engine->play2D("sounds/stage_clear.wav", false, false, true);
 }
 
 void SoundFactory::playTimeStop()

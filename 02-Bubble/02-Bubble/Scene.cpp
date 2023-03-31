@@ -58,6 +58,7 @@ void Scene::init(ShaderProgram &shaderProgram, string scene)
 	messageTimer = 2;
 
 	bStarting = true;
+	bMessageSoundPlaying = false;
 	bDoorTaken = false;
 	bPlayerDead = false;
 	bHourglassEnding = false;
@@ -78,6 +79,11 @@ void Scene::update(int deltaTime)
 		currentTime += deltaTime;
 		if (bStarting)
 		{
+			if (!bMessageSoundPlaying)
+			{
+				SoundFactory::instance().playReady();
+				bMessageSoundPlaying = true;
+			}
 			readyMessage();
 			updateSceneInterface(deltaTime);
 		}
@@ -87,6 +93,12 @@ void Scene::update(int deltaTime)
 				updatePlayer(deltaTime);
 			else if (!player->getSpawning())
 			{
+				if (!bMessageSoundPlaying)
+				{
+					cout << "PLAY SOME MUSIC" << endl;
+					SoundFactory::instance().playStageClear();
+					bMessageSoundPlaying = true;
+				}
 				stageClearMessage();
 				updateSceneInterface(deltaTime);
 			}
@@ -95,6 +107,11 @@ void Scene::update(int deltaTime)
 		{
 			SoundFactory::instance().stopImmune();
 			sceneInterface->updateLives(player->getLives());
+			if (!bMessageSoundPlaying)
+			{
+				SoundFactory::instance().playGameOver();
+				bMessageSoundPlaying = true;
+			}
 			gameOverMessage();
 		}
 		else
@@ -246,52 +263,45 @@ void Scene::initItems()
 
 void Scene::readyMessage()
 {
-	if (messageTimer == 0)
+	if (SoundFactory::instance().getReadySoundFinished())
 	{
 		sceneInterface->setState(Playing);
 		state = Playing;
 		bStarting = false;
-	}
-	else
-	{
-		if (currentTime / 1000 != timer)
-		{
-			timer = currentTime / 1000;
-			--messageTimer;
-		}
+		bMessageSoundPlaying = false;
 	}
 }
 
 void Scene::stageClearMessage()
 {
-	if (remainingSeconds == 0)
-		state = StageCleared;
-	else
+	if (SoundFactory::instance().getStageClearSoundFinished())
 	{
-		if (currentTime / 100 != timer)
+		if (remainingSeconds == 0)
 		{
-			timer = currentTime / 100;
-			--remainingSeconds;
-			player->addScore(10);
-			liveScore += 10;
-			SoundFactory::instance().playPointsObtained();
-			score2newLive();
+			state = StageCleared;
+			bMessageSoundPlaying = false;
+		}
+		else
+		{
+			if (currentTime / 100 != timer)
+			{
+				timer = currentTime / 100;
+				--remainingSeconds;
+				player->addScore(10);
+				liveScore += 10;
+				SoundFactory::instance().playPointsObtained();
+				score2newLive();
+			}
 		}
 	}
-	// que se muestre el mensaje durante 3-5 segundos y luego state = StageClear;
 }
 
 void Scene::gameOverMessage()
 {
-	if (messageTimer == 0)
-		state = GameOver;
-	else
+	if (SoundFactory::instance().getGameOverSoundFinished())
 	{
-		if (currentTime / 1000 != timer)
-		{
-			timer = currentTime / 1000;
-			--messageTimer;
-		}
+		state = GameOver;
+		bMessageSoundPlaying = false;
 	}
 }
 

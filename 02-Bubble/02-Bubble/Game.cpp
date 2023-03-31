@@ -65,7 +65,7 @@ void Game::keyPressed(int key)
 		scene->setItemSpawned(false);
 		scene->setItemSpawnCounter(0);
 	}
-	if (key == 27) // Escape code
+	if (key == 27 && (!bMenuShowing || menu.getMenuState() != Main)) // Escape code
 	{
 		bMenuShowing = true;
 		SoundFactory::instance().playSelectOption();
