@@ -38,16 +38,19 @@ void SoundFactory::playTimeTick()
 void SoundFactory::playReady()
 {
 	readySound = engine->play2D("sounds/ready.wav", false, false, true);
+	readySound->drop();
 }
 
 void SoundFactory::playGameOver()
 {
 	gameOverSound = engine->play2D("sounds/game_over.wav", false, false, true);
+	gameOverSound->drop();
 }
 
 void SoundFactory::playStageClear()
 {
 	stageClearSound = engine->play2D("sounds/stage_clear.wav", false, false, true);
+	stageClearSound->drop();
 }
 
 void SoundFactory::playTimeStop()
@@ -55,7 +58,6 @@ void SoundFactory::playTimeStop()
 	ISound* sound = engine->play2D("sounds/timestop.wav", false, false, true);
 	sound->setPlayPosition(500);
 	sound->drop();
-	//engine->play2D("sounds/timestop.wav", false);
 }
 
 void SoundFactory::playTimeResume()
@@ -129,9 +131,9 @@ void SoundFactory::playPointsObtained()
 
 void SoundFactory::playLifeUp()
 { 
-	ISound* sound = engine->play2D("sounds/life_up.wav", false, false, true);
-	sound->setVolume(0.3f);
-	sound->drop();
+	lifeUpSound = engine->play2D("sounds/life_up.wav", false, false, true);
+	lifeUpSound->setVolume(0.3f);
+	lifeUpSound->drop();
 }
 
 void SoundFactory::playImmune()

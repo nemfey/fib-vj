@@ -464,7 +464,8 @@ void Scene::score2newLive()
 		if (currentLives < 3)
 		{
 			player->setLives(currentLives + 1);
-			SoundFactory::instance().playLifeUp();
+			sceneInterface->setCurrentPosPlayer(map->getPosPlayer());
+			sceneInterface->setLifeUp(true);
 		}
 		liveScore = liveScore - 2500;
 	}

@@ -26,19 +26,22 @@ public:
 
 	// Gettters & Setters
 	void setState(StageState s) { state = s; };
+	void setLifeUp(bool b) { bLifeUp = b; };
+	void setCurrentPosPlayer(glm::ivec2 p) { posPlayer = p; };
 
 private:
 	void initNumberSprite(ShaderProgram& shaderProgram);
 	void initCharacterSprite(ShaderProgram& shaderProgram);
 	void initHeartSprite(ShaderProgram& shaderProgram);
 	void initPauseSprite(ShaderProgram& shaderProgram);
+	void initLifeUpSprite(ShaderProgram& shaderProgram);
 	void renderMessages();
 	void renderNumber(int n, int x, int y);
 	void renderCharacter(char c, int x, int y);
 
 
 private:
-	Texture numbersSpritesheet, charactersSpritesheet, heartSpritesheet, pauseSpriteSheet;
+	Texture numbersSpritesheet, charactersSpritesheet, heartSpritesheet, pauseSpriteSheet,lifeUpSpriteSheet;
 
 		// TENEMOS UN SOLO SPRITE PARA CADA COSA Y LO VAMOS COPIANDO A LOS LADOS E IMPREMINEDO VARIAS VECES EN CADA UPDATE
 
@@ -47,11 +50,16 @@ private:
 	Sprite *characterSprite;
 	Sprite *heartSprite;
 	Sprite* pauseSprite;
+	Sprite* lifeUpSprite;
 
 	int lives, score, remainingTime, stageNumber;
 	map<char, int> char2id;
 
 	StageState state;
+	
+	bool bLifeUp = false;
+	bool bSoundLifeUpPlaying = false;
+	glm::ivec2 posPlayer;
 };
 
 

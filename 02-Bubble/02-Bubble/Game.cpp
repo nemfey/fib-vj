@@ -91,7 +91,7 @@ void Game::keyPressed(int key)
 		stageIterator = 2;
 		loadFirstStage();
 	}
-	if (key == 99 && menu.getMenuState() == Main)
+	if ((key == 99 || key == 69) && menu.getMenuState() == Main)
 	{
 		SoundFactory::instance().playSelectOption();
 		menu.setMenuState(Credits);

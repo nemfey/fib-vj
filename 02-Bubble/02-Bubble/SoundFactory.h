@@ -35,6 +35,7 @@ public:
 	bool getGameOverSoundFinished() { return gameOverSound->isFinished(); };
 	void playStageClear();
 	bool getStageClearSoundFinished() { return stageClearSound->isFinished(); };
+	bool getLifeUpSoundFinished() { return lifeUpSound->isFinished(); };
 
 	void playTimeStop();
 	void playTimeResume();
@@ -66,6 +67,7 @@ private:
 	ISound* readySound;
 	ISound* gameOverSound;
 	ISound* stageClearSound;
+	ISound* lifeUpSound;
 
 	int timeTicks;
 };

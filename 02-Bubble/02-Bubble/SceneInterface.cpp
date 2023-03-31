@@ -3,6 +3,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "SceneInterface.h"
+#include "SoundFactory.h"
 
 
 //#define SCREEN_X 144
@@ -33,6 +34,7 @@ void SceneInterface::init(ShaderProgram &shaderProgram)
 	initCharacterSprite(shaderProgram);
 	initHeartSprite(shaderProgram);
 	initPauseSprite(shaderProgram);
+	initLifeUpSprite(shaderProgram);
 	
 	lives = 3;
 	score = 0;
@@ -95,6 +97,25 @@ void SceneInterface::render()
 	renderNumber(stageNumber / 10, 464, 16);
 	renderNumber(stageNumber % 10, 480, 16);
 
+	if (bLifeUp)
+	{
+		if (!bSoundLifeUpPlaying)
+		{
+			SoundFactory::instance().playLifeUp();
+			bSoundLifeUpPlaying = true;
+		} 
+		if (!SoundFactory::instance().getLifeUpSoundFinished())
+		{
+			lifeUpSprite->setPosition(glm::vec2(posPlayer.x+16, posPlayer.y+32));
+			lifeUpSprite->render();
+		}
+		else
+		{
+			bLifeUp = false;
+			bSoundLifeUpPlaying = false;
+		}
+	}
+
 	renderMessages();
 }
 
@@ -146,7 +167,6 @@ void SceneInterface::initHeartSprite(ShaderProgram& shaderProgram)
 
 void SceneInterface::initPauseSprite(ShaderProgram& shaderProgram)
 {
-	//pauseSpriteSheet.loadFromFile("images/pause_text.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	pauseSpriteSheet.loadFromFile("images/pause.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	pauseSpriteSheet.setMagFilter(GL_NEAREST);
 	pauseSprite = Sprite::createSprite(glm::ivec2(200, 108), glm::vec2(1, 1), &pauseSpriteSheet, &shaderProgram);
@@ -157,6 +177,19 @@ void SceneInterface::initPauseSprite(ShaderProgram& shaderProgram)
 	pauseSprite->addKeyframe(0, glm::vec2(0.f, 0.f));
 	pauseSprite->changeAnimation(0);
 	pauseSprite->setPosition(glm::vec2(156, 146));
+}
+
+void SceneInterface::initLifeUpSprite(ShaderProgram& shaderProgram)
+{
+	lifeUpSpriteSheet.loadFromFile("images/life_up.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	lifeUpSpriteSheet.setMagFilter(GL_NEAREST);
+	lifeUpSprite = Sprite::createSprite(glm::ivec2(32, 16), glm::vec2(1, 1), &lifeUpSpriteSheet, &shaderProgram);
+
+	lifeUpSprite->setNumberAnimations(1);
+
+	lifeUpSprite->setAnimationSpeed(0, 1);
+	lifeUpSprite->addKeyframe(0, glm::vec2(0.f, 0.f));
+	lifeUpSprite->changeAnimation(0);
 }
 
 void SceneInterface::renderMessages()
