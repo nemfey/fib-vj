@@ -457,6 +457,6 @@ void Scene::score2newLive()
 			player->setLives(currentLives + 1);
 			SoundFactory::instance().playLifeUp();
 		}
-		liveScore = 0;
+		liveScore = liveScore - 2500;
 	}
 }

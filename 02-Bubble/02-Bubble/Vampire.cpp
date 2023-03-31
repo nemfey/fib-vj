@@ -91,6 +91,7 @@ void Vampire::update(int deltaTime)
 			bTransformation = true;
 			sprite->changeAnimation(TRANSFORM);
 			SoundFactory::instance().playVampireTransform();
+			hitbox = glm::ivec2(24, 16);
 		}
 	}
 	else
@@ -207,6 +208,7 @@ void Vampire::batBehavior(int deltaTime)
 				bMoveRight = true;
 				sprite->changeAnimation(UNTRANSFORM);
 				SoundFactory::instance().playVampireUntransform();
+				hitbox = glm::ivec2(24, 16);
 				//bHumanAspect = true;
 				//humanAspectTime = 0;
 			}
@@ -231,6 +233,7 @@ void Vampire::batBehavior(int deltaTime)
 				bMoveRight = false;
 				sprite->changeAnimation(UNTRANSFORM);
 				SoundFactory::instance().playVampireUntransform();
+				hitbox = glm::ivec2(24, 16);
 				//bHumanAspect = true;
 				//humanAspectTime = 0;
 			}
