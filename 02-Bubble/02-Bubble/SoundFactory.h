@@ -27,6 +27,7 @@ public:
 
 	void playLevelMusic();
 	void stopLevelMusic();
+	void resumeLevelMusic();
 
 	void playChangeOption();
 	void playSelectOption();
@@ -55,6 +56,7 @@ public:
 	void playJump();
 	void playPointsObtained();
 	void playLifeUp();
+	void playItemSpawned();
 
 	void playImmune();
 	void stopImmune();

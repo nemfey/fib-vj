@@ -141,6 +141,7 @@ void Scene::update(int deltaTime)
 			}
 			else {
 				bHourglassEnding = false;
+				SoundFactory::instance().resumeLevelMusic();
 				updateTime(deltaTime);
 			}
 		}
@@ -334,9 +335,12 @@ void Scene::updateTime(int deltaTime)
 			itemCountDown = 10;
 			itemSpawned = true;
 			itemRNG = rand() % 100;
+			bItemSpawnedPlayed = false;
 		}
-		if (itemCountDown <= 0)
+		if (itemCountDown <= 0) {
 			itemSpawned = false;
+			bItemSpawnedPlayed = false;
+		}
 
 		//DEBUG
 		//cout << remainingSeconds << endl;
@@ -423,6 +427,11 @@ void Scene::updateItems(int deltaTime)
 		}
 
 		if (itemSpawned) {
+			if (!bItemSpawnedPlayed) {
+				SoundFactory::instance().playItemSpawned();
+				bItemSpawnedPlayed = true;
+			}
+
 			if (pTreasure && pTreasure->collisionPlayer()) {
 				SoundFactory::instance().playTreasureTaken();
 				player->addScore(150 + i->getType()*150);
@@ -445,6 +454,7 @@ void Scene::updateItems(int deltaTime)
 
 			if (pHourglass && pHourglass->collisionPlayer()) {
 				SoundFactory::instance().playTimeStop();
+				SoundFactory::instance().stopLevelMusic();
 				hourglassTimer = 5;
 				map->setHourglassTaken(false);
 				itemSpawned = false;

@@ -97,6 +97,7 @@ private:
 	int itemCountDown = 0;
 	int itemSpawnCounter = 20 - (rand() % 5);
 	bool itemSpawned = false;
+	bool bItemSpawnedPlayed = false;
 
 	int itemRNG = rand() % 100;
 

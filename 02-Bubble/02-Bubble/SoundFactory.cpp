@@ -19,6 +19,11 @@ void SoundFactory::stopLevelMusic()
 	levelMusic->setIsPaused(true);
 }
 
+void SoundFactory::resumeLevelMusic()
+{
+	levelMusic->setIsPaused(false);
+}
+
 void SoundFactory::playChangeOption()
 {
 	engine->play2D("sounds/select1.wav", false);
@@ -147,6 +152,11 @@ void SoundFactory::playLifeUp()
 	lifeUpSound = engine->play2D("sounds/life_up.wav", false, false, true);
 	lifeUpSound->setVolume(0.3f);
 	//lifeUpSound->drop();
+}
+
+void SoundFactory::playItemSpawned()
+{
+	engine->play2D("sounds/charge1.wav", false);
 }
 
 void SoundFactory::playImmune()
