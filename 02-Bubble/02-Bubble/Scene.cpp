@@ -95,6 +95,7 @@ void Scene::update(int deltaTime)
 			{
 				if (!bMessageSoundPlaying)
 				{
+					SoundFactory::instance().stopLevelMusic();
 					SoundFactory::instance().playStageClear();
 					bMessageSoundPlaying = true;
 				}
@@ -108,6 +109,7 @@ void Scene::update(int deltaTime)
 			sceneInterface->updateLives(player->getLives());
 			if (!bMessageSoundPlaying)
 			{
+				SoundFactory::instance().stopLevelMusic();
 				SoundFactory::instance().playGameOver();
 				bMessageSoundPlaying = true;
 			}
@@ -269,6 +271,8 @@ void Scene::readyMessage()
 		state = Playing;
 		bStarting = false;
 		bMessageSoundPlaying = false;
+
+		SoundFactory::instance().playLevelMusic();
 	}
 }
 
@@ -412,6 +416,9 @@ void Scene::updateItems(int deltaTime)
 			sceneInterface->setState(StageCleared);
 			bDoorTaken = true;
 			messageTimer = 5;
+
+			if (player->getInmunityState() || bPlayerInvencible)
+				SoundFactory::instance().stopImmune();
 		}
 
 		if (itemSpawned) {
@@ -462,6 +469,7 @@ void Scene::score2newLive()
 	{
 		int currentLives = player->getLives();
 		
+		player->setLives(currentLives + 1);
 		player->setLives(currentLives + 1);
 		sceneInterface->setCurrentPosPlayer(map->getPosPlayer());
 		sceneInterface->setLifeUp(true);

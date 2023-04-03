@@ -7,6 +7,18 @@ void SoundFactory::setAllSoundsPaused(bool b)
 	engine->setAllSoundsPaused(b);
 }
 
+void SoundFactory::playLevelMusic()
+{
+	//levelMusic = engine->play2D("sounds/castle3.wav", false, false, true);
+	levelMusic = engine->play2D("sounds/sewers.wav", false, false, true);
+	levelMusic->setVolume(0.3 );
+}
+
+void SoundFactory::stopLevelMusic()
+{
+	levelMusic->setIsPaused(true);
+}
+
 void SoundFactory::playChangeOption()
 {
 	engine->play2D("sounds/select1.wav", false);
@@ -72,7 +84,8 @@ void SoundFactory::playPlayerDie()
 
 void SoundFactory::playBibleTaken()
 {
-	engine->play2D("sounds/bible.wav", false);
+	ISound* sound = engine->play2D("sounds/bible.wav", false, false, true);
+	sound->setVolume(0.5f);
 }
 
 void SoundFactory::playTreasureTaken()

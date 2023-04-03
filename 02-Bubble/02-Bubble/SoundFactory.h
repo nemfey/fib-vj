@@ -25,6 +25,9 @@ public:
 	void setAllSoundsPaused(bool b);
 	//void stopAllSounds(bool b);
 
+	void playLevelMusic();
+	void stopLevelMusic();
+
 	void playChangeOption();
 	void playSelectOption();
 	void playTimeTick();
@@ -63,8 +66,9 @@ private:
 
 	ISoundSource* immuneSound;
 	ISoundSource* tickSound;
+
+	ISound* levelMusic;
 	
-public:
 	ISound* readySound;
 	ISound* gameOverSound;
 	ISound* stageClearSound;
