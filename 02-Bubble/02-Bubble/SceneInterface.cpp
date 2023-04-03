@@ -85,8 +85,28 @@ void SceneInterface::render()
 	renderNumber(score % 10, 184, 16);
 
 	// time
-	renderNumber(remainingTime / 10, 240, 16);
-	renderNumber(remainingTime % 10, 256, 16);
+	if (remainingTime < 15) {
+		if (msTime % 200 <= 50) {
+			renderNumber(remainingTime / 10, 238, 18);
+			renderNumber(remainingTime % 10, 254, 18);
+		}
+		else if (msTime % 200 <= 100){
+			renderNumber(remainingTime / 10, 243, 15);
+			renderNumber(remainingTime % 10, 259, 15);
+		}
+		else if (msTime % 200 <= 150) {
+			renderNumber(remainingTime / 10, 242, 19);
+			renderNumber(remainingTime % 10, 258, 19);
+		}
+		else {
+			renderNumber(remainingTime / 10, 239, 14);
+			renderNumber(remainingTime % 10, 255, 14);
+		}
+	}
+	else {
+		renderNumber(remainingTime / 10, 240, 16);
+		renderNumber(remainingTime % 10, 256, 16);
+	}
 
 	// stage
 	renderCharacter('s', 368, 16);

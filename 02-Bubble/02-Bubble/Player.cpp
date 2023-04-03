@@ -251,7 +251,6 @@ void Player::update(int deltaTime)
 					startY = posPlayer.y;
 				}
 			}
-
 			bJumpSoundPlayed = false;
 		}
 	}

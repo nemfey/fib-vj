@@ -10,7 +10,7 @@ void SoundFactory::setAllSoundsPaused(bool b)
 void SoundFactory::playLevelMusic()
 {
 	//levelMusic = engine->play2D("sounds/castle3.wav", false, false, true);
-	levelMusic = engine->play2D("sounds/sewers.wav", false, false, true);
+	levelMusic = engine->play2D("sounds/castle3.wav", false, false, true);
 	levelMusic->setVolume(0.3 );
 }
 

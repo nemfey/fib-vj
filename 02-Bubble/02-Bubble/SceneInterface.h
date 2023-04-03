@@ -22,6 +22,7 @@ public:
 	void updateScore(int s);
 	void updateRemainingTime(int t);
 	void updateStageNumber(int s);
+	void setDeltaTime(int deltatime) { msTime += deltatime; };
 	void render();
 
 	// Gettters & Setters
@@ -53,6 +54,7 @@ private:
 	Sprite* lifeUpSprite;
 
 	int lives, score, remainingTime, stageNumber;
+	int msTime = 0;
 	map<char, int> char2id;
 
 	StageState state;

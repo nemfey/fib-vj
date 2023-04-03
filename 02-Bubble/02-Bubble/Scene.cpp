@@ -77,6 +77,7 @@ void Scene::update(int deltaTime)
 	}
 	else {
 		currentTime += deltaTime;
+		sceneInterface->setDeltaTime(deltaTime);
 		if (bStarting)
 		{
 			if (!bMessageSoundPlaying)
