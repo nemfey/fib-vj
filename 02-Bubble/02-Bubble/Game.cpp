@@ -31,8 +31,10 @@ bool Game::update(int deltaTime)
 {
 	if (bMenuShowing)
 		updateMenu(deltaTime);
-	else
+	else {
+		menu.setMusicPlaying(false);
 		updateScene(deltaTime);
+	}
 
 	return bPlay;
 }
@@ -61,45 +63,60 @@ void Game::reshapeCallback(int width, int height)
 void Game::keyPressed(int key)
 {
 	cout << key << endl;
-	if (key == 105) {
+
+	//"I" pressed
+	if (key == 105 && !bMenuShowing) {
 		scene->setItemSpawned(false);
 		scene->setItemSpawnCounter(0);
 	}
-	if (key == 27 && (!bMenuShowing || menu.getMenuState() != Main)) // Escape code
+	//Escape pressed
+	if (key == 27 && (!bMenuShowing || menu.getMenuState() != Main))
 	{
-		SoundFactory::instance().setAllSoundsPaused(true);
+		//SoundFactory::instance().setAllSoundsPaused(true);
+		SoundFactory::instance().stopLevelMusic();
 		bMenuShowing = true;
 		SoundFactory::instance().playSelectOption();
 		menu.setMenuState(Main);
 	}
-	if ((key == 13 || key == 32) && bMenuShowing) // Enter code
+	//Enter pressed
+	if ((key == 13 || key == 32) && bMenuShowing)
 	{
 		SoundFactory::instance().playSelectOption();
 		optionSelected();
 	}
+	//Load stage 1
 	if (key == 49)
 	{
 		SoundFactory::instance().setAllSoundsPaused(true);
 		stageIterator = 0;
 		loadFirstStage();
 	}
+	//Load stage 2
 	if (key == 50)
 	{
 		SoundFactory::instance().setAllSoundsPaused(true);
 		stageIterator = 1;
 		loadFirstStage();
 	}
+	//Load stage 3
 	if (key == 51)
 	{
 		SoundFactory::instance().setAllSoundsPaused(true);
 		stageIterator = 2;
 		loadFirstStage();
 	}
+	//Show credits from menu "C" pressed
 	if ((key == 99 || key == 69) && menu.getMenuState() == Main)
 	{
 		SoundFactory::instance().playSelectOption();
 		menu.setMenuState(Credits);
 	}
+	//Quit credits "C" pressed
+	else if ((key == 99 || key == 69) && menu.getMenuState() == Credits) {
+		SoundFactory::instance().playSelectOption();
+		menu.setMenuState(Main);
+	}
+	//"G" pressed
 	if ((key == 103 || key == 71) && !bMenuShowing)
 	{
 		if (!scene->getPlayerInvencible())
@@ -107,10 +124,12 @@ void Game::keyPressed(int key)
 		else
 			scene->setPlayerInvencible(false);
 	}
+	//"K" pressed
 	if ((key == 107 || key == 75) && !bMenuShowing)
 	{
 		scene->makeKeyAppear();
 	}
+	//"P" pressed
 	if (key == 112 && !bMenuShowing)
 	{
 		StageState s = scene->state;
@@ -136,19 +155,21 @@ void Game::keyReleased(int key)
 
 void Game::specialKeyPressed(int key)
 {
-	if (key == 101 && option_nth > 0 && bMenuShowing)
+	if (key == 101 && bMenuShowing && menu.getMenuState() == Main)
 	{
 		--option_nth;
+		if (option_nth < 0) option_nth = 2;
 		SoundFactory::instance().playChangeOption();
 		menu.setSelection(option_nth);
 	}
-	if (key == 103 && option_nth < 2 && bMenuShowing)
+	if (key == 103 && bMenuShowing && menu.getMenuState() == Main)
 	{
 		++option_nth;
+		if (option_nth > 2) option_nth = 0;
 		SoundFactory::instance().playChangeOption();
 		menu.setSelection(option_nth);
 	}
-
+	cout << dictOptions[option_nth] << endl;
 	specialKeys[key] = true;
 }
 
@@ -323,6 +344,7 @@ void Game::optionSelected()
 	switch (dictOptions[option_nth])
 	{
 	case Play:
+		SoundFactory::instance().stopMenuMusic();
 		stageIterator = 0;
 		loadFirstStage();
 		break;

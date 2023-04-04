@@ -84,6 +84,11 @@ void Menu::init(ShaderProgram& shaderProgram)
 
 void Menu::update(int deltaTime)
 {
+	if (!bMusicPlaying) {
+		bMusicPlaying = true;
+		SoundFactory::instance().playMenuMusic();
+	}
+
 	switch (state)
 	{
 	case Main:

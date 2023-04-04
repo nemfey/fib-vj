@@ -12,6 +12,7 @@ private:
 		engine = createIrrKlangDevice();
 		immuneSound = engine->addSoundSourceFromFile("sounds/immune.wav");
 		tickSound = engine->addSoundSourceFromFile("sounds/time_tick.wav");
+		menuMusic = engine->addSoundSourceFromFile("sounds/sewers.wav");
 		timeTicks = 0;
 	}
 
@@ -24,6 +25,9 @@ public:
 
 	void setAllSoundsPaused(bool b);
 	//void stopAllSounds(bool b);
+
+	void playMenuMusic();
+	void stopMenuMusic();
 
 	void playLevelMusic();
 	void stopLevelMusic();
@@ -70,6 +74,7 @@ private:
 	ISoundSource* tickSound;
 
 	ISound* levelMusic;
+	ISoundSource* menuMusic;
 	
 	ISound* readySound;
 	ISound* gameOverSound;

@@ -7,16 +7,28 @@ void SoundFactory::setAllSoundsPaused(bool b)
 	engine->setAllSoundsPaused(b);
 }
 
+void SoundFactory::playMenuMusic()
+{
+	menuMusic->setDefaultVolume(0.6);
+	engine->play2D(menuMusic);
+}
+
+void SoundFactory::stopMenuMusic()
+{
+	engine->stopAllSoundsOfSoundSource(menuMusic);
+}
+
 void SoundFactory::playLevelMusic()
 {
 	//levelMusic = engine->play2D("sounds/castle3.wav", false, false, true);
 	levelMusic = engine->play2D("sounds/castle3.wav", false, false, true);
-	levelMusic->setVolume(0.3 );
+	levelMusic->setVolume(0.4);
 }
 
 void SoundFactory::stopLevelMusic()
 {
-	levelMusic->setIsPaused(true);
+	if (levelMusic != nullptr)
+		levelMusic->setIsPaused(true);
 }
 
 void SoundFactory::resumeLevelMusic()

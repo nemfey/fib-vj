@@ -3,6 +3,7 @@
 
 
 #include <glm/glm.hpp>
+#include "soundFactory.h"
 #include "ShaderProgram.h"
 #include "MenuState.h"
 
@@ -23,6 +24,7 @@ public:
 	void render();
 	void setSelection(int i);
 	void setMenuState(MenuState m) { state = m; };
+	void setMusicPlaying(bool b) { bMusicPlaying = b; };
 	MenuState getMenuState() { return state; };
 	void setPlayerFinalScore(int i) { playerFinalScore = i; };
 	void initNumberSprite(ShaderProgram& shaderProgram);
@@ -42,6 +44,8 @@ private:
 	MenuState state = Main;
 
 	int playerFinalScore;
+
+	bool bMusicPlaying = false;
 };
 
 
