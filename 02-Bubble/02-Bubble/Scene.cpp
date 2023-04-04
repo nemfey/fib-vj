@@ -428,7 +428,7 @@ void Scene::updateItems(int deltaTime)
 
 		if (itemSpawned) {
 			if (!bItemSpawnedPlayed) {
-				SoundFactory::instance().playItemSpawned();
+				SoundFactory::instance().playItemSpawn();
 				bItemSpawnedPlayed = true;
 			}
 

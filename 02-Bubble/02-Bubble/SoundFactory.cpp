@@ -154,9 +154,10 @@ void SoundFactory::playLifeUp()
 	//lifeUpSound->drop();
 }
 
-void SoundFactory::playItemSpawned()
+void SoundFactory::playItemSpawn()
 {
-	engine->play2D("sounds/charge1.wav", false);
+	itemSpawnSound = engine->play2D("sounds/charge1.wav", false, false, true);
+	itemSpawnSound->setVolume(0.3f);
 }
 
 void SoundFactory::playImmune()

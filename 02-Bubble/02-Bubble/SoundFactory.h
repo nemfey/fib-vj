@@ -56,7 +56,7 @@ public:
 	void playJump();
 	void playPointsObtained();
 	void playLifeUp();
-	void playItemSpawned();
+	void playItemSpawn();
 
 	void playImmune();
 	void stopImmune();
@@ -75,6 +75,7 @@ private:
 	ISound* gameOverSound;
 	ISound* stageClearSound;
 	ISound* lifeUpSound;
+	ISound* itemSpawnSound;
 
 	int timeTicks = 0;
 };

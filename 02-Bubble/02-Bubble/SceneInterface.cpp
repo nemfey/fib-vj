@@ -85,7 +85,7 @@ void SceneInterface::render()
 	renderNumber(score % 10, 184, 16);
 
 	// time
-	if (remainingTime < 15) {
+	if (remainingTime < 15 && (state == Playing || state == Pause)) {
 		if (msTime % 200 <= 50) {
 			renderNumber(remainingTime / 10, 238, 18);
 			renderNumber(remainingTime % 10, 254, 18);
