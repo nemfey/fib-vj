@@ -10,7 +10,7 @@ void SoundFactory::setAllSoundsPaused(bool b)
 void SoundFactory::playMenuMusic()
 {
 	menuMusic->setDefaultVolume(0.6);
-	engine->play2D(menuMusic);
+	engine->play2D(menuMusic, true);
 }
 
 void SoundFactory::stopMenuMusic()

@@ -65,14 +65,14 @@ void Game::keyPressed(int key)
 	cout << key << endl;
 
 	//"I" pressed
-	if (key == 105 && !bMenuShowing) {
+	if ((key == 105 || key == 73) && !bMenuShowing) {
 		scene->setItemSpawned(false);
 		scene->setItemSpawnCounter(0);
 	}
 	//Escape pressed
 	if (key == 27 && (!bMenuShowing || menu.getMenuState() != Main))
 	{
-		//SoundFactory::instance().setAllSoundsPaused(true);
+		SoundFactory::instance().setAllSoundsPaused(true);
 		SoundFactory::instance().stopLevelMusic();
 		bMenuShowing = true;
 		SoundFactory::instance().playSelectOption();
@@ -106,13 +106,13 @@ void Game::keyPressed(int key)
 		loadFirstStage();
 	}
 	//Show credits from menu "C" pressed
-	if ((key == 99 || key == 69) && menu.getMenuState() == Main)
+	if ((key == 99 || key == 69 || key == 67) && menu.getMenuState() == Main)
 	{
 		SoundFactory::instance().playSelectOption();
 		menu.setMenuState(Credits);
 	}
 	//Quit credits "C" pressed
-	else if ((key == 99 || key == 69) && menu.getMenuState() == Credits) {
+	else if ((key == 99 || key == 69 || key == 67) && menu.getMenuState() == Credits) {
 		SoundFactory::instance().playSelectOption();
 		menu.setMenuState(Main);
 	}
