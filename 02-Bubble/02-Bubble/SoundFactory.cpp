@@ -39,13 +39,13 @@ void SoundFactory::playTimeTick()
 	if (timeTicks < 10)
 		tickSound->setDefaultVolume(0.05);
 	if (timeTicks >= 10)
-		tickSound->setDefaultVolume(0.05);
-	if (timeTicks >= 20)
 		tickSound->setDefaultVolume(0.1);
-	if (timeTicks >= 30)
+	if (timeTicks >= 20)
 		tickSound->setDefaultVolume(0.2);
-	if (timeTicks >= 40)
+	if (timeTicks >= 30)
 		tickSound->setDefaultVolume(0.5);
+	if (timeTicks >= 40)
+		tickSound->setDefaultVolume(0.7);
 	if (timeTicks >= 50)
 		tickSound->setDefaultVolume(1.0);
 	engine->play2D(tickSound);
