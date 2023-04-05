@@ -242,9 +242,8 @@ void Player::update(int deltaTime)
 				map->positionStepped(posPlayer, glm::ivec2(32, 32), &posPlayer.y);
 				if (Game::instance().getSpecialKey(GLUT_KEY_UP))
 				{
-					if (SoundFactory::instance().getJumpFinished()) {
-						SoundFactory::instance().playJump();
-					}
+					
+					SoundFactory::instance().playJump();
 
 					bJumping = true;
 					jumpAngle = 0;
