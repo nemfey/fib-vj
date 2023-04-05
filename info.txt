@@ -1,0 +1,14 @@
+----- EQUIPO -----
+
+Joan Sales de Marcos (joan.sales.de.marcos@estudiantat.upc.edu)
+Victor Teixidó López (victor.teixido@estudiantat.upc.edu)
+
+----- INSTRUCCIONES -----
+
+Utiliza las flechas para moverte por el menú y para controlar al personaje durante el juego.
+Pulsa la barra espaciadora o la tecla enter para acceder a los distintos menús (y la tecla 'esc' para volver al menú principal).
+Pusla la tecla 'c' desde el menú principal para ver los créditos (y la tecla 'c' o la tecla 'esc' para volver al menú principal).
+Pisa todas las casillas para desbloquear la llave que, una vez cogida, te permitirá acceder al siguiente nivel.
+Pusla la tecla 'p' durante el juego para pausar la partida (y la tecla 'p' otra vez para retomar la partida).
+
+----- IMPLEMENTACIONES -----

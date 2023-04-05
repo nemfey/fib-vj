@@ -82,7 +82,7 @@ void Game::keyPressed(int key)
 		menu.setMenuState(Main);
 	}
 	//Enter pressed
-	if ((key == 13 || key == 32) && bMenuShowing)
+	if ((key == 13 || key == 32) && bMenuShowing && menu.getMenuState() == Main)
 	{
 		SoundFactory::instance().playSelectOption();
 		optionSelected();
