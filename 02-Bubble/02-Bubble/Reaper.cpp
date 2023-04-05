@@ -286,8 +286,8 @@ bool Reaper::collisionPlayer()
 		collisionY = posPlayer.y + 32 >= posEnemy.y + (32 - hitbox.y) && posEnemy.y + 32 - (32 - hitbox.y) >= posPlayer.y;
 	}
 	else {
-		collisionX = posPlayer.x + 32 >= posEnemy.x + (32 - hitbox.x) && posEnemy.x + 32 - (32 - hitbox.x) >= posPlayer.x;
-		collisionY = posPlayer.y + 32 >= posEnemy.y + (32 - hitbox.y) && posEnemy.y + 32 - (32 - hitbox.y) >= posPlayer.y;
+		collisionX = posPlayer.x + 32 >= posEnemy.x + (32 - hitbox.x) + 6 && posEnemy.x + 32 - (32 - hitbox.x) - 6 >= posPlayer.x;
+		collisionY = posPlayer.y + 32 >= posEnemy.y + (32 - hitbox.y) + 4 && posEnemy.y + 32 - (32 - hitbox.y) - 4 >= posPlayer.y;
 	}
 
 	return collisionX && collisionY;

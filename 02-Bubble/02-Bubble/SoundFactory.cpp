@@ -133,12 +133,14 @@ void SoundFactory::playKeySpawn()
 
 void SoundFactory::playVampireTransform()
 {
-	engine->play2D("sounds/transform2.wav", false);
+	transformSound = engine->play2D("sounds/transform2.wav", false, false, true);
+	transformSound->setVolume(0.5);
 }
 
 void SoundFactory::playVampireUntransform()
 {
-	engine->play2D("sounds/transform1.wav", false);
+	transformSound = engine->play2D("sounds/transform1.wav", false, false, true);
+	transformSound->setVolume(0.5);
 }
 
 void SoundFactory::playReaperCharge()

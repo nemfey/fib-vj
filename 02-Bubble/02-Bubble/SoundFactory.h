@@ -85,6 +85,8 @@ private:
 	ISound* itemSpawnSound;
 	ISound* jumpSound;
 
+	ISound* transformSound;
+
 	int timeTicks = 0;
 };
 

@@ -72,8 +72,8 @@ bool Enemy::collisionPlayer()
 	int tileSize = map->getTileSize();
 
 	
-	bool collisionX = posPlayer.x+32 >= posEnemy.x+(32-hitbox.x) && posEnemy.x+32-(32-hitbox.x) >= posPlayer.x;
-	bool collisionY = posPlayer.y+32 >= posEnemy.y+(32-hitbox.y) && posEnemy.y+32-(32-hitbox.y) >= posPlayer.y;
+	bool collisionX = posPlayer.x+32 >= posEnemy.x+(32-hitbox.x)+6 && posEnemy.x+32-(32-hitbox.x)-6 >= posPlayer.x;
+	bool collisionY = posPlayer.y+32 >= posEnemy.y+(32-hitbox.y)+4 && posEnemy.y+32-(32-hitbox.y)-4 >= posPlayer.y;
 
 	return collisionX && collisionY;
 }
