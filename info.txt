@@ -12,3 +12,99 @@ Pisa todas las casillas para desbloquear la llave que, una vez cogida, te permit
 Pusla la tecla 'p' durante el juego para pausar la partida (y la tecla 'p' otra vez para retomar la partida).
 
 ----- IMPLEMENTACIONES -----
+
+- Estructura de 6 pantallas:
+	- Menú principal
+	- Instrucciones
+	- Créditos
+	- Jugar
+	- Victoria
+	- Derrota.
+
+- 3 pantallas de juego. Una de ellas es una copia del nivel 28 del juego Night Knight.
+
+- 3 tipos de enemigos: Esqueleto, Vampiro y Parca.
+	- Esqueleto: Se mueve en linea recta y cambia la dirección cuando se va a caer o se encuentra un obstáculo.
+	- Vampiro: Mismo movimiento que el esqueleto. Tras 12 segundos se convierte en un murciélago que va rebotando hasta encontrar una plataforma
+			distinta desde la que salió para volver a transformarse.
+	- Carpa: Mismo movimiento que el esqueleto. Si encuentra a su alcance a un personaje, carga un ataque enfrente suya con un alcance de 3 casillas.
+
+- 4 tipos de objeto:
+	- Crónometro: Para el tiempo y a los enemigos durante 5 segundos.
+	- Tesoro: Da una puntuación extra al jugador entre 500 y 1500 puntos.
+	- Biblia: Te vuelve inmune al daño durante 3 segundos.
+	- Llave: Desbloquea la puerta de salida al siguiente nivel.
+
+- El personaje marca las casillas que va pisando, una vez pisadas todas las casillas del nivel aparece la llave.
+
+- Hay un tipo de suelo que es la lava (pinchos en el Night Knight) que mata al personaje si la pisa.
+
+- Arriba de la pantalla durante la fase de juego habrá la siguiente información:
+	- Número de vidas restantes.
+	- Puntuación del jugador.
+	- Tiempo restante para completar el nivel.
+	- Número de nivel actual.
+
+- Se ha implementado teclas especiales que permiten el 'god mode':
+	- La tecla 'K' hará aparecer automáticamente la llave.
+	- La tecla 'G' te hará invulnerable al daño hasta que vuelvas a pulsar la tecla.
+	- Con las teclas '1', '2' y '3', podrás saltar a los respectivos niveles.
+
+- Para salir del juego hay que, o cerrar la ventana del juego o seleccionar la opción 'Exit' desde el menú prinicpal.
+
+- Cada 2500 puntos conseguidos, el jugador obtiene una vida adicional (en pantalla saldrá el indicador '1up' para indicarlo).
+
+- Por cada casilla pisada el jugador obtiene 10 puntos.
+
+- Por cada segundo sobrante al acabar un nivel, el jugador obtiene 10 puntos.
+
+- Cuanto menos tiempo quede más fuerte suena el 'tic tac' del reloj.
+
+- Si el personaje muere, al reaparecer será inmune durante unos segundos.
+
+- Interactividad:
+	- Se indica que opción está seleccionada en el menú principal.
+	- Pausa antes de empezar cada nivel.
+	- Animación para el movimiento de todos los enemigos.
+	- Animación para la transformación de Vampiro a Murciélago y del revés.
+	- Animación para la carga y el ataque de la Parca.
+	- Animación cuando el personaje aparece al empezar un nivel, reaparece tras morir y desaparece al atravesar la puerta.
+	- Animación cuando el personaje recibe daño y muere.
+	- Animación para indicar la inmunidad del personaje.
+	- Animación para indicar cuando un item está a punto de desaparecer.
+	- Animación para indicar que el personaje es inmune y cuando está a punto de dejar de ser inmune.
+	- Animación de aparición de la puerta.
+	- Animación al aparecer un ítem.
+	- Cuando quedan menos de 15 segundos, el tiempo tiembla para indicar al jugador de que queda poco tiempo.
+	- En la pantalla de instrucciones se muestran todos los ítems que proporcionan puntos adicionales.
+
+- Música y efectos de sonido:
+	- Música para las disintas pantallas de menú.
+	- Múscia durante la fase de juego.
+	- Efecto de sonido al cambiar la opción en el menú.
+	- Efecto de sonido al escoger una opción el menú o volver al menú inicial.
+	- Efecto de sonido antes de iniciar un nivel.
+	- Efecto de sonido al ganar un nivel.
+	- Efecto de sonido al perder la partida.
+	- Efecto de sonido durante la aparición del personaje.
+	- Efecto de sonido al conseguir una vida extra.
+	- Efecto de sonido cuando se para el tiempo (Cronómetro).
+	- Efecto de sonido cuando se reanuda el tiempo (Cronómetro).
+	- Efecto de sonido cuando el personaje recibe daño y pierde una vida.
+	- Efecto de sonido al recoger la Biblia.
+	- Efecto de sonido al recoger un tesoro.
+	- Efecto de sonido al aparecer la llave.
+	- Efecto de sonido al recoger la llave.
+	- Efecto de sonido cuando el vampiro se transforma.
+	- Efecto de sonido cuando el vampiro se destransforma.
+	- Efecto de sonido cuando la parca carga el ataque.
+	- Efecto de sonido cuando la parca realiza el ataque.
+	- Efecto de sonido cuando el personaje salta.
+	- Efecto de sonido cuando se consiguen puntos.
+	- Efecto de sonido cuando aparece un ítem en el nivel.
+	- Efecto de sonido durante la inmunidad del personaje (por la Biblia o por tecla 'G').
+	- Efecto de sonido para el 'tic tac' del tiempo.
+
+
+
+
