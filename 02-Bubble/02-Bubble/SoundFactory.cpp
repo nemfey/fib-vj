@@ -21,8 +21,13 @@ void SoundFactory::stopMenuMusic()
 void SoundFactory::playLevelMusic()
 {
 	//levelMusic = engine->play2D("sounds/castle3.wav", false, false, true);
-	levelMusic = engine->play2D("sounds/castle3.wav", false, false, true);
-	levelMusic->setVolume(0.4);
+	if (levelMusic == nullptr) {
+		levelMusic = engine->play2D("sounds/castle3.wav", false, false, true);
+		levelMusic->setVolume(0.4);
+	}
+	else {
+		levelMusic->setPlayPosition(0);
+	}
 }
 
 void SoundFactory::stopLevelMusic()
@@ -34,6 +39,12 @@ void SoundFactory::stopLevelMusic()
 void SoundFactory::resumeLevelMusic()
 {
 	levelMusic->setIsPaused(false);
+}
+
+void SoundFactory::dropLevelMusic()
+{
+	if (levelMusic != nullptr)
+		levelMusic->drop();
 }
 
 void SoundFactory::playChangeOption()
@@ -149,9 +160,17 @@ void SoundFactory::playPlayerSpawn()
 
 void SoundFactory::playJump()
 {
-	ISound* sound = engine->play2D("sounds/jump2.wav", false, false, true);
-	sound->setVolume(0.3f);
+	jumpSound = engine->play2D("sounds/jump2.wav", false, false, true);
+	jumpSound->setVolume(0.3f);
 	//sound->drop();
+}
+
+bool SoundFactory::getJumpFinished()
+{
+	if (jumpSound != nullptr) {
+		return jumpSound->isFinished();
+	}
+	else return true;
 }
 
 void SoundFactory::playPointsObtained()

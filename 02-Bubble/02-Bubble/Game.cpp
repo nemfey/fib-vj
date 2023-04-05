@@ -72,8 +72,9 @@ void Game::keyPressed(int key)
 	//Escape pressed
 	if (key == 27 && (!bMenuShowing || menu.getMenuState() != Main))
 	{
-		SoundFactory::instance().setAllSoundsPaused(true);
-		SoundFactory::instance().stopLevelMusic();
+		if (!bMenuShowing) {
+			SoundFactory::instance().setAllSoundsPaused(true);
+		}
 		bMenuShowing = true;
 		SoundFactory::instance().playSelectOption();
 		menu.setMenuState(Main);

@@ -205,10 +205,6 @@ void Player::update(int deltaTime)
 		}
 		if (bJumping)
 		{
-			if (!bJumpSoundPlayed) {
-				SoundFactory::instance().playJump();
-				bJumpSoundPlayed = true;
-			}
 
 			if (!bFacingRight && sprite->animation() != JUMP_LEFT && !bInvincible && !inmunityStateBible)
 				sprite->changeAnimation(JUMP_LEFT);
@@ -246,12 +242,15 @@ void Player::update(int deltaTime)
 				map->positionStepped(posPlayer, glm::ivec2(32, 32), &posPlayer.y);
 				if (Game::instance().getSpecialKey(GLUT_KEY_UP))
 				{
+					if (SoundFactory::instance().getJumpFinished()) {
+						SoundFactory::instance().playJump();
+					}
+
 					bJumping = true;
 					jumpAngle = 0;
 					startY = posPlayer.y;
 				}
 			}
-			bJumpSoundPlayed = false;
 		}
 	}
 	//Invincible floating effect

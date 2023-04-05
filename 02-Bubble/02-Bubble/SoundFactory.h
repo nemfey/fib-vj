@@ -32,6 +32,7 @@ public:
 	void playLevelMusic();
 	void stopLevelMusic();
 	void resumeLevelMusic();
+	void dropLevelMusic();
 
 	void playChangeOption();
 	void playSelectOption();
@@ -58,6 +59,7 @@ public:
 	void playReaperAttack();
 	void playPlayerSpawn();
 	void playJump();
+	bool getJumpFinished();
 	void playPointsObtained();
 	void playLifeUp();
 	void playItemSpawn();
@@ -81,6 +83,7 @@ private:
 	ISound* stageClearSound;
 	ISound* lifeUpSound;
 	ISound* itemSpawnSound;
+	ISound* jumpSound;
 
 	int timeTicks = 0;
 };
