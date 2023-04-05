@@ -162,16 +162,14 @@ void SoundFactory::playPlayerSpawn()
 
 void SoundFactory::playJump()
 {
-	if (!engine->isCurrentlyPlaying("sounds/jump2.wav")) {
-		ISound* sound = engine->play2D("sounds/jump2.wav", false, false, true);
-		sound->setVolume(0.3f);
+	if (!engine->isCurrentlyPlaying("sounds/jump2_quiet.wav")) {
+		engine->play2D("sounds/jump2_quiet.wav", false, false, true);
 	}
-	//sound->drop();
 }
 
 bool SoundFactory::getJumpFinished()
 {
-	return !engine->isCurrentlyPlaying("sounds/jump2.wav");
+	return !engine->isCurrentlyPlaying("sounds/jump2_quiet.wav");
 }
 
 void SoundFactory::playPointsObtained()

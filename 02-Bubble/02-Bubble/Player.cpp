@@ -243,13 +243,20 @@ void Player::update(int deltaTime)
 				if (Game::instance().getSpecialKey(GLUT_KEY_UP))
 				{
 					
-					SoundFactory::instance().playJump();
+					if (!bJumpSoundPlayed) {
+						SoundFactory::instance().playJump();
+						bJumpSoundPlayed = true;
+					}
 
 					bJumping = true;
 					jumpAngle = 0;
 					startY = posPlayer.y;
 				}
 			}
+		}
+
+		if (bJumpSoundPlayed && SoundFactory::instance().getJumpFinished()) {
+			bJumpSoundPlayed = false;
 		}
 	}
 	//Invincible floating effect
