@@ -72,10 +72,12 @@ void Game::keyPressed(int key)
 	//Escape pressed
 	if (key == 27 && (!bMenuShowing || menu.getMenuState() != Main))
 	{
-		if (!bMenuShowing) {
+		if (!bMenuShowing)
+		{
 			SoundFactory::instance().setAllSoundsPaused(true);
+			bMenuShowing = true;
 		}
-		bMenuShowing = true;
+		//SoundFactory::instance().stopLevelMusic();
 		SoundFactory::instance().playSelectOption();
 		menu.setMenuState(Main);
 	}
@@ -170,7 +172,7 @@ void Game::specialKeyPressed(int key)
 		SoundFactory::instance().playChangeOption();
 		menu.setSelection(option_nth);
 	}
-	cout << dictOptions[option_nth] << endl;
+	//cout << dictOptions[option_nth] << endl;
 	specialKeys[key] = true;
 }
 
@@ -341,7 +343,7 @@ void Game::loadNextStage()
 
 void Game::optionSelected()
 {
-	cout << dictOptions[option_nth] << endl;
+	//cout << dictOptions[option_nth] << endl;
 	switch (dictOptions[option_nth])
 	{
 	case Play:
