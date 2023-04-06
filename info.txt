@@ -63,7 +63,7 @@ Pusla la tecla 'p' durante el juego para pausar la partida (y la tecla 'p' otra 
 - Si el personaje muere, al reaparecer será inmune durante unos segundos.
 
 - Interactividad:
-	- Se indica que opción está seleccionada en el menú principal.
+	- Se indica dque opción está seleccionada en el menú principal.
 	- Pausa antes de empezar cada nivel.
 	- Animación para el movimiento de todos los enemigos.
 	- Animación para la transformación de Vampiro a Murciélago y del revés.
