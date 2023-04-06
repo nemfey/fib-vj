@@ -10,7 +10,7 @@ void Game::init()
 {
 	initShaders();
 	bPlay = true;
-	glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
+	glClearColor(0.047f, 0.012f, 0.031f, 1.0f);
 	//glClearColor(0.f, 0.f, 0.f, 1.0f);
 	menu.init(texProgram);
 
