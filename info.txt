@@ -63,7 +63,7 @@ Pusla la tecla 'p' durante el juego para pausar la partida (y la tecla 'p' otra 
 
 - Si el personaje muere, al reaparecer será inmune durante unos segundos.
 
-- Interactividad:
+- Game Feeling / UX:
 	- Se indica qué opción está seleccionada en el menú principal.
 	- Pausa antes de empezar cada nivel.
 	- Animación para el movimiento de todos los enemigos.
