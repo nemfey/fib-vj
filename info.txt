@@ -108,4 +108,3 @@ Pusla la tecla 'p' durante el juego para pausar la partida (y la tecla 'p' otra 
 
 
 
-
