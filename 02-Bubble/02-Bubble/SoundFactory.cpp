@@ -60,15 +60,15 @@ void SoundFactory::playSelectOption()
 void SoundFactory::playTimeTick()
 {
 	if (timeTicks < 10)
-		tickSound->setDefaultVolume(0.05);
+		tickSound->setDefaultVolume(0.0);
 	if (timeTicks >= 10)
-		tickSound->setDefaultVolume(0.1);
+		tickSound->setDefaultVolume(0.05);
 	if (timeTicks >= 20)
-		tickSound->setDefaultVolume(0.2);
+		tickSound->setDefaultVolume(0.1);
 	if (timeTicks >= 30)
-		tickSound->setDefaultVolume(0.5);
+		tickSound->setDefaultVolume(0.2);
 	if (timeTicks >= 40)
-		tickSound->setDefaultVolume(0.7);
+		tickSound->setDefaultVolume(0.5);
 	if (timeTicks >= 50)
 		tickSound->setDefaultVolume(1.0);
 	engine->play2D(tickSound);
@@ -133,12 +133,14 @@ void SoundFactory::playKeySpawn()
 
 void SoundFactory::playVampireTransform()
 {
-	engine->play2D("sounds/transform2.wav", false);
+	transformSound = engine->play2D("sounds/transform2.wav", false, false, true);
+	transformSound->setVolume(0.5);
 }
 
 void SoundFactory::playVampireUntransform()
 {
-	engine->play2D("sounds/transform1.wav", false);
+	transformSound = engine->play2D("sounds/transform1.wav", false, false, true);
+	transformSound->setVolume(0.5);
 }
 
 void SoundFactory::playReaperCharge()
@@ -160,17 +162,14 @@ void SoundFactory::playPlayerSpawn()
 
 void SoundFactory::playJump()
 {
-	jumpSound = engine->play2D("sounds/jump2.wav", false, false, true);
-	jumpSound->setVolume(0.3f);
-	//sound->drop();
+	if (!engine->isCurrentlyPlaying("sounds/jump2_quiet.wav")) {
+		engine->play2D("sounds/jump2_quiet.wav", false, false, true);
+	}
 }
 
 bool SoundFactory::getJumpFinished()
 {
-	if (jumpSound != nullptr) {
-		return jumpSound->isFinished();
-	}
-	else return true;
+	return !engine->isCurrentlyPlaying("sounds/jump2_quiet.wav");
 }
 
 void SoundFactory::playPointsObtained()

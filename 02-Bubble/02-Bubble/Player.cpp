@@ -242,8 +242,10 @@ void Player::update(int deltaTime)
 				map->positionStepped(posPlayer, glm::ivec2(32, 32), &posPlayer.y);
 				if (Game::instance().getSpecialKey(GLUT_KEY_UP))
 				{
-					if (SoundFactory::instance().getJumpFinished()) {
+					
+					if (!bJumpSoundPlayed) {
 						SoundFactory::instance().playJump();
+						bJumpSoundPlayed = true;
 					}
 
 					bJumping = true;
@@ -251,6 +253,10 @@ void Player::update(int deltaTime)
 					startY = posPlayer.y;
 				}
 			}
+		}
+
+		if (bJumpSoundPlayed && SoundFactory::instance().getJumpFinished()) {
+			bJumpSoundPlayed = false;
 		}
 	}
 	//Invincible floating effect

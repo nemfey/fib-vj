@@ -83,7 +83,9 @@ private:
 	ISound* stageClearSound;
 	ISound* lifeUpSound;
 	ISound* itemSpawnSound;
-	ISound* jumpSound;
+	//ISound* jumpSound;
+
+	ISound* transformSound;
 
 	int timeTicks = 0;
 };
