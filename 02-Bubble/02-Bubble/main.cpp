@@ -81,17 +81,42 @@ static void idleCallback()
 	}
 }
 
+void positionWindow(int screenWidth, int screenHeight)
+{
+	RECT rect;
+	HWND taskBar = FindWindow(TEXT("Shell_TrayWnd"), NULL);
+	if (taskBar && GetWindowRect(taskBar, &rect))
+	{
+		int taskBarHeight = rect.bottom - rect.top;
+		int windowWidth = screenWidth;
+		int windowHeight = screenHeight - taskBarHeight;
+		int windowPosX = (GetSystemMetrics(SM_CXSCREEN) - windowWidth) / 2;
+		int windowPosY = (GetSystemMetrics(SM_CYSCREEN) - windowHeight) / 2;
+		glutPositionWindow(windowPosX, windowPosY);
+		glutReshapeWindow(windowWidth, windowHeight);
+	}
+	else
+	{
+		glutFullScreen();
+	}
+}
+
 
 int main(int argc, char **argv)
 {
 	// GLUT initialization
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
-	glutInitWindowPosition(100, 100);
-	glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+
+	//int screenWidth = glutGet(GLUT_SCREEN_WIDTH);
+	//int screenHeight = glutGet(GLUT_SCREEN_HEIGHT);
+	//glutInitWindowPosition(100, 100);
+	//positionWindow(screenWidth, screenHeight);
+	//glutInitWindowSize(screenWidth, screenHeight);
 	glutCreateWindow(argv[0]);
 
 	glutReshapeFunc(Game::reshapeCallback); //LA FUNCION ESTA EN LA CLASE GAME
+	glutFullScreen();
 	glutSetCursor(GLUT_CURSOR_NONE);
 
 	glutDisplayFunc(drawCallback);
