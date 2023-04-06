@@ -48,7 +48,7 @@ void Hourglass::update(int deltaTime)
 		showing = false;
 
 		//DEBUG
-		cout << "Hourglass taken" << endl;
+		//cout << "Hourglass taken" << endl;
 
 		map->setHourglassTaken(true);
 	}
@@ -65,7 +65,7 @@ void Hourglass::render()
 		sprite->setPosition(glm::vec2(screenCoords.x + posItem.x, screenCoords.y + posItem.y));
 
 		//DEBUG
-		cout << "position assinged is: " << posItem.x << " " << posItem.y - 24 << endl;
+		//cout << "position assinged is: " << posItem.x << " " << posItem.y - 24 << endl;
 
 		showing = true;
 	}

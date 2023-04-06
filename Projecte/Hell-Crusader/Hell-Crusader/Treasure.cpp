@@ -35,7 +35,7 @@ void Treasure::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	type = rand() % 8;
 
 	//DEBUG
-	cout << "Setted treasure type to " << type << endl;
+	//cout << "Setted treasure type to " << type << endl;
 
 	// Change to animation the random type
 	sprite->changeAnimation(type);
@@ -55,7 +55,7 @@ void Treasure::update(int deltaTime)
 		showing = false;
 
 		//DEBUG
-		cout << "Treasure taken" << endl;
+		//cout << "Treasure taken" << endl;
 	}
 
 	sprite->update(deltaTime);
@@ -70,7 +70,7 @@ void Treasure::render()
 		resetType();
 
 		//DEBUG
-		cout << "Setted treasure type to " << type << endl;
+		//cout << "Setted treasure type to " << type << endl;
 
 		// Change to animation the random type
 		sprite->changeAnimation(type);
@@ -80,7 +80,7 @@ void Treasure::render()
 		sprite->setPosition(glm::vec2(screenCoords.x + posItem.x, screenCoords.y + posItem.y));
 
 		//DEBUG
-		cout << "position assinged is: " << posItem.x << " " << posItem.y - 24 << endl;
+		//cout << "position assinged is: " << posItem.x << " " << posItem.y - 24 << endl;
 
 		showing = true;
 	}

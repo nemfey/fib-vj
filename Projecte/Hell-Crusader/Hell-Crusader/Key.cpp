@@ -65,7 +65,7 @@ void Key::render()
 		{
 			posItem = map->getRandomPosition(7) - glm::vec2(0, 24);
 			sprite->setPosition(glm::vec2(screenCoords.x + posItem.x, screenCoords.y + posItem.y));
-			cout << "position assinged is: " << posItem.x << " " << posItem.y - 24 << endl;
+			//cout << "position assinged is: " << posItem.x << " " << posItem.y - 24 << endl;
 			bPositioned = true;
 		}
 		//Key movement

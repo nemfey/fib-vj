@@ -135,7 +135,7 @@ void Scene::update(int deltaTime)
 				{
 					timer = currentTime / 1000;
 					--hourglassTimer;
-					cout << "item timer is: " << hourglassTimer << endl;
+					//cout << "item timer is: " << hourglassTimer << endl;
 				}
 
 			}
@@ -344,10 +344,10 @@ void Scene::updateTime(int deltaTime)
 
 		//DEBUG
 		//cout << remainingSeconds << endl;
-		if (itemSpawned)
-			cout << "Countdown: " << itemCountDown << endl;
-		else
-			cout << "SpawnTime: " << itemSpawnCounter << endl;
+		//if (itemSpawned)
+			//cout << "Countdown: " << itemCountDown << endl;
+		//else
+			//cout << "SpawnTime: " << itemSpawnCounter << endl;
 	}
 }
 

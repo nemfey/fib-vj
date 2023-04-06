@@ -157,7 +157,7 @@ void Player::update(int deltaTime)
 			inmunityTime -= deltaTime;
 			if (inmunityTime < 0)
 			{
-				cout << "my inmunity state ended :(" << endl;
+				//cout << "my inmunity state ended :(" << endl;
 				inmunityState = false;
 				inmunityStateBible = false;
 				inmunityTime = 0;
@@ -293,7 +293,7 @@ void Player::loseLive()
 	{
 		--lives;
 		setImmune(3000, false);
-		cout << "you lost a live but now im inmune" << endl;
+		//cout << "you lost a live but now im inmune" << endl;
 		// AÑADIR INMUNIDAD
 	}
 	else if (lives == 0)

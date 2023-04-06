@@ -46,7 +46,7 @@ void Door::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	itemSize = glm::ivec2(32, 32);
 	hitbox = glm::ivec2(2, 2);
 
-	cout << "Door position: " << posItem.x << " " << posItem.y << endl;
+	//cout << "Door position: " << posItem.x << " " << posItem.y << endl;
 }
 
 void Door::update(int deltaTime)
@@ -65,7 +65,7 @@ void Door::update(int deltaTime)
 	else if (showing && collisionPlayer())
 	{
 		taken = true;
-		cout << "LEVEL FINISHED" << endl;
+		//cout << "LEVEL FINISHED" << endl;
 	}
 }
 

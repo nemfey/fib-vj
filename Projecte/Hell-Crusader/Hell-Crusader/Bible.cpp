@@ -49,7 +49,7 @@ void Bible::update(int deltaTime)
 		showing = false;
 
 		//DEBUG
-		cout << "Bible taken" << endl;
+		//cout << "Bible taken" << endl;
 	}
 
 	sprite->update(deltaTime);
@@ -64,7 +64,7 @@ void Bible::render()
 		sprite->setPosition(glm::vec2(screenCoords.x + posItem.x, screenCoords.y + posItem.y));
 
 		//DEBUG
-		cout << "position assinged is: " << posItem.x << " " << posItem.y - 24 << endl;
+		//cout << "position assinged is: " << posItem.x << " " << posItem.y - 24 << endl;
 
 		showing = true;
 	}
