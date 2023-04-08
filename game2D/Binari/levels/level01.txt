@@ -1,0 +1,34 @@
+TILEMAP
+32 22 							-- Size of tile map in tiles
+16 16 							-- Tile size & block size
+images/theblocks4.png 	-- Tilesheet
+4 2 								-- Number of tiles in tilesheet
+66555555555555555555555555555566
+66                            66
+66                            66
+66                      R     66
+66                            66
+66    22111111111111111122    66
+66    66S               66    66
+66    66                66    66
+66    66111111111111111166    66
+66                            66
+66                            66
+66    22111111    11111122    66
+66    66              S 66    66
+66    66                66    66
+66    66111111111111111166    66
+66                            66
+66                            66
+66    11111111    11111111    66
+66  P               D         66
+66                            66
+66222222222222    22222222222266
+66666666666666XXXX66666666666666                         
+
+-- 1 Floor no stepped
+-- 2 Floor no stepped w/ wall
+-- 3 Floor stepped
+-- 4 Floor stepped w/ wall
+-- 5 Traspassable wall
+-- 6 No traspassable wall
