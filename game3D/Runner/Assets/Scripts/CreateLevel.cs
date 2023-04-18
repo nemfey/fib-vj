@@ -15,6 +15,15 @@ public class CreateLevel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        // cuando se haga un giro del player
+            // se destruye una seccion
+            // se construye una nueva
+            // siempre 5 en pantalla
+        // generacion de la seccion
+            // primer bloque un suelo
+            // ultimo suelo un giro
+            // de los bloques del medio
+                // se elige uno random para que sea la primera casilla trampa
+                // con cierta probablidad las siguientes casillas disponibles tambien seran de la misma trampa
     }
 }

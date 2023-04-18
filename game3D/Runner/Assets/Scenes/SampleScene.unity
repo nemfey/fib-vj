@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 238114689}
   - component: {fileID: 238114690}
+  - component: {fileID: 238114691}
   m_Layer: 0
   m_Name: Level
   m_TagString: Untagged
@@ -170,6 +171,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 5, y: 0, z: 25}
   m_Center: {x: -2.75, y: 9, z: -7.5}
+--- !u!114 &238114691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238114688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fd6efb563099fd4f8ab68f2ba8fed00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  floorPrefab: {fileID: 0}
+  turnRightPrefab: {fileID: 0}
+  turnLeftPrefab: {fileID: 0}
 --- !u!1001 &246218969
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1269,6 +1285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e98c8be63708074187703c7e065c257, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  level: {fileID: 0}
 --- !u!54 &1945719393
 Rigidbody:
   m_ObjectHideFlags: 0
