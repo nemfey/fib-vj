@@ -5,6 +5,7 @@ using static System.Collections.Specialized.BitVector32;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public GameObject level;
     // Start is called before the first frame update
     void Start()
     {
