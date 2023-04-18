@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class CameraMovement : MonoBehaviour
 {
+    public Vector3 speed;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -13,9 +15,6 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("space"))
-        {
-            GetComponent<Rigidbody>().velocity = new Vector3(0, 5, 0);
-        }
+        transform.Translate(speed * Time.deltaTime);
     }
 }
