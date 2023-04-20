@@ -14,18 +14,19 @@ public class CreateLevel : MonoBehaviour
         GameObject section;
 
         float lastX = -60.0f; // Virtual previous of the first section
-        float lastZ = -60.0f; // Virtual previous of the first section
+        float lastZ = -55.0f; // Virtual previous of the first section
         float previousSize = 5; // Random in the future
 
         for (uint i=0; i<7; i++)
         {
             section = new GameObject("Section");
             int sectionSize = 5; // RANDOM IN THE FUTURE
-            createNewSection(section, sectionSize);
+            createNewSection(section, sectionSize, i%2!=0);
 
             if (i % 2 != 0)
             {
-                lastX += 10.0f;
+                //lastX += 10.0f;
+                lastX += 5.0f;
                 lastZ += previousSize * 5.0f;
                 section.transform.Translate(lastX, 0.0f, lastZ);
                 section.transform.Rotate(0.0f, 0.0f, 0.0f);
@@ -33,7 +34,7 @@ public class CreateLevel : MonoBehaviour
             else
             {
                 lastX += (previousSize-1) * 5.0f;
-                lastZ += 5.0f;
+                //lastZ += 5.0f;
                 section.transform.Translate(lastX, 0.0f, lastZ);
                 section.transform.Rotate(0.0f, 90.0f, 0.0f);
 
@@ -62,13 +63,22 @@ public class CreateLevel : MonoBehaviour
     }
 
     // Create new section
-    void createNewSection(GameObject section, int sectionSize)
+    void createNewSection(GameObject section, int sectionSize, bool bTurnRight)
     {
-        GameObject chunk;
+        GameObject chunk = null;
 
         for (uint i = 0; i < sectionSize; i++)
         {
-            chunk = (GameObject)Instantiate(wallFloorPrefab);
+            if (i != 0)
+                chunk = (GameObject)Instantiate(wallFloorPrefab);
+            else if (i == 0)
+            {
+                if (bTurnRight)
+                    chunk = (GameObject)Instantiate(wallTurnRightPrefab);
+                else
+                    chunk = (GameObject)Instantiate(wallTurnLeftPrefab);
+            }
+
             chunk.transform.Translate(0.0f + i * 5.0f, 0.0f, 0.0f); // CAMIBAR EJES DE COORDS(?)
             chunk.transform.parent = section.transform;
         }

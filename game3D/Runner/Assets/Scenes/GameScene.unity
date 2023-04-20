@@ -168,8 +168,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wallFloorPrefab: {fileID: 4322115119348971012, guid: ba7f6c9f424678543bd2308f722b52d1, type: 3}
-  wallTurnRightPrefab: {fileID: 0}
-  wallTurnLeftPrefab: {fileID: 0}
+  wallTurnRightPrefab: {fileID: 5769834863951848276, guid: 28d9299cc18b40541bf345fb2f34b1f3, type: 3}
+  wallTurnLeftPrefab: {fileID: 7991989000120848551, guid: 5f85a6cb60aa73f4c89660a780c7eeca, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -319,7 +319,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 961735858}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8cb729445b05aed43957579b3cba22bf, type: 3}
   m_Name: 
@@ -459,7 +459,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: {fileID: 238114688}
+  speed: 0
+  jumpForce: 0
   remainingJumps: 0
+  turnAngle: 0
 --- !u!54 &1945719393
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -547,7 +550,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1945719391}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.75, y: 9.5, z: -10}
+  m_LocalPosition: {x: -12.5, y: 9.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

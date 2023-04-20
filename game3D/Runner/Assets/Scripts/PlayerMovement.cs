@@ -6,25 +6,51 @@ using static System.Collections.Specialized.BitVector32;
 public class PlayerMovement : MonoBehaviour
 {
     public GameObject level;
-    public uint remainingJumps;
+
+    public bool isGrounded;
+
+    public float speed;
+    public float jumpForce;
+    public float jumpCount;
+    public float turnAngle;
+
     // Start is called before the first frame update
     void Start()
     {
-        remainingJumps = 2;
+        isGrounded = true;
+        speed = 5f;
+        jumpForce = 5f;
+        jumpCount = 0;
+        turnAngle = 90f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (GetComponent<Rigidbody>().velocity.y == 0 && remainingJumps < 2)
-            remainingJumps = 2;
+        transform.Translate(Vector3.forward * speed * Time.deltaTime);
 
-        if (Input.GetKeyDown("space") && remainingJumps > 0)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            GetComponent<Rigidbody>().velocity = new Vector3(0, 5, 0);
-            --remainingJumps;
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, Vector3.down, out hit))
+            {
+                if (hit.collider.tag == "Floor" && jumpCount < 2)
+                {
+                    GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                    jumpCount++;
+                }
+                else if (hit.collider.tag == "Turn")
+                {
+                    transform.Rotate(Vector3.up, turnAngle);
+                    turnAngle = (turnAngle == 90f) ? -90f : 90f;
+                }
+            }
         }
 
+        if (isGrounded)
+        {
+            jumpCount = 0;
+        }
         //level.newSectionProcedure();
     }
 }
