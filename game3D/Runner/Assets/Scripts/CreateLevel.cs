@@ -6,22 +6,45 @@ public class CreateLevel : MonoBehaviour
 {
     public GameObject wallFloorPrefab, wallTurnRightPrefab, wallTurnLeftPrefab;
 
+    Queue<GameObject> sections = new Queue<GameObject>();
+
     // Start is called before the first frame update
     void Start()
     {
         GameObject section;
 
-        section = new GameObject("Section");
-        createNewSection(section);
-        section.transform.parent = transform;
-        /*
+        float lastX = 0.0f;
+        float lastZ = 0.0f;
+
         for (uint i=0; i<5; i++)
         {
             section = new GameObject("Section");
             createNewSection(section);
+
+            if (i == 0)
+            {
+                section.transform.Translate(0.0f, 0.0f, 0.0f);
+                section.transform.Rotate(0.0f, 0.0f, 0.0f);
+            }
+            else if (i % 2 == 0)
+            {
+                lastX += 10.0f;
+                lastZ += 25.0f;
+                section.transform.Translate(lastX, 0.0f, lastZ);
+                section.transform.Rotate(0.0f, 0.0f, 0.0f);
+            }
+            else
+            {
+                lastX += 20.0f;
+                lastZ += 5.0f;
+                section.transform.Translate(lastX, 0.0f, lastZ);
+                section.transform.Rotate(0.0f, 90.0f, 0.0f);
+
+            }
+
             section.transform.parent = transform;
+            sections.Enqueue(section);
         }
-        */
     }
 
     // Update is called once per frame
