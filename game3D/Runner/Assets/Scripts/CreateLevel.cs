@@ -13,35 +13,34 @@ public class CreateLevel : MonoBehaviour
     {
         GameObject section;
 
-        float lastX = 0.0f;
-        float lastZ = 0.0f;
+        float lastX = -60.0f; // Virtual previous of the first section
+        float lastZ = -60.0f; // Virtual previous of the first section
+        float previousSize = 5; // Random in the future
 
-        for (uint i=0; i<5; i++)
+        for (uint i=0; i<7; i++)
         {
             section = new GameObject("Section");
-            createNewSection(section);
+            int sectionSize = 5; // RANDOM IN THE FUTURE
+            createNewSection(section, sectionSize);
 
-            if (i == 0)
-            {
-                section.transform.Translate(0.0f, 0.0f, 0.0f);
-                section.transform.Rotate(0.0f, 0.0f, 0.0f);
-            }
-            else if (i % 2 == 0)
+            if (i % 2 != 0)
             {
                 lastX += 10.0f;
-                lastZ += 25.0f;
+                lastZ += previousSize * 5.0f;
                 section.transform.Translate(lastX, 0.0f, lastZ);
                 section.transform.Rotate(0.0f, 0.0f, 0.0f);
             }
             else
             {
-                lastX += 20.0f;
+                lastX += (previousSize-1) * 5.0f;
                 lastZ += 5.0f;
                 section.transform.Translate(lastX, 0.0f, lastZ);
                 section.transform.Rotate(0.0f, 90.0f, 0.0f);
 
             }
 
+            // ACTUALIZAR PREVOUS SIZE
+            previousSize = sectionSize;
             section.transform.parent = transform;
             sections.Enqueue(section);
         }
@@ -63,15 +62,20 @@ public class CreateLevel : MonoBehaviour
     }
 
     // Create new section
-    void createNewSection(GameObject section)
+    void createNewSection(GameObject section, int sectionSize)
     {
         GameObject chunk;
-        int n = 5; // RANDOM IN THE FUTURE
-        for (uint i = 0; i < n; i++)
+
+        for (uint i = 0; i < sectionSize; i++)
         {
             chunk = (GameObject)Instantiate(wallFloorPrefab);
             chunk.transform.Translate(0.0f + i * 5.0f, 0.0f, 0.0f); // CAMIBAR EJES DE COORDS(?)
             chunk.transform.parent = section.transform;
         }
+    }
+
+    void newSectionProcedure()
+    {
+        // create a new section and destroy the first one of the queue
     }
 }
