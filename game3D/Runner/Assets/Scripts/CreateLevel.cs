@@ -8,42 +8,24 @@ public class CreateLevel : MonoBehaviour
 
     Queue<GameObject> sections = new Queue<GameObject>();
 
+    float lastX;
+    float lastZ;
+    float previousSize;
+    int nthSection;
+
     // Start is called before the first frame update
     void Start()
     {
-        GameObject section;
-
-        float lastX = -60.0f; // Virtual previous of the first section
-        float lastZ = -55.0f; // Virtual previous of the first section
-        float previousSize = 5; // Random in the future
+        lastX = -60.0f; // Virtual previous of the first section
+        lastZ = -55.0f; // Virtual previous of the first section
+        previousSize = 5; // Random in the future
+        nthSection = 0;
 
         for (uint i=0; i<7; i++)
         {
-            section = new GameObject("Section");
-            int sectionSize = 5; // RANDOM IN THE FUTURE
-            createNewSection(section, sectionSize, i%2!=0);
-
-            if (i % 2 != 0)
-            {
-                //lastX += 10.0f;
-                lastX += 5.0f;
-                lastZ += previousSize * 5.0f;
-                section.transform.Translate(lastX, 0.0f, lastZ);
-                section.transform.Rotate(0.0f, 0.0f, 0.0f);
-            }
-            else
-            {
-                lastX += (previousSize-1) * 5.0f;
-                //lastZ += 5.0f;
-                section.transform.Translate(lastX, 0.0f, lastZ);
-                section.transform.Rotate(0.0f, 90.0f, 0.0f);
-
-            }
-
-            // ACTUALIZAR PREVOUS SIZE
-            previousSize = sectionSize;
-            section.transform.parent = transform;
-            sections.Enqueue(section);
+            nthSection++;
+            GameObject newSection = createSection();
+            sections.Enqueue(newSection);
         }
     }
 
@@ -63,7 +45,35 @@ public class CreateLevel : MonoBehaviour
     }
 
     // Create new section
-    void createNewSection(GameObject section, int sectionSize, bool bTurnRight)
+    GameObject createSection()
+    {
+        GameObject section;
+        section = new GameObject("Section");
+
+        int sectionSize = 5; // RANDOM IN THE FUTURE
+        createSectionChunks(section, sectionSize);
+
+        if (nthSection % 2 == 0)
+        {
+            lastX += 5.0f;
+            lastZ += previousSize * 5.0f;
+            section.transform.Translate(lastX, 0.0f, lastZ);
+            section.transform.Rotate(0.0f, 0.0f, 0.0f);
+        }
+        else
+        {
+            lastX += (previousSize - 1) * 5.0f;
+            section.transform.Translate(lastX, 0.0f, lastZ);
+            section.transform.Rotate(0.0f, 90.0f, 0.0f);
+        }
+
+        previousSize = sectionSize;
+        section.transform.parent = transform;
+
+        return section;
+    }
+
+    void createSectionChunks(GameObject section, int sectionSize)
     {
         GameObject chunk = null;
 
@@ -73,7 +83,7 @@ public class CreateLevel : MonoBehaviour
                 chunk = (GameObject)Instantiate(wallFloorPrefab);
             else if (i == 0)
             {
-                if (bTurnRight)
+                if (nthSection % 2 == 0)
                     chunk = (GameObject)Instantiate(wallTurnRightPrefab);
                 else
                     chunk = (GameObject)Instantiate(wallTurnLeftPrefab);
@@ -84,8 +94,12 @@ public class CreateLevel : MonoBehaviour
         }
     }
 
-    void newSectionProcedure()
+    public void newSectionProcedure()
     {
-        // create a new section and destroy the first one of the queue
+        nthSection++;
+        GameObject newSection = createSection();
+        sections.Enqueue(newSection);
+
+        Destroy(sections.Dequeue());
     }
 }

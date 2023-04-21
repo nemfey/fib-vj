@@ -9,7 +9,7 @@ public class CameraMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        speed = new Vector3(2f, 0f, 2f);
     }
 
     // Update is called once per frame

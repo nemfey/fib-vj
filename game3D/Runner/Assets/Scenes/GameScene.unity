@@ -319,7 +319,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 961735858}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8cb729445b05aed43957579b3cba22bf, type: 3}
   m_Name: 
@@ -459,10 +459,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: {fileID: 238114688}
+  isGrounded: 0
   speed: 0
   jumpForce: 0
-  remainingJumps: 0
-  turnAngle: 0
+  jumpCount: 0
+  rightTurnAngle: 0
+  leftTurnAngle: 0
 --- !u!54 &1945719393
 Rigidbody:
   m_ObjectHideFlags: 0

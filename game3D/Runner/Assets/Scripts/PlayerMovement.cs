@@ -12,7 +12,8 @@ public class PlayerMovement : MonoBehaviour
     public float speed;
     public float jumpForce;
     public float jumpCount;
-    public float turnAngle;
+    public float rightTurnAngle;
+    public float leftTurnAngle;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +22,8 @@ public class PlayerMovement : MonoBehaviour
         speed = 5f;
         jumpForce = 5f;
         jumpCount = 0;
-        turnAngle = 90f;
+        rightTurnAngle = 90f;
+        leftTurnAngle = -90f;
     }
 
     // Update is called once per frame
@@ -39,10 +41,15 @@ public class PlayerMovement : MonoBehaviour
                     GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
                     jumpCount++;
                 }
-                else if (hit.collider.tag == "Turn")
+                else if (hit.collider.tag == "RightTurn")
                 {
-                    transform.Rotate(Vector3.up, turnAngle);
-                    turnAngle = (turnAngle == 90f) ? -90f : 90f;
+                    transform.Rotate(Vector3.up, rightTurnAngle);
+                    level.GetComponent<CreateLevel>().newSectionProcedure();
+                }
+                else if (hit.collider.tag == "LeftTurn")
+                {
+                    transform.Rotate(Vector3.up, leftTurnAngle);
+                    level.GetComponent<CreateLevel>().newSectionProcedure();
                 }
             }
         }
@@ -51,6 +58,5 @@ public class PlayerMovement : MonoBehaviour
         {
             jumpCount = 0;
         }
-        //level.newSectionProcedure();
     }
 }

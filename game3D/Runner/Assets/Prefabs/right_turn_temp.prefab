@@ -17,7 +17,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4322115119348971012, guid: ba7f6c9f424678543bd2308f722b52d1, type: 3}
       propertyPath: m_TagString
-      value: Turn
+      value: RightTurn
       objectReference: {fileID: 0}
     - target: {fileID: 4322115119349000740, guid: ba7f6c9f424678543bd2308f722b52d1, type: 3}
       propertyPath: m_RootOrder

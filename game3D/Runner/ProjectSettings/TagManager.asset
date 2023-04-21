@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Turn
   - Floor
+  - RightTurn
+  - LeftTurn
   layers:
   - Default
   - TransparentFX
