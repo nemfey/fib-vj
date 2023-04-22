@@ -7,18 +7,24 @@ public class PlayerMovement : MonoBehaviour
 {
     public GameObject level;
 
-    public bool isGrounded;
-
     public float speed;
     public float jumpForce;
-    public float jumpCount;
-    public float rightTurnAngle;
-    public float leftTurnAngle;
+    float jumpCount;
+    float rightTurnAngle;
+    float leftTurnAngle;
+
+    bool isGrounded; // falta implementar
+    bool turnRight;
+
+    float tolerance = 0.1f;
+    float smoothness = 1f;
+    float centerSection = -12.5f;
 
     // Start is called before the first frame update
     void Start()
     {
         isGrounded = true;
+        turnRight = true;
         speed = 5f;
         jumpForce = 5f;
         jumpCount = 0;
@@ -29,7 +35,8 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        //transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        playerMovement();
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -41,15 +48,23 @@ public class PlayerMovement : MonoBehaviour
                     GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
                     jumpCount++;
                 }
-                else if (hit.collider.tag == "RightTurn")
+                else if (hit.collider.tag == "RightTurn" && turnRight)
                 {
                     transform.Rotate(Vector3.up, rightTurnAngle);
+                    // interpolacion hasta el centro de la carretera
+
                     level.GetComponent<CreateLevel>().newSectionProcedure();
+                    turnRight = false;
+                    centerSection += 10f;
                 }
-                else if (hit.collider.tag == "LeftTurn")
+                else if (hit.collider.tag == "LeftTurn" && !turnRight)
                 {
                     transform.Rotate(Vector3.up, leftTurnAngle);
+
                     level.GetComponent<CreateLevel>().newSectionProcedure();
+                    turnRight = true;
+                    centerSection += 15f;
+
                 }
             }
         }
@@ -57,6 +72,26 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded)
         {
             jumpCount = 0;
+        }
+    }
+
+    void playerMovement()
+    {
+        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+
+        // how far are we from the center
+        float axisValue = turnRight ? transform.position.x : transform.position.z;
+        if (Mathf.Abs(axisValue - centerSection) > tolerance)
+        {
+            //float newAxisValue = Mathf.Lerp(axisValue, centerSection, Time.deltaTime * smoothness);
+            float newAxisValue = Mathf.MoveTowards(axisValue, centerSection, Time.deltaTime * smoothness);
+
+            // Assume we just turned right, hence, center X value
+            Vector3 newPosition = new Vector3(newAxisValue, transform.position.y, transform.position.z);
+            // if we just turned left, then
+            if (!turnRight)
+                newPosition = new Vector3(transform.position.x, transform.position.y, newAxisValue);
+            transform.position = newPosition;
         }
     }
 }
