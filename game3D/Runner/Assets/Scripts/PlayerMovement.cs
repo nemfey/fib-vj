@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
     {
         isGrounded = true;
         turnRight = true;
-        speed = 5f;
+        speed = 10f;
         jumpForce = 5f;
         jumpCount = 0;
         rightTurnAngle = 90f;
