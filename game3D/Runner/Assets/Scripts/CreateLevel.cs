@@ -50,7 +50,11 @@ public class CreateLevel : MonoBehaviour
         GameObject section;
         section = new GameObject("Section");
 
-        int sectionSize = 5; // RANDOM IN THE FUTURE
+        System.Random random = new System.Random();
+        int sectionSize = nthSection < 4 ? 5 : random.Next(4, 8);
+        //int sectionSize = random.Next(4, 8);
+
+        previousSize = sectionSize;
         createSectionChunks(section, sectionSize);
 
         if (nthSection % 2 == 0)

@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     float rightTurnAngle;
     float leftTurnAngle;
 
-    bool isGrounded; // falta implementar
+    bool isGrounded;
     bool turnRight;
 
     float tolerance = 0.1f;
@@ -35,7 +35,6 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //transform.Translate(Vector3.forward * speed * Time.deltaTime);
         playerMovement();
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -49,23 +48,21 @@ public class PlayerMovement : MonoBehaviour
                     jumpCount++;
                     isGrounded = false;
                 }
-                else if (hit.collider.tag == "RightTurn" && turnRight)
+                else if (hit.collider.tag == "RightTurn" && turnRight && isGrounded)
                 {
                     transform.Rotate(Vector3.up, rightTurnAngle);
-                    // interpolacion hasta el centro de la carretera
 
                     level.GetComponent<CreateLevel>().newSectionProcedure();
                     turnRight = false;
-                    centerSection += 10f;
+                    centerSection = hit.collider.bounds.center.z;
                 }
-                else if (hit.collider.tag == "LeftTurn" && !turnRight)
+                else if (hit.collider.tag == "LeftTurn" && !turnRight && isGrounded)
                 {
                     transform.Rotate(Vector3.up, leftTurnAngle);
 
                     level.GetComponent<CreateLevel>().newSectionProcedure();
                     turnRight = true;
-                    centerSection += 15f;
-
+                    centerSection = hit.collider.bounds.center.x;
                 }
             }
         }
@@ -93,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnCollisionEnter(Collision c)
     {
-        if (c.collider.tag == "Floor")
+        if (c.collider.tag == "Floor" || c.collider.tag == "RightTurn" || c.collider.tag == "LeftTurn")
         {
             jumpCount = 0;
             isGrounded = true;
