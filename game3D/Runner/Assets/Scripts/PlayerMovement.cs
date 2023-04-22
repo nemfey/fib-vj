@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float speed;
     public float jumpForce;
-    float jumpCount;
+    public float jumpCount;
     float rightTurnAngle;
     float leftTurnAngle;
 
@@ -47,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
                     jumpCount++;
+                    isGrounded = false;
                 }
                 else if (hit.collider.tag == "RightTurn" && turnRight)
                 {
@@ -68,11 +69,6 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
-
-        if (isGrounded)
-        {
-            jumpCount = 0;
-        }
     }
 
     void playerMovement()
@@ -92,6 +88,15 @@ public class PlayerMovement : MonoBehaviour
             if (!turnRight)
                 newPosition = new Vector3(transform.position.x, transform.position.y, newAxisValue);
             transform.position = newPosition;
+        }
+    }
+
+    void OnCollisionEnter(Collision c)
+    {
+        if (c.collider.tag == "Floor")
+        {
+            jumpCount = 0;
+            isGrounded = true;
         }
     }
 }
