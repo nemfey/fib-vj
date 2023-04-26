@@ -13,8 +13,9 @@ public class PlayerMovement : MonoBehaviour
     float rightTurnAngle;
     float leftTurnAngle;
 
-    bool isGrounded;
-    bool turnRight;
+    bool bGrounded;
+    bool bTurnRight;
+    bool bCentered;
 
     float tolerance = 0.1f;
     float smoothness = 1f;
@@ -23,8 +24,9 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        isGrounded = true;
-        turnRight = true;
+        bGrounded = true;
+        bTurnRight = true;
+        bCentered = false;
         speed = 5f;
         jumpForce = 5f;
         jumpCount = 0;
@@ -46,22 +48,24 @@ public class PlayerMovement : MonoBehaviour
                 {
                     GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
                     jumpCount++;
-                    isGrounded = false;
+                    bGrounded = false;
                 }
-                else if (hit.collider.tag == "RightTurn" && turnRight && isGrounded)
+                else if (hit.collider.tag == "RightTurn" && bTurnRight && bGrounded)
                 {
                     transform.Rotate(Vector3.up, rightTurnAngle);
 
                     level.GetComponent<CreateLevel>().newSectionProcedure();
-                    turnRight = false;
+                    bTurnRight = false;
+                    bCentered = false;
                     centerSection = hit.collider.bounds.center.z;
                 }
-                else if (hit.collider.tag == "LeftTurn" && !turnRight && isGrounded)
+                else if (hit.collider.tag == "LeftTurn" && !bTurnRight && bGrounded)
                 {
                     transform.Rotate(Vector3.up, leftTurnAngle);
 
                     level.GetComponent<CreateLevel>().newSectionProcedure();
-                    turnRight = true;
+                    bTurnRight = true;
+                    bCentered = false;
                     centerSection = hit.collider.bounds.center.x;
                 }
             }
@@ -72,8 +76,17 @@ public class PlayerMovement : MonoBehaviour
     {
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
 
+        if (!bCentered)
+            moveToCenter();
+
+        //if (!bFrontAngle)
+        //    rotateToFront();
+    }
+
+    void moveToCenter()
+    {
         // how far are we from the center
-        float axisValue = turnRight ? transform.position.x : transform.position.z;
+        float axisValue = bTurnRight ? transform.position.x : transform.position.z;
         if (Mathf.Abs(axisValue - centerSection) > tolerance)
         {
             //float newAxisValue = Mathf.Lerp(axisValue, centerSection, Time.deltaTime * smoothness);
@@ -82,9 +95,13 @@ public class PlayerMovement : MonoBehaviour
             // Assume we just turned right, hence, center X value
             Vector3 newPosition = new Vector3(newAxisValue, transform.position.y, transform.position.z);
             // if we just turned left, then
-            if (!turnRight)
+            if (!bTurnRight)
                 newPosition = new Vector3(transform.position.x, transform.position.y, newAxisValue);
             transform.position = newPosition;
+        }
+        else
+        {
+            bCentered = true;
         }
     }
 
@@ -93,7 +110,7 @@ public class PlayerMovement : MonoBehaviour
         if (c.collider.tag == "Floor" || c.collider.tag == "RightTurn" || c.collider.tag == "LeftTurn")
         {
             jumpCount = 0;
-            isGrounded = true;
+            bGrounded = true;
         }
     }
 }
