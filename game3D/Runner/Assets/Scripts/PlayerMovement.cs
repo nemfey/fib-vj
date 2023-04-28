@@ -44,13 +44,14 @@ public class PlayerMovement : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(transform.position, Vector3.down, out hit))
             {
-                if (hit.collider.tag == "Floor" && jumpCount < 2)
+                string collider_tag = hit.collider.tag;
+                if ((collider_tag == "Floor" || collider_tag == "Obstacle") && jumpCount < 2)
                 {
                     GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
                     jumpCount++;
                     bGrounded = false;
                 }
-                else if (hit.collider.tag == "RightTurn" && bTurnRight && bGrounded)
+                else if (collider_tag == "RightTurn" && bTurnRight && bGrounded)
                 {
                     transform.Rotate(Vector3.up, rightTurnAngle);
 
@@ -59,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
                     bCentered = false;
                     centerSection = hit.collider.bounds.center.z;
                 }
-                else if (hit.collider.tag == "LeftTurn" && !bTurnRight && bGrounded)
+                else if (collider_tag == "LeftTurn" && !bTurnRight && bGrounded)
                 {
                     transform.Rotate(Vector3.up, leftTurnAngle);
 
@@ -107,10 +108,15 @@ public class PlayerMovement : MonoBehaviour
 
     void OnCollisionEnter(Collision c)
     {
-        if (c.collider.tag == "Floor" || c.collider.tag == "RightTurn" || c.collider.tag == "LeftTurn")
+        string collider_tag = c.collider.tag;
+        if (collider_tag == "Floor" || collider_tag == "RightTurn" || collider_tag == "LeftTurn")
         {
             jumpCount = 0;
             bGrounded = true;
+        }
+        if (collider_tag == "Obstacle")
+        {
+            Debug.Log("IM DEAD!");
         }
     }
 }

@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class CreateLevel : MonoBehaviour
 {
+    // paths
     public GameObject wallFloorPrefab, wallTurnRightPrefab, wallTurnLeftPrefab;
+
+    // obstacles
+    public GameObject wallBarrelsPrefab;
 
     Queue<GameObject> sections = new Queue<GameObject>();
 
@@ -67,8 +71,6 @@ public class CreateLevel : MonoBehaviour
             section.transform.Rotate(0.0f, 90.0f, 0.0f);
         }
 
-        Debug.Log(nthSection + ": " + lastX + " " + lastZ + " size: "+sectionSize);
-
         previousSize = sectionSize;
         section.transform.parent = transform;
         nthSection++;
@@ -80,16 +82,25 @@ public class CreateLevel : MonoBehaviour
     {
         GameObject chunk = null;
 
+        // chunk generator obstacle
+        int obstacleChunk = Random.Range(1, sectionSize - 1);
+
         for (uint i = 0; i < sectionSize; i++)
         {
-            if (i != sectionSize - 1)
-                chunk = (GameObject)Instantiate(wallFloorPrefab);
-            else if (i == sectionSize-1)
+            if (i == obstacleChunk && nthSection > 2)
+            {
+                chunk = (GameObject)Instantiate(wallBarrelsPrefab);
+            }
+            else if (i == sectionSize - 1)
             {
                 if (nthSection % 2 == 0)
                     chunk = (GameObject)Instantiate(wallTurnRightPrefab);
                 else
                     chunk = (GameObject)Instantiate(wallTurnLeftPrefab);
+            }
+            else
+            {
+                chunk = (GameObject)Instantiate(wallFloorPrefab);
             }
 
             chunk.transform.Translate(0.0f, 0.0f, 0.0f + i * 5.0f);
