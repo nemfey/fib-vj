@@ -170,6 +170,7 @@ MonoBehaviour:
   wallFloorPrefab: {fileID: 4677419076588921854, guid: 80edc3c345752e8439713d9aeb916b59, type: 3}
   wallTurnRightPrefab: {fileID: 6680551559078363868, guid: 2ce74d523589c304690dfee02af94cce, type: 3}
   wallTurnLeftPrefab: {fileID: 8187671838856122812, guid: 96b51d78682be074a8bb86ea75543b54, type: 3}
+  wallBarrelsPrefab: {fileID: 7233607683970063518, guid: b8cef0c84c963c04c936d28bcdd086c1, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
