@@ -61,14 +61,14 @@ public class CreateLevel : MonoBehaviour
         {
             lastX += 5.0f;
             lastZ += previousSize * 5.0f;
-            section.transform.Translate(lastX, 0.0f, lastZ);
-            section.transform.Rotate(0.0f, 0.0f, 0.0f);
+            //section.transform.Translate(lastX, 0.0f, lastZ);
+            //section.transform.Rotate(0.0f, 0.0f, 0.0f);
         }
         else
         {
             lastX += (previousSize - 1) * 5.0f;
-            section.transform.Translate(lastX, 0.0f, lastZ);
-            section.transform.Rotate(0.0f, 90.0f, 0.0f);
+            //section.transform.Translate(lastX, 0.0f, lastZ);
+            //section.transform.Rotate(0.0f, 90.0f, 0.0f);
         }
 
         previousSize = sectionSize;

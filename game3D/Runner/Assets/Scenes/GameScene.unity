@@ -167,9 +167,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fd6efb563099fd4f8ab68f2ba8fed00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wallFloorPrefab: {fileID: 4322115119348971012, guid: ba7f6c9f424678543bd2308f722b52d1, type: 3}
-  wallTurnRightPrefab: {fileID: 5769834863951848276, guid: 28d9299cc18b40541bf345fb2f34b1f3, type: 3}
-  wallTurnLeftPrefab: {fileID: 7991989000120848551, guid: 5f85a6cb60aa73f4c89660a780c7eeca, type: 3}
+  wallFloorPrefab: {fileID: 4677419076588921854, guid: 80edc3c345752e8439713d9aeb916b59, type: 3}
+  wallTurnRightPrefab: {fileID: 6680551559078363868, guid: 2ce74d523589c304690dfee02af94cce, type: 3}
+  wallTurnLeftPrefab: {fileID: 8187671838856122812, guid: 96b51d78682be074a8bb86ea75543b54, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
