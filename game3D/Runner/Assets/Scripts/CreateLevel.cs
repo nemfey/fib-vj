@@ -23,7 +23,6 @@ public class CreateLevel : MonoBehaviour
 
         for (uint i=0; i<7; i++)
         {
-            nthSection++;
             GameObject newSection = createSection();
             sections.Enqueue(newSection);
         }
@@ -50,29 +49,29 @@ public class CreateLevel : MonoBehaviour
         GameObject section;
         section = new GameObject("Section");
 
-        System.Random random = new System.Random();
-        int sectionSize = nthSection < 4 ? 5 : random.Next(4, 8);
-        //int sectionSize = random.Next(4, 8);
+        int sectionSize = nthSection < 4 ? 5 : Random.Range(4, 8);
 
-        previousSize = sectionSize;
         createSectionChunks(section, sectionSize);
 
         if (nthSection % 2 == 0)
         {
-            lastX += 5.0f;
-            lastZ += previousSize * 5.0f;
-            //section.transform.Translate(lastX, 0.0f, lastZ);
-            //section.transform.Rotate(0.0f, 0.0f, 0.0f);
+            lastX += previousSize * 5.0f;
+            lastZ += 5.0f;
+            section.transform.Translate(lastX, 0.0f, lastZ);
+            section.transform.Rotate(0.0f, 0.0f, 0.0f);
         }
         else
         {
-            lastX += (previousSize - 1) * 5.0f;
-            //section.transform.Translate(lastX, 0.0f, lastZ);
-            //section.transform.Rotate(0.0f, 90.0f, 0.0f);
+            lastZ += (previousSize - 1) * 5.0f;
+            section.transform.Translate(lastX, 0.0f, lastZ);
+            section.transform.Rotate(0.0f, 90.0f, 0.0f);
         }
+
+        Debug.Log(nthSection + ": " + lastX + " " + lastZ + " size: "+sectionSize);
 
         previousSize = sectionSize;
         section.transform.parent = transform;
+        nthSection++;
 
         return section;
     }
@@ -83,9 +82,9 @@ public class CreateLevel : MonoBehaviour
 
         for (uint i = 0; i < sectionSize; i++)
         {
-            if (i != 0)
+            if (i != sectionSize - 1)
                 chunk = (GameObject)Instantiate(wallFloorPrefab);
-            else if (i == 0)
+            else if (i == sectionSize-1)
             {
                 if (nthSection % 2 == 0)
                     chunk = (GameObject)Instantiate(wallTurnRightPrefab);
@@ -93,14 +92,13 @@ public class CreateLevel : MonoBehaviour
                     chunk = (GameObject)Instantiate(wallTurnLeftPrefab);
             }
 
-            chunk.transform.Translate(0.0f + i * 5.0f, 0.0f, 0.0f); // CAMIBAR EJES DE COORDS(?)
+            chunk.transform.Translate(0.0f, 0.0f, 0.0f + i * 5.0f);
             chunk.transform.parent = section.transform;
         }
     }
 
     public void newSectionProcedure()
     {
-        nthSection++;
         GameObject newSection = createSection();
         sections.Enqueue(newSection);
 
