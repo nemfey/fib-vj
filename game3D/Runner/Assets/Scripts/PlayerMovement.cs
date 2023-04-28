@@ -13,8 +13,9 @@ public class PlayerMovement : MonoBehaviour
     float rightTurnAngle;
     float leftTurnAngle;
 
-    bool isGrounded; // falta implementar
-    bool turnRight;
+    bool bGrounded;
+    bool bTurnRight;
+    bool bCentered;
 
     float tolerance = 0.1f;
     float smoothness = 1f;
@@ -23,9 +24,10 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        isGrounded = true;
-        turnRight = true;
-        speed = 10f;
+        bGrounded = true;
+        bTurnRight = true;
+        bCentered = false;
+        speed = 5f;
         jumpForce = 5f;
         jumpCount = 0;
         rightTurnAngle = 90f;
@@ -35,7 +37,6 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //transform.Translate(Vector3.forward * speed * Time.deltaTime);
         playerMovement();
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -43,29 +44,30 @@ public class PlayerMovement : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(transform.position, Vector3.down, out hit))
             {
-                if (hit.collider.tag == "Floor" && jumpCount < 2)
+                string collider_tag = hit.collider.tag;
+                if ((collider_tag == "Floor" || collider_tag == "Obstacle") && jumpCount < 2)
                 {
                     GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
                     jumpCount++;
-                    isGrounded = false;
+                    bGrounded = false;
                 }
-                else if (hit.collider.tag == "RightTurn" && turnRight)
+                else if (collider_tag == "RightTurn" && bTurnRight && bGrounded)
                 {
                     transform.Rotate(Vector3.up, rightTurnAngle);
-                    // interpolacion hasta el centro de la carretera
 
                     level.GetComponent<CreateLevel>().newSectionProcedure();
-                    turnRight = false;
-                    centerSection += 10f;
+                    bTurnRight = false;
+                    bCentered = false;
+                    centerSection = hit.collider.bounds.center.z;
                 }
-                else if (hit.collider.tag == "LeftTurn" && !turnRight)
+                else if (collider_tag == "LeftTurn" && !bTurnRight && bGrounded)
                 {
                     transform.Rotate(Vector3.up, leftTurnAngle);
 
                     level.GetComponent<CreateLevel>().newSectionProcedure();
-                    turnRight = true;
-                    centerSection += 15f;
-
+                    bTurnRight = true;
+                    bCentered = false;
+                    centerSection = hit.collider.bounds.center.x;
                 }
             }
         }
@@ -75,8 +77,17 @@ public class PlayerMovement : MonoBehaviour
     {
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
 
+        if (!bCentered)
+            moveToCenter();
+
+        //if (!bFrontAngle)
+        //    rotateToFront();
+    }
+
+    void moveToCenter()
+    {
         // how far are we from the center
-        float axisValue = turnRight ? transform.position.x : transform.position.z;
+        float axisValue = bTurnRight ? transform.position.x : transform.position.z;
         if (Mathf.Abs(axisValue - centerSection) > tolerance)
         {
             //float newAxisValue = Mathf.Lerp(axisValue, centerSection, Time.deltaTime * smoothness);
@@ -85,18 +96,27 @@ public class PlayerMovement : MonoBehaviour
             // Assume we just turned right, hence, center X value
             Vector3 newPosition = new Vector3(newAxisValue, transform.position.y, transform.position.z);
             // if we just turned left, then
-            if (!turnRight)
+            if (!bTurnRight)
                 newPosition = new Vector3(transform.position.x, transform.position.y, newAxisValue);
             transform.position = newPosition;
+        }
+        else
+        {
+            bCentered = true;
         }
     }
 
     void OnCollisionEnter(Collision c)
     {
-        if (c.collider.tag == "Floor")
+        string collider_tag = c.collider.tag;
+        if (collider_tag == "Floor" || collider_tag == "RightTurn" || collider_tag == "LeftTurn")
         {
             jumpCount = 0;
-            isGrounded = true;
+            bGrounded = true;
+        }
+        if (collider_tag == "Obstacle")
+        {
+            Debug.Log("IM DEAD!");
         }
     }
 }

@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class CreateLevel : MonoBehaviour
 {
+    // paths
     public GameObject wallFloorPrefab, wallTurnRightPrefab, wallTurnLeftPrefab;
+
+    // obstacles
+    public GameObject wallBarrelsPrefab;
 
     Queue<GameObject> sections = new Queue<GameObject>();
 
@@ -23,7 +27,6 @@ public class CreateLevel : MonoBehaviour
 
         for (uint i=0; i<7; i++)
         {
-            nthSection++;
             GameObject newSection = createSection();
             sections.Enqueue(newSection);
         }
@@ -50,25 +53,27 @@ public class CreateLevel : MonoBehaviour
         GameObject section;
         section = new GameObject("Section");
 
-        int sectionSize = 5; // RANDOM IN THE FUTURE
+        int sectionSize = nthSection < 4 ? 5 : Random.Range(4, 8);
+
         createSectionChunks(section, sectionSize);
 
         if (nthSection % 2 == 0)
         {
-            lastX += 5.0f;
-            lastZ += previousSize * 5.0f;
+            lastX += previousSize * 5.0f;
+            lastZ += 5.0f;
             section.transform.Translate(lastX, 0.0f, lastZ);
             section.transform.Rotate(0.0f, 0.0f, 0.0f);
         }
         else
         {
-            lastX += (previousSize - 1) * 5.0f;
+            lastZ += (previousSize - 1) * 5.0f;
             section.transform.Translate(lastX, 0.0f, lastZ);
             section.transform.Rotate(0.0f, 90.0f, 0.0f);
         }
 
         previousSize = sectionSize;
         section.transform.parent = transform;
+        nthSection++;
 
         return section;
     }
@@ -77,26 +82,34 @@ public class CreateLevel : MonoBehaviour
     {
         GameObject chunk = null;
 
+        // chunk generator obstacle
+        int obstacleChunk = Random.Range(1, sectionSize - 1);
+
         for (uint i = 0; i < sectionSize; i++)
         {
-            if (i != 0)
-                chunk = (GameObject)Instantiate(wallFloorPrefab);
-            else if (i == 0)
+            if (i == obstacleChunk && nthSection > 2)
+            {
+                chunk = (GameObject)Instantiate(wallBarrelsPrefab);
+            }
+            else if (i == sectionSize - 1)
             {
                 if (nthSection % 2 == 0)
                     chunk = (GameObject)Instantiate(wallTurnRightPrefab);
                 else
                     chunk = (GameObject)Instantiate(wallTurnLeftPrefab);
             }
+            else
+            {
+                chunk = (GameObject)Instantiate(wallFloorPrefab);
+            }
 
-            chunk.transform.Translate(0.0f + i * 5.0f, 0.0f, 0.0f); // CAMIBAR EJES DE COORDS(?)
+            chunk.transform.Translate(0.0f, 0.0f, 0.0f + i * 5.0f);
             chunk.transform.parent = section.transform;
         }
     }
 
     public void newSectionProcedure()
     {
-        nthSection++;
         GameObject newSection = createSection();
         sections.Enqueue(newSection);
 
