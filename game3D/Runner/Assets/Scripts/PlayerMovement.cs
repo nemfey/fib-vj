@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
         bGrounded = true;
         bTurnRight = true;
         bCentered = false;
-        speed = 5f;
+        speed = 10f;
         jumpForce = 5f;
         jumpCount = 0;
         rightTurnAngle = 90f;

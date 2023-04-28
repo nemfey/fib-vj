@@ -20,8 +20,8 @@ public class CreateLevel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        lastX = -60.0f; // Virtual previous of the first section
-        lastZ = -55.0f; // Virtual previous of the first section
+        lastX = -60f; // Virtual previous of the first section
+        lastZ = -55f; // Virtual previous of the first section
         previousSize = 5; // Random in the future
         nthSection = 0;
 
@@ -59,16 +59,16 @@ public class CreateLevel : MonoBehaviour
 
         if (nthSection % 2 == 0)
         {
-            lastX += previousSize * 5.0f;
-            lastZ += 5.0f;
-            section.transform.Translate(lastX, 0.0f, lastZ);
-            section.transform.Rotate(0.0f, 0.0f, 0.0f);
+            lastX += previousSize * 5f;
+            lastZ += 5f;
+            section.transform.Translate(lastX, 0f, lastZ);
+            section.transform.Rotate(0f, 0f, 0f);
         }
         else
         {
-            lastZ += (previousSize - 1) * 5.0f;
-            section.transform.Translate(lastX, 0.0f, lastZ);
-            section.transform.Rotate(0.0f, 90.0f, 0.0f);
+            lastZ += (previousSize - 1) * 5f;
+            section.transform.Translate(lastX, 0f, lastZ);
+            section.transform.Rotate(0f, 90f, 0f);
         }
 
         previousSize = sectionSize;
@@ -103,7 +103,7 @@ public class CreateLevel : MonoBehaviour
                 chunk = (GameObject)Instantiate(wallFloorPrefab);
             }
 
-            chunk.transform.Translate(0.0f, 0.0f, 0.0f + i * 5.0f);
+            chunk.transform.Translate(0f, 0f, 0f + i * 5f);
             chunk.transform.parent = section.transform;
         }
     }
