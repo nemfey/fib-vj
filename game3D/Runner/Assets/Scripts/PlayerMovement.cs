@@ -7,47 +7,43 @@ public class PlayerMovement : MonoBehaviour
 {
     public GameObject level;
 
-    public float speed;
-    public float jumpForce;
-    public float jumpCount;
-    float rightTurnAngle;
-    float leftTurnAngle;
+    public float velocity = 10f;
+    public float turnSpeed = 10f;   // de momento no se usa
+    public float jumpSpeed = 5f;
+    public float jumpCount = 0;
 
-    bool bGrounded;
-    bool bTurnRight;
-    bool bCentered;
+    float rightTurnAngle = 90f;     // son de verdad necesarios?
+    float leftTurnAngle = -90f;      // son de verdad necesarios?
+    bool bTurnRight = true;
 
     float tolerance = 0.1f;
     float smoothness = 1f;
     float centerSection = -12.5f;
 
+    RaycastHit hitInfo;
+    bool bGrounded = true;
+
     // Start is called before the first frame update
     void Start()
     {
-        bGrounded = true;
-        bTurnRight = true;
-        bCentered = false;
-        speed = 10f;
-        jumpForce = 5f;
-        jumpCount = 0;
-        rightTurnAngle = 90f;
-        leftTurnAngle = -90f;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        playerMovement();
+        moveForward();
+        moveToCenter();
+        rotate();
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, Vector3.down, out hit))
+            if (Physics.Raycast(transform.position, Vector3.down, out hitInfo))
             {
-                string collider_tag = hit.collider.tag;
+                string collider_tag = hitInfo.collider.tag;
                 if ((collider_tag == "Floor" || collider_tag == "Obstacle") && jumpCount < 2)
                 {
-                    GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                    GetComponent<Rigidbody>().AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
                     jumpCount++;
                     bGrounded = false;
                 }
@@ -57,8 +53,7 @@ public class PlayerMovement : MonoBehaviour
 
                     level.GetComponent<CreateLevel>().newSectionProcedure();
                     bTurnRight = false;
-                    bCentered = false;
-                    centerSection = hit.collider.bounds.center.z;
+                    centerSection = hitInfo.collider.bounds.center.z;
                 }
                 else if (collider_tag == "LeftTurn" && !bTurnRight && bGrounded)
                 {
@@ -66,22 +61,16 @@ public class PlayerMovement : MonoBehaviour
 
                     level.GetComponent<CreateLevel>().newSectionProcedure();
                     bTurnRight = true;
-                    bCentered = false;
-                    centerSection = hit.collider.bounds.center.x;
+                    centerSection = hitInfo.collider.bounds.center.x;
                 }
-            }
+                }
         }
     }
 
-    void playerMovement()
+    void moveForward()
     {
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
-
-        if (!bCentered)
-            moveToCenter();
-
-        //if (!bFrontAngle)
-        //    rotateToFront();
+       transform.position += transform.forward * velocity * Time.deltaTime;
+       //transform.Translate(Vector3.forward * velocity * Time.deltaTime);
     }
 
     void moveToCenter()
@@ -100,10 +89,11 @@ public class PlayerMovement : MonoBehaviour
                 newPosition = new Vector3(transform.position.x, transform.position.y, newAxisValue);
             transform.position = newPosition;
         }
-        else
-        {
-            bCentered = true;
-        }
+    }
+
+    void rotate()
+    {
+
     }
 
     void OnCollisionEnter(Collision c)
