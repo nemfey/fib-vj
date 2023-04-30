@@ -103,7 +103,6 @@ public class CreateLevel : MonoBehaviour
                 chunk = (GameObject)Instantiate(wallBarrelsPrefab);
             }
             else if (i == sectionSize - 1)
-            //if (i == sectionSize - 1)
             {
                 if (nthSection % 2 == 0)
                     chunk = (GameObject)Instantiate(wallTurnRightPrefab);

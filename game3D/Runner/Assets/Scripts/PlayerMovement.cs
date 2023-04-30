@@ -8,25 +8,33 @@ public class PlayerMovement : MonoBehaviour
     public GameObject level;
 
     public float velocity = 10f;
-    public float turnSpeed = 10f;   // de momento no se usa
-    public float jumpSpeed = 5f;
+
+    [SerializeField] Rigidbody rb;
+    public float jumpForce = 15f;
     public float jumpCount = 0;
 
-    float rightTurnAngle = 90f;     // son de verdad necesarios?
-    float leftTurnAngle = -90f;      // son de verdad necesarios?
-    bool bTurnRight = true;
+    float targetAngle = 0f;
+    float turnSpeed = 720f;
 
-    float tolerance = 0.1f;
-    float smoothness = 1f;
+    float smoothness = 2f;
     float centerSection = -12.5f;
 
     RaycastHit hitInfo;
     bool bGrounded = true;
 
+    private bool onSlope()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, out hitInfo))
+        {
+            return hitInfo.normal != Vector3.up;
+        }
+        return false;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -43,57 +51,56 @@ public class PlayerMovement : MonoBehaviour
                 string collider_tag = hitInfo.collider.tag;
                 if ((collider_tag == "Floor" || collider_tag == "Obstacle") && jumpCount < 2)
                 {
-                    GetComponent<Rigidbody>().AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
+                    rb.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
                     jumpCount++;
                     bGrounded = false;
                 }
-                else if (collider_tag == "RightTurn" && bTurnRight && bGrounded)
+                else if (collider_tag == "RightTurn" && targetAngle == 0f && bGrounded)
                 {
-                    transform.Rotate(Vector3.up, rightTurnAngle);
-
-                    level.GetComponent<CreateLevel>().newSectionProcedure();
-                    bTurnRight = false;
                     centerSection = hitInfo.collider.bounds.center.z;
-                }
-                else if (collider_tag == "LeftTurn" && !bTurnRight && bGrounded)
-                {
-                    transform.Rotate(Vector3.up, leftTurnAngle);
+                    targetAngle = 90f;
 
                     level.GetComponent<CreateLevel>().newSectionProcedure();
-                    bTurnRight = true;
+                }
+                else if (collider_tag == "LeftTurn" && targetAngle == 90f && bGrounded)
+                {
                     centerSection = hitInfo.collider.bounds.center.x;
+                    targetAngle = 0f;
+                    
+                    level.GetComponent<CreateLevel>().newSectionProcedure();
                 }
-                }
+            }
+        }
+
+        if (onSlope())
+        {
+            Debug.Log("SLOPE!");
         }
     }
 
     void moveForward()
     {
-       transform.position += transform.forward * velocity * Time.deltaTime;
-       //transform.Translate(Vector3.forward * velocity * Time.deltaTime);
+        transform.position += transform.forward * velocity * Time.deltaTime;
     }
 
     void moveToCenter()
     {
         // how far are we from the center
-        float axisValue = bTurnRight ? transform.position.x : transform.position.z;
-        if (Mathf.Abs(axisValue - centerSection) > tolerance)
-        {
-            //float newAxisValue = Mathf.Lerp(axisValue, centerSection, Time.deltaTime * smoothness);
-            float newAxisValue = Mathf.MoveTowards(axisValue, centerSection, Time.deltaTime * smoothness);
+        float axisValue = targetAngle == 0f ? transform.position.x : transform.position.z;
+        float newAxisValue = Mathf.MoveTowards(axisValue, centerSection, Time.deltaTime * smoothness);
 
-            // Assume we just turned right, hence, center X value
-            Vector3 newPosition = new Vector3(newAxisValue, transform.position.y, transform.position.z);
-            // if we just turned left, then
-            if (!bTurnRight)
-                newPosition = new Vector3(transform.position.x, transform.position.y, newAxisValue);
-            transform.position = newPosition;
-        }
+        // Assume we just turned right, hence, center X value
+        Vector3 newPosition = new Vector3(newAxisValue, transform.position.y, transform.position.z);
+        // if we just turned left, then
+        if (targetAngle == 90f)
+            newPosition = new Vector3(transform.position.x, transform.position.y, newAxisValue);
+        transform.position = newPosition;
     }
 
     void rotate()
     {
-
+        Quaternion targetRotation = Quaternion.Euler(0, targetAngle, 0);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
     }
 
     void OnCollisionEnter(Collision c)
