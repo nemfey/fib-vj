@@ -88,6 +88,9 @@ public class CreateLevel : MonoBehaviour
         GameObject chunk = null;
 
         bool bRampPlaced = false;
+
+        // select a random obstacle between all options
+        // to-do
         // chunk generator obstacle
         int obstacleChunk = Random.Range(1, sectionSize - 1);
 

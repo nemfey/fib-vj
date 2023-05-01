@@ -75,6 +75,7 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
+
         if (onSlope() && bGrounded)
         {
             Debug.Log("SLOPEDOWN!");
