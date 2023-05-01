@@ -396,7 +396,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 20
+  orthographic size: 15
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -462,10 +462,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: {fileID: 238114688}
   velocity: 10
-  turnSpeed: 10
   rb: {fileID: 0}
   jumpForce: 15
   jumpCount: 0
+  bGrounded: 1
 --- !u!54 &1945719393
 Rigidbody:
   m_ObjectHideFlags: 0

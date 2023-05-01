@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     float centerSection = -12.5f;
 
     RaycastHit hitInfo;
-    bool bGrounded = true;
+    public bool bGrounded = true;
 
     private bool onSlope()
     {
@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
     {
         moveForward();
         moveToCenter();
-        rotate();
+        rotateToTargetAngle();
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -72,9 +72,12 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (onSlope())
+        if (onSlope() && bGrounded)
         {
-            Debug.Log("SLOPE!");
+            Debug.Log("SLOPEDOWN!");
+            rb.AddForce(Vector3.down * 10f);
+            // player should be touchingh the slope all the time
+            // instead of floating
         }
     }
 
@@ -97,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
         transform.position = newPosition;
     }
 
-    void rotate()
+    void rotateToTargetAngle()
     {
         Quaternion targetRotation = Quaternion.Euler(0, targetAngle, 0);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
