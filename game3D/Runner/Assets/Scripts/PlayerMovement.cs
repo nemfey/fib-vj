@@ -20,7 +20,9 @@ public class PlayerMovement : MonoBehaviour
     float centerSection = -12.5f;
 
     RaycastHit hitInfo;
-    public bool bGrounded = true;
+    bool bGrounded = true;
+
+    public int score = 0;
 
     private bool onSlope()
     {
@@ -59,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     centerSection = hitInfo.collider.bounds.center.z;
                     targetAngle = 90f;
+                    score++;
 
                     level.GetComponent<CreateLevel>().newSectionProcedure();
                 }
@@ -66,16 +69,16 @@ public class PlayerMovement : MonoBehaviour
                 {
                     centerSection = hitInfo.collider.bounds.center.x;
                     targetAngle = 0f;
+                    score++;
                     
                     level.GetComponent<CreateLevel>().newSectionProcedure();
                 }
             }
         }
-
         if (onSlope() && bGrounded)
         {
             Debug.Log("SLOPEDOWN!");
-            rb.AddForce(Vector3.down * 10f);
+            rb.AddForce(Vector3.down * 5f * Time.deltaTime);
             // player should be touchingh the slope all the time
             // instead of floating
         }
