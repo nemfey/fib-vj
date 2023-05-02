@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    public Vector3 speed;
-    float playerSpeed;
-    
+    public Vector3 velocity;
+    float playerVelocity;
+
     // Start is called before the first frame update
     void Start()
     {
-        playerSpeed = GameObject.Find("Player").GetComponent<PlayerMovement>().speed;
-        speed = new Vector3(playerSpeed / 2, 0f, playerSpeed / 2);
+        playerVelocity = GameObject.Find("Player").GetComponent<PlayerMovement>().velocity;
+        velocity = new Vector3(playerVelocity / 2, 0f, playerVelocity / 2);
     }
 
     // Update is called once per frame
     void Update()
     {
-        playerSpeed = GameObject.Find("Player").GetComponent<PlayerMovement>().speed;
-        speed = new Vector3(playerSpeed / 2, 0f, playerSpeed / 2);
-        transform.Translate(speed * Time.deltaTime);
+        playerVelocity = GameObject.Find("Player").GetComponent<PlayerMovement>().velocity;
+        velocity = new Vector3(playerVelocity / 2, 0f, playerVelocity / 2);
+        transform.Translate(velocity * Time.deltaTime);
     }
 }

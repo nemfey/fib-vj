@@ -5,25 +5,30 @@ using UnityEngine;
 public class CreateLevel : MonoBehaviour
 {
     // paths
-    public GameObject wallFloorPrefab, wallTurnRightPrefab, wallTurnLeftPrefab;
+    public GameObject wallFloorPrefab, wallRampPrefab, wallTurnRightPrefab, wallTurnLeftPrefab;
 
     // obstacles
     public GameObject wallBarrelsPrefab;
 
     Queue<GameObject> sections = new Queue<GameObject>();
 
-    float lastX;
-    float lastZ;
+    // section parameters
+    float currentX;
+    float currentZ;
     float previousSize;
     int nthSection;
+
+    // chunk parameters
+    float currentChunkY;
 
     // Start is called before the first frame update
     void Start()
     {
-        lastX = -60.0f; // Virtual previous of the first section
-        lastZ = -55.0f; // Virtual previous of the first section
+        currentX = -60f; // Virtual previous of the first section
+        currentZ = -55f; // Virtual previous of the first section
         previousSize = 5; // Random in the future
         nthSection = 0;
+        currentChunkY = 0f;
 
         for (uint i=0; i<7; i++)
         {
@@ -59,16 +64,16 @@ public class CreateLevel : MonoBehaviour
 
         if (nthSection % 2 == 0)
         {
-            lastX += previousSize * 5.0f;
-            lastZ += 5.0f;
-            section.transform.Translate(lastX, 0.0f, lastZ);
-            section.transform.Rotate(0.0f, 0.0f, 0.0f);
+            currentX += previousSize * 5f;
+            currentZ += 5f;
+            section.transform.Translate(currentX, 0f, currentZ);
+            section.transform.Rotate(0f, 0f, 0f);
         }
         else
         {
-            lastZ += (previousSize - 1) * 5.0f;
-            section.transform.Translate(lastX, 0.0f, lastZ);
-            section.transform.Rotate(0.0f, 90.0f, 0.0f);
+            currentZ += (previousSize - 1) * 5f;
+            section.transform.Translate(currentX, 0f, currentZ);
+            section.transform.Rotate(0f, 90f, 0f);
         }
 
         previousSize = sectionSize;
@@ -82,12 +87,21 @@ public class CreateLevel : MonoBehaviour
     {
         GameObject chunk = null;
 
+        bool bRampPlaced = false;
+
+        // select a random obstacle between all options
+        // to-do
         // chunk generator obstacle
         int obstacleChunk = Random.Range(1, sectionSize - 1);
 
         for (uint i = 0; i < sectionSize; i++)
         {
-            if (i == obstacleChunk && nthSection > 2)
+            if (nthSection%2 == 0  && i == 1)
+            {
+                chunk = (GameObject)Instantiate(wallRampPrefab);
+                bRampPlaced = true;
+            }
+            else if (i == obstacleChunk && nthSection > 2)
             {
                 chunk = (GameObject)Instantiate(wallBarrelsPrefab);
             }
@@ -103,8 +117,14 @@ public class CreateLevel : MonoBehaviour
                 chunk = (GameObject)Instantiate(wallFloorPrefab);
             }
 
-            chunk.transform.Translate(0.0f, 0.0f, 0.0f + i * 5.0f);
+            chunk.transform.Translate(0f, currentChunkY, 0f + i * 5f);
             chunk.transform.parent = section.transform;
+
+            if (bRampPlaced)
+            {
+                currentChunkY -= 3f;
+                bRampPlaced = false;
+            }
         }
     }
 

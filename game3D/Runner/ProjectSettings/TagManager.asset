@@ -8,6 +8,7 @@ TagManager:
   - Floor
   - RightTurn
   - LeftTurn
+  - Obstacle
   layers:
   - Default
   - TransparentFX

@@ -7,103 +7,107 @@ public class PlayerMovement : MonoBehaviour
 {
     public GameObject level;
 
-    public float speed;
-    public float jumpForce;
-    public float jumpCount;
-    float rightTurnAngle;
-    float leftTurnAngle;
+    public float velocity = 10f;
 
-    bool bGrounded;
-    bool bTurnRight;
-    bool bCentered;
+    [SerializeField] Rigidbody rb;
+    public float jumpForce = 15f;
+    public float jumpCount = 0;
 
-    float tolerance = 0.1f;
-    float smoothness = 1f;
+    float targetAngle = 0f;
+    float turnSpeed = 720f;
+
+    float smoothness = 2f;
     float centerSection = -12.5f;
+
+    RaycastHit hitInfo;
+    bool bGrounded = true;
+
+    public int score = 0;
+
+    private bool onSlope()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, out hitInfo))
+        {
+            return hitInfo.normal != Vector3.up;
+        }
+        return false;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        bGrounded = true;
-        bTurnRight = true;
-        bCentered = false;
-        speed = 5f;
-        jumpForce = 5f;
-        jumpCount = 0;
-        rightTurnAngle = 90f;
-        leftTurnAngle = -90f;
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        playerMovement();
+        moveForward();
+        moveToCenter();
+        rotateToTargetAngle();
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, Vector3.down, out hit))
+            if (Physics.Raycast(transform.position, Vector3.down, out hitInfo))
             {
-                string collider_tag = hit.collider.tag;
+                string collider_tag = hitInfo.collider.tag;
                 if ((collider_tag == "Floor" || collider_tag == "Obstacle") && jumpCount < 2)
                 {
-                    GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                    rb.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
                     jumpCount++;
                     bGrounded = false;
                 }
-                else if (collider_tag == "RightTurn" && bTurnRight && bGrounded)
+                else if (collider_tag == "RightTurn" && targetAngle == 0f && bGrounded)
                 {
-                    transform.Rotate(Vector3.up, rightTurnAngle);
+                    centerSection = hitInfo.collider.bounds.center.z;
+                    targetAngle = 90f;
+                    score++;
 
                     level.GetComponent<CreateLevel>().newSectionProcedure();
-                    bTurnRight = false;
-                    bCentered = false;
-                    centerSection = hit.collider.bounds.center.z;
                 }
-                else if (collider_tag == "LeftTurn" && !bTurnRight && bGrounded)
+                else if (collider_tag == "LeftTurn" && targetAngle == 90f && bGrounded)
                 {
-                    transform.Rotate(Vector3.up, leftTurnAngle);
-
+                    centerSection = hitInfo.collider.bounds.center.x;
+                    targetAngle = 0f;
+                    score++;
+                    
                     level.GetComponent<CreateLevel>().newSectionProcedure();
-                    bTurnRight = true;
-                    bCentered = false;
-                    centerSection = hit.collider.bounds.center.x;
                 }
             }
         }
+
+        if (onSlope() && bGrounded)
+        {
+            Debug.Log("SLOPEDOWN!");
+            rb.AddForce(Vector3.down * 5f * Time.deltaTime);
+            // player should be touchingh the slope all the time
+            // instead of floating
+        }
     }
 
-    void playerMovement()
+    void moveForward()
     {
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
-
-        if (!bCentered)
-            moveToCenter();
-
-        //if (!bFrontAngle)
-        //    rotateToFront();
+        transform.position += transform.forward * velocity * Time.deltaTime;
     }
 
     void moveToCenter()
     {
         // how far are we from the center
-        float axisValue = bTurnRight ? transform.position.x : transform.position.z;
-        if (Mathf.Abs(axisValue - centerSection) > tolerance)
-        {
-            //float newAxisValue = Mathf.Lerp(axisValue, centerSection, Time.deltaTime * smoothness);
-            float newAxisValue = Mathf.MoveTowards(axisValue, centerSection, Time.deltaTime * smoothness);
+        float axisValue = targetAngle == 0f ? transform.position.x : transform.position.z;
+        float newAxisValue = Mathf.MoveTowards(axisValue, centerSection, Time.deltaTime * smoothness);
 
-            // Assume we just turned right, hence, center X value
-            Vector3 newPosition = new Vector3(newAxisValue, transform.position.y, transform.position.z);
-            // if we just turned left, then
-            if (!bTurnRight)
-                newPosition = new Vector3(transform.position.x, transform.position.y, newAxisValue);
-            transform.position = newPosition;
-        }
-        else
-        {
-            bCentered = true;
-        }
+        // Assume we just turned right, hence, center X value
+        Vector3 newPosition = new Vector3(newAxisValue, transform.position.y, transform.position.z);
+        // if we just turned left, then
+        if (targetAngle == 90f)
+            newPosition = new Vector3(transform.position.x, transform.position.y, newAxisValue);
+        transform.position = newPosition;
+    }
+
+    void rotateToTargetAngle()
+    {
+        Quaternion targetRotation = Quaternion.Euler(0, targetAngle, 0);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
     }
 
     void OnCollisionEnter(Collision c)
