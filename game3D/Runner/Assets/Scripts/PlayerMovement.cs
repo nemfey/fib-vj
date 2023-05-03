@@ -48,7 +48,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (Physics.Raycast(transform.position, Vector3.down, out hitInfo))
+            if (!bGrounded && jumpCount < 2)
+            {
+                rb.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
+                jumpCount++;
+            }
+            else if (Physics.Raycast(transform.position, Vector3.down, out hitInfo))
             {
                 string collider_tag = hitInfo.collider.tag;
                 if ((collider_tag == "Floor" || collider_tag == "Obstacle") && jumpCount < 2)
