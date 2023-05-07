@@ -4,21 +4,19 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    public Vector3 velocity;
-    float playerVelocity;
+    public Vector3 playerCoords;
+    public float offset = 50.0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerVelocity = GameObject.Find("Player").GetComponent<PlayerMovement>().velocity;
-        velocity = new Vector3(playerVelocity / 2, 0f, playerVelocity / 2);
+        playerCoords = GameObject.Find("Player").GetComponent<Transform>().position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        playerVelocity = GameObject.Find("Player").GetComponent<PlayerMovement>().velocity;
-        velocity = new Vector3(playerVelocity / 2, 0f, playerVelocity / 2);
-        transform.Translate(velocity * Time.deltaTime);
+        playerCoords = GameObject.Find("Player").GetComponent<Transform>().position;
+        this.transform.position = playerCoords + new Vector3(offset, offset - 15, offset);
     }
 }
