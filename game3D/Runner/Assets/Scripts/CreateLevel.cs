@@ -9,8 +9,9 @@ public class CreateLevel : MonoBehaviour
 
     // obstacles
     public GameObject wallBarrelsPrefab;
+    GameObject[] obstacles = new GameObject[1];
 
-    Queue<GameObject> sections = new Queue<GameObject>();
+Queue<GameObject> sections = new Queue<GameObject>();
 
     // section parameters
     float currentX;
@@ -24,11 +25,13 @@ public class CreateLevel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentX = -60f; // Virtual previous of the first section
-        currentZ = -55f; // Virtual previous of the first section
-        previousSize = 5; // Random in the future
-        nthSection = 0;
+        currentX = -60f;    // Virtual previous of the first section
+        currentZ = -75f;    // Virtual previous of the first section
+        previousSize = 5;   // Virtual previous of the first section
+        nthSection = -1;    // Virtual previous of the first section
         currentChunkY = 0f;
+
+        initializeObstacles();
 
         for (uint i=0; i<7; i++)
         {
@@ -87,12 +90,10 @@ public class CreateLevel : MonoBehaviour
     {
         GameObject chunk = null;
 
-        bool bRampPlaced = false;
-
-        // select a random obstacle between all options
-        // to-do
-        // chunk generator obstacle
+        int obstacleId = Random.Range(0, obstacles.Length+1);
         int obstacleChunk = Random.Range(1, sectionSize - 1);
+        
+        bool bRampPlaced = false;
 
         for (uint i = 0; i < sectionSize; i++)
         {
@@ -103,7 +104,14 @@ public class CreateLevel : MonoBehaviour
             }
             else if (i == obstacleChunk && nthSection > 2)
             {
-                chunk = (GameObject)Instantiate(wallBarrelsPrefab);
+                if (obstacleId < obstacles.Length)
+                {
+                    chunk = (GameObject)Instantiate(obstacles[obstacleId]);
+                }
+                else
+                {
+                    chunk = new GameObject("Void");
+                }
             }
             else if (i == sectionSize - 1)
             {
@@ -135,4 +143,9 @@ public class CreateLevel : MonoBehaviour
 
         Destroy(sections.Dequeue());
     }
-}
+
+    private void initializeObstacles()
+    {
+        obstacles[0] = wallBarrelsPrefab;
+    }
+}   
