@@ -167,11 +167,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fd6efb563099fd4f8ab68f2ba8fed00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wallFloorPrefab: {fileID: 4677419076588921854, guid: 80edc3c345752e8439713d9aeb916b59, type: 3}
+  wallFloorPrefab: {fileID: 1352879515081397130, guid: 28df1707a841cd24c9af718175f99e7b, type: 3}
   wallRampPrefab: {fileID: 1912805765983744347, guid: 3f25d49f233a85a4da0dccff1c3531be, type: 3}
   wallTurnRightPrefab: {fileID: 6680551559078363868, guid: 2ce74d523589c304690dfee02af94cce, type: 3}
   wallTurnLeftPrefab: {fileID: 8187671838856122812, guid: 96b51d78682be074a8bb86ea75543b54, type: 3}
-  wallBarrelsPrefab: {fileID: 2096158985202538201, guid: b8cef0c84c963c04c936d28bcdd086c1, type: 3}
+  wallBarrelsPrefab: {fileID: 4009050260843086219, guid: 7890d955acff61644853939ba62101bd, type: 3}
 --- !u!4 &387816188 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e9b441c46803bac4e854732b7e6827b4, type: 3}

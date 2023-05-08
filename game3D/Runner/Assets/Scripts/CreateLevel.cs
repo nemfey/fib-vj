@@ -104,7 +104,7 @@ Queue<GameObject> sections = new Queue<GameObject>();
             }
             else if (i == obstacleChunk && nthSection > 2)
             {
-                if (obstacleId < obstacles.Length)
+               if (obstacleId < obstacles.Length)
                 {
                     chunk = (GameObject)Instantiate(obstacles[obstacleId]);
                 }
