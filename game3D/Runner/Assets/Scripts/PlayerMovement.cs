@@ -84,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
         if (onSlope() && bGrounded)
         {
             Debug.Log("SLOPEDOWN!");
-            rb.AddForce(Vector3.down * 5f * Time.deltaTime);
+            //rb.AddForce(Vector3.down * 5f * Time.deltaTime);
             // player should be touchingh the slope all the time
             // instead of floating
         }

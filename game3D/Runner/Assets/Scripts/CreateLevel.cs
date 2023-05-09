@@ -25,15 +25,26 @@ Queue<GameObject> sections = new Queue<GameObject>();
     // Start is called before the first frame update
     void Start()
     {
-        currentX = -60f;    // Virtual previous of the first section
-        currentZ = -75f;    // Virtual previous of the first section
+        //-60 -75
+        //-35 -30
+        currentX = -10f;    // Virtual previous of the first section
+        currentZ = -150f;    // Virtual previous of the first section
         previousSize = 5;   // Virtual previous of the first section
-        nthSection = -1;    // Virtual previous of the first section
+        nthSection = -5;    // Virtual previous of the first section
         currentChunkY = 0f;
 
         initializeObstacles();
 
-        for (uint i=0; i<7; i++)
+        // create init straight path
+        for (uint i=0; i<6; i++)
+        {
+            GameObject newSection = createStraightSection();
+            sections.Enqueue(newSection);
+            //GameObject newSection = createSection();
+            //sections.Enqueue(newSection);
+        }
+        
+        for (uint i=0; i<5; i++)
         {
             GameObject newSection = createSection();
             sections.Enqueue(newSection);
@@ -53,6 +64,33 @@ Queue<GameObject> sections = new Queue<GameObject>();
             // de los bloques del medio
                 // se elige uno random para que sea la primera casilla trampa
                 // con cierta probablidad las siguientes casillas disponibles tambien seran de la misma trampa
+    }
+
+    // Create straight path section
+    GameObject createStraightSection()
+    {
+        GameObject section;
+        section = new GameObject("Section");
+
+        GameObject chunk = null;
+        for (uint i = 0; i < 5; i++)
+        {
+            if (nthSection == 0 && i == 4)
+                chunk = Instantiate(wallTurnRightPrefab);
+            else
+                chunk = Instantiate(wallFloorPrefab);
+            
+            chunk.transform.Translate(0f, currentChunkY, 0f + i * 5f);
+            chunk.transform.parent = section.transform;
+        }
+
+        currentZ += 4 * 5f;
+        section.transform.Translate(currentX, 0f, currentZ);
+        section.transform.Rotate(0f, 0f, 0f);
+        section.transform.parent = transform;
+        nthSection++;
+
+        return section;
     }
 
     // Create new section
