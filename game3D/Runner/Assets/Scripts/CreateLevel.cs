@@ -61,7 +61,8 @@ Queue<GameObject> sections = new Queue<GameObject>();
         GameObject section;
         section = new GameObject("Section");
 
-        int sectionSize = nthSection < 4 ? 5 : Random.Range(4, 8);
+        // init sections have size equal to 5
+        int sectionSize = nthSection < 4 ? 5 : Random.Range(2, 8);
 
         createSectionChunks(section, sectionSize);
 
@@ -97,12 +98,13 @@ Queue<GameObject> sections = new Queue<GameObject>();
 
         for (uint i = 0; i < sectionSize; i++)
         {
-            if (nthSection%2 == 0  && i == 1)
+            if (nthSection%2 == 0  && i == 1 && i != sectionSize-1)
             {
                 chunk = (GameObject)Instantiate(wallRampPrefab);
                 bRampPlaced = true;
             }
-            else if (i == obstacleChunk && nthSection > 2)
+            else if (i == obstacleChunk && nthSection > 2 && sectionSize > 3)
+            //if (i == obstacleChunk && nthSection > 2 && sectionSize > 3)
             {
                if (obstacleId < obstacles.Length)
                 {
