@@ -11,7 +11,7 @@ public class CreateLevel : MonoBehaviour
     public GameObject wallBarrelsPrefab;
     GameObject[] obstacles = new GameObject[1];
 
-Queue<GameObject> sections = new Queue<GameObject>();
+    Queue<GameObject> sections = new Queue<GameObject>();
 
     // section parameters
     float currentX;
@@ -27,24 +27,17 @@ Queue<GameObject> sections = new Queue<GameObject>();
     {
         //-60 -75
         //-35 -30
-        currentX = -10f;    // Virtual previous of the first section
-        currentZ = -150f;    // Virtual previous of the first section
+        //currentX = -10f;    // Virtual previous of the first section
+        currentX = 15f;    // Virtual previous of the first section
+        //currentZ = -150f;    // Virtual previous of the first section
+        currentZ = -5f;    // Virtual previous of the first section
         previousSize = 5;   // Virtual previous of the first section
-        nthSection = -5;    // Virtual previous of the first section
+        nthSection = -1;    // Virtual previous of the first section
         currentChunkY = 0f;
 
         initializeObstacles();
 
-        // create init straight path
-        for (uint i=0; i<6; i++)
-        {
-            GameObject newSection = createStraightSection();
-            sections.Enqueue(newSection);
-            //GameObject newSection = createSection();
-            //sections.Enqueue(newSection);
-        }
-        
-        for (uint i=0; i<5; i++)
+        for (uint i=0; i<3; i++)
         {
             GameObject newSection = createSection();
             sections.Enqueue(newSection);
@@ -64,33 +57,6 @@ Queue<GameObject> sections = new Queue<GameObject>();
             // de los bloques del medio
                 // se elige uno random para que sea la primera casilla trampa
                 // con cierta probablidad las siguientes casillas disponibles tambien seran de la misma trampa
-    }
-
-    // Create straight path section
-    GameObject createStraightSection()
-    {
-        GameObject section;
-        section = new GameObject("Section");
-
-        GameObject chunk = null;
-        for (uint i = 0; i < 5; i++)
-        {
-            if (nthSection == 0 && i == 4)
-                chunk = Instantiate(wallTurnRightPrefab);
-            else
-                chunk = Instantiate(wallFloorPrefab);
-            
-            chunk.transform.Translate(0f, currentChunkY, 0f + i * 5f);
-            chunk.transform.parent = section.transform;
-        }
-
-        currentZ += 4 * 5f;
-        section.transform.Translate(currentX, 0f, currentZ);
-        section.transform.Rotate(0f, 0f, 0f);
-        section.transform.parent = transform;
-        nthSection++;
-
-        return section;
     }
 
     // Create new section
@@ -130,19 +96,22 @@ Queue<GameObject> sections = new Queue<GameObject>();
         GameObject chunk = null;
 
         int obstacleId = Random.Range(0, obstacles.Length+1);
-        int obstacleChunk = Random.Range(1, sectionSize - 1);
+        //int obstacleChunk = Random.Range(1, sectionSize - 1);
+        HashSet<int> obstacleChunks = selectObstacleChunks(sectionSize);
         
         bool bRampPlaced = false;
 
-        for (uint i = 0; i < sectionSize; i++)
+        for (int i = 0; i < sectionSize; i++)
         {
+            /*
             if (nthSection%2 == 0  && i == 1 && i != sectionSize-1)
             {
                 chunk = (GameObject)Instantiate(wallRampPrefab);
                 bRampPlaced = true;
             }
-            else if (i == obstacleChunk && nthSection > 2 && sectionSize > 3)
-            //if (i == obstacleChunk && nthSection > 2 && sectionSize > 3)
+            */
+            //else if (i == obstacleChunk && nthSection > 2 && sectionSize > 3)
+            if (obstacleChunks.Contains(i) && nthSection > 2 && sectionSize > 3)
             {
                if (obstacleId < obstacles.Length)
                 {
@@ -181,11 +150,35 @@ Queue<GameObject> sections = new Queue<GameObject>();
         GameObject newSection = createSection();
         sections.Enqueue(newSection);
 
-        Destroy(sections.Dequeue());
+        if (nthSection > 9)
+        {
+            Destroy(sections.Dequeue());
+        }
     }
 
     private void initializeObstacles()
     {
         obstacles[0] = wallBarrelsPrefab;
+    }
+
+    private HashSet<int> selectObstacleChunks(int sectionSize)
+    {
+        HashSet<int> obstacleChunks = new HashSet<int>();
+
+        // Add init obstacle
+        int firstObstacleChunk = Random.Range(1, sectionSize - 1);
+        obstacleChunks.Add(firstObstacleChunk);
+
+        int extraChunks = Random.Range(0, 3);
+        Debug.Log(extraChunks);
+        for (int i = 0; i < extraChunks; i++)
+        {
+            int nextChunk = firstObstacleChunk + i + 1;
+            if (nextChunk < sectionSize-1)
+                obstacleChunks.Add(nextChunk);
+        }
+
+
+        return obstacleChunks;
     }
 }   
