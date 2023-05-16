@@ -7,6 +7,8 @@ public class PlayerMovement : MonoBehaviour
 {
     public GameObject level;
 
+    public Animator animController;
+
     public float velocity = 10f;
 
     [SerializeField] Rigidbody rb;
@@ -37,6 +39,8 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        animController = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -50,6 +54,8 @@ public class PlayerMovement : MonoBehaviour
         {
             if (!bGrounded && jumpCount < 2)
             {
+                animController.SetTrigger("DJumpTrigger");
+
                 rb.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
                 jumpCount++;
             }
@@ -61,6 +67,8 @@ public class PlayerMovement : MonoBehaviour
                     rb.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
                     jumpCount++;
                     bGrounded = false;
+
+                    animController.SetBool("InAir", true);
                 }
                 else if (collider_tag == "RightTurn" && targetAngle == 0f && bGrounded)
                 {
@@ -122,6 +130,8 @@ public class PlayerMovement : MonoBehaviour
         {
             jumpCount = 0;
             bGrounded = true;
+
+            animController.SetBool("InAir", false);
         }
         if (collider_tag == "Obstacle")
         {
