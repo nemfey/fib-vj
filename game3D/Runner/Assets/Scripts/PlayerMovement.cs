@@ -64,14 +64,11 @@ public class PlayerMovement : MonoBehaviour
                 string collider_tag = hitInfo.collider.tag;
                 if ((collider_tag == "Floor" || collider_tag == "Obstacle") && jumpCount < 2)
                 {
-                    animController.SetTrigger("JumpTrigger");
-
                     rb.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
                     jumpCount++;
                     bGrounded = false;
 
-                    animController.SetBool("Grounded", false);
-
+                    animController.SetBool("InAir", true);
                 }
                 else if (collider_tag == "RightTurn" && targetAngle == 0f && bGrounded)
                 {
@@ -134,7 +131,7 @@ public class PlayerMovement : MonoBehaviour
             jumpCount = 0;
             bGrounded = true;
 
-            animController.SetBool("Grounded", bGrounded);
+            animController.SetBool("InAir", false);
         }
         if (collider_tag == "Obstacle")
         {
