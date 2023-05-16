@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static System.Collections.Specialized.BitVector32;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class PlayerMovement : MonoBehaviour
     RaycastHit hitInfo;
     bool bGrounded = true;
 
+    [SerializeField] private GameObject gameCanvas;
+    private TextMeshProUGUI scoreText;
     public int score = 0;
 
     private bool onSlope()
@@ -41,6 +44,8 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         animController = GetComponentInChildren<Animator>();
+
+        scoreText = gameCanvas.transform.Find("Score").GetComponent<TextMeshProUGUI>();
     }
 
     // Update is called once per frame
@@ -75,6 +80,7 @@ public class PlayerMovement : MonoBehaviour
                     centerSection = hitInfo.collider.bounds.center.z;
                     targetAngle = 90f;
                     score++;
+                    scoreText.text = score.ToString();
 
                     level.GetComponent<CreateLevel>().newSectionProcedure();
                 }
@@ -83,7 +89,8 @@ public class PlayerMovement : MonoBehaviour
                     centerSection = hitInfo.collider.bounds.center.x;
                     targetAngle = 0f;
                     score++;
-                    
+                    scoreText.text = score.ToString();
+
                     level.GetComponent<CreateLevel>().newSectionProcedure();
                 }
             }
