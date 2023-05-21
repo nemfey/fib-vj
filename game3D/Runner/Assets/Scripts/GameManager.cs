@@ -49,5 +49,10 @@ public class GameManager : MonoBehaviour
         {
             startGame();
         }
+
+        if (gameStarted && pauseCanvas.activeSelf && Input.GetKeyDown(KeyCode.Space))
+        {
+            continueGame();
+        }
     }
 }
