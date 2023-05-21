@@ -8,8 +8,8 @@ public class CreateLevel : MonoBehaviour
     public GameObject wallFloorPrefab, wallRampPrefab, wallTurnRightPrefab, wallTurnLeftPrefab;
 
     // obstacles
-    public GameObject wallBarrelsPrefab;
-    GameObject[] obstacles = new GameObject[1];
+    public GameObject wallBarrelsPrefab, evilCoinPrefab;
+    GameObject[] obstacles = new GameObject[2];
 
     // Coin
     public GameObject coinPrefab;
@@ -116,7 +116,18 @@ public class CreateLevel : MonoBehaviour
             {
                if (obstacleId < obstacles.Length)
                 {
-                    chunk = (GameObject)Instantiate(obstacles[obstacleId]);
+                    if (obstacles[obstacleId] != evilCoinPrefab)
+                    {
+                        chunk = (GameObject)Instantiate(obstacles[obstacleId]);
+                    }
+                    else
+                    {
+                        GameObject evilCoin = (GameObject)Instantiate(evilCoinPrefab);
+                        Vector3 pos = new Vector3(-2.5f, currentChunkY + 20f, i * 5f);
+                        placeCoin(section, evilCoin, pos);
+                        chunk = (GameObject)Instantiate(wallFloorPrefab);
+                    }
+                    //chunk = (GameObject)Instantiate(obstacles[obstacleId]);
                 }
                 else
                 {
@@ -146,14 +157,17 @@ public class CreateLevel : MonoBehaviour
             
             if (coin != null && coinChunk == i)
             {
-                Debug.Log("COIN GENERATED");
-                Debug.Log(currentChunkY + " " + i);
-                //coin.transform.Translate(-2.5f, currentChunkY + 18f, 0f + i * 5f);
-                coin.transform.position = new Vector3(-2.5f, currentChunkY+20f, i * 5f);
-                coin.transform.parent = section.transform;
+                Vector3 pos = new Vector3(-2.5f, currentChunkY + 20f, i * 5f);
+                placeCoin(section, coin, pos);
             }
             
         }
+    }
+
+    public void placeCoin (GameObject section, GameObject c, Vector3 pos)
+    {
+        c.transform.position = pos;
+        c.transform.parent = section.transform;
     }
 
     public void newSectionProcedure()
@@ -171,6 +185,7 @@ public class CreateLevel : MonoBehaviour
     private void initializeObstacles()
     {
         obstacles[0] = wallBarrelsPrefab;
+        obstacles[1] = evilCoinPrefab;
     }
 
     private HashSet<int> selectObstacleChunks(int sectionSize)
