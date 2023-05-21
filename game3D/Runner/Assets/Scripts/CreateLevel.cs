@@ -11,6 +11,9 @@ public class CreateLevel : MonoBehaviour
     public GameObject wallBarrelsPrefab;
     GameObject[] obstacles = new GameObject[1];
 
+    // Coin
+    public GameObject coinPrefab;
+
     Queue<GameObject> sections = new Queue<GameObject>();
 
     // section parameters
@@ -25,48 +28,29 @@ public class CreateLevel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //-60 -75
-        //-35 -30
-        //currentX = -10f;    // Virtual previous of the first section
         currentX = 15f;    // Virtual previous of the first section
-        //currentZ = -150f;    // Virtual previous of the first section
         currentZ = -5f;    // Virtual previous of the first section
-        previousSize = 5;   // Virtual previous of the first section
-        nthSection = -1;    // Virtual previous of the first section
+        previousSize = 5;
+        nthSection = -1;
         currentChunkY = 0f;
 
         initializeObstacles();
 
         for (uint i=0; i<3; i++)
         {
-            GameObject newSection = createSection();
+            GameObject newSection = createSection(5);
             sections.Enqueue(newSection);
         }
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        // cuando se haga un giro del player
-            // se destruye una seccion
-            // se construye una nueva
-            // siempre 5 en pantalla
-        // generacion de la seccion
-            // primer bloque un suelo
-            // ultimo suelo un giro
-            // de los bloques del medio
-                // se elige uno random para que sea la primera casilla trampa
-                // con cierta probablidad las siguientes casillas disponibles tambien seran de la misma trampa
-    }
+    void Update() { }
 
     // Create new section
-    GameObject createSection()
+    GameObject createSection(int sectionSize)
     {
         GameObject section;
         section = new GameObject("Section");
-
-        // init sections have size equal to 5
-        int sectionSize = nthSection < 4 ? 5 : Random.Range(2, 8);
 
         createSectionChunks(section, sectionSize);
 
@@ -84,6 +68,14 @@ public class CreateLevel : MonoBehaviour
             section.transform.Rotate(0f, 90f, 0f);
         }
 
+        // Generate coin
+        //if (nthSection % 1 == 0)
+        //{
+        //    GameObject newCoin = (GameObject)Instantiate(coinPrefab);
+
+        //    newCoin.transform.Translate(section.transform.position.x, 0f, section.transform.position.z);
+        //}
+
         previousSize = sectionSize;
         section.transform.parent = transform;
         nthSection++;
@@ -95,10 +87,19 @@ public class CreateLevel : MonoBehaviour
     {
         GameObject chunk = null;
 
+        // Select obstacle chunk
         int obstacleId = Random.Range(0, obstacles.Length+1);
-        //int obstacleChunk = Random.Range(1, sectionSize - 1);
         HashSet<int> obstacleChunks = selectObstacleChunks(sectionSize);
-        
+
+        // Select if coin and coin chunk
+        GameObject coin = null;
+        int coinChunk = -1;
+        if (Random.Range(0, 4) == 1)
+        {
+            coin = (GameObject)Instantiate(coinPrefab);
+            coinChunk = Random.Range(0, sectionSize-1);
+        }
+
         bool bRampPlaced = false;
 
         for (int i = 0; i < sectionSize; i++)
@@ -142,12 +143,23 @@ public class CreateLevel : MonoBehaviour
                 currentChunkY -= 3f;
                 bRampPlaced = false;
             }
+            
+            if (coin != null && coinChunk == i)
+            {
+                Debug.Log("COIN GENERATED");
+                Debug.Log(currentChunkY + " " + i);
+                //coin.transform.Translate(-2.5f, currentChunkY + 18f, 0f + i * 5f);
+                coin.transform.position = new Vector3(-2.5f, currentChunkY+20f, i * 5f);
+                coin.transform.parent = section.transform;
+            }
+            
         }
     }
 
     public void newSectionProcedure()
     {
-        GameObject newSection = createSection();
+        int sectionSize = Random.Range(2, 8);
+        GameObject newSection = createSection(sectionSize);
         sections.Enqueue(newSection);
 
         if (nthSection > 9)
@@ -170,7 +182,6 @@ public class CreateLevel : MonoBehaviour
         obstacleChunks.Add(firstObstacleChunk);
 
         int extraChunks = Random.Range(0, 3);
-        Debug.Log(extraChunks);
         for (int i = 0; i < extraChunks; i++)
         {
             int nextChunk = firstObstacleChunk + i + 1;

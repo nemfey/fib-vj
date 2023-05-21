@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Time.timeScale = 0f;
+        mainMenuCanvas.SetActive(true);
+        gameCanvas.SetActive(false);
+        pauseCanvas.SetActive(false);
     }
 
     public void startGame()

@@ -12,7 +12,7 @@ public class FogMovement : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player");
-        minY = player.GetComponent<Transform>().position.y - 30;
+        minY = player.GetComponent<Transform>().position.y - 20;
         //playerCoords = GameObject.Find("Player").GetComponent<Transform>().position;
     }
 
@@ -21,8 +21,8 @@ public class FogMovement : MonoBehaviour
     {
         playerCoords = player.GetComponent<Transform>().position;
 
-        if (playerCoords.y - 30 < minY)
-            minY = playerCoords.y - 30;
+        if (playerCoords.y - 20 < minY)
+            minY = playerCoords.y - 20;
 
         this.transform.position = new Vector3(playerCoords.x, minY, playerCoords.z);
     }

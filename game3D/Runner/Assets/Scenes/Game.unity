@@ -1096,6 +1096,7 @@ MonoBehaviour:
   wallTurnRightPrefab: {fileID: 6680551559078363868, guid: 2ce74d523589c304690dfee02af94cce, type: 3}
   wallTurnLeftPrefab: {fileID: 8187671838856122812, guid: 96b51d78682be074a8bb86ea75543b54, type: 3}
   wallBarrelsPrefab: {fileID: 4009050260843086219, guid: 7890d955acff61644853939ba62101bd, type: 3}
+  coinPrefab: {fileID: 8563509653203400950, guid: 779ce531b0f31544db3ff287b96b539f, type: 3}
 --- !u!4 &240636191 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2305602901052356672, guid: 28df1707a841cd24c9af718175f99e7b, type: 3}
@@ -2700,7 +2701,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &880461786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2802,7 +2803,7 @@ GameObject:
   - component: {fileID: 948328707}
   - component: {fileID: 948328706}
   m_Layer: 5
-  m_Name: Gold
+  m_Name: Coins
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2825,8 +2826,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 475, y: 850}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchoredPosition: {x: 440, y: 850}
+  m_SizeDelta: {x: 200, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &948328706
 MonoBehaviour:
@@ -4899,7 +4900,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 475, y: 675}
+  m_AnchoredPosition: {x: 440, y: 675}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1489697442
@@ -5031,8 +5032,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -475, y: 850}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchoredPosition: {x: -440, y: 850}
+  m_SizeDelta: {x: 200, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1512048072
 MonoBehaviour:
@@ -5341,7 +5342,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1631831096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6136,7 +6137,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1943029261}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.9, y: 0, z: -14.7}
+  m_LocalPosition: {x: -10.9, y: 8, z: -14.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6198,6 +6199,7 @@ MonoBehaviour:
   jumpCount: 0
   gameCanvas: {fileID: 880461785}
   score: 0
+  coins: 0
 --- !u!54 &1945719393
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6371,15 +6373,15 @@ ParticleSystemRenderer:
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
-  m_MinParticleSize: 0
-  m_MaxParticleSize: 0.5
+  m_MinParticleSize: 0.0001
+  m_MaxParticleSize: 99999
   m_CameraVelocityScale: 0
   m_VelocityScale: 0
   m_LengthScale: 2
   m_SortingFudge: 0
   m_NormalDirection: 1
   m_ShadowBias: 0
-  m_RenderAlignment: 0
+  m_RenderAlignment: 3
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
   m_UseCustomVertexStreams: 0

@@ -29,6 +29,9 @@ public class PlayerMovement : MonoBehaviour
     private TextMeshProUGUI scoreText;
     public int score = 0;
 
+    private TextMeshProUGUI coinsText;
+    public int coins = 0;
+
     private bool onSlope()
     {
         if (Physics.Raycast(transform.position, Vector3.down, out hitInfo))
@@ -46,6 +49,7 @@ public class PlayerMovement : MonoBehaviour
         animController = GetComponentInChildren<Animator>();
 
         scoreText = gameCanvas.transform.Find("Score").GetComponent<TextMeshProUGUI>();
+        coinsText = gameCanvas.transform.Find("Coins").GetComponent<TextMeshProUGUI>();
     }
 
     // Update is called once per frame
@@ -143,6 +147,12 @@ public class PlayerMovement : MonoBehaviour
         if (collider_tag == "Obstacle")
         {
             Debug.Log("IM DEAD!");
+        }
+        if (collider_tag == "Coin")
+        {
+            Destroy(c.gameObject);
+            coins++;
+            coinsText.text = coins.ToString();
         }
     }
 }
