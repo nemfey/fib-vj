@@ -1096,6 +1096,7 @@ MonoBehaviour:
   wallTurnRightPrefab: {fileID: 6680551559078363868, guid: 2ce74d523589c304690dfee02af94cce, type: 3}
   wallTurnLeftPrefab: {fileID: 8187671838856122812, guid: 96b51d78682be074a8bb86ea75543b54, type: 3}
   wallBarrelsPrefab: {fileID: 4009050260843086219, guid: 7890d955acff61644853939ba62101bd, type: 3}
+  evilCoinPrefab: {fileID: 2428783756847589987, guid: 7ee0e0a9977820c489103a25c5d0e9c2, type: 3}
   coinPrefab: {fileID: 8563509653203400950, guid: 779ce531b0f31544db3ff287b96b539f, type: 3}
 --- !u!4 &240636191 stripped
 Transform:
