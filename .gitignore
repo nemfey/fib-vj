@@ -8,3 +8,4 @@ game3D/Runner/Builds/*
 game3D/Runner/Logs/*
 game3D/Runner/.vs/
 game3D/Runner/UserSettings/Layouts/default-2021.dwlt
+game3D/Runner/Assembly-CSharp.csproj
