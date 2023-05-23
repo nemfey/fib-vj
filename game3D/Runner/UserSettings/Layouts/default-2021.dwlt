@@ -19,7 +19,11 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
+<<<<<<< HEAD
   m_Title: Game
+=======
+  m_Title: Hierarchy
+>>>>>>> nemfey
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 542}
   m_MaxSize: {x: 10000, y: 10000}
@@ -44,8 +48,13 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
     width: 1920
     height: 997
+=======
+    width: 1280
+    height: 637.3333
+>>>>>>> nemfey
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
   m_UseTopView: 1
@@ -90,8 +99,13 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
+<<<<<<< HEAD
     y: 977
     width: 1920
+=======
+    y: 617.3333
+    width: 1280
+>>>>>>> nemfey
     height: 20
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
@@ -114,12 +128,21 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 30
+<<<<<<< HEAD
     width: 1920
     height: 947
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
   controlID: 72
+=======
+    width: 1280
+    height: 587.3333
+  m_MinSize: {x: 300, y: 200}
+  m_MaxSize: {x: 24288, y: 16192}
+  vertical: 0
+  controlID: 17
+>>>>>>> nemfey
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -139,8 +162,13 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
     width: 1479
     height: 947
+=======
+    width: 986
+    height: 587.3333
+>>>>>>> nemfey
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
@@ -164,8 +192,13 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
     width: 1479
     height: 601
+=======
+    width: 986
+    height: 400.66666
+>>>>>>> nemfey
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
@@ -187,10 +220,17 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
     width: 303
     height: 601
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 4000, y: 4000}
+=======
+    width: 276
+    height: 400.66666
+  m_MinSize: {x: 201, y: 221}
+  m_MaxSize: {x: 4001, y: 4021}
+>>>>>>> nemfey
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
@@ -206,24 +246,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: SceneView
+  m_Name: GameView
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 303
     y: 0
     width: 1176
     height: 601
+=======
+    x: 276
+    y: 0
+    width: 710
+    height: 400.66666
+>>>>>>> nemfey
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 14}
+  m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 14}
   - {fileID: 15}
   - {fileID: 16}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -240,9 +287,15 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
+<<<<<<< HEAD
     y: 601
     width: 1479
     height: 346
+=======
+    y: 400.66666
+    width: 986
+    height: 186.66666
+>>>>>>> nemfey
   m_MinSize: {x: 231, y: 271}
   m_MaxSize: {x: 10001, y: 10021}
   m_ActualView: {fileID: 17}
@@ -268,8 +321,13 @@ MonoBehaviour:
     serializedVersion: 2
     x: 1479
     y: 0
+<<<<<<< HEAD
     width: 441
     height: 947
+=======
+    width: 294
+    height: 587.3333
+>>>>>>> nemfey
   m_MinSize: {x: 276, y: 71}
   m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 12}
@@ -298,10 +356,17 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 1479
     y: 73
     width: 440
     height: 926
+=======
+    x: 986
+    y: 72.66667
+    width: 293
+    height: 566.3333
+>>>>>>> nemfey
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -341,9 +406,15 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
+<<<<<<< HEAD
     y: 73
     width: 302
     height: 580
+=======
+    y: 72.66667
+    width: 275
+    height: 379.66666
+>>>>>>> nemfey
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -352,9 +423,15 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
+<<<<<<< HEAD
       m_SelectedIDs: a8f0ffff
       m_LastClickedID: -3928
       m_ExpandedIDs: c4f3ffff
+=======
+      m_SelectedIDs: 745a0000
+      m_LastClickedID: 23156
+      m_ExpandedIDs: aecbfffff2edffff36fbffff1a590000c6590000cc5a0000
+>>>>>>> nemfey
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -398,10 +475,17 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 303
     y: 73
     width: 1174
     height: 580
+=======
+    x: 276
+    y: 72.66667
+    width: 708
+    height: 379.66666
+>>>>>>> nemfey
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -598,9 +682,9 @@ MonoBehaviour:
       floating: 1
       collapsed: 0
       displayed: 0
-      snapOffset: {x: 0, y: -193.33334}
+      snapOffset: {x: -232, y: -193.33334}
       snapOffsetDelta: {x: 0, y: 0}
-      snapCorner: 2
+      snapCorner: 3
       id: Scene View/Particles
       index: 10
       layout: 4
@@ -670,9 +754,15 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
+<<<<<<< HEAD
     m_Target: {x: 37.5, y: 53.5, z: 25.469902}
     speed: 2
     m_Value: {x: 37.5, y: 53.5, z: 25.469902}
+=======
+    m_Target: {x: -6.9244175, y: 4.050064, z: -17.025677}
+    speed: 2
+    m_Value: {x: -6.9244175, y: 4.050064, z: -17.025677}
+>>>>>>> nemfey
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -719,6 +809,7 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
+<<<<<<< HEAD
     m_Target: {x: 0.40449846, y: 0.088129036, z: -0.039196223, w: 0.90944475}
     speed: 2
     m_Value: {x: 0.4044961, y: 0.08812852, z: -0.039195996, w: 0.90943944}
@@ -726,6 +817,15 @@ MonoBehaviour:
     m_Target: 12.124355
     speed: 2
     m_Value: 12.124355
+=======
+    m_Target: {x: -0.05389568, y: 0.93810153, z: -0.29668674, w: -0.17041418}
+    speed: 2
+    m_Value: {x: -0.05389559, y: 0.9381, z: -0.29668623, w: -0.1704139}
+  m_Size:
+    m_Target: 172.54744
+    speed: 2
+    m_Value: 172.54744
+>>>>>>> nemfey
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -770,10 +870,17 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 303
     y: 73
     width: 1174
     height: 580
+=======
+    x: 276
+    y: 72.66667
+    width: 708
+    height: 379.66666
+>>>>>>> nemfey
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -785,7 +892,11 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
+<<<<<<< HEAD
   m_TargetSize: {x: 314, y: 559}
+=======
+  m_TargetSize: {x: 303, y: 538}
+>>>>>>> nemfey
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -800,10 +911,17 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
+<<<<<<< HEAD
     m_HBaseRangeMin: -157
     m_HBaseRangeMax: 157
     m_VBaseRangeMin: -279.5
     m_VBaseRangeMax: 279.5
+=======
+    m_HBaseRangeMin: -101
+    m_HBaseRangeMax: 101
+    m_VBaseRangeMin: -179.33334
+    m_VBaseRangeMax: 179.33334
+>>>>>>> nemfey
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -812,7 +930,7 @@ MonoBehaviour:
     m_HSlider: 0
     m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
-    m_EnableMouseInput: 0
+    m_EnableMouseInput: 1
     m_EnableSliderZoomHorizontal: 0
     m_EnableSliderZoomVertical: 0
     m_UniformScale: 1
@@ -821,16 +939,24 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
+<<<<<<< HEAD
       width: 1174
       height: 559
     m_Scale: {x: 1, y: 1}
     m_Translation: {x: 587, y: 279.5}
+=======
+      width: 708
+      height: 358.66666
+    m_Scale: {x: 0.99999994, y: 0.99999994}
+    m_Translation: {x: 354, y: 179.33333}
+>>>>>>> nemfey
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
+<<<<<<< HEAD
       x: -587
       y: -279.5
       width: 1174
@@ -838,6 +964,15 @@ MonoBehaviour:
     m_MinimalGUI: 1
   m_defaultScale: 1
   m_LastWindowPixelSize: {x: 1174, y: 580}
+=======
+      x: -354.00003
+      y: -179.33334
+      width: 708.00006
+      height: 358.6667
+    m_MinimalGUI: 1
+  m_defaultScale: 0.99999994
+  m_LastWindowPixelSize: {x: 1062, y: 569.5}
+>>>>>>> nemfey
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 00000000000000000000
@@ -910,9 +1045,15 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
+<<<<<<< HEAD
     y: 674
     width: 1478
     height: 325
+=======
+    y: 473.33334
+    width: 985
+    height: 165.66666
+>>>>>>> nemfey
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -931,36 +1072,51 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
+<<<<<<< HEAD
     - Assets/Sounds
+=======
+    - Assets/Images
+>>>>>>> nemfey
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 57
   m_LastFolders:
+<<<<<<< HEAD
   - Assets/Sounds
+=======
+  - Assets/Images
+>>>>>>> nemfey
   m_LastFoldersGridSize: 57
   m_LastProjectPath: "C:\\Users\\pacma\\OneDrive\\Escritorio\\joan\\Cosas de educaci\xF3n\\Uni\\VJ\\fib-vj\\game3D\\Runner"
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
+<<<<<<< HEAD
     scrollPos: {x: 0, y: 83}
     m_SelectedIDs: 38680000
     m_LastClickedID: 26680
     m_ExpandedIDs: 00000000e2670000e4670000e6670000e8670000ea67000000ca9a3b
+=======
+    scrollPos: {x: 0, y: 15.0000305}
+    m_SelectedIDs: e65d0000
+    m_LastClickedID: 24038
+    m_ExpandedIDs: 00000000cc5d0000ce5d0000d05d0000d25d0000d45d0000d65d000000ca9a3b
+>>>>>>> nemfey
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: Scenes
+      m_OriginalName: Scenes
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: 24046
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 10}
     m_SearchString: 
@@ -974,7 +1130,11 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
+<<<<<<< HEAD
     m_ExpandedIDs: 00000000e2670000e4670000e6670000e8670000ea670000
+=======
+    m_ExpandedIDs: 00000000cc5d0000ce5d0000d05d0000d25d0000d45d0000d65d0000
+>>>>>>> nemfey
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

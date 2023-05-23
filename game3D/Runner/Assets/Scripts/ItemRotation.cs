@@ -23,7 +23,7 @@ public class ItemRotation : MonoBehaviour
 
         // Float
         Vector3 newPosition = initialPosition;
-        newPosition.y += Mathf.Sin(Time.time * floatSpeed);
+        newPosition.y += Mathf.Sin(Time.time * floatSpeed) * 0.5f;
         transform.position = newPosition;
     }
 }
