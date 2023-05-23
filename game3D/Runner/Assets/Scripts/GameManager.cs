@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -32,13 +33,21 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0f;
 
+        // Hide pause button
+        Transform pauseButtonTransform = gameCanvas.transform.Find("PauseButton");
+        SetActiveButton(pauseButtonTransform, false);
+
         pauseCanvas.SetActive(true);
     }
 
-    public void continueGame()
+    public void resumeGame()
     {
         Time.timeScale = 1f;
 
+        // Show pause button
+        Transform pauseButtonTransform = gameCanvas.transform.Find("PauseButton");
+        SetActiveButton(pauseButtonTransform, true);
+        
         pauseCanvas.SetActive(false);
     }
 
@@ -52,7 +61,17 @@ public class GameManager : MonoBehaviour
 
         if (gameStarted && pauseCanvas.activeSelf && Input.GetKeyDown(KeyCode.Space))
         {
-            continueGame();
+            resumeGame();
+        }
+    }
+
+    void SetActiveButton(Transform buttonTransform, bool b)
+    {
+        Button button = buttonTransform.GetComponent<Button>();
+
+        if (button != null)
+        {
+            button.gameObject.SetActive(b);
         }
     }
 }
