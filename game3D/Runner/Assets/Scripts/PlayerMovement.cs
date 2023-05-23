@@ -65,6 +65,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 animController.SetTrigger("DJumpTrigger");
 
+                FindObjectOfType<AudioManager>().playSound("dJump");
+
                 rb.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
                 jumpCount++;
             }
@@ -77,10 +79,14 @@ public class PlayerMovement : MonoBehaviour
                     jumpCount++;
                     bGrounded = false;
 
+                    FindObjectOfType<AudioManager>().playSound("jump");
+
                     animController.SetBool("InAir", true);
                 }
                 else if (collider_tag == "RightTurn" && targetAngle == 0f && bGrounded)
                 {
+                    FindObjectOfType<AudioManager>().playSound("pointEarn");
+
                     centerSection = hitInfo.collider.bounds.center.z;
                     targetAngle = 90f;
                     score++;
@@ -90,6 +96,8 @@ public class PlayerMovement : MonoBehaviour
                 }
                 else if (collider_tag == "LeftTurn" && targetAngle == 90f && bGrounded)
                 {
+                    FindObjectOfType<AudioManager>().playSound("pointEarn");
+
                     centerSection = hitInfo.collider.bounds.center.x;
                     targetAngle = 0f;
                     score++;
@@ -153,6 +161,8 @@ public class PlayerMovement : MonoBehaviour
             Destroy(c.gameObject);
             coins++;
             coinsText.text = coins.ToString();
+
+            FindObjectOfType<AudioManager>().playSound("coin");
         }
     }
 }

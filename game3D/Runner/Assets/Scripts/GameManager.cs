@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         gameStarted = true;
 
+        FindObjectOfType<AudioManager>().playSound("MainSong");
+
         mainMenuCanvas.SetActive(false);
         gameCanvas.SetActive(true);
     }
