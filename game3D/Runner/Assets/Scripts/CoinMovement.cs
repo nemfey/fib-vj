@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemRotation : MonoBehaviour
+public class CoinMovement : MonoBehaviour
 {
     public float rotationSpeed = 100f;
     public float floatSpeed = 2f;
@@ -23,7 +23,7 @@ public class ItemRotation : MonoBehaviour
 
         // Float
         Vector3 newPosition = initialPosition;
-        newPosition.y += Mathf.Sin(Time.time * floatSpeed) * 0.5f;
+        newPosition.y += Mathf.Sin(Time.time * floatSpeed) * 0.25f;
         transform.position = newPosition;
     }
 }

@@ -156,6 +156,11 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.Log("IM DEAD!");
         }
+        if (collider_tag == "EvilCoin")
+        {
+            Destroy(c.gameObject);
+            Debug.Log("IM DEAD!");
+        }
         if (collider_tag == "Coin")
         {
             Destroy(c.gameObject);
