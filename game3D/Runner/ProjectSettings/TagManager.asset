@@ -10,6 +10,9 @@ TagManager:
   - LeftTurn
   - Obstacle
   - Coin
+  - EvilCoin
+  - BarrelObstacle
+  - Barrel
   layers:
   - Default
   - TransparentFX

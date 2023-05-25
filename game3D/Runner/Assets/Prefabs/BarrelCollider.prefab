@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2580077369220922672}
   m_Layer: 0
   m_Name: BarrelCollider
-  m_TagString: Obstacle
+  m_TagString: BarrelObstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -112,5 +112,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59c58fa6ff43dc64a8019fe6f9bfd23f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 100
   movementSpeed: 15

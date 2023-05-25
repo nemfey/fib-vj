@@ -8,8 +8,8 @@ public class CreateLevel : MonoBehaviour
     public GameObject wallFloorPrefab, wallRampPrefab, wallTurnRightPrefab, wallTurnLeftPrefab;
 
     // obstacles
-    public GameObject wallBarrelsPrefab, evilCoinPrefab;
-    GameObject[] obstacles = new GameObject[2];
+    public GameObject wallBarrelsPrefab, evilCoinPrefab, barrelPrefab;
+    GameObject[] obstacles = new GameObject[3];
 
     // Coin
     public GameObject coinPrefab;
@@ -68,14 +68,6 @@ public class CreateLevel : MonoBehaviour
             section.transform.Rotate(0f, 90f, 0f);
         }
 
-        // Generate coin
-        //if (nthSection % 1 == 0)
-        //{
-        //    GameObject newCoin = (GameObject)Instantiate(coinPrefab);
-
-        //    newCoin.transform.Translate(section.transform.position.x, 0f, section.transform.position.z);
-        //}
-
         previousSize = sectionSize;
         section.transform.parent = transform;
         nthSection++;
@@ -116,16 +108,26 @@ public class CreateLevel : MonoBehaviour
             {
                if (obstacleId < obstacles.Length)
                 {
-                    if (obstacles[obstacleId] != evilCoinPrefab)
-                    {
-                        chunk = (GameObject)Instantiate(obstacles[obstacleId]);
-                    }
-                    else
+                    if (obstacles[obstacleId] == evilCoinPrefab)
                     {
                         GameObject evilCoin = (GameObject)Instantiate(evilCoinPrefab);
                         Vector3 pos = new Vector3(-2.5f, currentChunkY + 20f, i * 5f);
-                        placeCoin(section, evilCoin, pos);
+                        placeObstacle(section, evilCoin, pos);
                         chunk = (GameObject)Instantiate(wallFloorPrefab);
+                    }
+                    else if (obstacles[obstacleId] == barrelPrefab)
+                    {
+                        Debug.Log("BARREL PLACED!");
+                        GameObject barrel = (GameObject)Instantiate(barrelPrefab);
+                        barrel.transform.Rotate(0f, -90f, 0f);
+                        Vector3 pos = new Vector3(-1.25f, currentChunkY + 40f, i * 5f);
+                        placeObstacle(section, barrel, pos);
+                        barrel.SetActive(false);
+                        chunk = (GameObject)Instantiate(wallFloorPrefab);
+                    }
+                    else
+                    {
+                        chunk = (GameObject)Instantiate(obstacles[obstacleId]);
                     }
                     //chunk = (GameObject)Instantiate(obstacles[obstacleId]);
                 }
@@ -158,16 +160,16 @@ public class CreateLevel : MonoBehaviour
             if (coin != null && coinChunk == i)
             {
                 Vector3 pos = new Vector3(-2.5f, currentChunkY + 20f, i * 5f);
-                placeCoin(section, coin, pos);
+                placeObstacle(section, coin, pos);
             }
             
         }
     }
 
-    public void placeCoin (GameObject section, GameObject c, Vector3 pos)
+    public void placeObstacle(GameObject section, GameObject gObj, Vector3 pos)
     {
-        c.transform.position = pos;
-        c.transform.parent = section.transform;
+        gObj.transform.position = pos;
+        gObj.transform.parent = section.transform;
     }
 
     public void newSectionProcedure()
@@ -186,6 +188,7 @@ public class CreateLevel : MonoBehaviour
     {
         obstacles[0] = wallBarrelsPrefab;
         obstacles[1] = evilCoinPrefab;
+        obstacles[2] = barrelPrefab;
     }
 
     private HashSet<int> selectObstacleChunks(int sectionSize)

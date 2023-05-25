@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BarrelMovement : MonoBehaviour
 {
-    public float movementSpeed = 15f;
+    public float movementSpeed = 1f;
 
     // Update is called once per frame
     void Update()

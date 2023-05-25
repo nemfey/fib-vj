@@ -64,7 +64,6 @@ public class PlayerMovement : MonoBehaviour
             if (!bGrounded && jumpCount < 2)
             {
                 animController.SetTrigger("DJumpTrigger");
-
                 FindObjectOfType<AudioManager>().playSound("dJump");
 
                 rb.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
@@ -72,6 +71,8 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (Physics.Raycast(transform.position, Vector3.down, out hitInfo))
             {
+                checkBarrelActivation(hitInfo);
+
                 string collider_tag = hitInfo.collider.tag;
                 if ((collider_tag == "Floor" || collider_tag == "Obstacle") && jumpCount < 2)
                 {
@@ -142,6 +143,43 @@ public class PlayerMovement : MonoBehaviour
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
     }
 
+    void checkBarrelActivation(RaycastHit hitInfo)
+    {
+        GameObject floorObject = hitInfo.collider.gameObject.transform.parent.gameObject;
+        if (floorObject != null)
+        {
+            GameObject sectionObject = floorObject.transform.parent.gameObject;
+            if (sectionObject != null)
+            {
+                Transform sectionTransform = sectionObject.transform;
+                GameObject barrelObject = null;
+
+                for (int i = 0; i < sectionTransform.childCount; i++)
+                {
+                    Transform child = sectionTransform.GetChild(i);
+                    if (child.CompareTag("Barrel"))
+                    {
+                        barrelObject = child.gameObject;
+                        break;
+                    }
+                }
+
+                if (barrelObject != null)
+                {
+                    Debug.Log("Found a GameObject with the tag 'Barrel' inside sectionObject.");
+                    barrelObject.SetActive(true);
+                }
+
+
+                //if (barrelObject != null && barrelObject.transform.IsChildOf(sectionObject.transform))
+                //{
+                //    Debug.Log("BARREL IN THIS SECTION!");
+                //    barrelObject.SetActive(true);
+                //}
+            }
+        }
+    }
+
     void OnCollisionEnter(Collision c)
     {
         string collider_tag = c.collider.tag;
@@ -152,11 +190,11 @@ public class PlayerMovement : MonoBehaviour
 
             animController.SetBool("InAir", false);
         }
-        if (collider_tag == "Obstacle")
+        if (collider_tag == "Obstacle" || collider_tag == "BarrelObstacle")
         {
             Debug.Log("IM DEAD!");
         }
-        if (collider_tag == "EvilCoin")
+        if (collider_tag == "CoinObstacle")
         {
             Destroy(c.gameObject);
             Debug.Log("IM DEAD!");
