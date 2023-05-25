@@ -151,7 +151,12 @@ public class PlayerMovement : MonoBehaviour
             GameObject sectionObject = floorObject.transform.parent.gameObject;
             if (sectionObject != null)
             {
+                // Get next section
+                Transform parentTransform = sectionObject.transform.parent;
+                int siblingIndex = sectionObject.transform.GetSiblingIndex();
+                sectionObject = parentTransform.GetChild(siblingIndex + 1).gameObject;
                 Transform sectionTransform = sectionObject.transform;
+
                 GameObject barrelObject = null;
 
                 for (int i = 0; i < sectionTransform.childCount; i++)
