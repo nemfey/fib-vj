@@ -71,8 +71,6 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (Physics.Raycast(transform.position, Vector3.down, out hitInfo))
             {
-                checkBarrelActivation(hitInfo);
-
                 string collider_tag = hitInfo.collider.tag;
                 if ((collider_tag == "Floor" || collider_tag == "Obstacle") && jumpCount < 2)
                 {
@@ -86,6 +84,8 @@ public class PlayerMovement : MonoBehaviour
                 }
                 else if (collider_tag == "RightTurn" && targetAngle == 0f && bGrounded)
                 {
+                    checkBarrelActivation(hitInfo);
+
                     FindObjectOfType<AudioManager>().playSound("pointEarn");
 
                     centerSection = hitInfo.collider.bounds.center.z;
@@ -97,6 +97,8 @@ public class PlayerMovement : MonoBehaviour
                 }
                 else if (collider_tag == "LeftTurn" && targetAngle == 90f && bGrounded)
                 {
+                    checkBarrelActivation(hitInfo);
+
                     FindObjectOfType<AudioManager>().playSound("pointEarn");
 
                     centerSection = hitInfo.collider.bounds.center.x;
