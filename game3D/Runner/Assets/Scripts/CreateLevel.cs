@@ -81,7 +81,7 @@ public class CreateLevel : MonoBehaviour
 
         // Select obstacle chunk
         int obstacleId = Random.Range(0, obstacles.Length+1);
-        HashSet<int> obstacleChunks = selectObstacleChunks(sectionSize);
+        HashSet<int> obstacleChunks = selectObstacleChunks(sectionSize, obstacleId);
 
         // Select if coin and coin chunk
         GameObject coin = null;
@@ -194,7 +194,7 @@ public class CreateLevel : MonoBehaviour
         obstacles[2] = barrelPrefab;
     }
 
-    private HashSet<int> selectObstacleChunks(int sectionSize)
+    private HashSet<int> selectObstacleChunks(int sectionSize, int obstacleId)
     {
         HashSet<int> obstacleChunks = new HashSet<int>();
 
@@ -202,14 +202,16 @@ public class CreateLevel : MonoBehaviour
         int firstObstacleChunk = Random.Range(1, sectionSize - 1);
         obstacleChunks.Add(firstObstacleChunk);
 
-        int extraChunks = Random.Range(0, 3);
-        for (int i = 0; i < extraChunks; i++)
+        if (obstacleId != 1 && obstacleId != 2)
         {
-            int nextChunk = firstObstacleChunk + i + 1;
-            if (nextChunk < sectionSize-1)
-                obstacleChunks.Add(nextChunk);
+            int extraChunks = Random.Range(0, 2);
+            for (int i = 0; i < extraChunks; i++)
+            {
+                int nextChunk = firstObstacleChunk + i + 1;
+                if (nextChunk < sectionSize - 1)
+                    obstacleChunks.Add(nextChunk);
+            }
         }
-
 
         return obstacleChunks;
     }
