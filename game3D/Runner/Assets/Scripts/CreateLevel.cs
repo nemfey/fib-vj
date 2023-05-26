@@ -120,7 +120,7 @@ public class CreateLevel : MonoBehaviour
                         Debug.Log("BARREL PLACED!");
                         GameObject barrel = (GameObject)Instantiate(barrelPrefab);
                         barrel.transform.Rotate(0f, -90f, 0f);
-                        Vector3 pos = new Vector3(-1.25f, currentChunkY + 40f, i * 5f);
+                        Vector3 pos = new Vector3(-1.25f, currentChunkY + 25f, (sectionSize+2) * 5f);
                         placeObstacle(section, barrel, pos);
                         barrel.SetActive(false);
                         chunk = (GameObject)Instantiate(wallFloorPrefab);
@@ -186,8 +186,11 @@ public class CreateLevel : MonoBehaviour
 
     private void initializeObstacles()
     {
-        obstacles[0] = wallBarrelsPrefab;
-        obstacles[1] = evilCoinPrefab;
+        //obstacles[0] = wallBarrelsPrefab;
+        //obstacles[1] = evilCoinPrefab;
+        //obstacles[2] = barrelPrefab;
+        obstacles[0] = barrelPrefab;
+        obstacles[1] = barrelPrefab;
         obstacles[2] = barrelPrefab;
     }
 
