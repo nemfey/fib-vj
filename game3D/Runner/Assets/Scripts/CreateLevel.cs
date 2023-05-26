@@ -186,11 +186,8 @@ public class CreateLevel : MonoBehaviour
 
     private void initializeObstacles()
     {
-        //obstacles[0] = wallBarrelsPrefab;
-        //obstacles[1] = evilCoinPrefab;
-        //obstacles[2] = barrelPrefab;
-        obstacles[0] = barrelPrefab;
-        obstacles[1] = barrelPrefab;
+        obstacles[0] = wallBarrelsPrefab;
+        obstacles[1] = evilCoinPrefab;
         obstacles[2] = barrelPrefab;
     }
 
