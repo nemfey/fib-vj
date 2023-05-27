@@ -29,11 +29,16 @@ public class GameManager : MonoBehaviour
         {
             startGame();
         }
-
-        if (gameStarted && pauseCanvas.activeSelf && Input.GetKeyDown(KeyCode.Space))
+        
+        if (gameStarted && !pauseCanvas.activeSelf && (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P)))
+        {
+            pauseGame();
+        }
+        else if (gameStarted && pauseCanvas.activeSelf && (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P)))
         {
             resumeGame();
         }
+
     }
 
     public void startGame()

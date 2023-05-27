@@ -58,70 +58,24 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        moveForward();
-        moveToCenter();
-        rotateToTargetAngle();
-
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Time.timeScale != 0f)
         {
-            if (!bGrounded && jumpCount < 2)
+            moveForward();
+            moveToCenter();
+            rotateToTargetAngle();
+
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                animController.SetTrigger("DJumpTrigger");
-                audioManager.playSound("dJump");
-
-                jumpProcedure();
+                playerAction();
             }
-            else if (Physics.Raycast(transform.position, Vector3.down, out hitInfo))
+
+            if (onSlope() && bGrounded)
             {
-                string collider_tag = hitInfo.collider.tag;
-                if ((collider_tag == "Floor" || collider_tag == "Obstacle") && jumpCount < 2)
-                {
-                    audioManager.playSound("jump");
-                    animController.SetBool("InAir", true);
-
-                    jumpProcedure();
-                }
-                else if ((collider_tag == "RightTurn" || collider_tag == "LeftTurn") && bGrounded)
-                {
-                    checkBarrelActivation(hitInfo);
-
-                    if ((collider_tag == "RightTurn" && targetAngle == 90f) || (collider_tag == "LeftTurn" && targetAngle == 0f))
-                    {
-                        audioManager.playSound("jump");
-                        animController.SetBool("InAir", true);
-
-                        jumpProcedure();
-                    }
-                    else
-                    {
-                        if (collider_tag == "RightTurn")
-                        {
-                            centerSection = hitInfo.collider.bounds.center.z;
-                            targetAngle = 90f;
-                        }
-                        else
-                        {
-                            centerSection = hitInfo.collider.bounds.center.x;
-                            targetAngle = 0f;
-                        }
-
-                        // Add score
-                        int score = PlayerPrefs.GetInt("ScoreCount", 0) + 1;
-                        PlayerPrefs.SetInt("ScoreCount", score);
-                        audioManager.playSound("pointEarn");
-
-                        level.GetComponent<CreateLevel>().newSectionProcedure();
-                    }
-                }
+                Debug.Log("SLOPEDOWN!");
+                //rb.AddForce(Vector3.down * 5f * Time.deltaTime);
+                // player should be touchingh the slope all the time
+                // instead of floating
             }
-        }
-
-        if (onSlope() && bGrounded)
-        {
-            Debug.Log("SLOPEDOWN!");
-            //rb.AddForce(Vector3.down * 5f * Time.deltaTime);
-            // player should be touchingh the slope all the time
-            // instead of floating
         }
     }
 
@@ -148,6 +102,60 @@ public class PlayerMovement : MonoBehaviour
     {
         Quaternion targetRotation = Quaternion.Euler(0, targetAngle, 0);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
+    }
+
+    void playerAction()
+    {
+        if (!bGrounded && jumpCount < 2)
+        {
+            animController.SetTrigger("DJumpTrigger");
+            audioManager.playSound("dJump");
+
+            jumpProcedure();
+        }
+        else if (Physics.Raycast(transform.position, Vector3.down, out hitInfo))
+        {
+            string collider_tag = hitInfo.collider.tag;
+            if ((collider_tag == "Floor" || collider_tag == "Obstacle") && jumpCount < 2)
+            {
+                audioManager.playSound("jump");
+                animController.SetBool("InAir", true);
+
+                jumpProcedure();
+            }
+            else if ((collider_tag == "RightTurn" || collider_tag == "LeftTurn") && bGrounded)
+            {
+                checkBarrelActivation(hitInfo);
+
+                if ((collider_tag == "RightTurn" && targetAngle == 90f) || (collider_tag == "LeftTurn" && targetAngle == 0f))
+                {
+                    audioManager.playSound("jump");
+                    animController.SetBool("InAir", true);
+
+                    jumpProcedure();
+                }
+                else
+                {
+                    if (collider_tag == "RightTurn")
+                    {
+                        centerSection = hitInfo.collider.bounds.center.z;
+                        targetAngle = 90f;
+                    }
+                    else
+                    {
+                        centerSection = hitInfo.collider.bounds.center.x;
+                        targetAngle = 0f;
+                    }
+
+                    // Add score
+                    int score = PlayerPrefs.GetInt("ScoreCount", 0) + 1;
+                    PlayerPrefs.SetInt("ScoreCount", score);
+                    audioManager.playSound("pointEarn");
+
+                    level.GetComponent<CreateLevel>().newSectionProcedure();
+                }
+            }
+        }
     }
 
     void checkBarrelActivation(RaycastHit hitInfo)
