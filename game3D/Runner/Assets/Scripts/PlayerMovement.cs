@@ -29,6 +29,8 @@ public class PlayerMovement : MonoBehaviour
     private TextMeshProUGUI scoreText;
     public int score = 0;
 
+    private AudioManager audioManager;
+
     //private TextMeshProUGUI coinsText;
 
     private bool onSlope()
@@ -48,9 +50,8 @@ public class PlayerMovement : MonoBehaviour
         animController = GetComponentInChildren<Animator>();
 
         scoreText = gameCanvas.transform.Find("Score").GetComponent<TextMeshProUGUI>();
-        //coinsText = gameCanvas.transform.Find("Coins").GetComponent<TextMeshProUGUI>();
 
-        //coinsText.text = PlayerPrefs.GetInt("CoinCount", 0).ToString();
+        audioManager = FindObjectOfType<AudioManager>();
 
     }
 
@@ -66,57 +67,51 @@ public class PlayerMovement : MonoBehaviour
             if (!bGrounded && jumpCount < 2)
             {
                 animController.SetTrigger("DJumpTrigger");
-                FindObjectOfType<AudioManager>().playSound("dJump");
+                audioManager.playSound("dJump");
 
-                rb.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
-                jumpCount++;
+                jumpProcedure();
             }
             else if (Physics.Raycast(transform.position, Vector3.down, out hitInfo))
             {
                 string collider_tag = hitInfo.collider.tag;
                 if ((collider_tag == "Floor" || collider_tag == "Obstacle") && jumpCount < 2)
                 {
-                    rb.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
-                    jumpCount++;
-                    bGrounded = false;
-
-                    FindObjectOfType<AudioManager>().playSound("jump");
-
+                    audioManager.playSound("jump");
                     animController.SetBool("InAir", true);
+
+                    jumpProcedure();
                 }
-                else if (collider_tag == "RightTurn" && targetAngle == 0f && bGrounded)
+                else if ((collider_tag == "RightTurn" || collider_tag == "LeftTurn") && bGrounded)
                 {
                     checkBarrelActivation(hitInfo);
 
-                    FindObjectOfType<AudioManager>().playSound("pointEarn");
+                    if ((collider_tag == "RightTurn" && targetAngle == 90f) || (collider_tag == "LeftTurn" && targetAngle == 0f))
+                    {
+                        audioManager.playSound("jump");
+                        animController.SetBool("InAir", true);
 
-                    centerSection = hitInfo.collider.bounds.center.z;
-                    targetAngle = 90f;
+                        jumpProcedure();
+                    }
+                    else
+                    {
+                        if (collider_tag == "RightTurn")
+                        {
+                            centerSection = hitInfo.collider.bounds.center.z;
+                            targetAngle = 90f;
+                        }
+                        else
+                        {
+                            centerSection = hitInfo.collider.bounds.center.x;
+                            targetAngle = 0f;
+                        }
 
-                    int score = PlayerPrefs.GetInt("ScoreCount", 0);
-                    score++;
-                    PlayerPrefs.SetInt("ScoreCount", score);
-                    //score++;
-                    //scoreText.text = score.ToString();
+                        // Add score
+                        int score = PlayerPrefs.GetInt("ScoreCount", 0) + 1;
+                        PlayerPrefs.SetInt("ScoreCount", score);
+                        audioManager.playSound("pointEarn");
 
-                    level.GetComponent<CreateLevel>().newSectionProcedure();
-                }
-                else if (collider_tag == "LeftTurn" && targetAngle == 90f && bGrounded)
-                {
-                    checkBarrelActivation(hitInfo);
-
-                    FindObjectOfType<AudioManager>().playSound("pointEarn");
-
-                    centerSection = hitInfo.collider.bounds.center.x;
-                    targetAngle = 0f;
-
-                    int score = PlayerPrefs.GetInt("ScoreCount", 0);
-                    score++;
-                    PlayerPrefs.SetInt("ScoreCount", score);
-                    //score++;
-                    //scoreText.text = score.ToString();
-
-                    level.GetComponent<CreateLevel>().newSectionProcedure();
+                        level.GetComponent<CreateLevel>().newSectionProcedure();
+                    }
                 }
             }
         }
@@ -197,6 +192,14 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void jumpProcedure()
+    {
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
+        jumpCount++;
+
+        bGrounded = false;
+    }
+
     void OnCollisionEnter(Collision c)
     {
         string collider_tag = c.collider.tag;
@@ -224,7 +227,7 @@ public class PlayerMovement : MonoBehaviour
             coins++;
             PlayerPrefs.SetInt("CoinCount", coins);
 
-            FindObjectOfType<AudioManager>().playSound("coin");
+            audioManager.playSound("coin");
         }
     }
 }
