@@ -13,6 +13,8 @@ TagManager:
   - EvilCoin
   - BarrelObstacle
   - Barrel
+  - CoinObstacle
+  - Bindweed
   layers:
   - Default
   - TransparentFX

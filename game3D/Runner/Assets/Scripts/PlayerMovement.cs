@@ -71,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (onSlope() && bGrounded)
             {
-                Debug.Log("SLOPEDOWN!");
+                //Debug.Log("SLOPEDOWN!");
                 //rb.AddForce(Vector3.down * 5f * Time.deltaTime);
                 // player should be touchingh the slope all the time
                 // instead of floating
@@ -220,6 +220,15 @@ public class PlayerMovement : MonoBehaviour
         if (collider_tag == "Obstacle" || collider_tag == "BarrelObstacle")
         {
             Debug.Log("IM DEAD!");
+        }
+    }
+
+    void OnTriggerEnter(Collider c)
+    {
+        string collider_tag = c.GetComponent<Collider>().tag;
+        if (collider_tag == "Bindweed")
+        {
+            Debug.Log("IM ROOTED!");
         }
         if (collider_tag == "CoinObstacle")
         {
