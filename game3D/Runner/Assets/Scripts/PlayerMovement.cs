@@ -228,7 +228,7 @@ public class PlayerMovement : MonoBehaviour
         string collider_tag = c.GetComponent<Collider>().tag;
         if (collider_tag == "Bindweed")
         {
-            Debug.Log("IM ROOTED!");
+            velocity = velocity / 4;
         }
         if (collider_tag == "CoinObstacle")
         {
@@ -244,6 +244,15 @@ public class PlayerMovement : MonoBehaviour
             PlayerPrefs.SetInt("CoinCount", coins);
 
             audioManager.playSound("coin");
+        }
+    }
+
+    void OnTriggerExit(Collider c)
+    {
+        string collider_tag = c.GetComponent<Collider>().tag;
+        if (collider_tag == "Bindweed")
+        {
+            velocity = velocity * 4;
         }
     }
 }

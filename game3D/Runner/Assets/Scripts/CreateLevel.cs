@@ -185,14 +185,14 @@ public class CreateLevel : MonoBehaviour
 
     private void initializeObstacles()
     {
-        //obstacles[0] = wallBarrelsPrefab;
-        //obstacles[1] = evilCoinPrefab;
-        //obstacles[2] = barrelPrefab;
-        //obstacles[3] = bindweedPrefab;
-        obstacles[0] = bindweedPrefab;
-        obstacles[1] = bindweedPrefab;
-        obstacles[2] = bindweedPrefab;
+        obstacles[0] = wallBarrelsPrefab;
+        obstacles[1] = evilCoinPrefab;
+        obstacles[2] = barrelPrefab;
         obstacles[3] = bindweedPrefab;
+        //obstacles[0] = bindweedPrefab;
+        ///obstacles[1] = bindweedPrefab;
+        //obstacles[2] = bindweedPrefab;
+        //obstacles[3] = bindweedPrefab;
     }
 
     private HashSet<int> selectObstacleChunks(int sectionSize, int obstacleId)
