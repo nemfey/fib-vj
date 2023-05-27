@@ -29,8 +29,7 @@ public class PlayerMovement : MonoBehaviour
     private TextMeshProUGUI scoreText;
     public int score = 0;
 
-    private TextMeshProUGUI coinsText;
-    public int coins = 0;
+    //private TextMeshProUGUI coinsText;
 
     private bool onSlope()
     {
@@ -49,7 +48,10 @@ public class PlayerMovement : MonoBehaviour
         animController = GetComponentInChildren<Animator>();
 
         scoreText = gameCanvas.transform.Find("Score").GetComponent<TextMeshProUGUI>();
-        coinsText = gameCanvas.transform.Find("Coins").GetComponent<TextMeshProUGUI>();
+        //coinsText = gameCanvas.transform.Find("Coins").GetComponent<TextMeshProUGUI>();
+
+        //coinsText.text = PlayerPrefs.GetInt("CoinCount", 0).ToString();
+
     }
 
     // Update is called once per frame
@@ -90,8 +92,12 @@ public class PlayerMovement : MonoBehaviour
 
                     centerSection = hitInfo.collider.bounds.center.z;
                     targetAngle = 90f;
+
+                    int score = PlayerPrefs.GetInt("ScoreCount", 0);
                     score++;
-                    scoreText.text = score.ToString();
+                    PlayerPrefs.SetInt("ScoreCount", score);
+                    //score++;
+                    //scoreText.text = score.ToString();
 
                     level.GetComponent<CreateLevel>().newSectionProcedure();
                 }
@@ -103,8 +109,12 @@ public class PlayerMovement : MonoBehaviour
 
                     centerSection = hitInfo.collider.bounds.center.x;
                     targetAngle = 0f;
+
+                    int score = PlayerPrefs.GetInt("ScoreCount", 0);
                     score++;
-                    scoreText.text = score.ToString();
+                    PlayerPrefs.SetInt("ScoreCount", score);
+                    //score++;
+                    //scoreText.text = score.ToString();
 
                     level.GetComponent<CreateLevel>().newSectionProcedure();
                 }
@@ -209,8 +219,10 @@ public class PlayerMovement : MonoBehaviour
         if (collider_tag == "Coin")
         {
             Destroy(c.gameObject);
+            // Update player coins
+            int coins = PlayerPrefs.GetInt("CoinCount", 0);
             coins++;
-            coinsText.text = coins.ToString();
+            PlayerPrefs.SetInt("CoinCount", coins);
 
             FindObjectOfType<AudioManager>().playSound("coin");
         }

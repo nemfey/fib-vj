@@ -502,6 +502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0cef91d7944c734aa577f2cfb718d08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coinsText: {fileID: 0}
 --- !u!114 &120581567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -978,6 +979,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0cef91d7944c734aa577f2cfb718d08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coinsText: {fileID: 0}
 --- !u!114 &225223091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1998,7 +2000,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 416945038}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 289551517}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: restartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &416945038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3538,6 +3552,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0cef91d7944c734aa577f2cfb718d08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coinsText: {fileID: 0}
 --- !u!114 &687883243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4600,6 +4615,8 @@ GameObject:
   - component: {fileID: 880461788}
   - component: {fileID: 880461787}
   - component: {fileID: 880461786}
+  - component: {fileID: 880461790}
+  - component: {fileID: 880461791}
   m_Layer: 5
   m_Name: GameCanvas
   m_TagString: Untagged
@@ -4692,6 +4709,31 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &880461790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880461785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0cef91d7944c734aa577f2cfb718d08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coinsText: {fileID: 0}
+--- !u!114 &880461791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880461785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b5c62b38247ce04c8196da45137c294, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &902555717 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3677059045669340636, guid: 2ce74d523589c304690dfee02af94cce, type: 3}
@@ -6061,6 +6103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0cef91d7944c734aa577f2cfb718d08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coinsText: {fileID: 0}
 --- !u!114 &1154325755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7108,7 +7151,6 @@ GameObject:
   - component: {fileID: 1408827334}
   - component: {fileID: 1408827333}
   - component: {fileID: 1408827332}
-  - component: {fileID: 1408827331}
   m_Layer: 5
   m_Name: PauseMenu
   m_TagString: Untagged
@@ -7116,18 +7158,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &1408827331
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1408827330}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0cef91d7944c734aa577f2cfb718d08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1408827332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8129,7 +8159,6 @@ MonoBehaviour:
   jumpCount: 0
   gameCanvas: {fileID: 880461785}
   score: 0
-  coins: 0
 --- !u!54 &1582047731
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8555,6 +8584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0cef91d7944c734aa577f2cfb718d08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coinsText: {fileID: 0}
 --- !u!4 &1638868781 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4478822117492342, guid: 9a0029d66f7229f4dacf38d09d5ddea3, type: 3}
@@ -9910,7 +9940,6 @@ MonoBehaviour:
   jumpCount: 0
   gameCanvas: {fileID: 880461785}
   score: 0
-  coins: 0
 --- !u!54 &1945719393
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -15017,6 +15046,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0cef91d7944c734aa577f2cfb718d08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coinsText: {fileID: 0}
 --- !u!114 &2133596125
 MonoBehaviour:
   m_ObjectHideFlags: 0
