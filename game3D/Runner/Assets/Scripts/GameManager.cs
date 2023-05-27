@@ -10,16 +10,25 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject gameCanvas;
     [SerializeField] private GameObject pauseCanvas;
 
-    private bool gameStarted = false;
+    private static bool gameStarted = false;
+
+    //private static bool  = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        Time.timeScale = 0f;
-        gameStarted = false;
-        mainMenuCanvas.SetActive(true);
-        gameCanvas.SetActive(false);
-        pauseCanvas.SetActive(false);
+        if (!gameStarted)
+        {
+            Time.timeScale = 0f;
+            //gameStarted = false;
+            mainMenuCanvas.SetActive(true);
+            gameCanvas.SetActive(false);
+            pauseCanvas.SetActive(false);
+        }
+        else
+        {
+            startGame();
+        }
     }
 
     // Update is called once per frame
@@ -45,7 +54,6 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         gameStarted = true;
-
         FindObjectOfType<AudioManager>().playSound("MainSong");
 
         mainMenuCanvas.SetActive(false);
@@ -77,9 +85,7 @@ public class GameManager : MonoBehaviour
     public void restartGame()
     {
         SceneManager.LoadScene("Game");
-        startGame();
     }
-
 
     public void showOptionsPause()
     {
@@ -88,7 +94,8 @@ public class GameManager : MonoBehaviour
 
     public void quitGame()
     {
-
+        gameStarted = false;
+        SceneManager.LoadScene("Game");
     }
 
     void SetActiveButton(Transform buttonTransform, bool b)

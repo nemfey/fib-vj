@@ -186,7 +186,6 @@ public class PlayerMovement : MonoBehaviour
 
                 if (barrelObject != null)
                 {
-                    Debug.Log("Found a GameObject with the tag 'Barrel' inside sectionObject.");
                     barrelObject.SetActive(true);
                 }
 
