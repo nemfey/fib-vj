@@ -85,16 +85,20 @@ public class CreateLevel : MonoBehaviour
         GameObject chunk = null;
 
         // Select obstacle chunk
-        int obstacleId = Random.Range(0, obstacles.Length+1);
+        int obstacleId = Random.Range(0, obstacles.Length+1); // +1 because probabiliy of not putting any trap
         HashSet<int> obstacleChunks = selectObstacleChunks(sectionSize, obstacleId);
 
         // Select if coin and coin chunk
-        GameObject coin = null;
-        int coinChunk = -1;
-        if (Random.Range(0, 4) == 1)
+        GameObject coin = (Random.Range(0, 4) == 1) ? (GameObject)Instantiate(coinPrefab) : null;
+        int coinChunk = Random.Range(0, sectionSize - 1);
+        float currentCoinY = -1f;
+
+        // Select void chunk
+        HashSet<int> voidChunks = new HashSet<int>();
+        if (obstacleId == 1 || obstacleId == 2 || obstacleId == obstacles.Length)
         {
-            coin = (GameObject)Instantiate(coinPrefab);
-            coinChunk = Random.Range(0, sectionSize-1);
+            Debug.Log("VOID WILLL BE PUT");
+            voidChunks = selectVoidChunks(sectionSize);
         }
 
         bool bRampPlaced = false;
@@ -109,37 +113,39 @@ public class CreateLevel : MonoBehaviour
             }
             */
             //else if (i == obstacleChunk && nthSection > 2 && sectionSize > 3)
-            if (obstacleChunks.Contains(i) && nthSection > 2 && sectionSize > 3)
+            if (obstacleId < obstacles.Length && obstacleChunks.Contains(i) && sectionSize > 3)
             {
-               if (obstacleId < obstacles.Length)
+                //if (obstacleId < obstacles.Length)
+                //{
+                if (obstacles[obstacleId] == evilCoinPrefab)
                 {
-                    if (obstacles[obstacleId] == evilCoinPrefab)
-                    {
-                        GameObject evilCoin = (GameObject)Instantiate(evilCoinPrefab);
-                        float coinY = (Random.Range(0, 2) == 0) ? 20f : 24f;
-                        Vector3 pos = new Vector3(-2.5f, currentChunkY + coinY, i * 5f);
-                        placeObstacle(section, evilCoin, pos);
-                        chunk = (GameObject)Instantiate(wallFloorPrefab);
-                    }
-                    else if (obstacles[obstacleId] == barrelPrefab)
-                    {
-                        GameObject barrel = (GameObject)Instantiate(barrelPrefab);
-                        barrel.transform.Rotate(0f, -90f, 0f);
-                        Vector3 pos = new Vector3(-1.25f, currentChunkY + 25f, (sectionSize+2) * 5f);
-                        placeObstacle(section, barrel, pos);
-                        barrel.SetActive(false);
-                        chunk = (GameObject)Instantiate(wallFloorPrefab);
-                    }
-                    else
-                    {
-                        chunk = (GameObject)Instantiate(obstacles[obstacleId]);
-                    }
-                    //chunk = (GameObject)Instantiate(obstacles[obstacleId]);
+                    GameObject evilCoin = (GameObject)Instantiate(evilCoinPrefab);
+                    float coinY = (Random.Range(0, 2) == 0) ? 20f : 24f;
+                    currentCoinY = (currentCoinY == -1f) ? coinY : currentCoinY;
+                    //float coinY = (Random.Range(0, 2) == 0) ? 20f : 24f;
+                    Vector3 pos = new Vector3(-2.5f, currentChunkY + currentCoinY, i * 5f);
+                    placeObstacle(section, evilCoin, pos);
+                    chunk = (GameObject)Instantiate(wallFloorPrefab);
+                }
+                else if (obstacles[obstacleId] == barrelPrefab)
+                {
+                    GameObject barrel = (GameObject)Instantiate(barrelPrefab);
+                    barrel.transform.Rotate(0f, -90f, 0f);
+                    Vector3 pos = new Vector3(-1.25f, currentChunkY + 25f, (sectionSize + 2) * 5f);
+                    placeObstacle(section, barrel, pos);
+                    barrel.SetActive(false);
+                    chunk = (GameObject)Instantiate(wallFloorPrefab);
                 }
                 else
                 {
-                    chunk = new GameObject("Void");
+                    chunk = (GameObject)Instantiate(obstacles[obstacleId]);
                 }
+                //chunk = (GameObject)Instantiate(obstacles[obstacleId]);
+                //}
+                //else
+                //{
+                //    chunk = new GameObject("Void");
+                //}
             }
             else if (i == sectionSize - 1)
             {
@@ -147,6 +153,11 @@ public class CreateLevel : MonoBehaviour
                     chunk = (GameObject)Instantiate(wallTurnRightPrefab);
                 else
                     chunk = (GameObject)Instantiate(wallTurnLeftPrefab);
+            }
+            else if (voidChunks.Contains(i) && sectionSize > 3)
+            {
+                Debug.Log("INSEERTING VOID");
+                chunk = new GameObject("Void");
             }
             else
             {
@@ -162,10 +173,11 @@ public class CreateLevel : MonoBehaviour
                 bRampPlaced = false;
             }
             
-            if (coin != null && coinChunk == i)
+            if (coin != null && coinChunk == i && obstacleId != 1)
             {
                 float coinY = (Random.Range(0, 2) == 0) ? 20f : 24f;
-                Vector3 pos = new Vector3(-2.5f, currentChunkY + coinY, i * 5f);
+                currentCoinY = (currentCoinY == -1f) ? coinY : currentCoinY;
+                Vector3 pos = new Vector3(-2.5f, currentChunkY + currentCoinY, i * 5f);
                 placeObstacle(section, coin, pos);
             }
             
@@ -180,7 +192,7 @@ public class CreateLevel : MonoBehaviour
 
     public void newSectionProcedure()
     {
-        int sectionSize = Random.Range(2, 8);
+        int sectionSize = Random.Range(2, 7);
         GameObject newSection = createSection(sectionSize);
         sections.Enqueue(newSection);
 
@@ -199,7 +211,6 @@ public class CreateLevel : MonoBehaviour
 
     private void addDecoration(Vector3 sectionPosition, int sectionSize)
     {
-        Debug.Log("DECORATIONPLACED");
         int decorationId = Random.Range(0, decorations.Length);
         GameObject decoration = (GameObject)Instantiate(decorations[decorationId]);
 
@@ -237,20 +248,47 @@ public class CreateLevel : MonoBehaviour
         HashSet<int> obstacleChunks = new HashSet<int>();
 
         // Add init obstacle
-        int firstObstacleChunk = Random.Range(1, sectionSize - 1);
+        int firstObstacleChunk = Random.Range(0, sectionSize - 1);
         obstacleChunks.Add(firstObstacleChunk);
 
-        if (obstacleId != 1 && obstacleId != 2)
+        if (obstacleId != 2)
         {
             int extraChunks = Random.Range(0, 2);
-            for (int i = 0; i < extraChunks; i++)
+            if (extraChunks == 1)
             {
-                int nextChunk = firstObstacleChunk + i + 1;
-                if (nextChunk < sectionSize - 1)
+                int nextChunk = firstObstacleChunk + (Random.Range(0, 2) + 1);
+                if (obstacleId == 1) // EvilCoins must be grouped
+                {
+                    nextChunk = firstObstacleChunk + 1;
                     obstacleChunks.Add(nextChunk);
+                }
+                else if (nextChunk < sectionSize - 1)
+                {
+                    obstacleChunks.Add(nextChunk);
+                }
             }
         }
 
         return obstacleChunks;
+    }
+
+    private HashSet<int> selectVoidChunks(int sectionSize)
+    {
+        HashSet<int> voidChunks = new HashSet<int>();
+
+        // Add init obstacle
+        int firstVoidChunk = Random.Range(1, sectionSize - 1);
+        voidChunks.Add(firstVoidChunk);
+
+        int extraChunks = Random.Range(0, 2);
+        if (extraChunks == 1)
+        {
+            int nextChunk = firstVoidChunk + (Random.Range(0, 2) + 1);
+            if (nextChunk < sectionSize - 1)
+            {
+                voidChunks.Add(nextChunk);
+            }
+        }
+        return voidChunks;
     }
 }   
