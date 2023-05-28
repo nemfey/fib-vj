@@ -13,20 +13,16 @@ public class CameraMovement : MonoBehaviour
 
     private PlayerMovement playerMovementScript;
 
-    // Camera rotation
-    GameObject playerObject;
-
     // Camera movement
     Vector3 currentPosition;
     Vector3 targetPosition;
 
-    float movementSpeed = 10f;
-    float rotationSpeed = 5f;
+    float movementSpeed = 8f;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerObject = GameObject.Find("Player");
+        GameObject playerObject = GameObject.Find("Player");
         playerMovementScript = playerObject.GetComponent<PlayerMovement>();
 
         currentPosition = this.transform.position;
@@ -40,14 +36,12 @@ public class CameraMovement : MonoBehaviour
 
         currentPosition = this.transform.position;
 
-        // Rotation
-        Vector3 targetDirection = playerObject.transform.position - currentPosition;
-        float singleStep = rotationSpeed * Time.deltaTime;
-        Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
-        this.transform.rotation = Quaternion.LookRotation(newDirection);
-
         // Movement
         targetPosition = playerMovementScript.cameraPosition;
+        targetPosition.x += 40f;
+        targetPosition.z += 40f;
+        //targetPosition.x += 50f;
+        //targetPosition.z += 50f;
 
         currentPosition = Vector3.MoveTowards(currentPosition, targetPosition, movementSpeed * Time.deltaTime);
         this.transform.position = currentPosition;

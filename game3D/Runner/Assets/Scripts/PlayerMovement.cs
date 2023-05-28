@@ -53,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
 
         scoreText = gameCanvas.transform.Find("Score").GetComponent<TextMeshProUGUI>();
 
-        cameraPosition = new Vector3(27.5f, 60f, 12.5f);
+        cameraPosition = new Vector3(2.5f, 50f, -12.5f);
     }
 
     // Update is called once per frame
@@ -219,18 +219,19 @@ public class PlayerMovement : MonoBehaviour
             {
                 Transform parentTransform = sectionObject.transform.parent;
                 int siblingIndex = sectionObject.transform.GetSiblingIndex();
-                sectionObject = parentTransform.GetChild(siblingIndex + 5).gameObject;
+                //sectionObject = parentTransform.GetChild(siblingIndex + 5).gameObject;
+                sectionObject = parentTransform.GetChild(siblingIndex + 1).gameObject;
 
                 int sectionSize = sectionObject.transform.childCount;
                 Vector3 sectionPosition = sectionObject.transform.position;
                 Vector3 sectionRotation = sectionObject.transform.eulerAngles;
 
                 // Default
-                cameraPosition = new Vector3(sectionPosition.x - 2.5f, sectionPosition.y + 60f, sectionPosition.z + ((sectionSize/2f)*5f));
+                cameraPosition = new Vector3(sectionPosition.x - 2.5f, sectionPosition.y + 50f, sectionPosition.z + ((sectionSize/2f)*5f));
 
                 if (sectionRotation.y == 90f)
                 {
-                    cameraPosition = new Vector3(sectionPosition.x + ((sectionSize/2f)*5f), sectionPosition.y + 60f, sectionPosition.z - 2.5f);
+                    cameraPosition = new Vector3(sectionPosition.x + ((sectionSize/2f)*5f), sectionPosition.y + 50f, sectionPosition.z - 2.5f);
                 }
             }
         }
