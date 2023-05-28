@@ -1080,6 +1080,12 @@ MonoBehaviour:
   evilCoinPrefab: {fileID: 2428783756847589987, guid: 7ee0e0a9977820c489103a25c5d0e9c2, type: 3}
   barrelPrefab: {fileID: 3200516799283944827, guid: 0a303995bee67e34d99ee0abf43a7288, type: 3}
   bindweedPrefab: {fileID: 7577787366224663874, guid: 81e6e51599cea3a4bbf054b7d58e81cc, type: 3}
+  spikeTrapPrefab: {fileID: 4522052704206501831, guid: 10d3717058f702640a79834687f23152, type: 3}
+  tower1Prefab: {fileID: 8691051625047323213, guid: a885d33c7e5190040b61b009aa62cbbd, type: 3}
+  tower2Prefab: {fileID: 5271679175452844236, guid: 99ed8b1b78baa8343a184b15f4cdddee, type: 3}
+  tower3Prefab: {fileID: 8770565513151048049, guid: de8825fe34b7407418482ff2eae16ed2, type: 3}
+  tower4Prefab: {fileID: 6639746742339469065, guid: 3708b05bb5ce9b442b1314045a994c7f, type: 3}
+  tower5Prefab: {fileID: 8655497562103271703, guid: b05ad047124f1434095bb36164ce139c, type: 3}
   coinPrefab: {fileID: 8563509653203400950, guid: 779ce531b0f31544db3ff287b96b539f, type: 3}
 --- !u!4 &240636191 stripped
 Transform:

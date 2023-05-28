@@ -8,8 +8,8 @@ public class CreateLevel : MonoBehaviour
     public GameObject wallFloorPrefab, wallRampPrefab, wallTurnRightPrefab, wallTurnLeftPrefab;
 
     // obstacles
-    public GameObject wallBarrelsPrefab, evilCoinPrefab, barrelPrefab, bindweedPrefab;
-    GameObject[] obstacles = new GameObject[4];
+    public GameObject wallBarrelsPrefab, evilCoinPrefab, barrelPrefab, bindweedPrefab, spikeTrapPrefab;
+    GameObject[] obstacles = new GameObject[5];
 
     // decoration
     public GameObject tower1Prefab, tower2Prefab, tower3Prefab, tower4Prefab, tower5Prefab;
@@ -77,6 +77,8 @@ public class CreateLevel : MonoBehaviour
         section.transform.parent = transform;
         nthSection++;
 
+        Debug.Log(sectionSize + "  " + section.transform.position);
+
         return section;
     }
 
@@ -85,7 +87,8 @@ public class CreateLevel : MonoBehaviour
         GameObject chunk = null;
 
         // Select obstacle chunk
-        int obstacleId = Random.Range(0, obstacles.Length+1); // +1 because probabiliy of not putting any trap
+        //int obstacleId = Random.Range(0, obstacles.Length+1); // +1 because probabiliy of not putting any trap
+        int obstacleId = Random.Range(0, obstacles.Length);
         HashSet<int> obstacleChunks = selectObstacleChunks(sectionSize, obstacleId);
 
         // Select if coin and coin chunk
@@ -105,6 +108,7 @@ public class CreateLevel : MonoBehaviour
 
         for (int i = 0; i < sectionSize; i++)
         {
+            Debug.Log("Iteration " + i);
             /*
             if (nthSection%2 == 0  && i == 1 && i != sectionSize-1)
             {
@@ -113,8 +117,9 @@ public class CreateLevel : MonoBehaviour
             }
             */
             //else if (i == obstacleChunk && nthSection > 2 && sectionSize > 3)
-            if (obstacleId < obstacles.Length && obstacleChunks.Contains(i) && sectionSize > 3)
+            if (obstacleChunks.Contains(i) && sectionSize > 3)
             {
+                Debug.Log("obstacle " + i);
                 //if (obstacleId < obstacles.Length)
                 //{
                 if (obstacles[obstacleId] == evilCoinPrefab)
@@ -149,6 +154,7 @@ public class CreateLevel : MonoBehaviour
             }
             else if (i == sectionSize - 1)
             {
+                Debug.Log("TURN");
                 if (nthSection % 2 == 0)
                     chunk = (GameObject)Instantiate(wallTurnRightPrefab);
                 else
@@ -156,11 +162,12 @@ public class CreateLevel : MonoBehaviour
             }
             else if (voidChunks.Contains(i) && sectionSize > 3)
             {
-                Debug.Log("INSEERTING VOID");
+                Debug.Log("INSERTING VOID");
                 chunk = new GameObject("Void");
             }
             else
             {
+                Debug.Log("FLOOR");
                 chunk = (GameObject)Instantiate(wallFloorPrefab);
             }
 
@@ -232,6 +239,8 @@ public class CreateLevel : MonoBehaviour
         obstacles[1] = evilCoinPrefab;
         obstacles[2] = barrelPrefab;
         obstacles[3] = bindweedPrefab;
+        obstacles[4] = spikeTrapPrefab;
+
     }
 
     private void initializeDecorations()
@@ -248,7 +257,7 @@ public class CreateLevel : MonoBehaviour
         HashSet<int> obstacleChunks = new HashSet<int>();
 
         // Add init obstacle
-        int firstObstacleChunk = Random.Range(0, sectionSize - 1);
+        int firstObstacleChunk = Random.Range(1, sectionSize - 1);
         obstacleChunks.Add(firstObstacleChunk);
 
         if (obstacleId != 2)
@@ -257,7 +266,7 @@ public class CreateLevel : MonoBehaviour
             if (extraChunks == 1)
             {
                 int nextChunk = firstObstacleChunk + (Random.Range(0, 2) + 1);
-                if (obstacleId == 1) // EvilCoins must be grouped
+                if (obstacleId == 1 && (firstObstacleChunk + 1) < sectionSize - 1) // EvilCoins must be grouped
                 {
                     nextChunk = firstObstacleChunk + 1;
                     obstacleChunks.Add(nextChunk);

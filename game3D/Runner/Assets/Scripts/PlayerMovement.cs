@@ -235,6 +235,10 @@ public class PlayerMovement : MonoBehaviour
             Destroy(c.gameObject);
             Debug.Log("IM DEAD!");
         }
+        if (collider_tag == "Obstacle")
+        {
+            Debug.Log("IM DEAD!");
+        }
         if (collider_tag == "Coin")
         {
             Destroy(c.gameObject);
