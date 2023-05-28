@@ -11,6 +11,10 @@ public class CreateLevel : MonoBehaviour
     public GameObject wallBarrelsPrefab, evilCoinPrefab, barrelPrefab, bindweedPrefab;
     GameObject[] obstacles = new GameObject[4];
 
+    // decoration
+    public GameObject tower1Prefab, tower2Prefab, tower3Prefab, tower4Prefab, tower5Prefab;
+    GameObject[] decorations = new GameObject[5];
+
     // Coin
     public GameObject coinPrefab;
 
@@ -35,6 +39,7 @@ public class CreateLevel : MonoBehaviour
         currentChunkY = 0f;
 
         initializeObstacles();
+        initializeDecorations();
 
         for (uint i=0; i<3; i++)
         {
@@ -111,7 +116,8 @@ public class CreateLevel : MonoBehaviour
                     if (obstacles[obstacleId] == evilCoinPrefab)
                     {
                         GameObject evilCoin = (GameObject)Instantiate(evilCoinPrefab);
-                        Vector3 pos = new Vector3(-2.5f, currentChunkY + 20f, i * 5f);
+                        float coinY = (Random.Range(0, 2) == 0) ? 20f : 24f;
+                        Vector3 pos = new Vector3(-2.5f, currentChunkY + coinY, i * 5f);
                         placeObstacle(section, evilCoin, pos);
                         chunk = (GameObject)Instantiate(wallFloorPrefab);
                     }
@@ -158,7 +164,8 @@ public class CreateLevel : MonoBehaviour
             
             if (coin != null && coinChunk == i)
             {
-                Vector3 pos = new Vector3(-2.5f, currentChunkY + 20f, i * 5f);
+                float coinY = (Random.Range(0, 2) == 0) ? 20f : 24f;
+                Vector3 pos = new Vector3(-2.5f, currentChunkY + coinY, i * 5f);
                 placeObstacle(section, coin, pos);
             }
             
@@ -181,6 +188,31 @@ public class CreateLevel : MonoBehaviour
         {
             Destroy(sections.Dequeue());
         }
+
+
+        if (Random.Range(0, 3) == 0)
+        {
+            Vector3 sectionPosition = newSection.transform.position;
+            addDecoration(sectionPosition, sectionSize);
+        }
+    }
+
+    private void addDecoration(Vector3 sectionPosition, int sectionSize)
+    {
+        Debug.Log("DECORATIONPLACED");
+        int decorationId = Random.Range(0, decorations.Length);
+        GameObject decoration = (GameObject)Instantiate(decorations[decorationId]);
+
+        if (nthSection % 2 == 0)
+        {
+            Vector3 pos = new Vector3(sectionPosition.x + sectionSize * 5f, sectionPosition.y-10f, sectionPosition.z - 40f);
+            decoration.transform.position = pos;
+        }
+        else
+        {
+            Vector3 pos = new Vector3(sectionPosition.x - 40f, sectionPosition.y-10f, sectionPosition.z + sectionSize * 5f);
+            decoration.transform.position = pos;
+        }
     }
 
     private void initializeObstacles()
@@ -189,10 +221,15 @@ public class CreateLevel : MonoBehaviour
         obstacles[1] = evilCoinPrefab;
         obstacles[2] = barrelPrefab;
         obstacles[3] = bindweedPrefab;
-        //obstacles[0] = bindweedPrefab;
-        ///obstacles[1] = bindweedPrefab;
-        //obstacles[2] = bindweedPrefab;
-        //obstacles[3] = bindweedPrefab;
+    }
+
+    private void initializeDecorations()
+    {
+        decorations[0] = tower1Prefab;
+        decorations[1] = tower2Prefab;
+        decorations[2] = tower3Prefab;
+        decorations[3] = tower4Prefab;
+        decorations[4] = tower5Prefab;
     }
 
     private HashSet<int> selectObstacleChunks(int sectionSize, int obstacleId)
