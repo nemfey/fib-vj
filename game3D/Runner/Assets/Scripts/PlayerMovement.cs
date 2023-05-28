@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject level;
 
     public Animator animController;
+    private AudioManager audioManager;
 
     public float velocity = 10f;
 
@@ -29,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
     private TextMeshProUGUI scoreText;
     public int score = 0;
 
-    private AudioManager audioManager;
+    public Vector3 cameraPosition;
 
     //private TextMeshProUGUI coinsText;
 
@@ -48,11 +49,11 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         animController = GetComponentInChildren<Animator>();
+        audioManager = FindObjectOfType<AudioManager>();
 
         scoreText = gameCanvas.transform.Find("Score").GetComponent<TextMeshProUGUI>();
 
-        audioManager = FindObjectOfType<AudioManager>();
-
+        cameraPosition = new Vector3(27.5f, 60f, 12.5f);
     }
 
     // Update is called once per frame
@@ -126,6 +127,7 @@ public class PlayerMovement : MonoBehaviour
             else if ((collider_tag == "RightTurn" || collider_tag == "LeftTurn") && bGrounded)
             {
                 checkBarrelActivation(hitInfo);
+                changeCameraPosition(hitInfo);
 
                 if ((collider_tag == "RightTurn" && targetAngle == 90f) || (collider_tag == "LeftTurn" && targetAngle == 0f))
                 {
@@ -156,6 +158,14 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
+    }
+
+    void jumpProcedure()
+    {
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
+        jumpCount++;
+
+        bGrounded = false;
     }
 
     void checkBarrelActivation(RaycastHit hitInfo)
@@ -199,12 +209,31 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void jumpProcedure()
+    void changeCameraPosition(RaycastHit hitInfo)
     {
-        rb.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
-        jumpCount++;
+        GameObject floorObject = hitInfo.collider.gameObject.transform.parent.gameObject;
+        if (floorObject != null)
+        {
+            GameObject sectionObject = floorObject.transform.parent.gameObject;
+            if (sectionObject != null)
+            {
+                Transform parentTransform = sectionObject.transform.parent;
+                int siblingIndex = sectionObject.transform.GetSiblingIndex();
+                sectionObject = parentTransform.GetChild(siblingIndex + 5).gameObject;
 
-        bGrounded = false;
+                int sectionSize = sectionObject.transform.childCount;
+                Vector3 sectionPosition = sectionObject.transform.position;
+                Vector3 sectionRotation = sectionObject.transform.eulerAngles;
+
+                // Default
+                cameraPosition = new Vector3(sectionPosition.x - 2.5f, sectionPosition.y + 60f, sectionPosition.z + ((sectionSize/2f)*5f));
+
+                if (sectionRotation.y == 90f)
+                {
+                    cameraPosition = new Vector3(sectionPosition.x + ((sectionSize/2f)*5f), sectionPosition.y + 60f, sectionPosition.z - 2.5f);
+                }
+            }
+        }
     }
 
     void OnCollisionEnter(Collision c)

@@ -77,8 +77,6 @@ public class CreateLevel : MonoBehaviour
         section.transform.parent = transform;
         nthSection++;
 
-        Debug.Log(sectionSize + "  " + section.transform.position);
-
         return section;
     }
 
@@ -100,7 +98,6 @@ public class CreateLevel : MonoBehaviour
         HashSet<int> voidChunks = new HashSet<int>();
         if (obstacleId == 1 || obstacleId == 2 || obstacleId == obstacles.Length)
         {
-            Debug.Log("VOID WILLL BE PUT");
             voidChunks = selectVoidChunks(sectionSize);
         }
 
@@ -108,7 +105,6 @@ public class CreateLevel : MonoBehaviour
 
         for (int i = 0; i < sectionSize; i++)
         {
-            Debug.Log("Iteration " + i);
             /*
             if (nthSection%2 == 0  && i == 1 && i != sectionSize-1)
             {
@@ -119,7 +115,6 @@ public class CreateLevel : MonoBehaviour
             //else if (i == obstacleChunk && nthSection > 2 && sectionSize > 3)
             if (obstacleChunks.Contains(i) && sectionSize > 3)
             {
-                Debug.Log("obstacle " + i);
                 //if (obstacleId < obstacles.Length)
                 //{
                 if (obstacles[obstacleId] == evilCoinPrefab)
@@ -154,7 +149,6 @@ public class CreateLevel : MonoBehaviour
             }
             else if (i == sectionSize - 1)
             {
-                Debug.Log("TURN");
                 if (nthSection % 2 == 0)
                     chunk = (GameObject)Instantiate(wallTurnRightPrefab);
                 else
@@ -162,12 +156,10 @@ public class CreateLevel : MonoBehaviour
             }
             else if (voidChunks.Contains(i) && sectionSize > 3)
             {
-                Debug.Log("INSERTING VOID");
                 chunk = new GameObject("Void");
             }
             else
             {
-                Debug.Log("FLOOR");
                 chunk = (GameObject)Instantiate(wallFloorPrefab);
             }
 
