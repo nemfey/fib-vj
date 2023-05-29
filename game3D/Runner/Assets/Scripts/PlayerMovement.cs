@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     float targetAngle = 0f;
     float turnSpeed = 720f;
 
-    float smoothness = 2f;
+    float smoothness = 10f;
     float centerSection = -12.5f;
 
     RaycastHit hitInfo;
