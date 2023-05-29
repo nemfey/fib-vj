@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject mainMenuCanvas;
     [SerializeField] private GameObject gameCanvas;
     [SerializeField] private GameObject pauseCanvas;
+    [SerializeField] private GameObject gameOverCanvas;
+
+    private PlayerMovement playerMovementScript;
 
     private static bool gameStarted = false;
 
@@ -17,6 +21,9 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameObject playerObject = GameObject.Find("Player");
+        playerMovementScript = playerObject.GetComponent<PlayerMovement>();
+
         if (!gameStarted)
         {
             Time.timeScale = 0f;
@@ -24,6 +31,7 @@ public class GameManager : MonoBehaviour
             mainMenuCanvas.SetActive(true);
             gameCanvas.SetActive(false);
             pauseCanvas.SetActive(false);
+            gameOverCanvas.SetActive(false);
         }
         else
         {
@@ -48,16 +56,22 @@ public class GameManager : MonoBehaviour
             resumeGame();
         }
 
+        if (!playerMovementScript.bAlive)
+        {
+            gameOver();
+
+        }
     }
 
     public void startGame()
     {
-        Time.timeScale = 1f;
         gameStarted = true;
         FindObjectOfType<AudioManager>().playSound("MainSong");
 
         mainMenuCanvas.SetActive(false);
         gameCanvas.SetActive(true);
+
+        Time.timeScale = 1f;
     }
 
     public void pauseGame()
@@ -73,13 +87,13 @@ public class GameManager : MonoBehaviour
 
     public void resumeGame()
     {
-        Time.timeScale = 1f;
-
         // Show pause button
         Transform pauseButtonTransform = gameCanvas.transform.Find("PauseButton");
         SetActiveButton(pauseButtonTransform, true);
         
         pauseCanvas.SetActive(false);
+
+        Time.timeScale = 1f;
     }
 
     public void restartGame()
@@ -87,15 +101,31 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("Game");
     }
 
-    public void showOptionsPause()
-    {
-        //
-    }
-
     public void quitGame()
     {
         gameStarted = false;
         SceneManager.LoadScene("Game");
+    }
+
+    public void gameOver()
+    {
+        Time.timeScale = 0f;
+
+        gameOverCanvas.SetActive(true);
+
+        int score = PlayerPrefs.GetInt("ScoreCount", 0);
+        int highscore = PlayerPrefs.GetInt("HighscoreCount", 0);
+
+        if (score > highscore)
+        {
+            PlayerPrefs.SetInt("HighscoreCount", score);
+        }
+
+        TextMeshProUGUI scoreText = gameOverCanvas.transform.Find("Score").GetComponent<TextMeshProUGUI>();
+        scoreText.text = PlayerPrefs.GetInt("ScoreCount", 0).ToString();
+
+        TextMeshProUGUI highscoreText = gameOverCanvas.transform.Find("Highscore").GetComponent<TextMeshProUGUI>();
+        highscoreText.text = PlayerPrefs.GetInt("HighscoreCount", 0).ToString();
     }
 
     void SetActiveButton(Transform buttonTransform, bool b)

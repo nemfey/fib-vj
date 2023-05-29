@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static System.Collections.Specialized.BitVector32;
-using TMPro;
+//using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -26,9 +26,11 @@ public class PlayerMovement : MonoBehaviour
     RaycastHit hitInfo;
     bool bGrounded = true;
 
+    public bool bAlive = true;
+
     [SerializeField] private GameObject gameCanvas;
-    private TextMeshProUGUI scoreText;
-    public int score = 0;
+    //private TextMeshProUGUI scoreText;
+    //public int score = 0;
 
     public Vector3 cameraPosition;
 
@@ -51,7 +53,9 @@ public class PlayerMovement : MonoBehaviour
         animController = GetComponentInChildren<Animator>();
         audioManager = FindObjectOfType<AudioManager>();
 
-        scoreText = gameCanvas.transform.Find("Score").GetComponent<TextMeshProUGUI>();
+        //scoreText = gameCanvas.transform.Find("Score").GetComponent<TextMeshProUGUI>();
+
+        bAlive = true;
 
         cameraPosition = new Vector3(2.5f, 50f, -12.5f);
     }
@@ -249,6 +253,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (collider_tag == "Obstacle" || collider_tag == "BarrelObstacle")
         {
+            bAlive = false;
             Debug.Log("IM DEAD!");
         }
     }
@@ -263,10 +268,12 @@ public class PlayerMovement : MonoBehaviour
         if (collider_tag == "CoinObstacle")
         {
             Destroy(c.gameObject);
+            bAlive = false;
             Debug.Log("IM DEAD!");
         }
         if (collider_tag == "Obstacle")
         {
+            bAlive = false;
             Debug.Log("IM DEAD!");
         }
         if (collider_tag == "Coin")
