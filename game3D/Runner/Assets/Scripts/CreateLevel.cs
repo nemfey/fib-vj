@@ -24,10 +24,10 @@ public class CreateLevel : MonoBehaviour
     float currentX;
     float currentZ;
     float previousSize;
-    int nthSection;
+    public int nthSection;
 
     // chunk parameters
-    float currentChunkY;
+    public float currentChunkY;
 
     // Start is called before the first frame update
     void Start()
@@ -112,17 +112,14 @@ public class CreateLevel : MonoBehaviour
                 bRampPlaced = true;
             }
             */
-            //else if (i == obstacleChunk && nthSection > 2 && sectionSize > 3)
+            //else if (obstacleChunks.Contains(i) && sectionSize > 3)
             if (obstacleChunks.Contains(i) && sectionSize > 3)
             {
-                //if (obstacleId < obstacles.Length)
-                //{
                 if (obstacles[obstacleId] == evilCoinPrefab)
                 {
                     GameObject evilCoin = (GameObject)Instantiate(evilCoinPrefab);
                     float coinY = (Random.Range(0, 2) == 0) ? 20f : 24f;
                     currentCoinY = (currentCoinY == -1f) ? coinY : currentCoinY;
-                    //float coinY = (Random.Range(0, 2) == 0) ? 20f : 24f;
                     Vector3 pos = new Vector3(-2.5f, currentChunkY + currentCoinY, i * 5f);
                     placeObstacle(section, evilCoin, pos);
                     chunk = (GameObject)Instantiate(wallFloorPrefab);
@@ -140,12 +137,6 @@ public class CreateLevel : MonoBehaviour
                 {
                     chunk = (GameObject)Instantiate(obstacles[obstacleId]);
                 }
-                //chunk = (GameObject)Instantiate(obstacles[obstacleId]);
-                //}
-                //else
-                //{
-                //    chunk = new GameObject("Void");
-                //}
             }
             else if (i == sectionSize - 1)
             {

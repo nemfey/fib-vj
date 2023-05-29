@@ -15,6 +15,7 @@ TagManager:
   - Barrel
   - CoinObstacle
   - Bindweed
+  - FallingFloor
   layers:
   - Default
   - TransparentFX

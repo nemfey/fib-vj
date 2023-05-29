@@ -13,16 +13,24 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject gameOverCanvas;
 
     private PlayerMovement playerMovementScript;
+    private CreateLevel createLevelScript;
 
     private static bool gameStarted = false;
+    private float gameTime = 0f;
 
     //private static bool  = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        gameTime = 0f;
+
         GameObject playerObject = GameObject.Find("Player");
         playerMovementScript = playerObject.GetComponent<PlayerMovement>();
+        playerMovementScript.proceduralLevel = true;
+
+        GameObject levelObject = GameObject.Find("Level");
+        createLevelScript = levelObject.GetComponent<CreateLevel>();
 
         if (!gameStarted)
         {
@@ -42,12 +50,14 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        timeManager();
+
         if (!gameStarted && mainMenuCanvas.activeSelf && Input.GetKeyDown(KeyCode.Space))
         {
             startGame();
         }
         
-        if (gameStarted && !pauseCanvas.activeSelf && (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P)))
+        if (gameStarted && !pauseCanvas.activeSelf && !gameOverCanvas.activeSelf && (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P)))
         {
             pauseGame();
         }
@@ -61,6 +71,16 @@ public class GameManager : MonoBehaviour
             gameOver();
 
         }
+    }
+
+    private void timeManager()
+    {
+        gameTime += Time.deltaTime;
+        //if (gameTime > 40f && createLevelScript.nthSection % 2 != 0)
+        //{
+        //    Debug.Log("NO MORE PROCEDURAL");
+        //    playerMovementScript.proceduralLevel = false;
+        //}
     }
 
     public void startGame()

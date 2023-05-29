@@ -6,6 +6,9 @@ using static System.Collections.Specialized.BitVector32;
 
 public class PlayerMovement : MonoBehaviour
 {
+    // Use this script
+    public bool proceduralLevel = true;
+
     public GameObject level;
 
     public Animator animController;
@@ -48,6 +51,8 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        proceduralLevel = true;
+
         rb = GetComponent<Rigidbody>();
 
         animController = GetComponentInChildren<Animator>();
@@ -121,7 +126,7 @@ public class PlayerMovement : MonoBehaviour
         else if (Physics.Raycast(transform.position, Vector3.down, out hitInfo))
         {
             string collider_tag = hitInfo.collider.tag;
-            if ((collider_tag == "Floor" || collider_tag == "Obstacle") && jumpCount < 2)
+            if ((collider_tag != "RightTurn" && collider_tag != "LeftTurn") && jumpCount < 2)
             {
                 audioManager.playSound("jump");
                 animController.SetBool("InAir", true);
@@ -158,7 +163,8 @@ public class PlayerMovement : MonoBehaviour
                     PlayerPrefs.SetInt("ScoreCount", score);
                     audioManager.playSound("pointEarn");
 
-                    level.GetComponent<CreateLevel>().newSectionProcedure();
+                    if (proceduralLevel)
+                        level.GetComponent<CreateLevel>().newSectionProcedure();
                 }
             }
         }
@@ -202,24 +208,6 @@ public class PlayerMovement : MonoBehaviour
                         rb.useGravity = true;
                     }
                 }
-                /*
-                if (childObject != null)
-                {
-                    if (childObject.CompareTag("Barrel"))
-                    {
-                        childObject.SetActive(true);
-                    }
-                    else if (childObject.CompareTag("FallingFloor"))
-                    
-                }&& childObject.CompareTag("Barrel"))
-                {
-                    childObject.SetActive(true);
-                }
-                else if (childObject != null && childObject.CompareTag("Barrel"))
-                {
-                    childObject.SetActive(true);
-                }
-                */
             }
         }
     }
@@ -242,11 +230,14 @@ public class PlayerMovement : MonoBehaviour
                 Vector3 sectionRotation = sectionObject.transform.eulerAngles;
 
                 // Default
-                cameraPosition = new Vector3(sectionPosition.x - 2.5f, sectionPosition.y + 50f, sectionPosition.z + ((sectionSize/2f)*5f));
+                float offset = 0f;
+                if (sectionSize > 5)
+                    offset = 10f;
+                cameraPosition = new Vector3(sectionPosition.x - 2.5f, sectionPosition.y + 50f, sectionPosition.z + offset + ((sectionSize/2f)*5f));
 
                 if (sectionRotation.y == 90f)
                 {
-                    cameraPosition = new Vector3(sectionPosition.x + ((sectionSize/2f)*5f), sectionPosition.y + 50f, sectionPosition.z - 2.5f);
+                    cameraPosition = new Vector3(sectionPosition.x + offset + ((sectionSize/2f)*5f), sectionPosition.y + 50f, sectionPosition.z - 2.5f);
                 }
             }
         }
