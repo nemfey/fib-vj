@@ -8,7 +8,7 @@ public class CreateLevel : MonoBehaviour
     public GameObject wallFloorPrefab, wallRampPrefab, wallTurnRightPrefab, wallTurnLeftPrefab;
 
     // obstacles
-    public GameObject wallBarrelsPrefab, evilCoinPrefab, barrelPrefab, bindweedPrefab, spikeTrapPrefab;
+    public GameObject fallingFloorPrefab, evilCoinPrefab, barrelPrefab, bindweedPrefab, spikeTrapPrefab;
     GameObject[] obstacles = new GameObject[5];
 
     // decoration
@@ -227,12 +227,11 @@ public class CreateLevel : MonoBehaviour
 
     private void initializeObstacles()
     {
-        obstacles[0] = wallBarrelsPrefab;
+        obstacles[0] = fallingFloorPrefab;
         obstacles[1] = evilCoinPrefab;
         obstacles[2] = barrelPrefab;
         obstacles[3] = bindweedPrefab;
         obstacles[4] = spikeTrapPrefab;
-
     }
 
     private void initializeDecorations()
@@ -255,6 +254,9 @@ public class CreateLevel : MonoBehaviour
         if (obstacleId != 2)
         {
             int extraChunks = Random.Range(0, 2);
+            if (obstacleId == 0)
+                extraChunks = 1;
+
             if (extraChunks == 1)
             {
                 int nextChunk = firstObstacleChunk + (Random.Range(0, 2) + 1);

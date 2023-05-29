@@ -186,29 +186,40 @@ public class PlayerMovement : MonoBehaviour
                 sectionObject = parentTransform.GetChild(siblingIndex + 1).gameObject;
                 Transform sectionTransform = sectionObject.transform;
 
-                GameObject barrelObject = null;
+                GameObject childObject = null;
 
                 for (int i = 0; i < sectionTransform.childCount; i++)
                 {
                     Transform child = sectionTransform.GetChild(i);
                     if (child.CompareTag("Barrel"))
                     {
-                        barrelObject = child.gameObject;
+                        child.gameObject.SetActive(true);
                         break;
                     }
+                    if (child.CompareTag("FallingFloor"))
+                    {
+                        Rigidbody rb = child.gameObject.GetComponent<Rigidbody>();
+                        rb.useGravity = true;
+                    }
                 }
-
-                if (barrelObject != null)
+                /*
+                if (childObject != null)
                 {
-                    barrelObject.SetActive(true);
+                    if (childObject.CompareTag("Barrel"))
+                    {
+                        childObject.SetActive(true);
+                    }
+                    else if (childObject.CompareTag("FallingFloor"))
+                    
+                }&& childObject.CompareTag("Barrel"))
+                {
+                    childObject.SetActive(true);
                 }
-
-
-                //if (barrelObject != null && barrelObject.transform.IsChildOf(sectionObject.transform))
-                //{
-                //    Debug.Log("BARREL IN THIS SECTION!");
-                //    barrelObject.SetActive(true);
-                //}
+                else if (childObject != null && childObject.CompareTag("Barrel"))
+                {
+                    childObject.SetActive(true);
+                }
+                */
             }
         }
     }
