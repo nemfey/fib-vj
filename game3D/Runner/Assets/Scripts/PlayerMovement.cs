@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public bool proceduralLevel = true;
 
     public bool godMode = false;
+    private float jumpTime = 0f;
 
     public GameObject level;
 
@@ -73,7 +74,12 @@ public class PlayerMovement : MonoBehaviour
             moveToCenter();
             rotateToTargetAngle();
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (godMode)
+            {
+                jumpTime -= Time.deltaTime;
+                godModeMovement();
+            }
+            else if (Input.GetKeyDown(KeyCode.Space))
             {
                 playerAction();
             }
@@ -166,6 +172,68 @@ public class PlayerMovement : MonoBehaviour
                         level.GetComponent<CreateLevel>().newSectionProcedure();
                 }
             }
+        }
+    }
+
+    void godModeMovement()
+    {
+        // Check floor below
+        if (Physics.Raycast(transform.position, Vector3.down, out hitInfo))
+        {
+            string collider_tag = hitInfo.collider.tag;
+            if (((collider_tag == "RightTurn" && targetAngle == 0f) || (collider_tag == "LeftTurn" && targetAngle == 90f)) && bGrounded)
+            {
+                checkBarrelActivation(hitInfo);
+                changeCameraPosition(hitInfo);
+
+                if (collider_tag == "RightTurn")
+                {
+                    centerSection = hitInfo.collider.bounds.center.z;
+                    targetAngle = 90f;
+                }
+                else
+                {
+                    centerSection = hitInfo.collider.bounds.center.x;
+                    targetAngle = 0f;
+                }
+
+                // Add score
+                int score = PlayerPrefs.GetInt("ScoreCount", 0) + 1;
+                PlayerPrefs.SetInt("ScoreCount", score);
+                audioManager.playSound("pointEarn");
+
+                if (proceduralLevel)
+                    level.GetComponent<CreateLevel>().newSectionProcedure();
+            }
+        }
+
+        Vector3 raycastOffset = transform.position + new Vector3(0f, 0f, 2f);
+        Vector3 raycastMoreOffset = transform.position + new Vector3(0f, 0f, 2.5f);
+        if (targetAngle == 90f)
+        {
+            raycastOffset = transform.position + new Vector3(2f, 0f, 0f);
+            raycastMoreOffset = transform.position + new Vector3(2.5f, 0f, 0f);
+        }
+
+        if (Physics.Raycast(raycastOffset, Vector3.down, out hitInfo) || Physics.Raycast(raycastMoreOffset, Vector3.down, out hitInfo))
+        {
+            string collider_tag = hitInfo.collider.tag;
+            if (collider_tag == "FallingFloor" && jumpCount < 2 && jumpTime <= 0f)
+            {
+                audioManager.playSound("jump");
+                animController.SetBool("InAir", true);
+                jumpProcedure();
+
+                jumpTime = 0.5f;
+            }
+        }
+        else if (jumpCount < 2 && jumpTime <= 0f)
+        {
+            audioManager.playSound("jump");
+            animController.SetBool("InAir", true);
+            jumpProcedure();
+
+            jumpTime= 0.5f;
         }
     }
 

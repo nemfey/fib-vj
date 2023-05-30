@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: wall_base_new
       objectReference: {fileID: 0}
+    - target: {fileID: 7306995148784126159, guid: a528bb21456b80649870bb63075b5ea2, type: 3}
+      propertyPath: m_TagString
+      value: FallingFloor
+      objectReference: {fileID: 0}
     - target: {fileID: 7938854328544498293, guid: a528bb21456b80649870bb63075b5ea2, type: 3}
       propertyPath: m_RootOrder
       value: 0
