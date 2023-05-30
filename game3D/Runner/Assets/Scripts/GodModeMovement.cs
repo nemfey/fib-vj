@@ -1,15 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static System.Collections.Specialized.BitVector32;
-//using TMPro;
 
-public class PlayerMovement : MonoBehaviour
+public class GodModeMovement : MonoBehaviour
 {
     // Use this script
     public bool proceduralLevel = true;
-
-    public bool godMode = false;
 
     public GameObject level;
 
@@ -37,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
 
     public Vector3 cameraPosition;
 
+
     private bool onSlope()
     {
         if (Physics.Raycast(transform.position, Vector3.down, out hitInfo))
@@ -50,7 +47,6 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         proceduralLevel = true;
-        godMode = false;
 
         rb = GetComponent<Rigidbody>();
 
@@ -171,7 +167,6 @@ public class PlayerMovement : MonoBehaviour
 
     void jumpProcedure()
     {
-        rb.velocity = Vector3.zero;
         rb.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
         jumpCount++;
 
@@ -233,11 +228,11 @@ public class PlayerMovement : MonoBehaviour
                 float offset = 0f;
                 if (sectionSize > 5)
                     offset = 10f;
-                cameraPosition = new Vector3(sectionPosition.x - 2.5f, sectionPosition.y + 50f, sectionPosition.z + offset + ((sectionSize/2f)*5f));
+                cameraPosition = new Vector3(sectionPosition.x - 2.5f, sectionPosition.y + 50f, sectionPosition.z + offset + ((sectionSize / 2f) * 5f));
 
                 if (sectionRotation.y == 90f)
                 {
-                    cameraPosition = new Vector3(sectionPosition.x + offset + ((sectionSize/2f)*5f), sectionPosition.y + 50f, sectionPosition.z - 2.5f);
+                    cameraPosition = new Vector3(sectionPosition.x + offset + ((sectionSize / 2f) * 5f), sectionPosition.y + 50f, sectionPosition.z - 2.5f);
                 }
             }
         }
@@ -253,7 +248,7 @@ public class PlayerMovement : MonoBehaviour
 
             animController.SetBool("InAir", false);
         }
-        if ((collider_tag == "Obstacle" || collider_tag == "BarrelObstacle") && !godMode)
+        if (collider_tag == "Obstacle" || collider_tag == "BarrelObstacle")
         {
             bAlive = false;
             Debug.Log("IM DEAD!");
@@ -263,17 +258,17 @@ public class PlayerMovement : MonoBehaviour
     void OnTriggerEnter(Collider c)
     {
         string collider_tag = c.GetComponent<Collider>().tag;
-        if (collider_tag == "Bindweed" && !godMode)
+        if (collider_tag == "Bindweed")
         {
             velocity = velocity / 4;
         }
-        if (collider_tag == "CoinObstacle" && !godMode)
+        if (collider_tag == "CoinObstacle")
         {
             Destroy(c.gameObject);
             bAlive = false;
             Debug.Log("IM DEAD!");
         }
-        if (collider_tag == "Obstacle" && !godMode)
+        if (collider_tag == "Obstacle")
         {
             bAlive = false;
             Debug.Log("IM DEAD!");
@@ -293,7 +288,7 @@ public class PlayerMovement : MonoBehaviour
     void OnTriggerExit(Collider c)
     {
         string collider_tag = c.GetComponent<Collider>().tag;
-        if (collider_tag == "Bindweed" && !godMode)
+        if (collider_tag == "Bindweed")
         {
             velocity = velocity * 4;
         }

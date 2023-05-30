@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     private static bool gameStarted = false;
     private float gameTime = 0f;
 
-    //private static bool  = false;
+    public bool godMode = false;
 
     // Start is called before the first frame update
     void Start()
@@ -53,8 +53,8 @@ public class GameManager : MonoBehaviour
         timeManager();
 
         if (!gameStarted && mainMenuCanvas.activeSelf && Input.GetKeyDown(KeyCode.Space))
-        {
-            startGame();
+            {
+                startGame();
         }
         
         if (gameStarted && !pauseCanvas.activeSelf && !gameOverCanvas.activeSelf && (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P)))
@@ -69,7 +69,20 @@ public class GameManager : MonoBehaviour
         if (!playerMovementScript.bAlive)
         {
             gameOver();
+        }
 
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            playerMovementScript.godMode = !playerMovementScript.godMode;
+            godMode = !godMode;
+            if (playerMovementScript.godMode)
+            {
+                Debug.Log("GodMode activated");
+            }
+            else
+            {
+                Debug.Log("GodMode deactivated");
+            }
         }
     }
 

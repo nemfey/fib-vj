@@ -111,8 +111,9 @@ public class CreateLevel : MonoBehaviour
                 chunk = (GameObject)Instantiate(wallRampPrefab);
                 bRampPlaced = true;
             }
+            
+            else if (obstacleChunks.Contains(i) && sectionSize > 3)
             */
-            //else if (obstacleChunks.Contains(i) && sectionSize > 3)
             if (obstacleChunks.Contains(i) && sectionSize > 3)
             {
                 if (obstacles[obstacleId] == evilCoinPrefab)
