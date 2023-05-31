@@ -324,6 +324,11 @@ public class PlayerMovement : MonoBehaviour
         if ((collider_tag == "Obstacle" || collider_tag == "BarrelObstacle") && !godMode)
         {
             bAlive = false;
+
+            FindObjectOfType<AudioManager>().stopSound("MainSong");
+            FindObjectOfType<AudioManager>().playSound("Death1");
+            FindObjectOfType<AudioManager>().playSound("Death2");
+
             Debug.Log("IM DEAD!");
         }
     }
@@ -339,11 +344,21 @@ public class PlayerMovement : MonoBehaviour
         {
             Destroy(c.gameObject);
             bAlive = false;
+
+            FindObjectOfType<AudioManager>().stopSound("MainSong");
+            FindObjectOfType<AudioManager>().playSound("Death1");
+            FindObjectOfType<AudioManager>().playSound("Death2");
+
             Debug.Log("IM DEAD!");
         }
         if (collider_tag == "Obstacle" && !godMode)
         {
             bAlive = false;
+
+            FindObjectOfType<AudioManager>().stopSound("MainSong");
+            FindObjectOfType<AudioManager>().playSound("Death1");
+            FindObjectOfType<AudioManager>().playSound("Death2");
+
             Debug.Log("IM DEAD!");
         }
         if (collider_tag == "Coin")
