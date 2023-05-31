@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5294,26 +5294,55 @@ MonoBehaviour:
     volume: 0.24
     pitch: 1
     source: {fileID: 0}
+    loop: 0
   - name: coin
     clip: {fileID: 8300000, guid: 046c12d6823d05845b48d6120da465bd, type: 3}
     volume: 0.567
     pitch: 1
     source: {fileID: 0}
+    loop: 0
   - name: pointEarn
     clip: {fileID: 8300000, guid: 09e27bfe80729324ebea8973d9dfd9ee, type: 3}
     volume: 0.463
     pitch: 1
     source: {fileID: 0}
+    loop: 0
   - name: jump
     clip: {fileID: 8300000, guid: 25647b0403a59a84b812c0b9fa2aee57, type: 3}
     volume: 3
     pitch: 1
     source: {fileID: 0}
+    loop: 0
   - name: dJump
     clip: {fileID: 8300000, guid: 5c7efa01a0488d9499f67fbfa2208636, type: 3}
     volume: 1
     pitch: 1
     source: {fileID: 0}
+    loop: 0
+  - name: Death1
+    clip: {fileID: 8300000, guid: 2048ce42fa458da4c93384da718eb1e1, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Death2
+    clip: {fileID: 8300000, guid: d56585efb08a420409e5a162b821fdd0, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: MenuSong
+    clip: {fileID: 8300000, guid: e2d3f66bd354f57429194b5343c58e13, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 1
+  - name: pickOption
+    clip: {fileID: 8300000, guid: 49bce8111a1e4324eae41deda4f5cf88, type: 3}
+    volume: 0.69
+    pitch: 1.58
+    source: {fileID: 0}
+    loop: 0
 --- !u!4 &808351466
 Transform:
   m_ObjectHideFlags: 0
