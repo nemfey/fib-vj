@@ -110,6 +110,9 @@
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\CoinMovement.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
+    <Compile Include="Assets\Seris_Voxel_Characters\Sample_Scene\AnimationTest.cs" />
+    <Compile Include="Assets\Seris_Voxel_Characters\Sample_Scene\ViewerCamera.cs" />
+    <Compile Include="Assets\Scripts\DragonMovement.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -135,6 +138,7 @@
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\AurynSky\Forest Pack\READ ME.txt" />
+    <None Include="Assets\Seris_Voxel_Characters\Dragons\readme.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Bangers - OFL.txt" />
   </ItemGroup>
