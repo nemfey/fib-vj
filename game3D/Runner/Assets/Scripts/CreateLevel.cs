@@ -192,7 +192,6 @@ public class CreateLevel : MonoBehaviour
             Destroy(sections.Dequeue());
         }
 
-
         if (Random.Range(0, 3) == 0)
         {
             Vector3 sectionPosition = newSection.transform.position;
@@ -207,12 +206,14 @@ public class CreateLevel : MonoBehaviour
 
         if (nthSection % 2 == 0)
         {
-            Vector3 pos = new Vector3(sectionPosition.x + sectionSize * 5f, sectionPosition.y-10f, sectionPosition.z - 40f);
+            //Vector3 pos = new Vector3(sectionPosition.x + sectionSize * 5f, sectionPosition.y-10f, sectionPosition.z - 40f);
+            Vector3 pos = new Vector3(sectionPosition.x + sectionSize * 5f, sectionPosition.y - 10f, sectionPosition.z - 25f);
             decoration.transform.position = pos;
         }
         else
         {
-            Vector3 pos = new Vector3(sectionPosition.x - 40f, sectionPosition.y-10f, sectionPosition.z + sectionSize * 5f);
+            //Vector3 pos = new Vector3(sectionPosition.x - 40f, sectionPosition.y-10f, sectionPosition.z + sectionSize * 5f);
+            Vector3 pos = new Vector3(sectionPosition.x - 25f, sectionPosition.y - 10f, sectionPosition.z + sectionSize * 5f);
             decoration.transform.position = pos;
         }
     }
