@@ -6,7 +6,7 @@ public class DragonMovement : MonoBehaviour
 {
     private Animator animator;
 
-    public float velocity = 8f;
+    public float velocity = 9.5f;
 
     float targetAngle = 0f;
     float turnSpeed = 720f;
