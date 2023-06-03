@@ -163,7 +163,6 @@ public class CreateLevel : MonoBehaviour
             }
 
             chunk.transform.Translate(0f, currentChunkY, 0f + i * 5f);
-            Debug.Log(chunk.transform.position);
             chunk.transform.parent = section.transform;
 
             if (bRampPlaced)
