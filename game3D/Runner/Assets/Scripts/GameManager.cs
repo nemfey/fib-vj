@@ -19,11 +19,13 @@ public class GameManager : MonoBehaviour
     private float gameTime = 0f;
 
     public bool godMode = false;
+    public bool adventureMode = true;
 
     // Start is called before the first frame update
     void Start()
     {
         gameTime = 0f;
+        adventureMode = true;
 
         GameObject playerObject = GameObject.Find("Player");
         playerMovementScript = playerObject.GetComponent<PlayerMovement>();
@@ -95,6 +97,11 @@ public class GameManager : MonoBehaviour
     private void timeManager()
     {
         gameTime += Time.deltaTime;
+
+        if (gameTime > 45f && adventureMode)
+        {
+            Debug.Log("Generamos el final del nivel");
+        }
     }
 
     public void startGame()
@@ -172,6 +179,26 @@ public class GameManager : MonoBehaviour
 
         TextMeshProUGUI highscoreText = gameOverCanvas.transform.Find("Highscore").GetComponent<TextMeshProUGUI>();
         highscoreText.text = PlayerPrefs.GetInt("HighscoreCount", 0).ToString();
+    }
+
+    public void adventureButtonPressed()
+    {
+        Transform adventureButton = mainMenuCanvas.transform.Find("AdventureButton");
+        SetActiveButton(adventureButton, false);
+        Transform infinityButton = mainMenuCanvas.transform.Find("InfinityButton");
+        SetActiveButton(infinityButton, true);
+
+        adventureMode = false;
+    }
+
+    public void infinityButtonPressed()
+    {
+        Transform adventureButton = mainMenuCanvas.transform.Find("AdventureButton");
+        SetActiveButton(adventureButton, true);
+        Transform infinityButton = mainMenuCanvas.transform.Find("InfinityButton");
+        SetActiveButton(infinityButton, false);
+
+        adventureMode = true;
     }
 
     void SetActiveButton(Transform buttonTransform, bool b)
