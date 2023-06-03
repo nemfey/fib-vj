@@ -16,15 +16,33 @@ public class DragonMovement : MonoBehaviour
 
     RaycastHit hitInfo;
 
+    GameObject player;
+    Vector3 playerCoords;
+
     // Start is called before the first frame update
     void Start()
     {
-        Animation animation = GetComponent<Animation>();
+        animator = GetComponent<Animator>();
 
         animator.SetBool("Fly", true);
         animator.Play("Fly", 0, 0f);
-    }
 
+        player = GameObject.Find("Player");
+        playerCoords = GameObject.Find("Player").GetComponent<Transform>().position;
+    }
+    /*
+    private void Update()
+    {
+        playerCoords = player.GetComponent<Transform>().position;
+
+        Vector3 newPosition = Vector3.Lerp(transform.position, playerCoords, Time.deltaTime * smoothness);
+
+        Debug.Log(newPosition);
+
+        transform.position = newPosition;
+    }
+    */
+    
     // Update is called once per frame
     private void Update()
     {
@@ -80,4 +98,5 @@ public class DragonMovement : MonoBehaviour
             }
         }
     }
+    
 }

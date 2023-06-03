@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class FogMovement : MonoBehaviour
 {
-    Vector3 playerCoords;
     GameObject player;
+    Vector3 playerCoords;
     float offsetY, minY;
 
     public GameObject fogPrefab;

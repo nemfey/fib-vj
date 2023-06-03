@@ -63,13 +63,13 @@ public class CreateLevel : MonoBehaviour
         {
             currentX += previousSize * 5f;
             currentZ += 5f;
-            section.transform.Translate(currentX, 0f, currentZ);
+            section.transform.Translate(currentX, 0f, currentZ - 0.5f);
             section.transform.Rotate(0f, 0f, 0f);
         }
         else
         {
             currentZ += (previousSize - 1) * 5f;
-            section.transform.Translate(currentX, 0f, currentZ);
+            section.transform.Translate(currentX, 0f, currentZ - 1f);
             section.transform.Rotate(0f, 90f, 0f);
         }
 
@@ -144,7 +144,9 @@ public class CreateLevel : MonoBehaviour
                 if (nthSection % 2 == 0)
                     chunk = (GameObject)Instantiate(wallTurnRightPrefab);
                 else
+                {
                     chunk = (GameObject)Instantiate(wallTurnLeftPrefab);
+                }
             }
             else if (voidChunks.Contains(i) && sectionSize > 3)
             {
@@ -156,6 +158,7 @@ public class CreateLevel : MonoBehaviour
             }
 
             chunk.transform.Translate(0f, currentChunkY, 0f + i * 5f);
+            Debug.Log(chunk.transform.position);
             chunk.transform.parent = section.transform;
 
             if (bRampPlaced)
