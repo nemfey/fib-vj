@@ -35,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
     bool bGrounded = true;
 
     public bool bAlive = true;
+    public float limitY;
 
     [SerializeField] private GameObject gameCanvas;
 
@@ -59,8 +60,6 @@ public class PlayerMovement : MonoBehaviour
 
         animController = GetComponentInChildren<Animator>();
         audioManager = FindObjectOfType<AudioManager>();
-
-        //scoreText = gameCanvas.transform.Find("Score").GetComponent<TextMeshProUGUI>();
 
         bAlive = true;
 
@@ -93,6 +92,8 @@ public class PlayerMovement : MonoBehaviour
                 // player should be touchingh the slope all the time
                 // instead of floating
             }
+
+            checkIfFallDeath();
         }
     }
 
@@ -325,6 +326,18 @@ public class PlayerMovement : MonoBehaviour
         turnPlatform.GetComponent<Renderer>().material = lightWallMaterial;
     }
 
+    void checkIfFallDeath()
+    {
+        if (transform.position.y < limitY)
+        {
+            bAlive = false;
+
+            FindObjectOfType<AudioManager>().stopSound("MainSong");
+            FindObjectOfType<AudioManager>().playSound("Death1");
+            FindObjectOfType<AudioManager>().playSound("Death2");
+        }
+    }
+
     void OnCollisionEnter(Collision c)
     {
         string collider_tag = c.collider.tag;
@@ -342,8 +355,6 @@ public class PlayerMovement : MonoBehaviour
             FindObjectOfType<AudioManager>().stopSound("MainSong");
             FindObjectOfType<AudioManager>().playSound("Death1");
             FindObjectOfType<AudioManager>().playSound("Death2");
-
-            Debug.Log("IM DEAD!");
         }
     }
 

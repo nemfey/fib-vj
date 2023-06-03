@@ -3236,7 +3236,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'INK PHANTOM
 
-    CDW_02'
+    _CDW2'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ffa9e71eee7baf54aaa44ad7ef86543c, type: 2}
   m_sharedMaterial: {fileID: -329832665229480750, guid: ffa9e71eee7baf54aaa44ad7ef86543c, type: 2}
@@ -19047,7 +19047,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1154325754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22325,7 +22325,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: AND DON'T LET THE TROLLS CATCH YOU!
+  m_text: AND DON'T LET THE DRAGON CATCH YOU!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ffa9e71eee7baf54aaa44ad7ef86543c, type: 2}
   m_sharedMaterial: {fileID: -329832665229480750, guid: ffa9e71eee7baf54aaa44ad7ef86543c, type: 2}

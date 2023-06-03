@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
 
         if (!gameStarted && mainMenuCanvas.activeSelf && Input.GetKeyDown(KeyCode.Space))
         {
-                startGame();
+            startGame();
         }
         
         if (gameStarted && !pauseCanvas.activeSelf && !gameOverCanvas.activeSelf && (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P)))
