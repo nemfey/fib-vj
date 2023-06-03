@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
 
     public Animator animController;
     private AudioManager audioManager;
+    private DeathParticleController deathParticles;
 
     public float velocity = 10f;
 
@@ -57,6 +58,7 @@ public class PlayerMovement : MonoBehaviour
 
         animController = GetComponentInChildren<Animator>();
         audioManager = FindObjectOfType<AudioManager>();
+        deathParticles = GetComponentInChildren<DeathParticleController>();
 
         //scoreText = gameCanvas.transform.Find("Score").GetComponent<TextMeshProUGUI>();
 
@@ -323,13 +325,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if ((collider_tag == "Obstacle" || collider_tag == "BarrelObstacle") && !godMode)
         {
-            bAlive = false;
-
-            FindObjectOfType<AudioManager>().stopSound("MainSong");
-            FindObjectOfType<AudioManager>().playSound("Death1");
-            FindObjectOfType<AudioManager>().playSound("Death2");
-
-            Debug.Log("IM DEAD!");
+            Die();
         }
     }
 
@@ -343,23 +339,11 @@ public class PlayerMovement : MonoBehaviour
         if (collider_tag == "CoinObstacle" && !godMode)
         {
             Destroy(c.gameObject);
-            bAlive = false;
-
-            FindObjectOfType<AudioManager>().stopSound("MainSong");
-            FindObjectOfType<AudioManager>().playSound("Death1");
-            FindObjectOfType<AudioManager>().playSound("Death2");
-
-            Debug.Log("IM DEAD!");
+            Die();
         }
         if (collider_tag == "Obstacle" && !godMode)
         {
-            bAlive = false;
-
-            FindObjectOfType<AudioManager>().stopSound("MainSong");
-            FindObjectOfType<AudioManager>().playSound("Death1");
-            FindObjectOfType<AudioManager>().playSound("Death2");
-
-            Debug.Log("IM DEAD!");
+            Die();
         }
         if (collider_tag == "Coin")
         {
@@ -380,5 +364,18 @@ public class PlayerMovement : MonoBehaviour
         {
             velocity = velocity * 4;
         }
+    }
+
+    void Die()
+    {
+        bAlive = false;
+
+        deathParticles.ActivateParticleSystem();
+
+        FindObjectOfType<AudioManager>().stopSound("MainSong");
+        FindObjectOfType<AudioManager>().playSound("Death1");
+        FindObjectOfType<AudioManager>().playSound("Death2");
+
+        Debug.Log("IM DEAD!");
     }
 }

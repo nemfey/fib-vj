@@ -162,7 +162,8 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0f;
 
-        gameOverCanvas.SetActive(true);
+        //DESCOMENTAR CUANDO ACABE LA MUERTE
+        //gameOverCanvas.SetActive(true);
 
         int score = PlayerPrefs.GetInt("ScoreCount", 0);
         int highscore = PlayerPrefs.GetInt("HighscoreCount", 0);
