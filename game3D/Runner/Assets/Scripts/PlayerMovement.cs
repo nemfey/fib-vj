@@ -289,8 +289,8 @@ public class PlayerMovement : MonoBehaviour
                     }
                     if (child.CompareTag("FallingFloor"))
                     {
-                        Rigidbody rb = child.gameObject.GetComponent<Rigidbody>();
-                        rb.useGravity = true;
+                        Rigidbody rbFallingFloor = child.gameObject.GetComponent<Rigidbody>();
+                        rbFallingFloor.useGravity = true;
                     }
                 }
             }
@@ -353,7 +353,7 @@ public class PlayerMovement : MonoBehaviour
             if (endGameSection)
             {
                 gameManagerScript.finalCutScene();
-                Destroy(this);
+                rb.useGravity = false;
             }
             else
             {

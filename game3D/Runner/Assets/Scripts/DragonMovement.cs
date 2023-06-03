@@ -6,6 +6,8 @@ public class DragonMovement : MonoBehaviour
 {
     private Animator animator;
 
+    private GameManager gameManagerScript;
+
     GameObject player;
     Vector3 playerCoords;
     float minY;
@@ -20,6 +22,9 @@ public class DragonMovement : MonoBehaviour
         animator.SetBool("Fly", true);
         animator.Play("Fly", 0, 0f);
 
+        GameObject gameManagerObject = GameObject.Find("GameManager");
+        gameManagerScript = gameManagerObject.GetComponent<GameManager>();
+
         player = GameObject.Find("Player");
         playerCoords = GameObject.Find("Player").GetComponent<Transform>().position;
         minY = playerCoords.y;
@@ -28,8 +33,18 @@ public class DragonMovement : MonoBehaviour
     
     private void Update()
     {
-        playerCoords = player.GetComponent<Transform>().position;
-        minY = (playerCoords.y < minY) ? playerCoords.y : minY;
+        if (!gameManagerScript.cutSceneStarted)
+        {
+            playerCoords = player.GetComponent<Transform>().position;
+            minY = (playerCoords.y < minY) ? playerCoords.y : minY;
+        }
+        else
+        {
+            GameObject boat = getBoatGameObject();
+            playerCoords = boat.GetComponent<Transform>().position;
+            minY = playerCoords.y;
+        }
+
         moveToPlayer();
         rotateToPlayer();
 
@@ -37,6 +52,14 @@ public class DragonMovement : MonoBehaviour
         //{
         //    animator.Play("Vox_Dragon_Breath_Fw", 0, 0f);
         //}
+    }
+
+    private GameObject getBoatGameObject()
+    {
+        GameObject level = GameObject.Find("Level");
+        GameObject wall = level.transform.Find("EndGameWall(Clone)").gameObject;
+        GameObject boat = wall.transform.Find("EndGameBoat").gameObject;
+        return boat;
     }
 
     private void moveToPlayer()

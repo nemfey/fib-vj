@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject gameCanvas;
     [SerializeField] private GameObject pauseCanvas;
     [SerializeField] private GameObject gameOverCanvas;
+    [SerializeField] private GameObject youWinCanvas;
 
     private PlayerMovement playerMovementScript;
     private CreateLevel createLevelScript;
@@ -20,12 +21,15 @@ public class GameManager : MonoBehaviour
 
     public bool godMode = false;
     public bool adventureMode = true;
+    public bool cutSceneStarted = false;
+    float cutSceneTime;
 
     // Start is called before the first frame update
     void Start()
     {
         gameTime = 0f;
         adventureMode = true;
+        cutSceneTime = 0f;
 
         GameObject playerObject = GameObject.Find("Player");
         playerMovementScript = playerObject.GetComponent<PlayerMovement>();
@@ -42,6 +46,7 @@ public class GameManager : MonoBehaviour
             gameCanvas.SetActive(false);
             pauseCanvas.SetActive(false);
             gameOverCanvas.SetActive(false);
+            youWinCanvas.SetActive(false);
 
             FindObjectOfType<AudioManager>().playSound("MenuSong");
         }
@@ -61,7 +66,7 @@ public class GameManager : MonoBehaviour
             startGame();
         }
         
-        if (gameStarted && !pauseCanvas.activeSelf && !gameOverCanvas.activeSelf && (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P)))
+        if (gameStarted && !pauseCanvas.activeSelf && !gameOverCanvas.activeSelf && !youWinCanvas.activeSelf && (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P)))
         {
             pauseGame();
         }
@@ -98,15 +103,26 @@ public class GameManager : MonoBehaviour
     {
         gameTime += Time.deltaTime;
 
-        if (gameTime > 4f && adventureMode && createLevelScript.nthSection % 2 == 0 && playerMovementScript.proceduralLevel)
+        if (gameTime > 0f && adventureMode && createLevelScript.nthSection % 2 == 0 && playerMovementScript.proceduralLevel)
         {
             playerMovementScript.proceduralLevel = false;
             createLevelScript.placeEndGameWall();
+        }
+
+        if (cutSceneStarted)
+        {
+            cutSceneTime += Time.deltaTime;
+
+            if (cutSceneTime > 5f)
+            {
+                winProcedure();
+            }
         }
     }
 
     public void startGame()
     {
+        cutSceneStarted = false;
         gameStarted = true;
 
         FindObjectOfType<AudioManager>().stopSound("MenuSong");
@@ -182,6 +198,27 @@ public class GameManager : MonoBehaviour
         highscoreText.text = PlayerPrefs.GetInt("HighscoreCount", 0).ToString();
     }
 
+    public void winProcedure()
+    {
+        Time.timeScale = 0f;
+
+        youWinCanvas.SetActive(true);
+
+        int score = PlayerPrefs.GetInt("ScoreCount", 0);
+        int highscore = PlayerPrefs.GetInt("HighscoreCount", 0);
+
+        if (score > highscore)
+        {
+            PlayerPrefs.SetInt("HighscoreCount", score);
+        }
+
+        TextMeshProUGUI scoreText = youWinCanvas.transform.Find("Score").GetComponent<TextMeshProUGUI>();
+        scoreText.text = PlayerPrefs.GetInt("ScoreCount", 0).ToString();
+
+        TextMeshProUGUI highscoreText = youWinCanvas.transform.Find("Highscore").GetComponent<TextMeshProUGUI>();
+        highscoreText.text = PlayerPrefs.GetInt("HighscoreCount", 0).ToString();
+    }
+
     public void adventureButtonPressed()
     {
         Transform adventureButton = mainMenuCanvas.transform.Find("AdventureButton");
@@ -204,13 +241,7 @@ public class GameManager : MonoBehaviour
 
     public void finalCutScene()
     {
-        // ACTIVAR BARCO
-        // PONER CAMARA CON BARCO
-        // PONER DRAGON CON BARCO
-        // MATAR DRAGON(?)
-        // UCNADO PASEN UNOS SEGUNOD PONER YOU WIN
-        //Invoke("YouWin", 3.0f);
-        Debug.Log("END GAME CUTSCENE");
+        cutSceneStarted = true;
     }
 
     void SetActiveButton(Transform buttonTransform, bool b)
