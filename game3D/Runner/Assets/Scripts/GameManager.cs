@@ -103,7 +103,7 @@ public class GameManager : MonoBehaviour
     {
         gameTime += Time.deltaTime;
 
-        if (gameTime > 0f && adventureMode && createLevelScript.nthSection % 2 == 0 && playerMovementScript.proceduralLevel)
+        if (gameTime > 40f && adventureMode && createLevelScript.nthSection % 2 == 0 && playerMovementScript.proceduralLevel)
         {
             playerMovementScript.proceduralLevel = false;
             createLevelScript.placeEndGameWall();
@@ -227,6 +227,7 @@ public class GameManager : MonoBehaviour
         SetActiveButton(infinityButton, true);
 
         adventureMode = false;
+        Debug.Log("ADVENTURE MODE: " + adventureMode);
     }
 
     public void infinityButtonPressed()
@@ -237,6 +238,7 @@ public class GameManager : MonoBehaviour
         SetActiveButton(infinityButton, false);
 
         adventureMode = true;
+        Debug.Log("ADVENTURE MODE: " + adventureMode);
     }
 
     public void finalCutScene()

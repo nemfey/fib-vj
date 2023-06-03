@@ -204,9 +204,9 @@ public class CreateLevel : MonoBehaviour
         GameObject newSection = createSection(sectionSize);
         sections.Enqueue(newSection);
 
-        if (nthSection > 9)
+        if (nthSection > 15)
         {
-            Destroy(sections.Dequeue());
+            //Destroy(sections.Dequeue());
         }
 
         if (Random.Range(0, 3) == 0)

@@ -237,8 +237,16 @@ public class PlayerMovement : MonoBehaviour
             string collider_tag = hitInfo.collider.tag;
             if (collider_tag == "FallingFloor" && jumpCount < 2 && jumpTime <= 0f)
             {
-                audioManager.playSound("jump");
-                animController.SetBool("InAir", true);
+                if (jumpCount == 0)
+                {
+                    audioManager.playSound("jump");
+                    animController.SetBool("InAir", true);
+                }
+                else
+                {
+                    animController.SetTrigger("DJumpTrigger");
+                    audioManager.playSound("dJump");
+                }
                 jumpProcedure();
 
                 jumpTime = 0.5f;
@@ -246,8 +254,16 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (jumpCount < 2 && jumpTime <= 0f)
         {
-            audioManager.playSound("jump");
-            animController.SetBool("InAir", true);
+            if (jumpCount == 0)
+            {
+                audioManager.playSound("jump");
+                animController.SetBool("InAir", true);
+            }
+            else
+            {
+                animController.SetTrigger("DJumpTrigger");
+                audioManager.playSound("dJump");
+            }
             jumpProcedure();
 
             jumpTime= 0.5f;
