@@ -15,9 +15,11 @@ public class PlayerMovement : MonoBehaviour
     private float jumpTime = 0f;
 
     public GameObject level;
+    public GameObject playerModel;
 
     public Animator animController;
     private AudioManager audioManager;
+    private DeathParticleController deathParticles;
 
     public float velocity = 10f;
 
@@ -60,6 +62,8 @@ public class PlayerMovement : MonoBehaviour
 
         animController = GetComponentInChildren<Animator>();
         audioManager = FindObjectOfType<AudioManager>();
+        deathParticles = GetComponentInChildren<DeathParticleController>();
+
 
         bAlive = true;
 
@@ -99,7 +103,7 @@ public class PlayerMovement : MonoBehaviour
 
     void moveForward()
     {
-        transform.position += transform.forward * velocity * Time.deltaTime;
+        if (bAlive) transform.position += transform.forward * velocity * Time.deltaTime;
     }
 
     void moveToCenter()
@@ -330,11 +334,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (transform.position.y < limitY)
         {
-            bAlive = false;
-
-            FindObjectOfType<AudioManager>().stopSound("MainSong");
-            FindObjectOfType<AudioManager>().playSound("Death1");
-            FindObjectOfType<AudioManager>().playSound("Death2");
+            Die("fall");
         }
     }
 
@@ -346,15 +346,11 @@ public class PlayerMovement : MonoBehaviour
             jumpCount = 0;
             bGrounded = true;
 
-            animController.SetBool("InAir", false);
+            if (animController != null) animController.SetBool("InAir", false);
         }
         if ((collider_tag == "Obstacle" || collider_tag == "BarrelObstacle") && !godMode)
         {
-            bAlive = false;
-
-            FindObjectOfType<AudioManager>().stopSound("MainSong");
-            FindObjectOfType<AudioManager>().playSound("Death1");
-            FindObjectOfType<AudioManager>().playSound("Death2");
+            Die("generic");
         }
     }
 
@@ -368,19 +364,11 @@ public class PlayerMovement : MonoBehaviour
         if (collider_tag == "CoinObstacle" && !godMode)
         {
             Destroy(c.gameObject);
-            bAlive = false;
-
-            FindObjectOfType<AudioManager>().stopSound("MainSong");
-            FindObjectOfType<AudioManager>().playSound("Death1");
-            FindObjectOfType<AudioManager>().playSound("Death2");
+            Die("generic");
         }
         if (collider_tag == "Obstacle" && !godMode)
         {
-            bAlive = false;
-
-            FindObjectOfType<AudioManager>().stopSound("MainSong");
-            FindObjectOfType<AudioManager>().playSound("Death1");
-            FindObjectOfType<AudioManager>().playSound("Death2");
+            Die("generic");
         }
         if (collider_tag == "Coin")
         {
@@ -401,5 +389,25 @@ public class PlayerMovement : MonoBehaviour
         {
             velocity = velocity * 4;
         }
+    }
+
+    void Die(string cause)
+    {
+        bAlive = false;
+
+        Destroy(playerModel);
+
+        FindObjectOfType<AudioManager>().stopSound("MainSong");
+        if (cause == "generic")
+        {
+            FindObjectOfType<AudioManager>().playSound("Death1");
+            FindObjectOfType<AudioManager>().playSound("Death2");
+        }
+        else if (cause == "fall")
+        {
+
+        }
+
+        deathParticles.ActivateParticleSystem();
     }
 }
