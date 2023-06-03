@@ -332,7 +332,7 @@ public class PlayerMovement : MonoBehaviour
 
     void checkIfFallDeath()
     {
-        if (transform.position.y < limitY)
+        if (transform.position.y < limitY + 25 && bAlive)
         {
             Die("fall");
         }
@@ -395,19 +395,22 @@ public class PlayerMovement : MonoBehaviour
     {
         bAlive = false;
 
-        Destroy(playerModel);
-
-        FindObjectOfType<AudioManager>().stopSound("MainSong");
         if (cause == "generic")
         {
+            Destroy(playerModel);
+
+            FindObjectOfType<AudioManager>().stopSound("MainSong");
             FindObjectOfType<AudioManager>().playSound("Death1");
             FindObjectOfType<AudioManager>().playSound("Death2");
+
+            deathParticles.ActivateParticleSystem();
         }
         else if (cause == "fall")
         {
+            FindObjectOfType<AudioManager>().stopSound("MainSong");
+            FindObjectOfType<AudioManager>().playSound("falling");
 
+            Destroy(playerModel, 3.0f);
         }
-
-        deathParticles.ActivateParticleSystem();
     }
 }

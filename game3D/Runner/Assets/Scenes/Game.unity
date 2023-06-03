@@ -18958,6 +18958,12 @@ MonoBehaviour:
     pitch: 1.58
     source: {fileID: 0}
     loop: 0
+  - name: falling
+    clip: {fileID: 8300000, guid: 90f1d0fff73d7fd42acb9d97f906a4b9, type: 3}
+    volume: 1.12
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
 --- !u!4 &808351466
 Transform:
   m_ObjectHideFlags: 0
