@@ -5,7 +5,7 @@ using UnityEngine;
 public class CreateLevel : MonoBehaviour
 {
     // paths
-    public GameObject wallFloorPrefab, wallRampPrefab, wallTurnRightPrefab, wallTurnLeftPrefab;
+    public GameObject wallFloorPrefab, wallRampPrefab, wallTurnRightPrefab, wallTurnLeftPrefab, endGameWallPrefab;
 
     // obstacles
     public GameObject fallingFloorPrefab, evilCoinPrefab, barrelPrefab, bindweedPrefab, spikeTrapPrefab;
@@ -89,8 +89,12 @@ public class CreateLevel : MonoBehaviour
     {
         GameObject chunk = null;
 
+        // Select ramp chunk
+        bool bRampPlaced = false;
+        //bool bPlaceRamp = (Random.Range(0, 10) == 0);
+        //int rampChunk = bPlaceRamp ? Random.Range(1, sectionSize - 2) : -1;
+
         // Select obstacle chunk
-        //int obstacleId = Random.Range(0, obstacles.Length+1); // +1 because probabiliy of not putting any trap
         int obstacleId = Random.Range(0, obstacles.Length);
         HashSet<int> obstacleChunks = selectObstacleChunks(sectionSize, obstacleId);
 
@@ -106,19 +110,23 @@ public class CreateLevel : MonoBehaviour
             voidChunks = selectVoidChunks(sectionSize);
         }
 
-        bool bRampPlaced = false;
-
         for (int i = 0; i < sectionSize; i++)
         {
             /*
-            if (nthSection%2 == 0  && i == 1 && i != sectionSize-1)
+            if (bPlaceRamp && i == rampChunk)
             {
                 chunk = (GameObject)Instantiate(wallRampPrefab);
                 bRampPlaced = true;
             }
-            
-            else if (obstacleChunks.Contains(i) && sectionSize > 3)
             */
+            /*
+            if (bPlaceRamp  && i == 1 && i != sectionSize-1)
+            {
+                chunk = (GameObject)Instantiate(wallRampPrefab);
+                bRampPlaced = true;
+            }
+            */
+            //else if (obstacleChunks.Contains(i) && sectionSize > 3)
             if (obstacleChunks.Contains(i) && sectionSize > 3)
             {
                 if (obstacles[obstacleId] == evilCoinPrefab)
@@ -206,6 +214,20 @@ public class CreateLevel : MonoBehaviour
             Vector3 sectionPosition = newSection.transform.position;
             addDecoration(sectionPosition, sectionSize);
         }
+    }
+
+    public void placeEndGameWall()
+    {
+        GameObject endGameWall = (GameObject)Instantiate(endGameWallPrefab);
+
+        currentX += previousSize * 5f;
+        currentZ += 5f;
+        endGameWall.transform.Translate(currentX, 0f, currentZ - 0.5f);
+        endGameWall.transform.Rotate(0f, 0f, 0f);
+        
+        //previousSize = sectionSize;
+        endGameWall.transform.parent = transform;
+        //nthSection++;
     }
 
     private void addDecoration(Vector3 sectionPosition, int sectionSize)

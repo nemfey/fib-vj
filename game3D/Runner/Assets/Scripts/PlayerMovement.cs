@@ -7,7 +7,9 @@ using static System.Collections.Specialized.BitVector32;
 public class PlayerMovement : MonoBehaviour
 {
     // Use this script
+    private GameManager gameManagerScript;
     public bool proceduralLevel = true;
+    public bool endGameSection = false;
 
     public Material lightWallMaterial;
 
@@ -42,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject gameCanvas;
 
     public Vector3 cameraPosition;
+    public float cameraSpeed;
 
     private bool onSlope()
     {
@@ -55,7 +58,10 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameObject gameManagerObject = GameObject.Find("GameManager");
+        gameManagerScript = gameManagerObject.GetComponent<GameManager>();
         proceduralLevel = true;
+        endGameSection = false;
         godMode = false;
 
         rb = GetComponent<Rigidbody>();
@@ -64,10 +70,10 @@ public class PlayerMovement : MonoBehaviour
         audioManager = FindObjectOfType<AudioManager>();
         deathParticles = GetComponentInChildren<DeathParticleController>();
 
-
         bAlive = true;
 
         cameraPosition = new Vector3(2.5f, 50f, -12.5f);
+        cameraSpeed = 8f;
     }
 
     // Update is called once per frame
@@ -309,14 +315,24 @@ public class PlayerMovement : MonoBehaviour
                 Vector3 sectionRotation = sectionObject.transform.eulerAngles;
 
                 // Default
-                float offset = 0f;
+                float offsetXZ = 0f;
+                float offsetY = 50f;
                 if (sectionSize > 5)
-                    offset = 10f;
-                cameraPosition = new Vector3(sectionPosition.x - 2.5f, sectionPosition.y + 50f, sectionPosition.z + offset + ((sectionSize/2f)*5f));
+                    offsetXZ = 10f;
+
+                if (sectionObject.name == "EndGameWall(Clone)")
+                {
+                    endGameSection = true;
+                    offsetXZ = 30f;
+                    offsetY = 60f;
+                    cameraSpeed = 14f;
+                }
+
+                cameraPosition = new Vector3(sectionPosition.x - 2.5f, sectionPosition.y + offsetY, sectionPosition.z + offsetXZ + ((sectionSize/2f)*5f));
 
                 if (sectionRotation.y == 90f)
                 {
-                    cameraPosition = new Vector3(sectionPosition.x + offset + ((sectionSize/2f)*5f), sectionPosition.y + 50f, sectionPosition.z - 2.5f);
+                    cameraPosition = new Vector3(sectionPosition.x + offsetXZ + ((sectionSize/2f)*5f), sectionPosition.y + offsetY, sectionPosition.z - 2.5f);
                 }
             }
         }
@@ -334,7 +350,15 @@ public class PlayerMovement : MonoBehaviour
     {
         if (transform.position.y < limitY + 25 && bAlive)
         {
-            Die("fall");
+            if (endGameSection)
+            {
+                gameManagerScript.finalCutScene();
+                Destroy(this);
+            }
+            else
+            {
+                Die("fall");
+            }
         }
     }
 

@@ -35,8 +35,7 @@ public class CameraMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //playerCoords = GameObject.Find("Player").GetComponent<Transform>().position;
-        //this.transform.position = playerCoords + new Vector3(offsetX, offsetY, offsetZ);
+        movementSpeed = playerMovementScript.cameraSpeed;
 
         currentPosition = this.transform.position;
         // Movement

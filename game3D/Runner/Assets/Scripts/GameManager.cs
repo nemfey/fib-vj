@@ -98,9 +98,10 @@ public class GameManager : MonoBehaviour
     {
         gameTime += Time.deltaTime;
 
-        if (gameTime > 45f && adventureMode)
+        if (gameTime > 4f && adventureMode && createLevelScript.nthSection % 2 == 0 && playerMovementScript.proceduralLevel)
         {
-            Debug.Log("Generamos el final del nivel");
+            playerMovementScript.proceduralLevel = false;
+            createLevelScript.placeEndGameWall();
         }
     }
 
@@ -199,6 +200,17 @@ public class GameManager : MonoBehaviour
         SetActiveButton(infinityButton, false);
 
         adventureMode = true;
+    }
+
+    public void finalCutScene()
+    {
+        // ACTIVAR BARCO
+        // PONER CAMARA CON BARCO
+        // PONER DRAGON CON BARCO
+        // MATAR DRAGON(?)
+        // UCNADO PASEN UNOS SEGUNOD PONER YOU WIN
+        //Invoke("YouWin", 3.0f);
+        Debug.Log("END GAME CUTSCENE");
     }
 
     void SetActiveButton(Transform buttonTransform, bool b)
