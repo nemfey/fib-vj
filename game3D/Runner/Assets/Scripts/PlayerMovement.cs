@@ -20,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
 
     public float velocity = 10f;
 
+    public GameObject playermodel;
+
     [SerializeField] Rigidbody rb;
     public float jumpForce = 15f;
     public float jumpCount = 0;
@@ -98,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
 
     void moveForward()
     {
-        transform.position += transform.forward * velocity * Time.deltaTime;
+        if (bAlive) transform.position += transform.forward * velocity * Time.deltaTime;
     }
 
     void moveToCenter()
@@ -372,10 +374,13 @@ public class PlayerMovement : MonoBehaviour
 
         deathParticles.ActivateParticleSystem();
 
+        playermodel.SetActive(false);
+
         FindObjectOfType<AudioManager>().stopSound("MainSong");
         FindObjectOfType<AudioManager>().playSound("Death1");
         FindObjectOfType<AudioManager>().playSound("Death2");
 
         Debug.Log("IM DEAD!");
     }
+
 }

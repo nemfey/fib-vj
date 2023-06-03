@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
 
         if (!playerMovementScript.bAlive)
         {
-            gameOver();
+            Invoke("gameOver", 1.0f);
         }
 
         if (Input.GetKeyDown(KeyCode.G))
@@ -163,7 +163,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
 
         //DESCOMENTAR CUANDO ACABE LA MUERTE
-        //gameOverCanvas.SetActive(true);
+        gameOverCanvas.SetActive(true);
 
         int score = PlayerPrefs.GetInt("ScoreCount", 0);
         int highscore = PlayerPrefs.GetInt("HighscoreCount", 0);

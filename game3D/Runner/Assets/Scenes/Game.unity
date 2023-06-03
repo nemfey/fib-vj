@@ -23501,6 +23501,23 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4415358586433786, guid: 41a670177e1723444b5622302f81dd16, type: 3}
   m_PrefabInstance: {fileID: 806371762}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1418640224 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 55b05499fc2ffb6429b2de57df782a5f, type: 3}
+  m_PrefabInstance: {fileID: 1862843206}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1418640226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418640224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52a14a28dae5c734e972ad0e1da51e7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1425312169 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4216007349902218, guid: 054a9c568cb242643994f3f0ed0eaed0, type: 3}
@@ -25428,6 +25445,7 @@ MonoBehaviour:
   level: {fileID: 238114688}
   animController: {fileID: 0}
   velocity: 10
+  playermodel: {fileID: 1418640224}
   rb: {fileID: 0}
   jumpForce: 15
   jumpCount: 0
@@ -30481,6 +30499,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Knight_big@Running
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 55b05499fc2ffb6429b2de57df782a5f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 55b05499fc2ffb6429b2de57df782a5f, type: 3}
       propertyPath: m_Controller
       value: 
@@ -33283,7 +33305,7 @@ ParticleSystemRenderer:
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 1
-  m_MinParticleSize: 0
+  m_MinParticleSize: 0.1
   m_MaxParticleSize: 5
   m_CameraVelocityScale: 0
   m_VelocityScale: 0
@@ -33325,7 +33347,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 0
   useUnscaledTime: 0
