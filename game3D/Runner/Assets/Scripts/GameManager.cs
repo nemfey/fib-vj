@@ -54,6 +54,9 @@ public class GameManager : MonoBehaviour
         {
             startGame();
         }
+
+
+        AudioListener.volume = PlayerPrefs.GetFloat("musicVolume"); ;
     }
 
     // Update is called once per frame
@@ -227,7 +230,6 @@ public class GameManager : MonoBehaviour
         SetActiveButton(infinityButton, true);
 
         adventureMode = false;
-        Debug.Log("ADVENTURE MODE: " + adventureMode);
     }
 
     public void infinityButtonPressed()
@@ -238,7 +240,6 @@ public class GameManager : MonoBehaviour
         SetActiveButton(infinityButton, false);
 
         adventureMode = true;
-        Debug.Log("ADVENTURE MODE: " + adventureMode);
     }
 
     public void finalCutScene()
