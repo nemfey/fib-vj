@@ -26,6 +26,7 @@ public class CreateLevel : MonoBehaviour
     float previousSize;
     public int nthSection;
 
+    private PlayerMovement playerMovementScript;
     // chunk parameters
     public float currentChunkY;
 
@@ -37,6 +38,10 @@ public class CreateLevel : MonoBehaviour
         previousSize = 5;
         nthSection = -1;
         currentChunkY = 0f;
+
+        GameObject playerObject = GameObject.Find("Player");
+        playerMovementScript = playerObject.GetComponent<PlayerMovement>();
+        playerMovementScript.limitY = currentChunkY - 15f;
 
         initializeObstacles();
         initializeDecorations();
@@ -158,13 +163,14 @@ public class CreateLevel : MonoBehaviour
             }
 
             chunk.transform.Translate(0f, currentChunkY, 0f + i * 5f);
-            Debug.Log(chunk.transform.position);
             chunk.transform.parent = section.transform;
 
             if (bRampPlaced)
             {
                 currentChunkY -= 3f;
                 bRampPlaced = false;
+
+                playerMovementScript.limitY = currentChunkY - 15f;
             }
             
             if (coin != null && coinChunk == i && obstacleId != 1)

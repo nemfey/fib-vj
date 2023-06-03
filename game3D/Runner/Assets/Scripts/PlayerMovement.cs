@@ -9,6 +9,8 @@ public class PlayerMovement : MonoBehaviour
     // Use this script
     public bool proceduralLevel = true;
 
+    public Material lightWallMaterial;
+
     public bool godMode = false;
     private float jumpTime = 0f;
 
@@ -16,11 +18,8 @@ public class PlayerMovement : MonoBehaviour
 
     public Animator animController;
     private AudioManager audioManager;
-    private DeathParticleController deathParticles;
 
     public float velocity = 10f;
-
-    public GameObject playermodel;
 
     [SerializeField] Rigidbody rb;
     public float jumpForce = 15f;
@@ -36,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
     bool bGrounded = true;
 
     public bool bAlive = true;
+    public float limitY;
 
     [SerializeField] private GameObject gameCanvas;
 
@@ -60,9 +60,6 @@ public class PlayerMovement : MonoBehaviour
 
         animController = GetComponentInChildren<Animator>();
         audioManager = FindObjectOfType<AudioManager>();
-        deathParticles = GetComponentInChildren<DeathParticleController>();
-
-        //scoreText = gameCanvas.transform.Find("Score").GetComponent<TextMeshProUGUI>();
 
         bAlive = true;
 
@@ -95,12 +92,14 @@ public class PlayerMovement : MonoBehaviour
                 // player should be touchingh the slope all the time
                 // instead of floating
             }
+
+            checkIfFallDeath();
         }
     }
 
     void moveForward()
     {
-        if (bAlive) transform.position += transform.forward * velocity * Time.deltaTime;
+        transform.position += transform.forward * velocity * Time.deltaTime;
     }
 
     void moveToCenter()
@@ -167,6 +166,8 @@ public class PlayerMovement : MonoBehaviour
                         targetAngle = 0f;
                     }
 
+                    illuminateTurnPlatform(hitInfo);
+
                     // Add score
                     int score = PlayerPrefs.GetInt("ScoreCount", 0) + 1;
                     PlayerPrefs.SetInt("ScoreCount", score);
@@ -200,6 +201,8 @@ public class PlayerMovement : MonoBehaviour
                     centerSection = hitInfo.collider.bounds.center.x;
                     targetAngle = 0f;
                 }
+
+                illuminateTurnPlatform(hitInfo);
 
                 // Add score
                 int score = PlayerPrefs.GetInt("ScoreCount", 0) + 1;
@@ -315,6 +318,26 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void illuminateTurnPlatform(RaycastHit hitInfo)
+    {
+        GameObject floorObject = hitInfo.collider.gameObject.transform.parent.gameObject;
+        GameObject turnPlatform = floorObject.transform.Find("TurnPlatform").gameObject;
+
+        turnPlatform.GetComponent<Renderer>().material = lightWallMaterial;
+    }
+
+    void checkIfFallDeath()
+    {
+        if (transform.position.y < limitY)
+        {
+            bAlive = false;
+
+            FindObjectOfType<AudioManager>().stopSound("MainSong");
+            FindObjectOfType<AudioManager>().playSound("Death1");
+            FindObjectOfType<AudioManager>().playSound("Death2");
+        }
+    }
+
     void OnCollisionEnter(Collision c)
     {
         string collider_tag = c.collider.tag;
@@ -327,7 +350,11 @@ public class PlayerMovement : MonoBehaviour
         }
         if ((collider_tag == "Obstacle" || collider_tag == "BarrelObstacle") && !godMode)
         {
-            Die();
+            bAlive = false;
+
+            FindObjectOfType<AudioManager>().stopSound("MainSong");
+            FindObjectOfType<AudioManager>().playSound("Death1");
+            FindObjectOfType<AudioManager>().playSound("Death2");
         }
     }
 
@@ -341,11 +368,19 @@ public class PlayerMovement : MonoBehaviour
         if (collider_tag == "CoinObstacle" && !godMode)
         {
             Destroy(c.gameObject);
-            Die();
+            bAlive = false;
+
+            FindObjectOfType<AudioManager>().stopSound("MainSong");
+            FindObjectOfType<AudioManager>().playSound("Death1");
+            FindObjectOfType<AudioManager>().playSound("Death2");
         }
         if (collider_tag == "Obstacle" && !godMode)
         {
-            Die();
+            bAlive = false;
+
+            FindObjectOfType<AudioManager>().stopSound("MainSong");
+            FindObjectOfType<AudioManager>().playSound("Death1");
+            FindObjectOfType<AudioManager>().playSound("Death2");
         }
         if (collider_tag == "Coin")
         {
@@ -367,20 +402,4 @@ public class PlayerMovement : MonoBehaviour
             velocity = velocity * 4;
         }
     }
-
-    void Die()
-    {
-        bAlive = false;
-
-        deathParticles.ActivateParticleSystem();
-
-        playermodel.SetActive(false);
-
-        FindObjectOfType<AudioManager>().stopSound("MainSong");
-        FindObjectOfType<AudioManager>().playSound("Death1");
-        FindObjectOfType<AudioManager>().playSound("Death2");
-
-        Debug.Log("IM DEAD!");
-    }
-
 }
