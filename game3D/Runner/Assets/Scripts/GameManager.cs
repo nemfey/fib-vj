@@ -95,11 +95,6 @@ public class GameManager : MonoBehaviour
     private void timeManager()
     {
         gameTime += Time.deltaTime;
-        //if (gameTime > 40f && createLevelScript.nthSection % 2 != 0)
-        //{
-        //    Debug.Log("NO MORE PROCEDURAL");
-        //    playerMovementScript.proceduralLevel = false;
-        //}
     }
 
     public void startGame()

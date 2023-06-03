@@ -16,6 +16,7 @@ TagManager:
   - CoinObstacle
   - Bindweed
   - FallingFloor
+  - TurnPlatform
   layers:
   - Default
   - TransparentFX

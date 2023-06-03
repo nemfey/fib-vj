@@ -18,7 +18,7 @@ public class CameraMovement : MonoBehaviour
     Vector3 currentPosition;
     Vector3 targetPosition;
 
-    float movementSpeed = 8;
+    float movementSpeed = 8f;
 
     // Start is called before the first frame update
     void Start()

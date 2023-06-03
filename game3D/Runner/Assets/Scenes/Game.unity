@@ -9562,6 +9562,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RightTurnFloor
       objectReference: {fileID: 0}
+    - target: {fileID: 7947181883412472096, guid: fc6887f7112f61741b0cccb772a2603e, type: 3}
+      propertyPath: m_TagString
+      value: RightTurn
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc6887f7112f61741b0cccb772a2603e, type: 3}
 --- !u!1001 &561583775
@@ -25424,6 +25428,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   proceduralLevel: 1
+  lightWallMaterial: {fileID: 2100000, guid: 94454265ff5e65a48a5537efbb505673, type: 2}
   godMode: 0
   level: {fileID: 238114688}
   animController: {fileID: 0}
@@ -28175,6 +28180,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 105677922}
     m_Modifications:
+    - target: {fileID: 4030885415322134314, guid: fc6887f7112f61741b0cccb772a2603e, type: 3}
+      propertyPath: m_TagString
+      value: RightTurn
+      objectReference: {fileID: 0}
     - target: {fileID: 6539399250013117017, guid: fc6887f7112f61741b0cccb772a2603e, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -28223,6 +28232,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: RightTurnFloor
       objectReference: {fileID: 0}
+    - target: {fileID: 7947181883412472096, guid: fc6887f7112f61741b0cccb772a2603e, type: 3}
+      propertyPath: m_TagString
+      value: RightTurn
+      objectReference: {fileID: 0}
+    - target: {fileID: 8753394248226457913, guid: fc6887f7112f61741b0cccb772a2603e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a0c6c4757d70d784b9a1cb379ed3b317, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc6887f7112f61741b0cccb772a2603e, type: 3}
 --- !u!4 &1748667192 stripped
@@ -31333,6 +31350,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Vox_Dragon_Normal
       objectReference: {fileID: 0}
+    - target: {fileID: 1821285486597438, guid: 489939eafa6439b41b2be82f493c9598, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
+      objectReference: {fileID: 0}
     - target: {fileID: 4588969432930894, guid: 489939eafa6439b41b2be82f493c9598, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -31351,15 +31372,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4588969432930894, guid: 489939eafa6439b41b2be82f493c9598, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -12.5
+      value: -60
       objectReference: {fileID: 0}
     - target: {fileID: 4588969432930894, guid: 489939eafa6439b41b2be82f493c9598, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 25
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 4588969432930894, guid: 489939eafa6439b41b2be82f493c9598, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -60
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 4588969432930894, guid: 489939eafa6439b41b2be82f493c9598, type: 3}
       propertyPath: m_LocalRotation.w
@@ -31412,7 +31433,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8aa07c1672157d4697f7fd7e6f81e90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: 8
+--- !u!65 &1927652576
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927652571}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4, y: 4, z: 9}
+  m_Center: {x: 0.00000011920929, y: 1.5, z: 1.3000002}
 --- !u!1001 &1929586523
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34080,6 +34113,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1059261817}
     m_Modifications:
+    - target: {fileID: 1008273031337954327, guid: e20fe8d3a39f53148b8043e99eec4ffd, type: 3}
+      propertyPath: m_TagString
+      value: LeftTurn
+      objectReference: {fileID: 0}
     - target: {fileID: 2759062514912890728, guid: e20fe8d3a39f53148b8043e99eec4ffd, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.7071068

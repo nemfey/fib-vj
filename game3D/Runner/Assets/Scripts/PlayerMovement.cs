@@ -9,6 +9,8 @@ public class PlayerMovement : MonoBehaviour
     // Use this script
     public bool proceduralLevel = true;
 
+    public Material lightWallMaterial;
+
     public bool godMode = false;
     private float jumpTime = 0f;
 
@@ -163,6 +165,8 @@ public class PlayerMovement : MonoBehaviour
                         targetAngle = 0f;
                     }
 
+                    illuminateTurnPlatform(hitInfo);
+
                     // Add score
                     int score = PlayerPrefs.GetInt("ScoreCount", 0) + 1;
                     PlayerPrefs.SetInt("ScoreCount", score);
@@ -196,6 +200,8 @@ public class PlayerMovement : MonoBehaviour
                     centerSection = hitInfo.collider.bounds.center.x;
                     targetAngle = 0f;
                 }
+
+                illuminateTurnPlatform(hitInfo);
 
                 // Add score
                 int score = PlayerPrefs.GetInt("ScoreCount", 0) + 1;
@@ -311,6 +317,14 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void illuminateTurnPlatform(RaycastHit hitInfo)
+    {
+        GameObject floorObject = hitInfo.collider.gameObject.transform.parent.gameObject;
+        GameObject turnPlatform = floorObject.transform.Find("TurnPlatform").gameObject;
+
+        turnPlatform.GetComponent<Renderer>().material = lightWallMaterial;
+    }
+
     void OnCollisionEnter(Collision c)
     {
         string collider_tag = c.collider.tag;
@@ -348,8 +362,6 @@ public class PlayerMovement : MonoBehaviour
             FindObjectOfType<AudioManager>().stopSound("MainSong");
             FindObjectOfType<AudioManager>().playSound("Death1");
             FindObjectOfType<AudioManager>().playSound("Death2");
-
-            Debug.Log("IM DEAD!");
         }
         if (collider_tag == "Obstacle" && !godMode)
         {
@@ -358,8 +370,6 @@ public class PlayerMovement : MonoBehaviour
             FindObjectOfType<AudioManager>().stopSound("MainSong");
             FindObjectOfType<AudioManager>().playSound("Death1");
             FindObjectOfType<AudioManager>().playSound("Death2");
-
-            Debug.Log("IM DEAD!");
         }
         if (collider_tag == "Coin")
         {
