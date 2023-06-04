@@ -280,6 +280,8 @@ public class CreateLevel : MonoBehaviour
             int extraChunks = Random.Range(0, 2);
             if (obstacleId == 0)
                 extraChunks = 1;
+            else if (obstacleId == 4)
+                extraChunks = 0;
 
             if (extraChunks == 1)
             {
@@ -307,6 +309,7 @@ public class CreateLevel : MonoBehaviour
         int firstVoidChunk = Random.Range(1, sectionSize - 1);
         voidChunks.Add(firstVoidChunk);
 
+        /*
         int extraChunks = Random.Range(0, 2);
         if (extraChunks == 1)
         {
@@ -316,6 +319,7 @@ public class CreateLevel : MonoBehaviour
                 voidChunks.Add(nextChunk);
             }
         }
+        */
         return voidChunks;
     }
 }   

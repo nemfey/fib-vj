@@ -19338,7 +19338,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1631831096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20667,7 +20667,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: MEDIEVAL RUN
+  m_text: MEDIEVAL ESCAPE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9d6ce623f59c0f24a9cb67620c22dbc8, type: 2}
   m_sharedMaterial: {fileID: -329832665229480750, guid: 9d6ce623f59c0f24a9cb67620c22dbc8, type: 2}

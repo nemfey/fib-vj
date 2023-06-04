@@ -37,7 +37,7 @@ public class FogMovement : MonoBehaviour
             minY = playerCoords.y - offsetY;
 
         float distance = Vector3.Distance(playerCoords, farFog.transform.position);
-        if (distance > 400f)
+        if (distance > 300f)
         {
             Destroy(farFog);
             farFog = nearFog;
