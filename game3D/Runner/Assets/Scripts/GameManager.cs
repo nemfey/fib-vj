@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     private static bool gameStarted = false;
     private float gameTime = 0f;
 
+    private bool winSongPlayed = false;
+
     public bool godMode = false;
     public bool adventureMode = true;
     public bool cutSceneStarted = false;
@@ -114,6 +116,14 @@ public class GameManager : MonoBehaviour
 
         if (cutSceneStarted)
         {
+            if (!winSongPlayed)
+            {
+                FindObjectOfType<AudioManager>().playSound("WinSong");
+                FindObjectOfType<AudioManager>().stopSound("MainSong");
+
+                winSongPlayed = true;
+            }
+
             cutSceneTime += Time.deltaTime;
 
             if (cutSceneTime > 5f)
@@ -127,6 +137,8 @@ public class GameManager : MonoBehaviour
     {
         cutSceneStarted = false;
         gameStarted = true;
+
+        winSongPlayed = false;
 
         FindObjectOfType<AudioManager>().stopSound("MenuSong");
         FindObjectOfType<AudioManager>().playSound("MainSong");
@@ -183,6 +195,9 @@ public class GameManager : MonoBehaviour
     public void gameOver()
     {
         Time.timeScale = 0f;
+
+        FindObjectOfType<AudioManager>().playSound("LolUDied");
+        FindObjectOfType<AudioManager>().stopSound("MainSong");
 
         gameOverCanvas.SetActive(true);
 
