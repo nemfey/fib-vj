@@ -138,7 +138,7 @@ public class PlayerMovement : MonoBehaviour
         {
             animController.SetTrigger("DJumpTrigger");
             //audioManager.playSound("dJump");
-            audioManager.playSound("dJump");
+            audioManager.playSound("pickOption");
 
             jumpProcedure();
         }
@@ -148,8 +148,8 @@ public class PlayerMovement : MonoBehaviour
             if ((collider_tag != "RightTurn" && collider_tag != "LeftTurn") && jumpCount < 2)
             {
                 animController.SetBool("InAir", true);
-                //audioManager.playSound("jump");
-                audioManager.playSound("dJump");
+                //audioManager.playSound("dJump");
+                audioManager.playSound("pickOption");
 
                 jumpProcedure();
             }
@@ -161,8 +161,8 @@ public class PlayerMovement : MonoBehaviour
                 if ((collider_tag == "RightTurn" && targetAngle == 90f) || (collider_tag == "LeftTurn" && targetAngle == 0f))
                 {
                     animController.SetBool("InAir", true);
-                    //audioManager.playSound("jump");
-                    audioManager.playSound("dJump");
+                    //audioManager.playSound("dJump");
+                    audioManager.playSound("pickOption");
 
                     jumpProcedure();
                 }
