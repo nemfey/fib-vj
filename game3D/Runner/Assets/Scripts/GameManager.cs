@@ -29,6 +29,11 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        PlayerPrefs.DeleteKey("Screenmanager Resolution Height");
+        PlayerPrefs.DeleteKey("Screenmanager Resolution Width");
+        PlayerPrefs.DeleteKey("Screenmanager Is Fullscreen mode");
+
         gameTime = 0f;
         adventureMode = true;
         cutSceneTime = 0f;
@@ -282,7 +287,6 @@ public class GameManager : MonoBehaviour
         playSelectOptionSound();
 
         // Exit game
-
         Application.Quit();
     }
 }
