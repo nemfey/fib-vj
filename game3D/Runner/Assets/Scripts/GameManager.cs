@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
             gameOverCanvas.SetActive(false);
             youWinCanvas.SetActive(false);
 
-            //FindObjectOfType<AudioManager>().playSound("MenuSong");
+            FindObjectOfType<AudioManager>().playSound("MenuSong");
         }
         else
         {
