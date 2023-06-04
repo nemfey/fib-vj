@@ -282,5 +282,7 @@ public class GameManager : MonoBehaviour
         playSelectOptionSound();
 
         // Exit game
+
+        Application.Quit();
     }
 }
