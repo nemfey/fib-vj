@@ -137,6 +137,7 @@ public class PlayerMovement : MonoBehaviour
         if (!bGrounded && jumpCount < 2)
         {
             animController.SetTrigger("DJumpTrigger");
+            //audioManager.playSound("dJump");
             audioManager.playSound("dJump");
 
             jumpProcedure();
@@ -146,8 +147,9 @@ public class PlayerMovement : MonoBehaviour
             string collider_tag = hitInfo.collider.tag;
             if ((collider_tag != "RightTurn" && collider_tag != "LeftTurn") && jumpCount < 2)
             {
-                audioManager.playSound("jump");
                 animController.SetBool("InAir", true);
+                //audioManager.playSound("jump");
+                audioManager.playSound("dJump");
 
                 jumpProcedure();
             }
@@ -158,8 +160,9 @@ public class PlayerMovement : MonoBehaviour
 
                 if ((collider_tag == "RightTurn" && targetAngle == 90f) || (collider_tag == "LeftTurn" && targetAngle == 0f))
                 {
-                    audioManager.playSound("jump");
                     animController.SetBool("InAir", true);
+                    //audioManager.playSound("jump");
+                    audioManager.playSound("dJump");
 
                     jumpProcedure();
                 }
@@ -239,13 +242,15 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (jumpCount == 0)
                 {
-                    audioManager.playSound("jump");
                     animController.SetBool("InAir", true);
+                    //audioManager.playSound("jump");
+                    audioManager.playSound("pickOption");
                 }
                 else
                 {
                     animController.SetTrigger("DJumpTrigger");
-                    audioManager.playSound("dJump");
+                    //audioManager.playSound("dJump");
+                    audioManager.playSound("pickOption");
                 }
                 jumpProcedure();
 
@@ -256,13 +261,15 @@ public class PlayerMovement : MonoBehaviour
         {
             if (jumpCount == 0)
             {
-                audioManager.playSound("jump");
                 animController.SetBool("InAir", true);
+                //audioManager.playSound("jump");
+                audioManager.playSound("pickOption");
             }
             else
             {
                 animController.SetTrigger("DJumpTrigger");
-                audioManager.playSound("dJump");
+                //audioManager.playSound("dJump");
+                audioManager.playSound("pickOption");
             }
             jumpProcedure();
 
@@ -323,7 +330,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 Transform parentTransform = sectionObject.transform.parent;
                 int siblingIndex = sectionObject.transform.GetSiblingIndex();
-                //sectionObject = parentTransform.GetChild(siblingIndex + 5).gameObject;
                 sectionObject = parentTransform.GetChild(siblingIndex + 1).gameObject;
 
                 int sectionSize = sectionObject.transform.childCount;

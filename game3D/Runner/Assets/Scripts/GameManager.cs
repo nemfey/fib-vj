@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
             gameOverCanvas.SetActive(false);
             youWinCanvas.SetActive(false);
 
-            FindObjectOfType<AudioManager>().playSound("MenuSong");
+            //FindObjectOfType<AudioManager>().playSound("MenuSong");
         }
         else
         {
@@ -91,13 +91,13 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("GodMode activated");
 
-                FindObjectOfType<AudioManager>().playSound("pickOption");
+                //FindObjectOfType<AudioManager>().playSound("pickOption");
             }
             else
             {
                 Debug.Log("GodMode deactivated");
 
-                FindObjectOfType<AudioManager>().playSound("pickOption");
+                //FindObjectOfType<AudioManager>().playSound("pickOption");
             }
         }
     }
@@ -134,7 +134,7 @@ public class GameManager : MonoBehaviour
         mainMenuCanvas.SetActive(false);
         gameCanvas.SetActive(true);
 
-        FindObjectOfType<AudioManager>().playSound("pickOption");
+        playSelectOptionSound();
 
         Time.timeScale = 1f;
     }
@@ -143,7 +143,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0f;
 
-        FindObjectOfType<AudioManager>().playSound("pickOption");
+        playSelectOptionSound();
 
         // Hide pause button
         Transform pauseButtonTransform = gameCanvas.transform.Find("PauseButton");
@@ -158,7 +158,7 @@ public class GameManager : MonoBehaviour
         Transform pauseButtonTransform = gameCanvas.transform.Find("PauseButton");
         SetActiveButton(pauseButtonTransform, true);
 
-        FindObjectOfType<AudioManager>().playSound("pickOption");
+        playSelectOptionSound();
 
         pauseCanvas.SetActive(false);
 
@@ -169,15 +169,15 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene("Game");
 
-        FindObjectOfType<AudioManager>().playSound("pickOption");
+        //FindObjectOfType<AudioManager>().playSound("pickOption");
     }
 
-    public void quitGame()
+    public void goBackToMenu()
     {
+        playSelectOptionSound();
+
         gameStarted = false;
         SceneManager.LoadScene("Game");
-
-        FindObjectOfType<AudioManager>().playSound("pickOption");
     }
 
     public void gameOver()
@@ -255,5 +255,17 @@ public class GameManager : MonoBehaviour
         {
             button.gameObject.SetActive(b);
         }
+    }
+
+    public void playSelectOptionSound()
+    {
+        FindObjectOfType<AudioManager>().playSound("jump");
+    }
+
+    public void exitGame()
+    {
+        playSelectOptionSound();
+
+        // Exit game
     }
 }
